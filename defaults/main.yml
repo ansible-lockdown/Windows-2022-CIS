@@ -1,4 +1,6 @@
 ---
+win2022_os_distribution: Windows-2022
+
 section01_patch: yes
 section02_patch: yes
 section09_patch: yes
@@ -6,7 +8,7 @@ section17_patch: yes
 section18_patch: yes
 section19_patch: yes
 
-min_ansible_version: "2.6"
+min_ansible_version: "2.9"
 
 # We've defined complexity-high to mean that we cannot automatically remediate
 # the rule in question.  In the future this might mean that the remediation
