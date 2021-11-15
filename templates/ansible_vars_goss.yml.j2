@@ -1,0 +1,917 @@
+## Variables file This is populated from remediation discovery
+## metadata for benchmark
+win2022cis_benchmark:
+- "type: {{ benchmark }}"
+- "version: '{{ benchmark_version }}'"
+- "os: Win2022"
+- "epoch: {{ ansible_date_time.epoch }}"
+- "hostname: {{ ansible_hostname }}"
+- "server_type: {% if win2022cis_is_domain_controller is defined %}Domain Controller{% elif win2022cis_is_standalone is defined %}Standalone Server{% else %}Domain Member Server{% endif %}"
+
+win2022_os_distribution: {{ win2022_os_distribution }}
+
+######################
+## Server Variables ##
+######################
+{% if win2022cis_is_domain_controller is defined %}
+is_domain_controller: true
+{% else %}
+is_domain_controller: false
+{% endif %}
+{% if win2022cis_is_standalone is defined %}
+is_standalone: true
+{% else %}
+is_standalone: false
+{% endif %}
+reboot_required: false
+win2022cis_use_iis: false
+exchange_server_group: false
+
+###################
+# Reference files #
+###################
+gpresult_file: {{ audit_capture_path }}gpresults_{{ audit_time }}.txt
+auditresult_file: {{ audit_capture_path }}auditpol_{{ audit_time }}.txt
+secedit_file: {{ audit_capture_path }}secedit_{{ audit_time }}.txt
+
+#########
+## CIS ##
+#########
+
+##############
+# CIS Levels #
+##############
+win2022cis_level_1: true
+win2022cis_level_2: true
+win2022cis_NG: {% if nextgen_memberserver is sameas true %}true{% elif nextgen_domainserver is sameas true %}true {% else %}false{% endif %} # Note this needs UEFI and virtualization enabled systems - rollback is very manual
+
+################
+# Server Roles #
+################
+# If a Server uses the following set to true
+# certification Authority role
+win2022cis_cert_auth_role: false
+# WINS server Feature Installed
+win2022cis_WINS_server: false
+win2022_use_domain_firewall: false
+win2022_use_private_firewall: false
+win2022_use_public_firewall: false
+
+
+
+################
+# CIS Sections #
+################
+win2022cis_section_1: {{ section01_patch }}
+win2022cis_section_2: {{ section02_patch }}
+win2022cis_section_9: {{ section09_patch }}
+win2022cis_section_17: {{ section17_patch }}
+win2022cis_section_18: {{ section18_patch }}
+win2022cis_section_19: {{ section19_patch }}
+
+########################
+## Section_1_Controls ##
+########################
+# 1.1 Password Policy
+win2022cis_1_1_1: {{ rule_1_1_1 }}
+win2022cis_1_1_2: {{ rule_1_1_2 }}
+win2022cis_1_1_3: {{ rule_1_1_3 }}
+win2022cis_1_1_4: {{ rule_1_1_4 }}
+win2022cis_1_1_5: {{ rule_1_1_5 }}
+win2022cis_1_1_6: {{ rule_1_1_6 }}
+# 1.2 Account Lockout Policy
+win2022cis_1_2_1: {{ rule_1_2_1 }}
+win2022cis_1_2_2: {{ rule_1_2_2 }}
+win2022cis_1_2_3: {{ rule_1_2_3 }}
+
+########################
+## Section_2_Controls ##
+########################
+# 2.2 User Rights Assignment
+win2022cis_2_2_1: {{ rule_2_2_1 }}
+win2022cis_2_2_2: {{ rule_2_2_2 }}  # DC_ONLY
+win2022cis_2_2_3: {{ rule_2_2_3 }}  # MS_ONLY
+win2022cis_2_2_4: {{ rule_2_2_4 }}
+win2022cis_2_2_5: {{ rule_2_2_5 }}  # DC_ONLY
+win2022cis_2_2_6: {{ rule_2_2_6 }}
+win2022cis_2_2_7: {{ rule_2_2_7 }}  # DC & MS separate controls (see Section_2_Vars)
+win2022cis_2_2_8: {{ rule_2_2_8 }}  # DC_ONLY
+win2022cis_2_2_9: {{ rule_2_2_9 }}  # MS_ONLY
+win2022cis_2_2_10: {{ rule_2_2_10 }}
+win2022cis_2_2_11: {{ rule_2_2_11 }}
+win2022cis_2_2_12: {{ rule_2_2_12 }}
+win2022cis_2_2_13: {{ rule_2_2_13 }}
+win2022cis_2_2_14: {{ rule_2_2_14 }}
+win2022cis_2_2_15: {{ rule_2_2_15 }}
+win2022cis_2_2_16: {{ rule_2_2_16 }}
+win2022cis_2_2_17: {{ rule_2_2_17 }}  # DC ONLY
+win2022cis_2_2_18: {{ rule_2_2_18 }}  # MS ONLY
+win2022cis_2_2_19: {{ rule_2_2_19 }}
+win2022cis_2_2_20: {{ rule_2_2_20 }}  # DC ONLY
+win2022cis_2_2_21: {{ rule_2_2_21 }}
+win2022cis_2_2_22: {{ rule_2_2_22 }}
+win2022cis_2_2_23: {{ rule_2_2_23 }}
+win2022cis_2_2_24: {{ rule_2_2_24 }}
+win2022cis_2_2_25: {{ rule_2_2_25 }}  # DC ONLY
+win2022cis_2_2_26: {{ rule_2_2_26 }}  # MS ONLY
+win2022cis_2_2_27: {{ rule_2_2_27 }}  # DC ONLY
+win2022cis_2_2_28: {{ rule_2_2_28 }}  # MS ONLY
+win2022cis_2_2_29: {{ rule_2_2_29 }}
+win2022cis_2_2_30: {{ rule_2_2_30 }}
+win2022cis_2_2_31: {{ rule_2_2_31 }}  # DC ONLY
+win2022cis_2_2_32: {{ rule_2_2_32 }}  # MS ONLY
+win2022cis_2_2_33: {{ rule_2_2_33 }}
+win2022cis_2_2_34: {{ rule_2_2_34 }}
+win2022cis_2_2_35: {{ rule_2_2_35 }}
+win2022cis_2_2_36: {{ rule_2_2_36 }}  # DC ONLY
+win2022cis_2_2_37: {{ rule_2_2_37 }}  # DC ONLY
+win2022cis_2_2_38: {{ rule_2_2_38 }}  # MS ONLY
+win2022cis_2_2_39: {{ rule_2_2_39 }}
+win2022cis_2_2_40: {{ rule_2_2_40 }}
+win2022cis_2_2_41: {{ rule_2_2_41 }}
+win2022cis_2_2_42: {{ rule_2_2_42 }}
+win2022cis_2_2_43: {{ rule_2_2_43 }}
+win2022cis_2_2_44: {{ rule_2_2_44 }}
+win2022cis_2_2_45: {{ rule_2_2_45 }}
+win2022cis_2_2_46: {{ rule_2_2_46 }}
+win2022cis_2_2_47: {{ rule_2_2_47 }}  # DC ONLY
+win2022cis_2_2_48: {{ rule_2_2_48 }}
+# 2.3.1 Accounts
+win2022cis_2_3_1_1: {{ rule_2_3_1_1 }}  # MS Only
+win2022cis_2_3_1_2: {{ rule_2_3_1_2 }} 
+win2022cis_2_3_1_3: {{ rule_2_3_1_3 }}  # MS Only
+win2022cis_2_3_1_4: {{ rule_2_3_1_4 }}
+win2022cis_2_3_1_5: {{ rule_2_3_1_5 }}
+win2022cis_2_3_1_6: {{ rule_2_3_1_6 }}
+#A 2.3.2 udit
+win2022cis_2_3_2_1: {{ rule_2_3_2_1 }}
+win2022cis_2_3_2_2: {{ rule_2_3_2_2 }}
+# 2.3.3 DCOM
+# 2.3.4 Devices
+win2022cis_2_3_4_1: {{ rule_2_3_4_1 }}
+win2022cis_2_3_4_2: {{ rule_2_3_4_2 }}
+# 2.3.5 Domain Controller
+win2022cis_2_3_5_1: {{ rule_2_3_5_1 }}
+win2022cis_2_3_5_2: {{ rule_2_3_5_2 }}
+win2022cis_2_3_5_3: {{ rule_2_3_5_3 }}
+# 2.3.6 Domain Member
+win2022cis_2_3_6_1: {{ rule_2_3_6_1 }}
+win2022cis_2_3_6_2: {{ rule_2_3_6_2 }}
+win2022cis_2_3_6_3: {{ rule_2_3_6_3 }}
+win2022cis_2_3_6_4: {{ rule_2_3_6_4 }}
+win2022cis_2_3_6_5: {{ rule_2_3_6_5 }}
+win2022cis_2_3_6_6: {{ rule_2_3_6_6 }}
+# 2.3.7 Interactive Login
+win2022cis_2_3_7_1: {{ rule_2_3_7_1 }}
+win2022cis_2_3_7_2: {{ rule_2_3_7_2 }}
+win2022cis_2_3_7_3: {{ rule_2_3_7_3 }}
+win2022cis_2_3_7_4: {{ rule_2_3_7_4 }}
+win2022cis_2_3_7_5: {{ rule_2_3_7_5 }}
+win2022cis_2_3_7_6: {{ rule_2_3_7_6 }}   # MS Only
+win2022cis_2_3_7_7: {{ rule_2_3_7_7 }}
+win2022cis_2_3_7_8: {{ rule_2_3_7_8 }}   # MS Only
+win2022cis_2_3_7_9: {{ rule_2_3_7_9 }}
+# 2.3.8 Microsoft network client SMB
+win2022cis_2_3_8_1: {{ rule_2_3_8_1 }}
+win2022cis_2_3_8_2: {{ rule_2_3_8_2 }}
+win2022cis_2_3_8_3: {{ rule_2_3_8_3 }}
+# 2.3.9 Microsoft network server SMB
+win2022cis_2_3_9_1: {{ rule_2_3_9_1 }}
+win2022cis_2_3_9_2: {{ rule_2_3_9_2 }}
+win2022cis_2_3_9_3: {{ rule_2_3_9_3 }}
+win2022cis_2_3_9_4: {{ rule_2_3_9_4 }}
+win2022cis_2_3_9_5: {{ rule_2_3_9_5 }}
+# 2.3.10 Network Access
+win2022cis_2_3_10_1: {{ rule_2_3_10_1 }}
+win2022cis_2_3_10_2: {{ rule_2_3_10_2 }}
+win2022cis_2_3_10_3: {{ rule_2_3_10_3 }}
+win2022cis_2_3_10_4: {{ rule_2_3_10_4 }}
+win2022cis_2_3_10_5: {{ rule_2_3_10_5 }}
+win2022cis_2_3_10_6: {{ rule_2_3_10_6 }}
+win2022cis_2_3_10_7: {{ rule_2_3_10_7 }}
+win2022cis_2_3_10_8: {{ rule_2_3_10_8 }}
+win2022cis_2_3_10_9: {{ rule_2_3_10_9 }}
+win2022cis_2_3_10_10: {{ rule_2_3_10_10 }}
+win2022cis_2_3_10_11: {{ rule_2_3_10_11 }}
+win2022cis_2_3_10_12: {{ rule_2_3_10_12 }}
+win2022cis_2_3_10_13: {{ rule_2_3_10_13 }}
+# 2.3.11 Network Security
+win2022cis_2_3_11_1: {{ rule_2_3_11_1 }}
+win2022cis_2_3_11_2: {{ rule_2_3_11_2 }}
+win2022cis_2_3_11_3: {{ rule_2_3_11_3 }}
+win2022cis_2_3_11_4: {{ rule_2_3_11_4 }}
+win2022cis_2_3_11_5: {{ rule_2_3_11_5 }}
+win2022cis_2_3_11_6: {{ rule_2_3_11_6 }}
+win2022cis_2_3_11_7: {{ rule_2_3_11_7 }}
+win2022cis_2_3_11_8: {{ rule_2_3_11_8 }}
+win2022cis_2_3_11_9: {{ rule_2_3_11_9 }}
+win2022cis_2_3_11_10: {{ rule_2_3_11_10 }}
+# 2.2.12 Recovery Console
+# 2.3.13 Shutdown
+win2022cis_2_3_13_1: {{ rule_2_3_13_1 }}
+#2.3.14 Cryptography
+# 2.3.15 System Objects
+win2022cis_2_3_15_1: {{ rule_2_3_15_1 }}
+win2022cis_2_3_15_2: {{ rule_2_3_15_2 }}
+# 2.3.16 System Settings
+# 2.3.17 User Account Control
+win2022cis_2_3_17_1: {{ rule_2_3_17_1 }}
+win2022cis_2_3_17_2: {{ rule_2_3_17_2 }}
+win2022cis_2_3_17_3: {{ rule_2_3_17_3 }}
+win2022cis_2_3_17_4: {{ rule_2_3_17_4 }}
+win2022cis_2_3_17_5: {{ rule_2_3_17_5 }}
+win2022cis_2_3_17_6: {{ rule_2_3_17_6 }}
+win2022cis_2_3_17_7: {{ rule_2_3_17_7 }}
+win2022cis_2_3_17_8: {{ rule_2_3_17_8 }}
+
+##################
+# Section_2_Vars #
+##################
+win2022cis_DC_access_from_network: Administrators Authenticated Users ENTERPRISE DOMAIN CONTROLLERS
+win2022cis_MS_access_from_network: Administrators Authenticated Users
+win2022cis_DC_allow_logon_local_users: Administrators
+win2022cis_MS_allow_logon_local_users: Administrators
+win2022cis_DC_allow_logon_RDP_users: Administrators
+win2022cis_MS_allow_logon_RDP_users: Administrators Remote Desktop Users
+win2022_admin_renamed_as: {{ win16cis_admin_username }}
+win2022_guest_renamed_as: {{ win16cis_guest_username }}
+win2022cis_logon_text: 'You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.'
+win2022cis_logon_title: {{ legalnoticecaption }}
+
+########################
+## Section_9_Controls ##
+########################
+# 9.1 Domain Profile Firewall
+win2022cis_9_1_1: {{ rule_9_1_1 }}
+win2022cis_9_1_2: {{ rule_9_1_2 }}
+win2022cis_9_1_3: {{ rule_9_1_3 }}
+win2022cis_9_1_4: {{ rule_9_1_4 }}
+win2022cis_9_1_5: {{ rule_9_1_5 }}
+win2022cis_9_1_6: {{ rule_9_1_6 }}
+win2022cis_9_1_7: {{ rule_9_1_7 }}
+win2022cis_9_1_8: {{ rule_9_1_8 }}
+# 9.2 Private Profile Firewall
+win2022cis_9_2_1: {{ rule_9_2_1 }}
+win2022cis_9_2_2: {{ rule_9_2_2 }}
+win2022cis_9_2_3: {{ rule_9_2_3 }}
+win2022cis_9_2_4: {{ rule_9_2_4 }}
+win2022cis_9_2_5: {{ rule_9_2_5 }}
+win2022cis_9_2_6: {{ rule_9_2_6 }}
+win2022cis_9_2_7: {{ rule_9_2_7 }}
+win2022cis_9_2_8: {{ rule_9_2_8 }}
+# 9.3 Public Profile Firewall
+win2022cis_9_3_1: {{ rule_9_3_1 }}
+win2022cis_9_3_2: {{ rule_9_3_2 }}
+win2022cis_9_3_3: {{ rule_9_3_3 }}
+win2022cis_9_3_4: {{ rule_9_3_4 }}
+win2022cis_9_3_5: {{ rule_9_3_5 }}
+win2022cis_9_3_6: {{ rule_9_3_6 }}
+win2022cis_9_3_7: {{ rule_9_3_7 }}
+win2022cis_9_3_8: {{ rule_9_3_8 }}
+win2022cis_9_3_9: {{ rule_9_3_9 }}
+win2022cis_9_3_10: {{ rule_9_3_10 }}
+
+##################
+# Section_9_Vars #
+##################
+
+#########################
+## Section_17_Controls ##
+#########################
+# Advanced Audit Policy Configuration
+# 17.1 Account Logon
+win2022cis_17_1_1: {{ rule_17_1_1 }}
+win2022cis_17_1_2: {{ rule_17_1_2 }}
+win2022cis_17_1_3: {{ rule_17_1_3 }}  # DC_Only
+# 17.2 Account Management
+win2022cis_17_2_1: {{ rule_17_2_1 }}
+win2022cis_17_2_2: {{ rule_17_2_2 }}  # DC_Only
+win2022cis_17_2_3: {{ rule_17_2_3 }}  # DC_Only
+win2022cis_17_2_4: {{ rule_17_2_4 }}  # DC_Only
+win2022cis_17_2_5: {{ rule_17_2_5 }}
+win2022cis_17_2_6: {{ rule_17_2_6 }}
+# 17.3 Detailed Tracking
+win2022cis_17_3_1: {{ rule_17_3_1 }}
+win2022cis_17_3_2: {{ rule_17_3_2 }}
+# 17.4 DS Access
+win2022cis_17_4_1: {{ rule_17_4_1 }}  # DC Only
+win2022cis_17_4_2: {{ rule_17_4_2 }}  # DC Only
+# 17.5 logon/off
+win2022cis_17_5_1: {{ rule_17_5_1 }}
+win2022cis_17_5_2: {{ rule_17_5_2 }}
+win2022cis_17_5_3: {{ rule_17_5_3 }}
+win2022cis_17_5_4: {{ rule_17_5_4 }}
+win2022cis_17_5_5: {{ rule_17_5_5 }}
+win2022cis_17_5_6: {{ rule_17_5_6 }}
+# 17.6 Object Access
+win2022cis_17_6_1: {{ rule_17_6_1 }}
+win2022cis_17_6_2: {{ rule_17_6_2 }}
+win2022cis_17_6_3: {{ rule_17_6_3 }}
+win2022cis_17_6_4: {{ rule_17_6_4 }}
+# 17.7 Policy Change
+win2022cis_17_7_1: {{ rule_17_7_1 }}
+win2022cis_17_7_2: {{ rule_17_7_2 }}
+win2022cis_17_7_3: {{ rule_17_7_3 }}
+win2022cis_17_7_4: {{ rule_17_7_4 }}
+win2022cis_17_7_5: {{ rule_17_7_5 }}
+# 17.8 Privilege Use
+win2022cis_17_8_1: {{ rule_17_8_1 }}
+# 17.9 System
+win2022cis_17_9_1: {{ rule_17_9_1 }}
+win2022cis_17_9_2: {{ rule_17_9_2 }}
+win2022cis_17_9_3: {{ rule_17_9_3 }}
+win2022cis_17_9_4: {{ rule_17_9_4 }}
+win2022cis_17_9_5: {{ rule_17_9_5 }}
+
+###################
+# Section_17_Vars #
+###################
+
+#########################
+## Section_18_Controls ##
+#########################
+# 18 Administrative Templates
+# 18.1 Control Panel
+# 18.1.1 Personalization
+win2022cis_18_1_1_1: {{ rule_18_1_1_1 }}
+win2022cis_18_1_1_2: {{ rule_18_1_1_2 }}
+# 18.1.2 Regional and Language Options
+# 18.1.2.1 Handwriting Personalization
+win2022cis_18_1_2_2: {{ rule_18_1_2_2 }}
+win2022cis_18_1_3: {{ rule_18_1_3 }}
+# 18.2 LAPS - Needs LAPS installed per host
+win2022cis_18_2_1: {{ rule_18_2_1 }}
+win2022cis_18_2_2: {{ rule_18_2_2 }}
+win2022cis_18_2_3: {{ rule_18_2_3 }}
+win2022cis_18_2_4: {{ rule_18_2_4 }}
+win2022cis_18_2_5: {{ rule_18_2_5 }}
+win2022cis_18_2_6: {{ rule_18_2_6 }}
+# 18.3 MS Security 
+win2022cis_18_3_1: {{ rule_18_3_1 }}
+win2022cis_18_3_2: {{ rule_18_3_2 }}
+win2022cis_18_3_3: {{ rule_18_3_3 }}
+win2022cis_18_3_4: {{ rule_18_3_4 }}
+win2022cis_18_3_5: {{ rule_18_3_5 }}
+win2022cis_18_3_6: {{ rule_18_3_6 }}
+win2022cis_18_3_7: {{ rule_18_3_7 }}
+# 18.4 MSS Legacy
+win2022cis_18_4_1: {{ rule_18_4_1 }}
+win2022cis_18_4_2: {{ rule_18_4_2 }}
+win2022cis_18_4_3: {{ rule_18_4_3 }}
+win2022cis_18_4_4: {{ rule_18_4_4 }}
+win2022cis_18_4_5: {{ rule_18_4_5 }}
+win2022cis_18_4_6: {{ rule_18_4_6 }}
+win2022cis_18_4_7: {{ rule_18_4_7 }}
+win2022cis_18_4_8: {{ rule_18_4_8 }}
+win2022cis_18_4_9: {{ rule_18_4_9 }}
+win2022cis_18_4_10: {{ rule_18_4_10 }}
+win2022cis_18_4_11: {{ rule_18_4_11 }}
+win2022cis_18_4_12: {{ rule_18_4_12 }}
+# 18.5 Network
+# 18.5.1 Background Intelligent Transfer
+# 18.5.2 Branch Cache
+# 18.5.3 DirectAccess Client Experience Settings
+# 18 5.4 DNS Client
+win2022cis_18_5_4_1: {{ rule_18_5_4_1 }}
+# 18.5.5 Fonts
+win2022cis_18_5_5_1: {{ rule_18_5_5_1 }}
+# 18.5.6 Hotspot Authentication
+# 18.5.7 lanwamn Server
+# 18.5.8 Lanman WorkStation
+win2022cis_18_5_8_1: {{ rule_18_5_8_1 }}
+# 18.5.9 Link-Layer Topology Discovery
+win2022cis_18_5_9_1: {{ rule_18_5_9_1 }}
+win2022cis_18_5_9_2: {{ rule_18_5_9_2 }}
+# 18.5.10 Microsoft Peer-To-Peer Networking Services
+# 18.5.10.1 Peer Name Resolution Protocol
+win2022cis_18_5_10_2: {{ rule_18_5_10_2 }}
+# 18.5.11 Network Connections
+# 18.5.11.1 Windows Defender Firewall (formally Windows Firewall)
+win2022cis_18_5_11_2: {{ rule_18_5_11_2 }}
+win2022cis_18_5_11_3: {{ rule_18_5_11_3 }}
+win2022cis_18_5_11_4: {{ rule_18_5_11_4 }}
+# 18.5.12 Network Connectivity Status Indicator
+# 18.5.13 Network Isolation
+# 18.5.14 Network Provider
+win2022cis_18_5_14_1: {{ rule_18_5_14_1 }}  # NOte Network Paths will need to ne configured for this to pass
+# 18.5.15 Offline Files
+# 18.5.16 QoS Packet Scheduler
+# 18.5.17 SNMP
+# 18.5.18 SSL Configuration Settings
+# 18.15.9 TCPIP Settings
+# 18.5.19.1 IPv6 Transitoin Technologies
+# 18.5.19.2 Paranters
+win2022cis_18_5_19_2_1: {{ rule_18_5_19_2_1 }}
+# 18.5 20 Windows Connect Now
+win2022cis_18_5_20_1: {{ rule_18_5_20_1 }}
+win2022cis_18_5_20_2: {{ rule_18_5_20_2 }}
+# 18.5.21 Windows Connection Manager
+win2022cis_18_5_21_1: {{ rule_18_5_21_1 }}
+win2022cis_18_5_21_2: {{ rule_18_5_21_2 }}
+# 18.5.6 Printers
+# 18.7.Start Menu and Taskbar
+# 18.7.1 Notifications
+win2022cis_18_7_1_1: {{ rule_18_7_1_1 }}
+# 18.8 System
+# 18.8.1 Access-Denied Assistance
+# 18.8.2 App-V
+# 18.8.3 Audit Process Creation
+win2022cis_18_8_3_1: {{ rule_18_8_3_1 }}
+# 18.8.4 Credential Delegation
+win2022cis_18_8_4_1: {{ rule_18_8_4_1 }}
+win2022cis_18_8_4_2: {{ rule_18_8_4_2 }}
+# 18.8.5 Device Guard
+win2022cis_18_8_5_1: {{ rule_18_8_5_1 }}
+win2022cis_18_8_5_2: {{ rule_18_8_5_2 }}
+win2022cis_18_8_5_3: {{ rule_18_8_5_3 }}
+win2022cis_18_8_5_4: {{ rule_18_8_5_4 }}
+win2022cis_18_8_5_5: {{ rule_18_8_5_5 }}
+win2022cis_18_8_5_6: {{ rule_18_8_5_6 }}
+win2022cis_18_8_5_7: {{ rule_18_8_5_7 }}
+# 18.8.6 Device Health Attenstation Servic
+# 18.8.7 Device Installation
+# 18.8.8 Device Redirection
+# 18.8.9 Disk NV Cache
+# 18.8.10 Disk Quotas
+# 18.8.11 Display
+# 18.8.12 Distributed COM
+# 18.8.13 Driver Installation
+# 18.8.14 Early Launch AntiMalware
+win2022cis_18_8_14_1: {{ rule_18_8_14_1 }}
+# 18.8.15 Enhanced Storage Access
+# 18.8.16 DFile Classification Infrastructure
+# 18.7.17 File Share Shadow Copy Agent
+# 18.8.18 File Share Shadow Copy Provider
+# 18.8.19 FileSystems (Formerly NTFS FileSystem)
+# 18.8.20 Folder Redirecion
+# 18.8.21 Group Policy
+# 18.8.21.1 Logging and Tracing
+win2022cis_18_8_21_2: {{ rule_18_8_21_2 }}
+win2022cis_18_8_21_3: {{ rule_18_8_21_3 }}
+win2022cis_18_8_21_4: {{ rule_18_8_21_4 }}
+win2022cis_18_8_21_5: {{ rule_18_8_21_5 }}
+# 18.8.22 Internet Communication Managemnet
+# 18.8.22.1 Internet Communication Settings
+win2022cis_18_8_22_1_1: {{ rule_18_8_22_1_1 }}
+win2022cis_18_8_22_1_2: {{ rule_18_8_22_1_2 }}
+win2022cis_18_8_22_1_3: {{ rule_18_8_22_1_3 }}
+win2022cis_18_8_22_1_4: {{ rule_18_8_22_1_4 }}
+win2022cis_18_8_22_1_5: {{ rule_18_8_22_1_5 }}
+win2022cis_18_8_22_1_6: {{ rule_18_8_22_1_6 }}
+win2022cis_18_8_22_1_7: {{ rule_18_8_22_1_7 }}
+win2022cis_18_8_22_1_8: {{ rule_18_8_22_1_8 }}
+win2022cis_18_8_22_1_9: {{ rule_18_8_22_1_9 }}
+win2022cis_18_8_22_1_10: {{ rule_18_8_22_1_10 }}
+win2022cis_18_8_22_1_11: {{ rule_18_8_22_1_11 }}
+win2022cis_18_8_22_1_12: {{ rule_18_8_22_1_12 }}
+win2022cis_18_8_22_1_13: {{ rule_18_8_22_1_13 }}
+# 18.8.23 iSCSI
+# 18.8.24 KDC
+# 18.8.25 Kerberos
+win2022cis_18_8_25_1: {{ rule_18_8_25_1 }}
+# 18.8.26 Kernel DMA Protection
+# 18.8.27 Locale Services
+win2022cis_18_8_27_1: {{ rule_18_8_27_1 }}
+# 18.8.28 Login
+win2022cis_18_8_28_1: {{ rule_18_8_28_1 }}
+win2022cis_18_8_28_2: {{ rule_18_8_28_2 }}
+win2022cis_18_8_28_3: {{ rule_18_8_28_3 }}
+win2022cis_18_8_28_4: {{ rule_18_8_28_4 }}
+win2022cis_18_8_28_5: {{ rule_18_8_28_5 }}
+win2022cis_18_8_28_6: {{ rule_18_8_28_6 }}
+win2022cis_18_8_28_7: {{ rule_18_8_28_7 }}
+# 18.8.29 Mitigation Options
+# 18.8.30 Net Logon
+# 18.8.31 OS Policies
+# 18.8.32 Performance Control Panel
+# 18.8.33 PIN Complexity
+# 18.8.34 Power Management
+# 18.8.34.1 Button Settings
+# 18.8.34.2 Energy Saver Settings
+# 18.8.34.3 Hard Disk Settings
+# 18.8.34.4 Notification Settings
+# 18.8.34.5 Power Throttling Settings
+# 18.8.34.6 Sleep Settings
+win2022cis_18_8_34_6_1: {{ rule_18_8_34_6_1 }}
+win2022cis_18_8_34_6_2: {{ rule_18_8_34_6_2 }}
+win2022cis_18_8_34_6_3: {{ rule_18_8_34_6_3 }}
+win2022cis_18_8_34_6_4: {{ rule_18_8_34_6_4 }}
+# 18.8.35 Recovery
+# 18.8.36 Remote Assistance
+win2022cis_18_8_36_1: {{ rule_18_8_36_1 }}
+win2022cis_18_8_36_2: {{ rule_18_8_36_2 }}
+# 18.8.37 Remote Procedure Call
+win2022cis_18_8_37_1: {{ rule_18_8_37_1 }}
+win2022cis_18_8_37_2: {{ rule_18_8_37_2 }}
+# 18.8.38 Removable Storage Access
+# 18.8.39 Scripts
+# 18.8.40 Server Manager
+# 18.8.41 Service Control Manager Settings
+# 18.8.42 Shutdown
+# 18.8.43 Shutdown Options
+# 18.8.44 Storage Health
+# 18.8.45 Storage Sense
+# 18.8.46 System Restore
+# 18.8.47 Troubleshooting and Diagnostics
+# 18.8.47.1 Application Compatibility Diagnostics
+# 18.8.47.2 Corrupted File Recovery
+# 18.8.47.3 Disk Diagnostic
+# 18.8.47.4 Fault Tolerant Heap
+# 18.8.47.5 Microsoft Support Diagnostic Tool
+win2022cis_18_8_47_5_1: {{ rule_18_8_47_5_1 }}
+# 18.8.47.6 MSI Corrupted File Recovery
+# 18.8.47.7 Scheduled Maintenance
+# 18.8.47.8 Scripted Diagnostics
+# 18.8.47.9 Windows Boot Performance Diagnostics
+# 18.8.47.10 Windows Memory Leak Diagnosis
+# 18.8.47.11 Windows Performance PerfTrack
+win2022cis_18_8_47_11_1: {{ rule_18_8_47_11_1 }}
+# 18.8.48 Trusted Platform Module Services
+# 18.8.49 User Profiles
+win2022cis_18_8_49_1: {{ rule_18_8_49_1 }}
+# 18.8.50 Windows File Protection
+# 18.8.51 Windows HotStart
+# 18.8.52 Windows Time Service
+# 18.8.52.1 Time Providers
+win2022cis_18_8_52_1_1: {{ rule_18_8_52_1_1 }}
+win2022cis_18_8_52_1_2: {{ rule_18_8_52_1_2 }}
+# 18.9 Windows Components
+# 18.9.1 Active Directory Federation Services
+# 18.9.2 ActiveX Installer Service
+# 18.9.3 Add features to Windows 8 / 8.1 / 10 (formerly Windows Anytime Upgrade)
+# 18.9.4 App Package Deployment
+win2022cis_18_9_4_1: {{ rule_18_9_4_1 }}
+# 18.9.5 App Privacy
+# 18.9.6 App runtime
+win2022cis_18_9_6_1: {{ rule_18_9_6_1 }}
+# 18.9.7 Application Compatibility
+# 18.9.8 AutoPlay Policies
+win2022cis_18_9_8_1: {{ rule_18_9_8_1 }}
+win2022cis_18_9_8_2: {{ rule_18_9_8_2 }}
+win2022cis_18_9_8_3: {{ rule_18_9_8_3 }}
+# 18.9.9 Backup
+# 18.9.10 Biometrics
+# 18.9.10.1 Facial Features
+win2022cis_18_9_10_1_1: {{ rule_18_9_10_1_1 }}
+# 18.9.11 BitLocker Drive Encryption
+# 18.9.12 Camera
+win2022cis_18_9_12_1: {{ rule_18_9_12_1 }}
+# 18.9.13 Cloud Content
+# 18.9.14 Connect
+win2022cis_18_9_14_1: {{ rule_18_9_14_1 }}
+# 18.9.15 Credential User Interface
+win2022cis_18_9_15_1: {{ rule_18_9_15_1 }}
+win2022cis_18_9_15_2: {{ rule_18_9_15_2 }}
+# 18.9.16 Data Collection and Preview Builds
+win2022cis_18_9_16_1: {{ rule_18_9_16_1 }}
+win2022cis_18_9_16_2: {{ rule_18_9_16_2 }}
+win2022cis_18_9_16_3: {{ rule_18_9_16_3 }}
+win2022cis_18_9_16_4: {{ rule_18_9_16_4 }}
+# 18.9.17 Delivery Optimization
+# 18.9.18 Desktop Gadgets
+# 18.9.19 Desktop Window Manager
+# 18.9.20 Device and Driver Compatibility
+# 18.9.21 Device Registration (formerly Workplace Join)
+# 18.9.22 Digital Locker
+# 18.9.23 Edge UI
+# 18.9.24 EMET
+# 18.9.25 Event Forwarding
+# 18.9.26 Event Log Service
+# 18.9.26.1 Application
+win2022cis_18_9_26_1_1: {{ rule_18_9_26_1_1 }}
+win2022cis_18_9_26_1_2: {{ rule_18_9_26_1_2 }}
+# 18.9.26.2 Security
+win2022cis_18_9_26_2_1: {{ rule_18_9_26_2_1 }}
+win2022cis_18_9_26_2_2: {{ rule_18_9_26_2_2 }}
+# 18.9.26.3 Setup
+win2022cis_18_9_26_3_1: {{ rule_18_9_26_3_1 }}
+win2022cis_18_9_26_3_2: {{ rule_18_9_26_3_2 }}
+# 18.9.26.4 System
+win2022cis_18_9_26_4_1: {{ rule_18_9_26_4_1 }}
+win2022cis_18_9_26_4_2: {{ rule_18_9_26_4_2 }}
+# 18.9.27 Event Logging
+# 18.9.28 Event Viewer
+# 18.9.29 Family Safety (formerly Parental Controls)
+# 18.9.30 File Explorer (formerly Windows Explorer)
+# 18.9.30.1 Previous Versions
+win2022cis_18_9_30_2: {{ rule_18_9_30_2 }}
+win2022cis_18_9_30_3: {{ rule_18_9_30_3 }}
+win2022cis_18_9_30_4: {{ rule_18_9_30_4 }}
+# 18.9.31 File History
+# 18.9.32 Find My Device
+# 18.9.33 Game Explorer
+# 18.9.34 Handwriting
+# 18.9.35 HomeGroup
+# 18.9.36 Import Video
+# 18.9.37 Internet Explorer
+# 18.9.38 Internet Information Services
+# 18.9.39 Location and Sensors
+win2022cis_18_9_39_1: {{ rule_18_9_39_1 }}
+# 18.9.40 Maintenance Scheduler
+# 18.9.41 Maps
+# 18.9.42 MDM
+# 18.9.43 Messaging
+win2022cis_18_9_43_1: {{ rule_18_9_43_1 }}
+# 18.9.44 Microsoft account
+win2022cis_18_9_44_1: {{ rule_18_9_44_1 }}
+# 18.9.45 Microsoft Edge
+# 18.9.46 Microsoft FIDO Authentication
+# 18.9.47 Microsoft Secondary Authentication Factor
+# 18.9.48 Microsoft User Experience Virtualization
+# 18.9.49 NetMeeting
+# 18.9.50 Network Access Protection
+# 18.9.51 Network Projector
+# 18.9.52 OneDrive (formerly SkyDrive)
+win2022cis_18_9_52_1: {{ rule_18_9_52_1 }}
+# 18.9.53 Online Assistance
+# 18.9.54 OOBE
+# 18.9.55 Password Synchronization
+# 18.9.56 Portable Operating System
+# 18.9.57 Presentation Settings
+# 18.9.58 Push To Install
+# 18.9.59 Remote Desktop Services (formerly Terminal Services)
+# 18.9.59.1 RD Licensing (formerly TS Licensing)
+# 18.9.59.2 Remote Desktop Connection Client
+# 18.9.59.2.1 RemoteFX USB Device Redirection
+win2022cis_18_9_59_2_2: {{ rule_18_9_59_2_2 }}
+# 18.9.59.3 Remote Desktop Session Host (formerly Terminal Server)
+# 18.9.59.3.1 Application Compatibility
+# 18.9.59.3.2 Connections
+win2022cis_18_9_59_3_2_1: {{ rule_18_9_59_3_2_1 }}
+# 18.9.59.3.3 Device and Resource Redirection
+win2022cis_18_9_59_3_3_1: {{ rule_18_9_59_3_2_1 }}
+win2022cis_18_9_59_3_3_2: {{ rule_18_9_59_3_3_2 }}
+win2022cis_18_9_59_3_3_3: {{ rule_18_9_59_3_3_3 }}
+win2022cis_18_9_59_3_3_4: {{ rule_18_9_59_3_3_4 }}
+# 18.9.59.3.4 Licensing
+# 18.9.59.3.5 Printer Redirection
+# 18.9.59.3.6 Profiles
+# 18.9.59.3.7 RD Connection Broker (formerly TS Connection Broker)
+# 18.9.59.3.8 Remote Session Environment
+# 18.9.59.3.9 Security
+win2022cis_18_9_59_3_9_1: {{ rule_18_9_59_3_9_1 }}
+win2022cis_18_9_59_3_9_2: {{ rule_18_9_59_3_9_2 }}
+win2022cis_18_9_59_3_9_3: {{ rule_18_9_59_3_9_3 }}
+win2022cis_18_9_59_3_9_4: {{ rule_18_9_59_3_9_4 }}
+win2022cis_18_9_59_3_9_5: {{ rule_18_9_59_3_9_5 }}
+# 18.9.59.3.10 Session Time Limits
+win2022cis_18_9_59_3_10_1: {{ rule_18_9_59_3_10_1 }}
+win2022cis_18_9_59_3_10_2: {{ rule_18_9_59_3_10_2 }}
+# 18.9.59.3.11 Temporary Folders
+win2022cis_18_9_59_3_11_1: {{ rule_18_9_59_3_11_1 }}
+win2022cis_18_9_59_3_11_2: {{ rule_18_9_59_3_11_2 }}
+# 18.9.60 RSS Feeds
+win2022cis_18_9_60_1: {{ rule_18_9_60_1 }}
+# 18.9.61 Search
+# 18.9.61.1 OCR
+win2022cis_18_9_61_2: {{ rule_18_9_61_2 }}
+win2022cis_18_9_61_3: {{ rule_18_9_61_3 }}
+# 18.9.62 Security Center
+# 18.9.63 Server for NIS
+# 18.9.64 Shutdown Options
+# 18.9.65 Smart Card
+# 18.9.66 Software Protection Platform
+win2022cis_18_9_66_1: {{ rule_18_9_66_1 }}
+# 18.9.67 Sound Recorder
+# 18.9.68 Speech
+# 18.9.69 Store
+# 18.9.70 Sync Your Tablet
+# 18.9.71 Tablet PC
+# 18.9.72 Task Scheduler
+# 18.9.73 Text Input
+# 18.9.74 Windows Calendar
+# 18.9.75 Windows Color System
+# 18.9.76 Windows Customer Experience Program
+# 18.9.77 Windows Defender AntiVirus (formally Windows Defender)
+# 18.9.77.1 Client Interface
+# 18.9.77.2 Exclusions
+# 18.9.77.3 MAPS
+win2022cis_18_9_77_3_1: {{ rule_18_9_77_3_1 }}
+win2022cis_18_9_77_3_2: {{ rule_18_9_77_3_2 }}
+# 18.9.77.4 MpEngine
+# 18.9.77.5 Network Inspection System
+# 18.9.77.6 Quarantine
+win2022cis_18_9_77_7_1: {{ rule_18_9_77_7_1 }}
+# 18.9.77.8 Remediation
+# 18.9.77.9 Reporting
+win2022cis_18_9_77_9_1: {{ rule_18_9_77_9_1 }}
+win2022cis_18_9_77_10_1: {{ rule_18_9_77_10_1 }}
+win2022cis_18_9_77_10_2: {{ rule_18_9_77_10_2 }}
+# 18.9.77.11 Security Intelligence Updates (formerly Signature Updates)
+# 18.9.77.12 Threats
+# 18.9.77.13 Windows Defender Exploit Guard
+# 18.9.77.13.1 Attack Surface Reduction
+# 18.9.77.13.2 Controlled Folder Access
+# 18.9.77.13.3 Network Protection
+win2022cis_18_9_77_13_3_1: {{ rule_18_9_77_13_3_1 }}
+win2022cis_18_9_77_14: {{ rule_18_9_77_14 }}
+win2022cis_18_9_77_15: {{ rule_18_9_77_15 }}
+# 18.9.78 Windows Defender Application Guard
+# 18.9.79 Windows Defender Exploit Guard
+# 18.9.80 Windows Defender SmartScreen
+# 18.9.80.1 Explorer
+win2022cis_18_9_80_1_1: {{ rule_18_9_80_1_1 }}
+# 18.9.81 Windows Error Reporting
+# 18.9.82 Windows Game Recording and Broadcasting
+# 18.9.83 Windows Hello for Business (formerly Microsoft Passport for Work)
+# 18.9.84 Windows Ink Workspace
+win2022cis_18_9_84_1: {{ rule_18_9_84_1 }}
+win2022cis_18_9_84_2: {{ rule_18_9_84_2 }}
+# 18.9.85 Windows Installer
+win2022cis_18_9_85_1: {{ rule_18_9_85_1 }}
+win2022cis_18_9_85_2: {{ rule_18_9_85_2 }}
+win2022cis_18_9_85_3: {{ rule_18_9_85_3 }}
+# 18.9.86 Windows Logon Options
+win2022cis_18_9_86_1: {{ rule_18_9_86_1 }}
+# 18.9.87 Windows Mail
+# 18.9.88 Windows Media Center
+# 18.9.89 Windows Media Digital Rights Management
+# 18.9.90 Windows Media Player
+# 18.9.91 Windows Meeting Space
+# 18.9.92 Windows Messenger
+# 18.9.93 Windows Mobility Center
+# 18.9.94 Windows Movie Maker
+# 18.9.95 Windows PowerShell
+win2022cis_18_9_95_1: {{ rule_18_9_95_1 }}
+win2022cis_18_9_95_2: {{ rule_18_9_95_2 }}
+# 18.9.96 Windows Reliability Analysis
+# 18.9.97 Windows Remote Management (WinRM)
+# 18.9.97.1 WinRM Client
+win2022cis_18_9_97_1_1: {{ rule_18_9_97_1_1 }}
+win2022cis_18_9_97_1_2: {{ rule_18_9_97_1_2 }}
+win2022cis_18_9_97_1_3: {{ rule_18_9_97_1_3 }}
+# 18.9.97.2 WinRM Service
+win2022cis_18_9_97_2_1: {{ rule_18_9_97_2_1 }}
+win2022cis_18_9_97_2_2: {{ rule_18_9_97_2_2 }}
+win2022cis_18_9_97_2_3: {{ rule_18_9_97_2_3 }}
+win2022cis_18_9_97_2_4: {{ rule_18_9_97_2_4 }}
+# 18.9.98 Windows Remote Shell
+win2022cis_18_9_98_1: {{ rule_18_9_98_1 }}
+# 18.9.99 Windows Security (formerly Windows Defender Security Center)
+# 18.9.99.1 Account protection
+# 18.9.99.2 App and browser protection
+win2022cis_18_9_99_2_1: {{ rule_18_9_99_2_1 }}
+# 18.9.100 Windows SideShow
+# 18.9.101 Windows System Resource Manager
+# 18.9.102 Windows Update
+# 18.9.102.1 Windows Update for Business (formerly Defer Windows Updates)
+win2022cis_18_9_102_1_1: {{ rule_18_9_102_1_1 }}
+win2022cis_18_9_102_1_2: {{ rule_18_9_102_1_2 }}
+win2022cis_18_9_102_1_3: {{ rule_18_9_102_1_3 }}
+win2022cis_18_9_102_2: {{ rule_18_9_102_2 }}
+win2022cis_18_9_102_3: {{ rule_18_9_102_3 }}
+win2022cis_18_9_102_4: {{ rule_18_9_102_4 }}
+
+###################
+# Section_18_Vars #
+###################
+win2022_eventlog_app_max_size: {{ app_maxsize }}
+win2022_eventlog_sec_max_size: {{ sec_maxsize }}
+win2022_eventlog_setup_max_size: 32768
+win2022_eventlog_sys_max_size: {{ sys_maxsize }}
+win2022cis_autoupdate_enabled: '0'
+win2022cis_autoupdate_option: {{ win16cis_wupdate_options }}  # 2 - Notify for download and auto install # 3 -Auto download and notify for instal # 4 - Auto download and schedule the install
+win2022cis_autoupdate_day: 0 # 0 - everyday
+
+##############
+# Section_19 #
+##############
+# 19 Administrative Templates (User)
+# 19.1 Control Panel
+# 19.1.1 Add or Remove Programs
+# 19.1.2 Display
+# 19.1.3 Personalization (formerly Desktop Themes)
+win2022cis_19_1_3_1: {{ rule_19_1_3_1 }}
+win2022cis_19_1_3_2: {{ rule_19_1_3_2 }}
+win2022cis_19_1_3_3: {{ rule_19_1_3_3 }}
+win2022cis_19_1_3_4: {{ rule_19_1_3_4 }}
+# 19.2 Desktop
+# 19.3 Network
+# 19.4 Shared Folders
+# 19.5 Start Menu and Taskbar
+# 19.5.1 Notifications
+win2022cis_19_5_1_1: {{ rule_19_5_1_1 }}
+# 19.6 System
+# 19.6.1 Ctrl+Alt+Del Options
+# 19.6.2 Display
+# 19.6.3 Driver Installation
+# 19.6.4 Folder Redirection
+# 19.6.5 Group Policy
+# 19.6.6 Internet Communication Management
+# 19.6.6.1 Internet Communication settings
+win2022cis_19_6_6_1_1: {{ rule_19_6_6_1_1 }}
+# 19.7 Windows Components
+# 19.7.1 Add features to Windows 8 / 8.1 / 10 (formerly Windows Anytime Upgrade)
+# 19.7.2 App runtime
+# 19.7.3 Application Compatibility
+# 19.7.4 Attachment Manager
+win2022cis_19_7_4_1: {{ rule_19_7_4_1 }}
+win2022cis_19_7_4_2: {{ rule_19_7_4_2 }}
+# 19.7.5 AutoPlay Policies
+# 19.7.6 Backup
+# 19.7.7 Cloud Content
+win2022cis_19_7_7_1: {{ rule_19_7_7_1 }}
+win2022cis_19_7_7_2: {{ rule_19_7_7_2 }}
+win2022cis_19_7_7_3: {{ rule_19_7_7_3 }}
+win2022cis_19_7_7_4: {{ rule_19_7_7_4 }}
+# 19.7.8 Credential User Interface
+# 19.7.9 Data Collection and Preview Builds
+# 19.7.10 Desktop Gadgets
+# 19.7.11 Desktop Window Manager
+# 19.7.12 Digital Locker
+# 19.7.13 Edge UI
+# 19.7.14 File Explorer (formerly Windows Explorer)
+# 19.7.15 File Revocation
+# 19.7.16 IME
+# 19.7.17 Import Video
+# 19.7.18 Instant Search
+# 19.7.19 Internet Explorer
+# 19.7.20 Location and Sensors
+# 19.7.21 Microsoft Edge
+# 19.7.22 Microsoft Management Console
+# 19.7.23 Microsoft User Experience Virtualization
+# 19.7.24 NetMeeting
+# 19.7.25 Network Projector
+# 19.7.26 Network Sharing
+win2022cis_19_7_26_1: {{ rule_19_7_26_1 }}
+# 19.7.27 OOBE
+# 19.7.28 Presentation Settings
+# 19.7.29 Remote Desktop Services (formerly Terminal Services)
+# 19.7.30 RSS Feeds
+# 19.7.31 Search
+# 19.7.32 Sound Recorder
+# 19.7.33 Store
+# 19.7.34 Tablet PC
+# 19.7.35 Task Scheduler
+# 19.7.36 Windows Calendar
+# 19.7.37 Windows Color System
+# 19.7.38 Windows Defender SmartScreen
+# 19.7.39 Windows Error Reporting
+# 19.7.40 Windows Hello for Business (formerly Microsoft Passport for Work)
+# 19.7.41 Windows Installer
+win2022cis_19_7_41_1: {{ rule_19_7_41_1 }}
+# 19.7.42 Windows Logon Options
+# 19.7.43 Windows Mail
+# 19.7.44 Windows Media Center
+# 19.7.45 Windows Media Player
+# 19.7.45.1 Networking
+# 19.7.45.2 Playback
+win2022cis_19_7_45_2_1: {{ rule_19_7_45_2_1 }}
+
+
+###################
+# Section_19_Vars #
+###################
+win2022cis_screensaver_file: scrnsave.scr
+win2022cis_screensaver_timeout: '900'
+##############################
+## Global command Variables ##
+##############################
+# powershell commands
+audit_scripts_dir: {{ audit_scripts_dir }}
+reboot_check: 'powershell -c ({{ audit_scripts_dir }}/scripts/pending_reboot.ps1 localhost).IsPendingReboot'
+ps_regcheck: 'powershell -noprofile -noninteractive -command'
+gpo_regex_script: 'powershell {{ audit_scripts_dir }}/scripts/gpo_regex.ps1'
+standalone_script: 'powershell {{ audit_scripts_dir }}/scripts/standalone.ps1'
+audit_ps_cmd: Select-String -Path
+# Registry_paths
+# CurrentControlSet/Lsa
+
+# Get Parameter
+HKLM_CCS_LANWORK: get-itempropertyValue -path 'HKLM:/SYSTEM/CurrentControlSet/Services/LanmanWorkStation/Parameters'
+HKLM_CCS_LANSERVER: get-itempropertyValue -path 'HKLM:/SYSTEM/CurrentControlSet/Services/LanmanServer/Parameters'
+HKLM_CCS_LDAP: get-itempropertyValue -path 'HKLM:/SYSTEM/CurrentControlSet/Services/LDAP/'
+HKLM_CCS_LSA: get-itempropertyValue -path 'HKLM:/SYSTEM/CurrentControlSet/Control/Lsa/'
+HKLM_CCS_NETLOGON: 'HKLM:/SYSTEM/CurrentControlSet/Services/Netlogon/Parameters'
+HKLM_CV_SYSTEM: get-itempropertyValue -path 'HKLM:/SOFTWARE/Microsoft/Windows/CurrentVersion/Policies/System/'
+HKLM_KERB: get-itempropertyValue -path 'HKLM:/SOFTWARE/Microsoft/Windows/CurrentVersion/Policies/System/Kerberos/Parameters'
+HKLM_NT_WINLOGON: get-itempropertyValue -path 'HKLM:/SOFTWARE/Microsoft/Windows NT/CurrentVersion/Winlogon'
+HKLM_WIN_PERSON: get-itempropertyValue -path 'HKLM:/SOFTWARE/Policies/Microsoft/Windows/Personalization'
+HKLM_MS_SVCS: get-itempropertyValue -path 'HKLM:/SOFTWARE/Policies/Microsoft Services/AdmPwd'
+HKLM_TCPIP4: get-itempropertyValue -path 'HKLM:/SYSTEM/CurrentControlSet/Services/Tcpip/Parameters'
+HKLM_TCPIP6: get-itempropertyValue -path 'HKLM:/SYSTEM/CurrentControlSet/Services/Tcpip6/Parameters'
+HKLM_DEV_GUARD: get-ItempropertyValue -path 'HKLM:/SOFTWARE/Policies/Microsoft/Windows/DeviceGuard'
+HKLM_WIN_SYSTEM: get-ItempropertyValue -path 'HKLM:/SOFTWARE/Policies/Microsoft/Windows/System'
+HKLM_EXPLORER: get-itempropertyValue -path 'HKLM:/SOFTWARE/Policies/Microsoft/Windows/Explorer'
+HKLM_CV_EXPLORER: get-itempropertyValue -path 'HKLM:/SOFTWARE/Microsoft/Windows/CurrentVersion/Policies/Explorer'
+HKLM_TERM_SVCS: get-itempropertyValue -path 'HKLM:/SOFTWARE/Policies/Microsoft/Windows NT/Terminal Services'
+HKLM_WINRM_CLT: get-itempropertyValue -path 'HKLM:/SOFTWARE/Policies/Microsoft/Windows/WinRM/Client'
+HKLM_WINRM_SVC: get-itempropertyValue -path 'HKLM:/SOFTWARE/Policies/Microsoft/Windows/WinRM/Service'
+HKLM_WIN_UPDATE: get-itempropertyValue -path 'HKLM:/SOFTWARE/Policies/Microsoft/Windows/WindowsUpdate'
+HKCU_CP_PERSONAL: get-itempropertyvalue -path 'HKCU:/SOFTWARE/Policies/Microsoft/Windows/Personalization/'
+HKCU_CP_DESKTOP: get-itempropertyvalue -path 'HKCU:/SOFTWARE/Policies/Microsoft/Windows/Control Panel/Desktop'
+HKLM_POL_FW_DOM: get-itempropertyvalue -path 'HKLM:/SOFTWARE/Policies/Microsoft/WindowsFirewall/DomainProfile'
+HKLM_POL_FW_PRV: get-itempropertyvalue -path 'HKLM:/SOFTWARE/Policies/Microsoft/WindowsFirewall/PrivateProfile'
+HKLM_POL_FW_PUB: get-itempropertyvalue -path 'HKLM:/SOFTWARE/Policies/Microsoft/WindowsFirewall/PublicProfile'
+# Known Security identified names 
+## https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/security-identifiers-in-windows
+everyone_sid: '*S-1-1-0'
+auth_users_sid: '*S-1-5-11'
+local_svc_sid: '*S-1-5-19'
+local_net_sid: '*S-1-5-20'
+admin_sid: '*S-1-5-32-544'
+user_sid: '*S-1-5-32-545'
+guest_sid: '*S-1-5-32-546'
+backup_sid: '*S-1-5-32-551'
+remote_desktop_sid: '*S-1-5-32-555'
+nt_svc_sid: '*S-1-5-80-'
