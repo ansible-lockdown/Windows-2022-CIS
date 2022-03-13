@@ -5,13 +5,11 @@ galaxy_info:
     company: "MindPoint Group"
     license: MIT
     role_name: windows_2022_cis
-    min_ansible_version: 2.6
-
+    min_ansible_version: "2.6"
     platforms:
         - name: Windows
           versions:
-              - 2022
-
+              - "2022"
     galaxy_tags:
         - system
         - security
@@ -19,5 +17,6 @@ galaxy_info:
         - hardening
         - microsoft
         - windows
-
-    dependencies: []
+    collections:
+        - community.windows
+dependencies: []
