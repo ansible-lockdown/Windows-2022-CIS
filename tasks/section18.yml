@@ -2255,18 +2255,18 @@
       - rule_18.9.64.1
       - patch
 
-- name: "18.9.65.2.1 | PATCH | Ensure Do not allow passwords to be saved is set to Enabled"
+- name: "18.9.65.2.2 | PATCH | Ensure Do not allow passwords to be saved is set to Enabled"
   win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: DisablePasswordSaving
       data: 1
       type: dword
   when:
-      - rule_18_9_65_2_1
+      - rule_18_9_65_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.2.1
+      - rule_18.9.65.2.2
       - patch
 
 - name: "18.9.65.3.2.1 | PATCH | Ensure Restrict Remote Desktop Services users to a single Remote Desktop Services session is set to Enabled"
