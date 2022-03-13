@@ -16,8 +16,8 @@
 
 - name: copy goss binary
   win_copy:
-    src: "{{ goss_copy_src }}"
-    dest: "{{ audit_capture_path }}{{ goss_exe }}"
+      src: "{{ goss_copy_src }}"
+      dest: "{{ audit_capture_path }}{{ goss_exe }}"
   when:
       - copy_audit_exe
 

@@ -66,6 +66,6 @@
       name: GOSS_USE_ALPHA
       value: 1
       level: user
-  when: 
-      - audit_time == 'post' 
+  when:
+      - audit_time == 'post'
       - goss_env.changed
