@@ -25,37 +25,46 @@
   tags:
       - always
 
-
 - name: Get Windows installation type
   win_reg_stat:
-    path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion
-    name: InstallationType
+      path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion
+      name: InstallationType
   register: get_windows_installation_type
 
 - name: Set Windows installation type
   set_fact:
-    windows_installation_type: "{{ get_windows_installation_type.value | default('') }}"
+      windows_installation_type: "{{ get_windows_installation_type.value | default('') }}"
 
-# - name: Include the preliminary tasks
-#   include_tasks: prelim.yml
-#   tags:
-#       - prelim_tasks
+- name: Include the preliminary tasks
+  include_tasks: prelim.yml
+  tags:
+      - prelim_tasks
 
 - name: Execute the section 1 tasks
   import_tasks: section01.yml
-  when: section01_patch | bool
+  when:
+      - section01_patch
   tags:
       - section01
 
 - name: Execute the section 2 tasks
   import_tasks: section02.yml
-  when: section02_patch | bool
+  when:
+      - section02_patch
   tags:
       - section02
 
+- name: Execute the section 5 tasks
+  import_tasks: section05.yml
+  when:
+      - section05_patch
+  tags:
+      - section05
+
 - name: Execute the section 9 tasks
   import_tasks: section09.yml
-  when: section09_patch | bool
+  when:
+      - section09_patch
   tags:
       - section09
 
