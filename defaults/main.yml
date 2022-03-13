@@ -1,12 +1,13 @@
 ---
 win2022_os_distribution: Windows-2022
 
-section01_patch: yes
-section02_patch: yes
-section09_patch: yes
-section17_patch: yes
-section18_patch: yes
-section19_patch: yes
+section01_patch: false
+section02_patch: false
+section05_patch: true
+section09_patch: false
+section17_patch: false
+section18_patch: false
+section19_patch: true
 
 min_ansible_version: "2.9"
 
@@ -387,11 +388,11 @@ rule_18_9_27_4_2: true
 rule_18_9_31_2: true
 rule_18_9_31_3: true
 rule_18_9_31_4: true
-rule_18_9_41_2: true
+rule_18_9_41_1: true
 rule_18_9_45_1: true
 rule_18_9_46_1: true
-rule_18_9_47_1: true
-rule_18_9_47_2: true
+rule_18_9_47_4_1: true
+rule_18_9_47_4_2: true
 rule_18_9_47_5_1_1: true
 rule_18_9_47_5_1_2: true
 rule_18_9_47_5_3_1: true
@@ -434,6 +435,7 @@ rule_18_9_89_2: true
 rule_18_9_90_1: true
 rule_18_9_90_2: true
 rule_18_9_90_3: true
+rule_18_9_91_1: true
 rule_18_9_100_1: true
 rule_18_9_100_2: true
 rule_18_9_102_1_1: true
