@@ -11,7 +11,7 @@ On our [Discord Server](https://discord.gg/JFxpSgPFEJ) to ask questions, discuss
 
 ![Release](https://img.shields.io/github/v/release/ansible-lockdown/Windows-2022-CIS?style=plastic)
 
-Configure a Windows Server 2022 system to be compliant to 2019 benchmark . Non-disruptive Section 1, Section 2, Section 9, Section 17, Section 18, and Section 19 findings will be corrected by default.
+Configure a Windows Server 2022 system to be compliant to 2019 benchmark.
 
 ## Caution(s)
 
