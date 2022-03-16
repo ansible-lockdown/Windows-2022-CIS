@@ -1,4 +1,5 @@
 ---
+
 - name: "2.2.1 | PATCH | Ensure Access Credential Manager as a trusted caller is set to No One"
   win_user_right:
       name: SeTrustedCredManAccessPrivilege

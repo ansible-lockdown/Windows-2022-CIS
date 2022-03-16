@@ -1,4 +1,5 @@
 ---
+
 - name: "18.1.1.1 | PATCH | Ensure Prevent enabling lock screen camera is set to Enabled"
   win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Personalization
