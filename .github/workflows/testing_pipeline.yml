@@ -36,17 +36,10 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    # Set the OS to test on here
-    # Name matches the os_name.tfvars file
-    # one of
-    # - centos7
-    # - rocky8
-    # - ubuntu20
-    # - ubuntu18
 
     env: 
-      TEST_OS: rocky8
       ENABLE_DEBUG: false
+      OS_TFVARS: windows.tfvars
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -71,7 +64,7 @@ jobs:
 
       - name: Terraform_Apply
         working-directory: .github/workflows
-        run: terraform apply -var-file "${TEST_OS}.tfvars" --auto-approve
+        run: terraform apply -var-file "${OS_TFVARS}" --auto-approve
 
 ## Debug Section
       - name: DEBUG - Show Ansible hostfile
@@ -95,6 +88,4 @@ jobs:
 
       - name: Terraform_Destroy
         working-directory: .github/workflows
-        env:
-          OS_TFVARS: windows.tfvars
-        run: terraform destroy -var-file "${TEST_OS}.tfvars" -auto-approve
+        run: terraform destroy -var-file "${OS_TFVARS}" -auto-approve
