@@ -71,19 +71,19 @@
 - name: Execute the section 17 tasks
   import_tasks: section17.yml
   when:
-      - section17_patch | bool
+      - section17_patch
   tags:
       - section17
 
 - name: Execute the section 18 tasks
   import_tasks: section18.yml
   when:
-      - section18_patch | bool
+      - section18_patch
   tags:
       - section18
 
 - name: Execute the section 19 tasks
   import_tasks: section19.yml
-  when: section19_patch | bool
+  when: section19_patch
   tags:
       - section19
