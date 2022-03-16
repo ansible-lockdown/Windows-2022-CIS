@@ -87,5 +87,6 @@ jobs:
 # Remove test system
 
       - name: Terraform_Destroy
+        if: always() && env.ENABLE_DEBUG == 'false'
         working-directory: .github/workflows
         run: terraform destroy -var-file "${OS_TFVARS}" -auto-approve
