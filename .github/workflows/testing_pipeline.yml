@@ -45,7 +45,7 @@ jobs:
     # - ubuntu18
 
     env: 
-      TEST_OS: rocky8
+      TEST_OS: windows
       ENABLE_DEBUG: false
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
@@ -95,6 +95,4 @@ jobs:
 
       - name: Terraform_Destroy
         working-directory: .github/workflows
-        env:
-          OS_TFVARS: windows.tfvars
         run: terraform destroy -var-file "${TEST_OS}.tfvars" -auto-approve
