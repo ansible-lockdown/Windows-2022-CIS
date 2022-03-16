@@ -165,7 +165,7 @@ resource "local_file" "inventory" {
     all:
       hosts:
         ${var.hostname}:
-          ansible_host: ${azurerm_public_ip.main.*.ip_address}
+          ansible_host: ${azurerm_public_ip.main.ip_address}
           ansible_user: adminuser
       vars:
         setup_audit: true
