@@ -14,6 +14,10 @@ provider "azurerm" {
   features {}
 }
 
+data "external" "win_account" {
+  program = ["cat", "sensitive_info.json "]
+}
+
 resource "azurerm_resource_group" "main" {
   name     = "${var.prefix}-${var.OS_version}-RG"
   location = var.location
@@ -109,8 +113,8 @@ resource "azurerm_windows_virtual_machine" "main" {
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   size                = var.system_size
-  admin_username      = "adminuser"
-  admin_password      = "P@ssw0rd1234!"
+  admin_username      = "{$var.external.win_account.result.username}"
+  admin_password      = "{$var.external.win_account.result.password}"
   network_interface_ids = [
     azurerm_network_interface.main.id,
   ]
@@ -141,7 +145,7 @@ resource "azurerm_virtual_machine_extension" "enablewinrm" {
   virtual_machine_id         = azurerm_windows_virtual_machine.main.id
   publisher                  = "Microsoft.Compute"     ## az vm extension image list --location eastus Do not use Microsoft.Azure.Extensions here
   type                       = "CustomScriptExtension" ## az vm extension image list --location eastus Only use CustomScriptExtension here
-  type_handler_version       = "1.10"                   ## az vm extension image list --location eastus
+  type_handler_version       = "1.10"                  ## az vm extension image list --location eastus
   auto_upgrade_minor_version = true
   settings                   = <<SETTINGS
     {
@@ -157,17 +161,18 @@ output "public_ip_address" {
 
 // generate inventory file
 resource "local_file" "inventory" {
-  filename = "./hosts.yml"
+  filename             = "./hosts.yml"
   directory_permission = "0755"
   file_permission      = "0644"
-  content  = <<EOF
+  content              = <<EOF
     # benchmark host
     all:
       hosts:
         ${var.hostname}:
           ansible_host: ${azurerm_public_ip.main.ip_address}
-          ansible_user: adminuser
       vars:
+        ansible_user: "${var.external.win_account.result.username}"
+        ansible_password: "${var.external.win_account.result.password}"
         setup_audit: true
         run_audit: true
         system_is_ec2: true
