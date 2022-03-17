@@ -113,8 +113,8 @@ resource "azurerm_windows_virtual_machine" "main" {
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   size                = var.system_size
-  admin_username      = "{$var.external.win_account.result.username}"
-  admin_password      = "{$var.external.win_account.result.password}"
+  admin_username      = "${data.external.win_account.result.username}"
+  admin_password      = "${data.external.win_account.result.password}"
   network_interface_ids = [
     azurerm_network_interface.main.id,
   ]
@@ -171,8 +171,8 @@ resource "local_file" "inventory" {
         ${var.hostname}:
           ansible_host: ${azurerm_public_ip.main.ip_address}
       vars:
-        ansible_user: "${var.external.win_account.result.username}"
-        ansible_password: "${var.external.win_account.result.password}"
+        ansible_user: "${data.external.win_account.result.username}"
+        ansible_password: "${data.external.win_account.result.password}"
         setup_audit: true
         run_audit: true
         system_is_ec2: true
