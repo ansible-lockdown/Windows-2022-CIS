@@ -43,6 +43,7 @@ jobs:
     # - rocky8
     # - ubuntu20
     # - ubuntu18
+    # - windows
 
     env: 
       TEST_OS: windows
@@ -51,6 +52,8 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+      WIN_USERNAME: ${{ secrets.WIN_USERNAME }}
+      WIN_PASSWORD: ${{ secrets.WIN_PASSWORD }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -60,9 +63,10 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
+# Sensitive data stored and passed to terraform
       - name: user details
         working-directory: .github/workflows
-        run: echo "{\n\"username\":\"${win_username}\",\n\"password\":\"${win_password}\"\n}" >> sensitive_info.json
+        run: echo "{\n\"username\":\"${WIN_USERNAME}\",\n\"password\":\"${WIN_PASSWORD}\"\n}" >> sensitive_info.json
 
 ### Build out the server
       - name: Terraform_Init
