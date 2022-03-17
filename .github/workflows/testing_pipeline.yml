@@ -60,6 +60,10 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: user details
+        working-directory: .github/workflows
+        run: echo "{\n\"username\":\"${win_username}\",\n\"password\":\"${win_password}\"\n}" >> sensitive_info.json
+
 ### Build out the server
       - name: Terraform_Init
         working-directory: .github/workflows

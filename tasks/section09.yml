@@ -1,4 +1,5 @@
 ---
+
 - name: "9.1.1 | PATCH | Ensure 'Windows Firewall: Domain: Firewall state' is set to 'On (recommended)'"
   win_firewall:
       state: enabled

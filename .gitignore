@@ -9,7 +9,7 @@ tests/Dockerfile
 packer_cache
 delete*
 ignore*
-.github
+.github/*
 # VSCode
 .vscode
 
