@@ -1,7 +1,7 @@
 prefix         = "github"
 location       = "eastus"
 tagname        = "ansible_lockdown"
-system_size    = "Standard_DC2s_v2"
+system_size    = "Standard_D2s_v3"
 OS_publisher   = "MicrosoftWindowsServer"
 OS_version     = "2022"
 system_release = "Datacenter-g2"
