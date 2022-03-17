@@ -6,7 +6,6 @@ terraform {
       version = "~> 2.65"
     }
   }
-
   required_version = ">= 1.1.0"
 }
 
@@ -15,7 +14,7 @@ provider "azurerm" {
 }
 
 data "external" "win_account" {
-  program = ["cat", "sensitive_info.json "]
+  program = ["cat", "./sensitive_info.json"]
 }
 
 resource "azurerm_resource_group" "main" {
@@ -113,8 +112,8 @@ resource "azurerm_windows_virtual_machine" "main" {
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   size                = var.system_size
-  admin_username      = "${data.external.win_account.result.username}"
-  admin_password      = "${data.external.win_account.result.password}"
+  admin_username      = data.external.win_account.result.username
+  admin_password      = data.external.win_account.result.password
   network_interface_ids = [
     azurerm_network_interface.main.id,
   ]
