@@ -1,11 +1,11 @@
 ---
 galaxy_info:
-    author: "Ryan Speelman"
+    author: "Mark Bolwell, George Nalen"
     description: "Ansible role to apply Windows Server 2022 CIS Benchmark"
     company: "MindPoint Group"
     license: MIT
     role_name: windows_2022_cis
-    min_ansible_version: "2.6"
+    min_ansible_version: "2.9"
     platforms:
         - name: Windows
           versions:
