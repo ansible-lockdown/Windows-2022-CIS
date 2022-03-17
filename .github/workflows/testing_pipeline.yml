@@ -66,7 +66,7 @@ jobs:
 # Sensitive data stored and passed to terraform
       - name: user details
         working-directory: .github/workflows
-        run: echo "{\n\"username\":\"${WIN_USERNAME}\",\n\"password\":\"${WIN_PASSWORD}\"\n}" >> sensitive_info.json
+        run: echo "{\"username\":\"${WIN_USERNAME}\",\"password\":\"${WIN_PASSWORD}\"}" >> sensitive_info.json
 
 ### Build out the server
       - name: Terraform_Init
