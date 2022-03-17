@@ -15,7 +15,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "main" {
-  name     = "${var.prefix}-RG"
+  name     = "${var.prefix}-${var.OS_version}-RG"
   location = var.location
   tags = {
     environment = var.tagname
@@ -23,7 +23,7 @@ resource "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_virtual_network" "main" {
-  name                = "${var.prefix}-network"
+  name                = "${var.prefix}-${var.OS_version}-network"
   address_space       = ["172.16.0.0/16"]
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
@@ -33,14 +33,14 @@ resource "azurerm_virtual_network" "main" {
 }
 
 resource "azurerm_subnet" "internal" {
-  name                 = "${var.prefix}-intip"
+  name                 = "${var.prefix}-${var.OS_version}-intip"
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["172.16.101.0/24"]
 }
 
 resource "azurerm_public_ip" "main" {
-  name                = "${var.prefix}-pubip"
+  name                = "${var.prefix}-${var.OS_version}-pubip"
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
   allocation_method   = "Static"
@@ -50,7 +50,7 @@ resource "azurerm_public_ip" "main" {
 }
 
 resource "azurerm_network_interface" "main" {
-  name                = "${var.prefix}-nic"
+  name                = "${var.prefix}-${var.OS_version}-nic"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
 
@@ -68,7 +68,7 @@ resource "azurerm_network_interface" "main" {
 }
 
 resource "azurerm_network_security_group" "secgroup" {
-  name                = "${var.prefix}-secgroup"
+  name                = "${var.prefix}-${var.OS_version}-secgroup"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
   security_rule {
