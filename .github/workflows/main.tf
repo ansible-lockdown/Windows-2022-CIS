@@ -6,7 +6,6 @@ terraform {
       version = "~> 2.65"
     }
   }
-
   required_version = ">= 1.1.0"
 }
 
@@ -15,7 +14,7 @@ provider "azurerm" {
 }
 
 data "external" "win_account" {
-  program = ["cat", "sensitive_info.json "]
+  program = ["cat", "./sensitive_info.json"]
 }
 
 resource "azurerm_resource_group" "main" {
