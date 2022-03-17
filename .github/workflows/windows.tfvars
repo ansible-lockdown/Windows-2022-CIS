@@ -1,4 +1,4 @@
-prefix         = "githubactions"
+prefix         = "github"
 location       = "eastus"
 tagname        = "ansible_lockdown"
 system_size    = "Standard_DC2s_v2"
