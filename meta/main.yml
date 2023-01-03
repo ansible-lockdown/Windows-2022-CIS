@@ -4,8 +4,9 @@ galaxy_info:
     description: "Ansible role to apply Windows Server 2022 CIS Benchmark"
     company: "MindPoint Group"
     license: MIT
+    namespace: mindpointgroup
     role_name: windows_2022_cis
-    min_ansible_version: "2.9"
+    min_ansible_version: 2.9.0
     platforms:
         - name: Windows
           versions:
