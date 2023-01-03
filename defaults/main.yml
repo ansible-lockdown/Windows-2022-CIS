@@ -1,12 +1,12 @@
 ---
 win2022_os_distribution: Windows-2022
 
-section01_patch: false
-section02_patch: false
+section01_patch: true
+section02_patch: true
 section05_patch: true
-section09_patch: false
-section17_patch: false
-section18_patch: false
+section09_patch: true
+section17_patch: true
+section18_patch: true
 section19_patch: true
 
 min_ansible_version: "2.9"
@@ -14,21 +14,21 @@ min_ansible_version: "2.9"
 # We've defined complexity-high to mean that we cannot automatically remediate
 # the rule in question.  In the future this might mean that the remediation
 # may fail in some cases.
-complexity_high: no
+complexity_high: true
 
 # Show "changed" for complex items not remediated per complexity-high setting
 # to make them stand out.  "changed" items on a second run of the role would
 # indicate items requiring manual review.
-audit_complex: yes
+audit_complex: true
 
 # We've defined disruption-high to indicate items that are likely to cause
 # disruption in a normal workflow.  These items can be remediated automatically
 # but are disabled by default to avoid disruption.
-disruption_high: no
+disruption_high: false
 
 # Show "changed" for disruptive items not remediated per disruption-high
 # setting to make them stand out.
-audit_disruptive: yes
+audit_disruptive: false
 
 skip_for_travis: false
 
@@ -473,6 +473,42 @@ rule_19_7_28_1: true
 rule_19_7_43_1: true
 rule_19_7_47_2_1: true
 
+# Section 1 Variables
+
+# 1.1.1
+# win22cis_passwordhistorysize is the number of past PW before they can be reused
+# This value should be set to 24 or more to be CIS compliant
+win22cis_passwordhistorysize: 24
+
+# 1.1.2
+# win22cis_maximumpasswordage is the maximum password age in days
+# This value should be set to 365 or fewer, but not 0, to be CIS compliant
+win22cis_maximumpasswordage: 365
+
+# 1.1.3
+# win22cis_minimumpasswordage is the minimum password age in days
+# This value should be set to 1 or more days to be CIS compliant
+win22cis_minimumpasswordage: 1
+
+# 1.1.4
+# win22cis_minimumpasswordlength is the minimum number of characters needed for a password
+# This value should be set to 14 or more to be CIS compliant
+win22cis_minimumpasswordlength: 14
+
+# 1.2.1
+# win22cis_lockoutduration is the duration a locked account stays locked in minutes
+# This value should be set to 15 or more to be CIS compliant
+win22cis_lockoutduration: 15
+
+# 1.2.2
+# win22cis_lockoutbadcount is the number of failed login attempts before locking account
+# This value should be set to 5 or fewer, but not 0, to be CIS compliant
+win22cis_lockoutbadcount: 5
+
+# 1.2.3
+# win22cis_resetlockoutcount is the amount of time in minutes before a reset after an account lockout
+# This value should be set to 15 or fewer to be CIS compliant
+win22cis_resetlockoutcount: 15
 
 # Section 2 Variables
 
@@ -491,15 +527,8 @@ win19cis_guest_username: guestchangethis
 # This SID is the same for standalone, member, domain controller for 'Administrators' group
 sedebugprivilege: "*S-1-5-32-544"
 
-pass_age: 60
-
-lockoutduration: 15
-lockoutbadcount: 5
-resetlockoutcount: 15
-passwordhistorysize: 24
-maximumpasswordage: 365
-minimumpasswordage: 1
-minimumpasswordlength: 14
+# !!!!!!!!!!!!!!!!!!!!!Check if this var is actaully not used, a quick search showed it's not used
+# pass_age: 60
 
 newadministratorname: renamedadmin
 newguestname: renamedguest

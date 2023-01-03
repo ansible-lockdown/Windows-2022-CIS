@@ -1,20 +1,10 @@
 ---
 
 - name: "1.1.1 | PATCH | Ensure Enforce password history is set to 24 or more passwords"
-  block:
-      - name: "1.1.1 | AUDIT | Ensure Enforce password history is set to 24 or more passwords"
-        assert:
-            that: passwordhistorysize | int is version('24', '>=')
-            fail_msg: "Password history must be configured to 24 passwords remembered and variable passwordhistorysize is set to {{ passwordhistorysize }}"
-        changed_when: false
-        ignore_errors: true
-        register: result
-
-      - name: "1.1.1 | PATCH | Ensure Enforce password history is set to 24 or more passwords"
-        win_security_policy:
-            section: System Access
-            key: PasswordHistorySize
-            value: "{{ passwordhistorysize }}"
+  win_security_policy:
+      section: System Access
+      key: passwordhistorysize
+      value: "{{ win22cis_passwordhistorysize }}"
   when:
       - rule_1_1_1
   tags:
@@ -22,22 +12,13 @@
       - level1-memberserver
       - rule_1.1.1
       - patch
+      - passwords
 
 - name: "1.1.2 | PATCH | Ensure Maximum password age is set to 365 or fewer days but not 0"
-  block:
-      - name: "1.1.2 | AUDIT | Ensure Maximum password age is set to 365 or fewer days but not 0"
-        assert:
-            that: maximumpasswordage | int is version('365', '<=')
-            fail_msg: "Maximum password age must be configured to 365 days or less and variable maximumpasswordage is set to {{ maximumpasswordage }}"
-        changed_when: false
-        ignore_errors: true
-        register: result
-
-      - name: "1.1.2 | PATCH | Ensure Maximum password age is set to 365 or fewer days but not 0"
-        win_security_policy:
-            section: System Access
-            key: MaximumPasswordAge
-            value: "{{ maximumpasswordage }}"
+  win_security_policy:
+      section: System Access
+      key: MaximumPasswordAge
+      value: "{{ win22cis_maximumpasswordage }}"
   when:
       - rule_1_1_2
   tags:
@@ -45,22 +26,13 @@
       - level1-memberserver
       - rule_1.1.2
       - patch
+      - passwords
 
 - name: "1.1.3 | PATCH | Ensure Minimum password age is set to 1 or more days"
-  block:
-      - name: "1.1.3 | AUDIT | Ensure Minimum password age is set to 1 or more days"
-        assert:
-            that: minimumpasswordage is version('1', '>=')
-            fail_msg: "Minimum password age must be configured to at least one day and variable minimumpasswordage is set to {{ minimumpasswordage }}"
-        changed_when: false
-        ignore_errors: true
-        register: result
-
-      - name: "1.1.3 | PATCH | Ensure Minimum password age is set to 1 or more days"
-        win_security_policy:
-            section: System Access
-            key: MinimumPasswordAge
-            value: "{{ minimumpasswordage }}"
+  win_security_policy:
+      section: System Access
+      key: MinimumPasswordAge
+      value: "{{ win22cis_minimumpasswordage }}"
   when:
       - rule_1_1_3
   tags:
@@ -68,22 +40,13 @@
       - level1-memberserver
       - rule_1.1.3
       - patch
+      - passwords
 
 - name: "1.1.4 | PATCH | Ensure Minimum password length is set to 14 or more characters"
-  block:
-      - name: "1.1.4 | AUDIT | Ensure Minimum password length is set to 14 or more characters"
-        assert:
-            that: minimumpasswordlength is version('14', '>=')
-            fail_msg: "Minimum password length must be configured to 14 characters and variable minimumpasswordlength is set to {{ minimumpasswordlength }} characters"
-        changed_when: false
-        ignore_errors: true
-        register: result
-
-      - name: "1.1.4 | PATCH | Ensure Minimum password length is set to 14 or more characters"
-        win_security_policy:
-            section: System Access
-            key: MinimumPasswordLength
-            value: "{{ minimumpasswordlength }}"
+  win_security_policy:
+      section: System Access
+      key: MinimumPasswordLength
+      value: "{{ win22cis_minimumpasswordlength }}"
   when:
       - rule_1_1_4
   tags:
@@ -91,6 +54,7 @@
       - level1-memberserver
       - rule_1.1.4
       - patch
+      - passwords
 
 - name: "1.1.5 | PATCH | Ensure Password must meet complexity requirements is set to Enabled"
   win_security_policy:
@@ -104,6 +68,7 @@
       - level1-memberserver
       - rule_1.1.5
       - patch
+      - passwords
 
 - name: "1.1.6 | PATCH | Ensure Relax minimum password length limits is set to enabled"
   win_regedit:
@@ -118,6 +83,7 @@
       - level1-memberserver
       - rule_1.1.6
       - patch
+      - passwords
 
 - name: "1.1.7 | PATCH | Ensure Store passwords using reversible encryption is set to Disabled"
   win_security_policy:
@@ -131,38 +97,29 @@
       - level1-memberserver
       - rule_1.1.7
       - patch
+      - passwords
 
 # Speelman | added because of this error "Failed to import secedit.ini file from C:\\Users\\vagrant\\AppData\\Local\\Temp\\tmp81F3.tmp
 - name: "1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes"
-  block:
-      - name: "1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes"
-        assert:
-            that: lockoutduration | int is version('15', '<=')
-            fail_msg: "Must have the period of time before the bad logon counter is reset configured to 15 minutes or greater and variable lockoutduration is set to {{ lockoutduration }}"
-        changed_when: false
-        ignore_errors: true
-        register: result
-
-      - name: "1.2.1 | PATCH | Ensure Account lockout duration is set to 15 or more minutes"
-        win_security_policy:
-            section: System Access
-            key: LockoutDuration
-            value: "{{ lockoutduration }}"
+  win_security_policy:
+      section: System Access
+      key: LockoutDuration
+      value: "{{ win22cis_lockoutduration }}"
   when:
       - rule_1_2_1
-      - is_implemented
   tags:
       - level1-domaincontroller
       - level1-memberserver
       - rule_1.2.1
       - patch
+      - account
 
 # This rule must be applied first to make rule_1.2.1 and rule_1.2.3 applicable
 - name: "1.2.2 | PATCH | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempts but not 0"
   win_security_policy:
       section: System Access
       key: LockoutBadCount
-      value: "{{ lockoutbadcount }}"
+      value: "{{ win22cis_lockoutbadcount }}"
   when:
       - rule_1_2_2
   tags:
@@ -170,22 +127,13 @@
       - level1-memberserver
       - rule_1.2.2
       - patch
+      - account
 
 - name: "1.2.3 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes"
-  block:
-      - name: "1.2.3 | AUDIT | Ensure Reset account lockout counter after is set to 15 or more minutes"
-        assert:
-            that: resetlockoutcount | int is version('15', '>=')
-            fail_msg: "Must have the period of time before the bad logon counter is reset configured to 15 minutes or greater and variable resetlockoutcount is set to {{ resetlockoutcount }}"
-        changed_when: false
-        ignore_errors: true
-        register: result
-
-      - name: "1.2.3 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes"
-        win_security_policy:
-            section: System Access
-            key: ResetLockoutCount
-            value: "{{ resetlockoutcount }}"
+  win_security_policy:
+      section: System Access
+      key: ResetLockoutCount
+      value: "{{ resetlockoutcount }}"
   when:
       - rule_1_2_3
   tags:
@@ -193,3 +141,4 @@
       - level1-memberserver
       - rule_1.2.3
       - patch
+      - account
