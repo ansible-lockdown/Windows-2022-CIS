@@ -514,7 +514,7 @@ win22cis_resetlockoutcount: 15
 
 # 2.2.18
 # is_hyperv_installed is Hyper-V installed
-is_hyperv_installed: false
+win22cis_hyperv_installed: false
 
 # 2.3.1.5
 # win19cis_admin_username is the name the administrator account will be renamed to
@@ -523,6 +523,41 @@ win19cis_admin_username: adminchangethis
 # 2.3.1.6
 # win19cis_guest_username is the name the guest account will be renamed to
 win19cis_guest_username: guestchangethis
+
+# 2.3.6.5
+# win22cis_machine_acct_pw_age is the max machine account pw age in days
+# This value should be set to 30 or fewer, but not zero, to be CIS compliant
+win22cis_machine_acct_pw_age: 30
+
+# 2.3.7.3
+# win22cis_inactivity_timeout is the timeout in seconds for how long to wait for activity
+# This value should be 900 or vewer, but not zero, to be CIS compliant
+win22cis_inactivity_timeout: 900
+
+# 2.3.7.6
+# win22cis_cached_logons_count is the number of logons that are cached
+# This needs to be 4 or fewer to be CIS compliant
+win22cis_cached_logons_count: 4
+
+# 2.3.7.7
+# win22cis_passwd_expiry_warn is the number of days before an expring password users will receive warnings about the expring password
+# This needs to be between 4 adn 14 days to be CIS compliant
+win22cis_passwd_expiry_warn: 14
+
+# 2.3.7.9
+# win22cis_smartc_remove_option is the reg key option on the action when a SmartCard is removed
+# This needs to be set to 1 (Lock Workstation) or 2 (Force Logoff) to be CIS compliant
+win22cis_smartc_remove_option: "1"
+
+# 2.3.9.1
+# win22cis_auto_disconnect is the duration in minutes of idle time before suspending the session
+# This needs to be set to 15 or fewer to be CIS compliant
+win22cis_auto_disconnect: 15
+
+
+
+
+
 
 # This SID is the same for standalone, member, domain controller for 'Administrators' group
 sedebugprivilege: "*S-1-5-32-544"
@@ -533,27 +568,14 @@ sedebugprivilege: "*S-1-5-32-544"
 newadministratorname: renamedadmin
 newguestname: renamedguest
 
-legalnoticetext: |
-    You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
 
-    By using this IS (which includes any device attached to this IS), you consent to the following conditions:
-
-    -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
-
-    -At any time, the USG may inspect and seize data stored on this IS.
-
-    -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose.
-
-    -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
-
-    -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
 
 app_maxsize: 32768
 sec_maxsize: 196608
 sys_maxsize: 32768
 
 
-legalnoticecaption: "DoD Notice and Consent Banner"
+
 
 # 2.2.33
 # Window Manager\Window Manager Group only exists on non Core installations
