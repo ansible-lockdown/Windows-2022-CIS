@@ -554,10 +554,55 @@ win22cis_smartc_remove_option: "1"
 # This needs to be set to 15 or fewer to be CIS compliant
 win22cis_auto_disconnect: 15
 
+# Section 9 Variables
+
+# 9.1.5
+# domain_firewall_log_path is the path to the domain firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\domainfw.log
+# This is a variable to give some leway on where to store these log files
+win22cis_domain_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\domainfw.log'
+
+# 9.1.6
+# domain_firewall_log_size is the size of the log file generated
+# To conform to CIS standards the value should be 16,384 or greater. Value is in KB
+win22cis_domain_firewall_log_size: 16,384
+
+# 9.2.5
+# private_firewall_log_path is the path to the private firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\privatefw.log
+# This is a variable to give some leway on where to store these log files
+win22cis_private_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\privatefw.log'
+
+# 9.2.6
+# private_firewall_log_size is the size of the log file
+# To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
+win22cis_private_firewall_log_size: 16,384
+
+# 9.3.7
+# public_firewall_log_path is the path to the public firewall log file. The control suggests %SystemRoot%\System32\logfiles\firewall\publicfw.log
+# This is a variable to give some leway on where to store these log files
+win22cis_public_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\publicfw.log'
+
+# 9.3.8
+# public_firewall_log_size is the size of the log file
+# To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
+public_firewall_log_size: 16,384
+
+# Control 18.2.5
+# laps_passwordlength is the LAPS tool password length.
+# To conform to CIS standards please use a min value of 15 and max value of 127
+laps_passwordlength: 15
+
+# Control 18.2.6
+# laps_passwordagedays is the LAPS tool password age in days
+# To conform to CIS standards please use a max value of 30
+laps_passwordagedays: 30
+
+# 18.3.6
+# netbt_nodetype is the node type value in HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters:NodeType
+# Options are B-node value of 1, P-node value of 2, M-node value of 4, H-node value of 8. P-node is the recommended setting from CIS
+netbt_nodetype: 2
 
 
-
-
+# need to address !!!!!!!!!!!!!!
 
 # This SID is the same for standalone, member, domain controller for 'Administrators' group
 sedebugprivilege: "*S-1-5-32-544"
@@ -582,49 +627,3 @@ sys_maxsize: 32768
 # windows_installation_type should be 'Server Core' for Core installations
 # This is a variable to determine if Windows Manager should be included in this step
 increase_scheduling_priority_users: '{{ ["Administrators"] if (windows_installation_type=="Server Core") else (["Administrators","Window Manager\Window Manager Group"]) }}'
-
-
-# 9.1.5
-# domain_firewall_log_path is the path to the domain firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\domainfw.log
-# This is a variable to give some leway on where to store these log files
-domain_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\domainfw.log'
-
-# 9.1.6
-# domain_firewall_log_size is the size of the log file generated
-# To conform to CIS standards the value should be 16,384 or greater. Value is in KB
-domain_firewall_log_size: 16,384
-
-# 9.2.5
-# private_firewall_log_path is the path to the private firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\privatefw.log
-# This is a variable to give some leway on where to store these log files
-private_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\privatefw.log'
-
-# 9.2.6
-# private_firewall_log_size is the size of the log file
-# To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
-private_firewall_log_size: 16,384
-
-# 9.3.7
-# public_firewall_log_path is the path to the public firewall log file. The control suggests %SystemRoot%\System32\logfiles\firewall\publicfw.log
-# This is a variable to give some leway on where to store these log files
-public_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\publicfw.log'
-
-# 9.3.8
-# public_firewall_log_size is the size of the log file
-# To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
-public_firewall_log_size: 16,384
-
-# Control 18.2.5
-# laps_passwordlength is the LAPS tool password length.
-# To conform to CIS standards please use a min value of 15 and max value of 127
-laps_passwordlength: 15
-
-# Control 18.2.6
-# laps_passwordagedays is the LAPS tool password age in days
-# To conform to CIS standards please use a max value of 30
-laps_passwordagedays: 30
-
-# 18.3.6
-# netbt_nodetype is the node type value in HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters:NodeType
-# Options are B-node value of 1, P-node value of 2, M-node value of 4, H-node value of 8. P-node is the recommended setting from CIS
-netbt_nodetype: 2
