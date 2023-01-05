@@ -12,7 +12,7 @@
       - level1-domaincontroller
       - level1-memberserver
       - rule_18.1.1.1
-      - patch
+      - automated
 
 - name: "18.1.1.2 | PATCH | Ensure Prevent enabling lock screen slide show is set to Enabled"
   win_regedit:
