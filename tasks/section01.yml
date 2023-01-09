@@ -133,7 +133,7 @@
   win_security_policy:
       section: System Access
       key: ResetLockoutCount
-      value: "{{ resetlockoutcount }}"
+      value: "{{ win22cis_resetlockoutcount }}"
   when:
       - rule_1_2_3
   tags:
