@@ -460,7 +460,7 @@
 - name: "2.2.33 | PATCH | Ensure Increase scheduling priority is set to Administrators Window ManagerWindow Manager Group"
   win_user_right:
       name: SeIncreaseBasePriorityPrivilege
-      users: "{{ increase_scheduling_priority_users }}"
+      users: "{{ win22cis_increase_scheduling_priority_users }}"
       action: set
   when:
       - rule_2_2_33
@@ -725,7 +725,7 @@
   win_security_policy:
       section: System Access
       key: newadministratorname
-      value: "{{ win19cis_admin_username }}"
+      value: "{{ win22cis_admin_username }}"
   when:
       - rule_2_3_1_5
       - not win_skip_for_test
@@ -739,7 +739,7 @@
   win_security_policy:
       section: System Access
       key: NewGuestName
-      value: "{{ win19cis_guest_username }}"
+      value: "{{ win22cis_guest_username }}"
   when:
       - rule_2_3_1_6
   tags:

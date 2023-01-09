@@ -30,6 +30,9 @@ disruption_high: false
 # setting to make them stand out.
 audit_disruptive: false
 
+run_audit: false
+setup_audit: false
+
 skip_for_travis: false
 
 workaround_for_disa_benchmark: true
@@ -498,7 +501,7 @@ win22cis_minimumpasswordlength: 14
 # 1.2.1
 # win22cis_lockoutduration is the duration a locked account stays locked in minutes
 # This value should be set to 15 or more to be CIS compliant
-win22cis_lockoutduration: 15
+win22cis_lockoutduration: "15"
 
 # 1.2.2
 # win22cis_lockoutbadcount is the number of failed login attempts before locking account
@@ -517,12 +520,12 @@ win22cis_resetlockoutcount: 15
 win22cis_hyperv_installed: false
 
 # 2.3.1.5
-# win19cis_admin_username is the name the administrator account will be renamed to
-win19cis_admin_username: adminchangethis
+# win22cis_admin_username is the name the administrator account will be renamed to
+win22cis_admin_username: adminchangethis
 
 # 2.3.1.6
-# win19cis_guest_username is the name the guest account will be renamed to
-win19cis_guest_username: guestchangethis
+# win22cis_guest_username is the name the guest account will be renamed to
+win22cis_guest_username: guestchangethis
 
 # 2.3.6.5
 # win22cis_machine_acct_pw_age is the max machine account pw age in days
@@ -668,29 +671,3 @@ win22cis_defer_feature_update_period: 180
 # win22cis_screen_saver_timeout is the time in seconds until the screen saver turns on
 # This needs to be set to 900 or fewer, but not zero, to be CIS compliant
 win22cis_screen_saver_timeout: 900
-
-# need to address !!!!!!!!!!!!!!
-
-# This SID is the same for standalone, member, domain controller for 'Administrators' group
-sedebugprivilege: "*S-1-5-32-544"
-
-# !!!!!!!!!!!!!!!!!!!!!Check if this var is actaully not used, a quick search showed it's not used
-# pass_age: 60
-
-newadministratorname: renamedadmin
-newguestname: renamedguest
-
-
-
-app_maxsize: 32768
-sec_maxsize: 196608
-sys_maxsize: 32768
-
-
-
-
-# 2.2.33
-# Window Manager\Window Manager Group only exists on non Core installations
-# windows_installation_type should be 'Server Core' for Core installations
-# This is a variable to determine if Windows Manager should be included in this step
-increase_scheduling_priority_users: '{{ ["Administrators"] if (windows_installation_type=="Server Core") else (["Administrators","Window Manager\Window Manager Group"]) }}'

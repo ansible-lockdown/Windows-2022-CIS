@@ -90,7 +90,7 @@
         when: "'Failure' not in win22cis_17_2_1_audit.stdout"
   when:
       - rule_17_2_1
-      - ansible_windows_domain_role == "Primary domain controller"
+      - ansible_windows_domain_role == "Primary domain controller" or
         ansible_windows_domain_role == "Member server"
   tags:
       - level1-domaincontroller
