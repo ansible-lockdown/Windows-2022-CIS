@@ -99,21 +99,6 @@
       - automated
       - passwords
 
-# Speelman | added because of this error "Failed to import secedit.ini file from C:\\Users\\vagrant\\AppData\\Local\\Temp\\tmp81F3.tmp
-- name: "1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes"
-  win_security_policy:
-      section: System Access
-      key: LockoutDuration
-      value: "{{ win22cis_lockoutduration }}"
-  when:
-      - rule_1_2_1
-  tags:
-      - level1-domaincontroller
-      - level1-memberserver
-      - rule_1.2.1
-      - automated
-      - account
-
 # This rule must be applied first to make rule_1.2.1 and rule_1.2.3 applicable
 - name: "1.2.2 | PATCH | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempts but not 0"
   win_security_policy:
@@ -126,6 +111,21 @@
       - level1-domaincontroller
       - level1-memberserver
       - rule_1.2.2
+      - automated
+      - account
+
+# Speelman | added because of this error "Failed to import secedit.ini file from C:\\Users\\vagrant\\AppData\\Local\\Temp\\tmp81F3.tmp
+- name: "1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes"
+  win_security_policy:
+      section: System Access
+      key: LockoutDuration
+      value: "{{ win22cis_lockoutduration }}"
+  when:
+      - rule_1_2_1
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_1.2.1
       - automated
       - account
 

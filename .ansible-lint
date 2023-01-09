@@ -1,6 +1,14 @@
 parseable: true
 quiet: true
 skip_list:
+  - 'schema'
+  - 'no-changed-when'
+  - 'var-spacing'
+  - 'fqcn-builtins'
+  - 'experimental'
+  - 'name[casing]'
+  - 'name[template]'
+  - 'fqcn[action]'
   - '204'
   - '305'
   - '303'

@@ -24,3 +24,12 @@ win22cis_legalnoticetext: |
 # win22cis_legalnoticecaption is the caption for the logon legal notice
 # This value should stay as the default because scanners look for htis exact text
 win22cis_legalnoticecaption: "DoD Notice and Consent Banner"
+
+# This SID is the same for standalone, member, domain controller for 'Administrators' group
+sedebugprivilege: "*S-1-5-32-544"
+
+# 2.2.33
+# Window Manager\Window Manager Group only exists on non Core installations
+# windows_installation_type should be 'Server Core' for Core installations
+# This is a variable to determine if Windows Manager should be included in this step
+win22cis_increase_scheduling_priority_users: '{{ ["Administrators"] if (windows_installation_type=="Server Core") else (["Administrators","Window Manager\Window Manager Group"]) }}'

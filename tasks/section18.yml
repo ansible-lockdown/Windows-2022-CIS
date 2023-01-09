@@ -748,7 +748,7 @@
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint
       name: NoWarningNoElevationOnInstall
       data: 0
-      type: dword 
+      type: dword
   when:
       - rule_18_6_2
   tags:
