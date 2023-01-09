@@ -184,5 +184,6 @@ resource "local_file" "inventory" {
         # to keep ansible connections
         rule_9_2_1: false
         rule_18_3_1: false
+        rule_2_3_1_1: false
     EOF
 }
