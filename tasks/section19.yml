@@ -276,39 +276,16 @@
       - rule_19.7.8.5
       - manual
 
-# - name: "SCORED | 19.7.8.5 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
-#   block:
-#       - name: "SCORED | 19.7.8.5 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
-#         win_regedit:
-#             path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
-#             name: DisableSpotlightCollectionOnDesktop
-#             data: 1
-#             type: dword
-
-#       - name: "SCORED | 19.7.8.5 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
-#         win_regedit:
-#             path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
-#             name: DisableSpotlightCollectionOnDesktop
-#             data: 1
-#             type: dword
-#   when:
-#       - rule_19_7_8_5
-#   tags:
-#       - level2-domaincontroller
-#       - level2-memberserver
-#       - rule_19.7.8.5
-#       - automated
-
-- name: "SCORED | 19.7.28.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
+- name: "19.7.28.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
   block:
-      - name: "SCORED | 19.7.28.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
+      - name: "19.7.28.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
         win_regedit:
             path: HKU:\.DEFAULT\Software\Microsoft\Windows\Currentversion\Policies\Explorer
             name: NoInplaceSharing
             data: 1
             type: dword
 
-      - name: "SCORED | 19.7.28.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
+      - name: "19.7.28.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
         win_regedit:
             path: HKCU:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
             name: NoInplaceSharing
@@ -324,14 +301,14 @@
 
 - name: "19.7.43.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
   block:
-      - name: "SCORED | 19.7.43.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
+      - name: "19.7.43.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
         win_regedit:
             path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\Installer
             name: AlwaysInstallElevated
             data: 0
             type: dword
 
-      - name: "SCORED | 19.7.43.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
+      - name: "19.7.43.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
         win_regedit:
             path: HKCU:\Software\Policies\Microsoft\Windows\Installer
             name: AlwaysInstallElevated
