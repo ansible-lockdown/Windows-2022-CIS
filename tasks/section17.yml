@@ -10,13 +10,11 @@
 
       - name: "17.1.1 | PATCH | Ensure Audit Credential Validation is set to Success and Failure | Success"
         win_shell: AuditPol /set /subcategory:"Credential Validation" /success:enable
-        when: "'Success' not in win22cis_17_1_1_audit.stdout"
         changed_when: "'Success' not in win22cis_17_1_1_audit.stdout"
 
       - name: "17.1.1 | PATCH | Ensure Audit Credential Validation is set to Success and Failure | Failure"
         win_shell: AuditPol /set /subcategory:"Credential Validation" /failure:enable
         when: "'Failure' not in win22cis_17_1_1_audit.stdout"
-        changed_when: "'Failure' not in win22cis_17_1_1_audit.stdout"
   when:
       - rule_17_1_1
       - ansible_windows_domain_role == "Primary domain controller" or
@@ -108,7 +106,6 @@
 
       - name: "17.2.2 | PATCH | Ensure Audit Computer Account Management is set to include Success DC only"
         win_shell: AuditPol /set /subcategory:"Computer Account Management" /success:enable
-        changed_when: "'Success' not in win22cis_17_2_2_audit.stdout"
         when: "'Success' not in win22cis_17_2_2_audit.stdout"
   when:
       - rule_17_2_2
