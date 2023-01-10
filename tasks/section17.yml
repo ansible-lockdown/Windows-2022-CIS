@@ -106,6 +106,7 @@
 
       - name: "17.2.2 | PATCH | Ensure Audit Computer Account Management is set to include Success DC only"
         win_shell: AuditPol /set /subcategory:"Computer Account Management" /success:enable
+        changed_when: "'Success' not in win22cis_17_2_2_audit.stdout"
         when: "'Success' not in win22cis_17_2_2_audit.stdout"
   when:
       - rule_17_2_2
