@@ -1,12 +1,12 @@
 ---
 win2022_os_distribution: Windows-2022
 
-section01_patch: false
-section02_patch: false
+section01_patch: true
+section02_patch: true
 section05_patch: true
-section09_patch: false
-section17_patch: false
-section18_patch: false
+section09_patch: true
+section17_patch: true
+section18_patch: true
 section19_patch: true
 
 min_ansible_version: "2.9"
@@ -14,21 +14,24 @@ min_ansible_version: "2.9"
 # We've defined complexity-high to mean that we cannot automatically remediate
 # the rule in question.  In the future this might mean that the remediation
 # may fail in some cases.
-complexity_high: no
+complexity_high: true
 
 # Show "changed" for complex items not remediated per complexity-high setting
 # to make them stand out.  "changed" items on a second run of the role would
 # indicate items requiring manual review.
-audit_complex: yes
+audit_complex: true
 
 # We've defined disruption-high to indicate items that are likely to cause
 # disruption in a normal workflow.  These items can be remediated automatically
 # but are disabled by default to avoid disruption.
-disruption_high: no
+disruption_high: false
 
 # Show "changed" for disruptive items not remediated per disruption-high
 # setting to make them stand out.
-audit_disruptive: yes
+audit_disruptive: false
+
+run_audit: false
+setup_audit: false
 
 skip_for_travis: false
 
@@ -473,107 +476,198 @@ rule_19_7_28_1: true
 rule_19_7_43_1: true
 rule_19_7_47_2_1: true
 
+# Section 1 Variables
+
+# 1.1.1
+# win22cis_passwordhistorysize is the number of past PW before they can be reused
+# This value should be set to 24 or more to be CIS compliant
+win22cis_passwordhistorysize: 24
+
+# 1.1.2
+# win22cis_maximumpasswordage is the maximum password age in days
+# This value should be set to 365 or fewer, but not 0, to be CIS compliant
+win22cis_maximumpasswordage: 365
+
+# 1.1.3
+# win22cis_minimumpasswordage is the minimum password age in days
+# This value should be set to 1 or more days to be CIS compliant
+win22cis_minimumpasswordage: 1
+
+# 1.1.4
+# win22cis_minimumpasswordlength is the minimum number of characters needed for a password
+# This value should be set to 14 or more to be CIS compliant
+win22cis_minimumpasswordlength: 14
+
+# 1.2.1
+# win22cis_lockoutduration is the duration a locked account stays locked in minutes
+# This value should be set to 15 or more to be CIS compliant
+win22cis_lockoutduration: "15"
+
+# 1.2.2
+# win22cis_lockoutbadcount is the number of failed login attempts before locking account
+# This value should be set to 5 or fewer, but not 0, to be CIS compliant
+win22cis_lockoutbadcount: 5
+
+# 1.2.3
+# win22cis_resetlockoutcount is the amount of time in minutes before a reset after an account lockout
+# This value should be set to 15 or fewer to be CIS compliant
+win22cis_resetlockoutcount: 15
 
 # Section 2 Variables
 
 # 2.2.18
 # is_hyperv_installed is Hyper-V installed
-is_hyperv_installed: false
+win22cis_hyperv_installed: false
 
 # 2.3.1.5
-# win19cis_admin_username is the name the administrator account will be renamed to
-win19cis_admin_username: adminchangethis
+# win22cis_admin_username is the name the administrator account will be renamed to
+win22cis_admin_username: adminchangethis
 
 # 2.3.1.6
-# win19cis_guest_username is the name the guest account will be renamed to
-win19cis_guest_username: guestchangethis
+# win22cis_guest_username is the name the guest account will be renamed to
+win22cis_guest_username: guestchangethis
 
-# This SID is the same for standalone, member, domain controller for 'Administrators' group
-sedebugprivilege: "*S-1-5-32-544"
+# 2.3.6.5
+# win22cis_machine_acct_pw_age is the max machine account pw age in days
+# This value should be set to 30 or fewer, but not zero, to be CIS compliant
+win22cis_machine_acct_pw_age: 30
 
-pass_age: 60
+# 2.3.7.3
+# win22cis_inactivity_timeout is the timeout in seconds for how long to wait for activity
+# This value should be 900 or vewer, but not zero, to be CIS compliant
+win22cis_inactivity_timeout: 900
 
-lockoutduration: 15
-lockoutbadcount: 5
-resetlockoutcount: 15
-passwordhistorysize: 24
-maximumpasswordage: 365
-minimumpasswordage: 1
-minimumpasswordlength: 14
+# 2.3.7.6
+# win22cis_cached_logons_count is the number of logons that are cached
+# This needs to be 4 or fewer to be CIS compliant
+win22cis_cached_logons_count: 4
 
-newadministratorname: renamedadmin
-newguestname: renamedguest
+# 2.3.7.7
+# win22cis_passwd_expiry_warn is the number of days before an expring password users will receive warnings about the expring password
+# This needs to be between 4 adn 14 days to be CIS compliant
+win22cis_passwd_expiry_warn: 14
 
-legalnoticetext: |
-    You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
+# 2.3.7.9
+# win22cis_smartc_remove_option is the reg key option on the action when a SmartCard is removed
+# This needs to be set to 1 (Lock Workstation) or 2 (Force Logoff) to be CIS compliant
+win22cis_smartc_remove_option: "1"
 
-    By using this IS (which includes any device attached to this IS), you consent to the following conditions:
+# 2.3.9.1
+# win22cis_auto_disconnect is the duration in minutes of idle time before suspending the session
+# This needs to be set to 15 or fewer to be CIS compliant
+win22cis_auto_disconnect: 15
 
-    -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
-
-    -At any time, the USG may inspect and seize data stored on this IS.
-
-    -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose.
-
-    -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
-
-    -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
-
-app_maxsize: 32768
-sec_maxsize: 196608
-sys_maxsize: 32768
-
-
-legalnoticecaption: "DoD Notice and Consent Banner"
-
-# 2.2.33
-# Window Manager\Window Manager Group only exists on non Core installations
-# windows_installation_type should be 'Server Core' for Core installations
-# This is a variable to determine if Windows Manager should be included in this step
-increase_scheduling_priority_users: '{{ ["Administrators"] if (windows_installation_type=="Server Core") else (["Administrators","Window Manager\Window Manager Group"]) }}'
-
+# Section 9 Variables
 
 # 9.1.5
 # domain_firewall_log_path is the path to the domain firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\domainfw.log
 # This is a variable to give some leway on where to store these log files
-domain_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\domainfw.log'
+win22cis_domain_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\domainfw.log'
 
 # 9.1.6
 # domain_firewall_log_size is the size of the log file generated
 # To conform to CIS standards the value should be 16,384 or greater. Value is in KB
-domain_firewall_log_size: 16,384
+win22cis_domain_firewall_log_size: 16,384
 
 # 9.2.5
 # private_firewall_log_path is the path to the private firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\privatefw.log
 # This is a variable to give some leway on where to store these log files
-private_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\privatefw.log'
+win22cis_private_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\privatefw.log'
 
 # 9.2.6
 # private_firewall_log_size is the size of the log file
 # To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
-private_firewall_log_size: 16,384
+win22cis_private_firewall_log_size: 16,384
 
 # 9.3.7
 # public_firewall_log_path is the path to the public firewall log file. The control suggests %SystemRoot%\System32\logfiles\firewall\publicfw.log
 # This is a variable to give some leway on where to store these log files
-public_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\publicfw.log'
+win22cis_public_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\publicfw.log'
 
 # 9.3.8
 # public_firewall_log_size is the size of the log file
 # To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
-public_firewall_log_size: 16,384
+win22cis_public_firewall_log_size: 16,384
+
+# Section 18 Variables
 
 # Control 18.2.5
 # laps_passwordlength is the LAPS tool password length.
 # To conform to CIS standards please use a min value of 15 and max value of 127
-laps_passwordlength: 15
+win22cis_laps_passwordlength: 15
 
 # Control 18.2.6
 # laps_passwordagedays is the LAPS tool password age in days
 # To conform to CIS standards please use a max value of 30
-laps_passwordagedays: 30
+win22cis_laps_passwordagedays: 30
 
 # 18.3.6
 # netbt_nodetype is the node type value in HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters:NodeType
 # Options are B-node value of 1, P-node value of 2, M-node value of 4, H-node value of 8. P-node is the recommended setting from CIS
-netbt_nodetype: 2
+win22cis_netbt_nodetype: 2
+
+# 18.4.9
+# win22cis_screen_saver_grace is the time in seconds before the screen saver grace period expires
+# To conform to CIS standards the value should be 5 or fewer, with zero as recommended
+win22cis_screen_saver_grace: 0
+
+# 18.4.12
+# win22cis_mss_security_warn_thresh is the threshold at which the event log will start warning
+# To conform to CIS standards the value should be 90 or less
+win22cis_mss_security_warn_thresh: 90
+
+# 18.5.4.1
+# win22cis_dns_over_https is the registry value for the DoHPolicy regkey entry
+# To conform to CIS standards this value needs to be 0 or 1
+win22cis_dns_over_https: 1
+
+# 18.8.40.1
+# win22cis_sam_ng_key_roc is the value for the ROCA-vulnerable WHfB keys during authentication registry key value
+# To conform to CIS standards this value needs to be 1 or 2
+win22cis_sam_ng_key_roc: 1
+
+# 18.9.15.1
+# wincis_require_pin_pairing is the value for the require pin for pairing registry key
+# To conform to CIS standards this value should be 1 or 2
+win22cis_require_pin_pairing: 1
+
+# 18.9.17.1
+# win22cis_diag_data is the value for the Allow Diagnostic Data registry key
+# To confrom to CIS standards this value should be a 0 or 1
+win22cis_diag_data: 0
+
+# 18.9.27.1.2
+# win22cis_elm_applog_max_size is the max size of the Event Log Manager Application logs can become, in KB
+# To conform to CIS stadnards this value should be 32768 or greater
+win22cis_elm_applog_max_size: 65538
+
+# 18.9.27.2.2
+# win22cis_elm_seclog_max_size is the max size of the Event Log Manager Security logs can become, in KB
+# To confrom to CIS standards this value should be 196608 or greater
+win22cis_elm_seclog_max_size: 196608
+
+# 18.9.27.3.2
+# win22cis_elm_setup_max_size is the max size of the Even Log Manager non- standard logs can become, in KB
+# To conform to CIS standards this value should be 32768 or higher
+win22cis_elm_setup_max_size: 32768
+
+# 18.9.27.4.2
+# win22cis_elm_syslog_max_size is the max size of the Event Long Manager System logs can become, in KB
+# To conform to CIS standards this value should be 32768 or higher
+win22cis_elm_syslog_max_size: 32768
+
+# 18.9.89.2
+# win22cis_allow_ink_workspace is the registry key value for the allowing windows ink workspace
+# To conform to CIS stadnards this value should be a 0 or 1
+win22cis_allow_ink_workspace: 1
+
+# 19.9.108.4.2
+# win22cis_defer_feature_update_period is the duration in days to delay feature updates in automatic updates
+# To conform to CIS stadnards this value should be 180 or more (365 is max allowed by Windows)
+win22cis_defer_feature_update_period: 180
+
+# Section 19 Variables
+
+# win22cis_screen_saver_timeout is the time in seconds until the screen saver turns on
+# This needs to be set to 900 or fewer, but not zero, to be CIS compliant
+win22cis_screen_saver_timeout: 900

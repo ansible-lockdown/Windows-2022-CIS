@@ -1,6 +1,8 @@
-# Windows Server 2022 CIS - ALPHA
+# Windows Server 2022 CIS
 
-# NOTE: This has not yet been released by CIS and is based upon the 2019 remediation
+![Release](https://img.shields.io/github/v/release/ansible-lockdown/Windows-2022-CIS?style=plastic)
+
+Configure a Windows Server 2022 system to be [CIS](https://downloads.cisecurity.org/#/) compliant. 
 
 ## Join us
 
@@ -17,10 +19,10 @@ Configure a Windows Server 2022 system to be compliant to 2019 benchmark.
 
 This role **will make changes to the system** that could break things. This is not an auditing tool but rather a remediation tool to be used after an audit has been conducted.
 
-This role was developed against a clean install of the Operating System. If you are implimenting to an existing system please review this role for any site specific changes that are needed.
+This role was developed against a clean install of the Operating System. If you are implementing to an existing system please review this role for any site specific changes that are needed.
 
 To use release version please point to main branch
-Based on NOt yet releases
+Based on [Windows Server 2019 CIS v1.0.0 02-14-2022](https://downloads.cisecurity.org/#/).
 
 ## Documentation
 
