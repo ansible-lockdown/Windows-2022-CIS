@@ -1106,7 +1106,7 @@
       - rule_18.8.22.1.7
       - automated
 
-- name: "SCORED |18.8.22.1.8 | PATCH | Ensure Turn off Search Companion content file updates is set to Enabled"
+- name: "18.8.22.1.8 | PATCH | Ensure Turn off Search Companion content file updates is set to Enabled"
   win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Searchcompanion
       name: DisableContentFileUpdates
