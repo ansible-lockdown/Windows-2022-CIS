@@ -1,6 +1,11 @@
 ---
 win2022_os_distribution: Windows-2022
 
+## Benchmark name used by audting control role
+# The audit variable found at the base
+benchmark: Windows-2022-CIS
+benchmark_version: v1.0.0
+
 section01_patch: true
 section02_patch: true
 section05_patch: true
@@ -697,7 +702,7 @@ goss_conf_url: "https://github.com/ansible-lockdown/{{ os_distribution }}-{{ ben
 audit_scripts_dir: "c:/{{ audit_dir }}/{{ os_distribution }}-{{ benchmark }}-Audit"
 run_audit_script: "{{ audit_scripts_dir }}/run_audit.ps1"
 goss_vars_path: "{{ audit_scripts_dir }}/{{ ansible_hostname }}.yml"
-audit_results_file: "{{ audit_capture_path }}{{ ansible_hostname }}_{{ audit_time }}_remediate_{{ ansible_date_time.epoch }}.{{ audit_format }}"
+audit_results_file: "{{ audit_capture_path }}{{ ansible_hostname }}-{{ benchmark }}_{{ audit_time }}_remediate_{{ ansible_date_time.epoch }}.{{ audit_format }}"
 
 audit_results: |
       The pre remediation results are: {{ pre_audit_summary }}.
