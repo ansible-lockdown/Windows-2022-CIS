@@ -671,3 +671,35 @@ win22cis_defer_feature_update_period: 180
 # win22cis_screen_saver_timeout is the time in seconds until the screen saver turns on
 # This needs to be set to 900 or fewer, but not zero, to be CIS compliant
 win22cis_screen_saver_timeout: 900
+
+
+### Goss audit variables
+
+https://github.com/goss-org/goss/releases/download/v0.3.21/goss-alpha-windows-amd64.exe
+## Goss Binary settings
+goss_version: v0.3.21
+goss_url: https://github.com/goss-org/goss/releases/download/
+goss_dl_exe: goss-alpha-windows-amd64.exe
+goss_dl_sha: 559841fba32bf28c01ac6b9f8d90ce078ee1b0166041f1e44c6b55971692a5fc
+goss_exe: goss.exe  # Note any path to be a forward slash
+audit_format: json
+
+# Goss copy download options
+goss_download_url: "{{ goss_url }}{{ goss_version }}/{{ goss_dl_exe }}"
+goss_copy_src: Full to copy the exe
+
+# Goss Audit config when using git to download
+goss_conf_git_branch: main
+goss_conf_url: "https://github.com/ansible-lockdown/{{ os_distribution }}-{{ benchmark }}-Audit/archive/refs/heads/{{ goss_conf_git_branch }}.zip"
+
+
+## Goss running
+audit_scripts_dir: "c:/{{ audit_dir }}/{{ os_distribution }}-{{ benchmark }}-Audit"
+run_audit_script: "{{ audit_scripts_dir }}/run_audit.ps1"
+goss_vars_path: "{{ audit_scripts_dir }}/{{ ansible_hostname }}.yml"
+audit_results_file: "{{ audit_capture_path }}{{ ansible_hostname }}_{{ audit_time }}_remediate_{{ ansible_date_time.epoch }}.{{ audit_format }}"
+
+audit_results: |
+      The pre remediation results are: {{ pre_audit_summary }}.
+      The post remediation results are: {{ post_audit_summary }}.
+      Full breakdown can be found in {{ audit_capture_path }}

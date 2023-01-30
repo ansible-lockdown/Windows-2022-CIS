@@ -8,7 +8,7 @@
       - name: "run {{ audit_time }} remediation auditpol report"
         win_shell: "auditpol.exe /get /category:* > {{ audit_capture_path }}auditpol_{{ audit_time }}.txt"
   when:
-      - win2016cis_is_standalone
+      - win2022cis_is_standalone
 
 - name: Run prereqs for Domain members or controllers
   block:
@@ -18,7 +18,7 @@
       - name: "run {{ audit_time }} remediation auditpol report"
         win_shell: "auditpol.exe /get /category:* > {{ audit_capture_path }}auditpol_{{ audit_time }}.txt"
   when:
-      - not win2016cis_is_standalone
+      - not win2022cis_is_standalone
 
 # Copied pre and post to capture output files.
 - name: copy the template used by ansible for consistent checks
@@ -27,7 +27,7 @@
       dest: "{{ goss_vars_path }}"
 
 - name: Run the goss audit
-  win_shell: "{{ audit_capture_path }}{{ goss_exe }} -g {{ audit_capture_path }}{{ win2016_os_distribution }}-{{ benchmark }}-Audit\\goss.yml --vars {{ goss_vars_path }} v -f {{ audit_format }} -o pretty | Out-File {{ audit_results_file }}"
+  win_shell: "{{ audit_capture_path }}{{ goss_exe }} -g {{ audit_capture_path }}{{ win2022_os_distribution }}-{{ benchmark }}-Audit\\goss.yml --vars {{ goss_vars_path }} v -f {{ audit_format }} -o pretty | Out-File {{ audit_results_file }}"
   failed_when: false
 
 - name: Capture the pre remediation audit data summary
