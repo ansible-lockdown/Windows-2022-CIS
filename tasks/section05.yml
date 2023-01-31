@@ -10,7 +10,6 @@
       type: dword
   when:
       - rule_5_1
-      - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
       - level1-memberserver

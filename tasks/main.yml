@@ -84,6 +84,7 @@
 
 - name: Execute the section 19 tasks
   import_tasks: section19.yml
-  when: section19_patch
+  when:
+      - section19_patch
   tags:
       - section19
