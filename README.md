@@ -6,7 +6,7 @@ Configure a Windows Server 2022 system to be [CIS](https://downloads.cisecurity.
 
 ## Join us
 
-On our [Discord Server](https://discord.gg/JFxpSgPFEJ) to ask questions, discuss features, or just chat with other Ansible-Lockdown users
+On our [Discord Server](https://discord.io/ansible-lockdown) to ask questions, discuss features, or just chat with other Ansible-Lockdown users
 
 - observations so far:
   - potentially slow to remediate - anti-malware high memory and CPU (maybe due to vagrant image and limited resources).
@@ -22,7 +22,7 @@ This role **will make changes to the system** that could break things. This is n
 This role was developed against a clean install of the Operating System. If you are implementing to an existing system please review this role for any site specific changes that are needed.
 
 To use release version please point to main branch
-Based on [Windows Server 2019 CIS v1.0.0 02-14-2022](https://downloads.cisecurity.org/#/).
+Based on [Windows Server 2022 CIS v1.0.0 02-14-2022](https://downloads.cisecurity.org/#/).
 
 ## Documentation
 
@@ -31,7 +31,7 @@ Based on [Windows Server 2019 CIS v1.0.0 02-14-2022](https://downloads.cisecurit
 - [Per-Host Configuration](https://www.lockdownenterprise.com/docs/per-host-lockdown-enterprise-configuration)
 - [Getting the Most Out of the Role](https://www.lockdownenterprise.com/docs/get-the-most-out-of-lockdown-enterprise)
 - [Wiki](https://github.com/ansible-lockdown/Windows-2019-CIS/wiki)
-- [Repo GitHub Page](https://ansible-lockdown.github.io/Windows-2019-CIS/)
+- [Repo GitHub Page](https://ansible-lockdown.github.io/Windows-2022-CIS/)
 
 ## Requirements
 
@@ -43,7 +43,8 @@ Based on [Windows Server 2019 CIS v1.0.0 02-14-2022](https://downloads.cisecurit
   - [Tower User Guide](https://docs.ansible.com/ansible-tower/latest/html/userguide/index.html)
   - [Ansible Community Info](https://docs.ansible.com/ansible/latest/community/index.html)
 - Functioning Ansible and/or Tower Installed, configured, and running. This includes all of the base Ansible/Tower configurations, needed packages installed, and infrastructure setup.
-- Please read through the tasks in this role to gain an understanding of what each control is doing. Some of the tasks are disruptive and can have unintended consiquences in a live production system. Also familiarize yourself with the variables in the defaults/main.yml file or the [Main Variables Wiki Page](https://github.com/ansible-lockdown/Windows-2022-CIS/wiki/Main-Variables).
+- Please read through the tasks in this role to gain an understanding of what each control is doing. Some of the tasks are disruptive and can have unintended consequences in a live production system.
+- There are controls that relate to Primary Domain Controllers, Secondary Domain Controllers, Domain Member Servers, and Stand Alone servers. This is the reason for some controls using a mix of `not ansible_windows_domain_role == "Primary domain controller"`, `ansible_windows_domain_role == "Primary domain controller"`, .etc. This inconsistency is purposeful. 
 
 **Technical Dependencies:**
 

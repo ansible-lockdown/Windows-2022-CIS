@@ -1,6 +1,6 @@
 # This is the workflow for sending a welcome message when a new contributor creates a new issue
 
-name: new_contrib_message
+name: new_issue_contrib_message
 
 # Controls when the action will run.
 # Triggers the workflow on push or pull request
@@ -17,7 +17,7 @@ jobs:
       runs-on: ubuntu-latest
 
       steps:
-          - uses: actions/first-interaction@v1.1.0
+          - uses: actions/first-interaction@main
             with:
                 repo-token: ${{ secrets.GITHUB_TOKEN }}
                 issue-message: |-

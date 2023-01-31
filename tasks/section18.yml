@@ -999,7 +999,7 @@
   win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System\DisableBkGndGroupPolicy
       state: absent
-      delete_key: yes
+      delete_key: true
   when:
       - rule_18_8_21_5
   tags:

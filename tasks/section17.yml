@@ -48,19 +48,19 @@
       - rule_17.1.2
       - automated
 
-- name: "17.1.3 | PATCH | Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure'"
+- name: "17.1.3 | PATCH | Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure' DC Only"
   block:
-      - name: "17.1.3 | AUDIT | Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure'"
+      - name: "17.1.3 | PATCH | Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure' DC Only | Get Kerberos Ticket Operations value"
         win_shell: AuditPol /get /subcategory:"Kerberos Service Ticket Operations" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_1_3_audit
 
-      - name: "17.1.3 | PATCH | Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure'"
+      - name: "17.1.3 | PATCH | Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure' DC Only | Set success"
         win_shell: AuditPol /set /subcategory:"Kerberos Service Ticket Operations" /success:enable
         when: "'Success' not in win22cis_17_1_3_audit.stdout"
 
-      - name: "17.1.3 | PATCH | Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure'"
+      - name: "17.1.3 | PATCH | Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure' DC Only | Set failure"
         win_shell: AuditPol /set /subcategory:"Kerberos Service Ticket Operations" /failure:enable
         when: "'Failure' not in win22cis_17_1_3_audit.stdout"
   when:

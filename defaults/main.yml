@@ -1,4 +1,5 @@
 ---
+
 win2022_os_distribution: Windows-2022
 
 section01_patch: true
@@ -9,7 +10,7 @@ section17_patch: true
 section18_patch: true
 section19_patch: true
 
-min_ansible_version: "2.9"
+min_ansible_version: "2.10"
 
 # We've defined complexity-high to mean that we cannot automatically remediate
 # the rule in question.  In the future this might mean that the remediation
@@ -39,7 +40,7 @@ workaround_for_disa_benchmark: true
 workaround_for_ssg_benchmark: true
 
 # tweak role to run in a non-privileged container
-system_is_container: no
+system_is_container: false
 
 # set to false to skip tasks that either have not been developed or cannot be automated
 is_implemented: false
