@@ -114,6 +114,20 @@
       - automated
       - account
 
+- name: "1.2.3 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes"
+  win_security_policy:
+      section: System Access
+      key: ResetLockoutCount
+      value: "{{ win22cis_resetlockoutcount }}"
+  when:
+      - rule_1_2_3
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_1.2.3
+      - automated
+      - account
+
 # Speelman | added because of this error "Failed to import secedit.ini file from C:\\Users\\vagrant\\AppData\\Local\\Temp\\tmp81F3.tmp
 - name: "1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes"
   win_security_policy:
@@ -126,19 +140,5 @@
       - level1-domaincontroller
       - level1-memberserver
       - rule_1.2.1
-      - automated
-      - account
-
-- name: "1.2.3 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes"
-  win_security_policy:
-      section: System Access
-      key: ResetLockoutCount
-      value: "{{ win22cis_resetlockoutcount }}"
-  when:
-      - rule_1_2_3
-  tags:
-      - level1-domaincontroller
-      - level1-memberserver
-      - rule_1.2.3
       - automated
       - account

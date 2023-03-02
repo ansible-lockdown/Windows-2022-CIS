@@ -501,7 +501,7 @@ win22cis_minimumpasswordlength: 14
 # 1.2.1
 # win22cis_lockoutduration is the duration a locked account stays locked in minutes
 # This value should be set to 15 or more to be CIS compliant
-win22cis_lockoutduration: "15"
+win22cis_lockoutduration: 15
 
 # 1.2.2
 # win22cis_lockoutbadcount is the number of failed login attempts before locking account
