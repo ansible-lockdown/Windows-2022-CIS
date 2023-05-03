@@ -14,9 +14,24 @@
       - automated
       - credential_manager
 
-- name: |
-        "2.2.2 | PATCH | Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users, ENTERPRISE DOMAIN CONTROLLERS' (DC only)"
-        "2.2.3 | PATCH | Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users' (MS only)"
+- name: "2.2.2 | PATCH | Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users, ENTERPRISE DOMAIN CONTROLLERS' (DC only)"
+  win_user_right:
+      name: SeNetworkLogonRight
+      users:
+          - Administrators
+          - Authenticated Users
+          - ENTERPRISE DOMAIN CONTROLLERS
+      action: set
+  when:
+      - rule_2_2_2
+      - "'Primary domain controller' in ansible_windows_domain_role"
+  tags:
+      - level1-domaincontroller
+      - rule_2.2.2
+      - automated
+      - access
+
+- name: "2.2.3 | PATCH | Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users' (MS only)"
   win_user_right:
       name: SeNetworkLogonRight
       users:
@@ -24,12 +39,10 @@
           - Authenticated Users
       action: set
   when:
-      - rule_2_2_2 or
-        rule_2_2_3
+      - rule_2_2_3
+      - "'Primary domain controller' not in ansible_windows_domain_role"
   tags:
-      - level1-domaincontroller
       - level1-memberserver
-      - rule_2.2.2
       - rule_2.2.3
       - automated
       - access
@@ -79,8 +92,7 @@
 - name: "2.2.7 | PATCH | Ensure Allow log on locally is set to Administrators"
   win_user_right:
       name: SeInteractiveLogonRight
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_7
@@ -90,9 +102,20 @@
       - rule_2.2.7
       - automated
 
-- name: |
-    "2.2.8 | PATCH | Ensure Allow log on through Remote Desktop Services is set to Administrators DC only"
-    "2.2.9 | PATCH | Ensure 'Allow log on through Remote Desktop Services' is set to 'Administrators, Remote Desktop Users' (MS only)"
+- name: "2.2.8 | PATCH | Ensure Allow log on through Remote Desktop Services is set to Administrators DC only"
+  win_user_right:
+      name: SeRemoteInteractiveLogonRight
+      users: Administrators
+      action: set
+  when:
+      - rule_2_2_8
+      - "'Primary domain controller' in ansible_windows_domain_role"
+  tags:
+      - level1-domaincontroller
+      - rule_2.2.8
+      - automated
+
+- name: "2.2.9 | PATCH | Ensure 'Allow log on through Remote Desktop Services' is set to 'Administrators, Remote Desktop Users' (MS only)"
   win_user_right:
       name: SeRemoteInteractiveLogonRight
       users:
@@ -100,20 +123,17 @@
           - Remote Desktop Users
       action: set
   when:
-      - rule_2_2_8 or
-        rule_2_2_9
+      - rule_2_2_9
+      - "'Primary domain controller' not in ansible_windows_domain_role"
   tags:
-      - level1-domaincontroller
       - level1-memberserver
-      - rule_2.2.8
       - rule_2.2.9
       - automated
 
 - name: "2.2.10 | PATCH | Ensure Back up files and directories is set to Administrators"
   win_user_right:
       name: SeBackupPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_10
@@ -156,8 +176,7 @@
 - name: "2.2.13 | PATCH | Ensure Create a pagefile is set to Administrators"
   win_user_right:
       name: SeCreatePagefilePrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_13
@@ -213,8 +232,7 @@
 - name: "2.2.17 | PATCH | Ensure Create symbolic links is set to Administrators DC only"
   win_user_right:
       name: SeCreateSymbolicLinkPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_17
@@ -229,8 +247,7 @@
       - name: "2.2.18 | PATCH | (L1 Ensure Create symbolic links is set to Administrators NT VIRTUAL MACHINEVirtual Machines MS only | No Hyper-v"
         win_user_right:
             name: SeCreateSymbolicLinkPrivilege
-            users:
-                - Administrators
+            users: Administrators
             action: set
         when: not win22cis_hyperv_installed
 
@@ -253,8 +270,7 @@
 - name: "2.2.19 | PATCH | Ensure Debug programs is set to Administrators"
   win_user_right:
       name: SeDebugPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_19
@@ -268,8 +284,7 @@
 - name: "2.2.20 | PATCH | Ensure Deny access to this computer from the network to include Guests DC only"
   win_user_right:
       name: SeDenyNetworkLogonRight
-      users:
-          - Guests
+      users: Guests
       action: set
   when:
       - rule_2_2_20
@@ -290,6 +305,7 @@
   when:
       - rule_2_2_21
       - ansible_windows_domain_member
+      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level1-memberserver
       - rule_2.2.21
@@ -298,8 +314,7 @@
 - name: "2.2.22 | PATCH | Ensure Deny log on as a batch job to include Guests"
   win_user_right:
       name: SeDenyBatchLogonRight
-      users:
-          - Guests
+      users: Guests
       action: set
   when:
       - rule_2_2_22
@@ -312,8 +327,7 @@
 - name: "2.2.23 | PATCH | Ensure Deny log on as a service to include Guests"
   win_user_right:
       name: SeDenyServiceLogonRight
-      users:
-          - Guests
+      users: Guests
       action: set
   when:
       - rule_2_2_23
@@ -326,8 +340,7 @@
 - name: "2.2.24 | PATCH | Ensure Deny log on locally to include Guests"
   win_user_right:
       name: SeDenyInteractiveLogonRight
-      users:
-          - Guests
+      users: Guests
       action: set
   when:
       - rule_2_2_24
@@ -357,11 +370,12 @@
       name: SeDenyRemoteInteractiveLogonRight
       users:
           - Guests
-          # - Local Account
+          - Local Account
       action: set
   when:
       - rule_2_2_26
       - ansible_windows_domain_member
+      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level1-memberserver
       - rule_2.2.26
@@ -388,6 +402,7 @@
   when:
       - rule_2_2_28
       - ansible_windows_domain_member
+      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level1-memberserver
       - rule_2.2.28
@@ -396,8 +411,7 @@
 - name: "2.2.29 | PATCH | Ensure Force shutdown from a remote system is set to Administrators"
   win_user_right:
       name: SeRemoteShutdownPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_29
@@ -452,6 +466,7 @@
   when:
       - rule_2_2_32
       - ansible_windows_domain_member
+      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level1-memberserver
       - rule_2.2.32
@@ -473,8 +488,7 @@
 - name: "2.2.34 | PATCH | Ensure Load and unload device drivers is set to Administrators"
   win_user_right:
       name: SeLoadDriverPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_34
@@ -515,8 +529,7 @@
     "2.2.38 | PATCH | Ensure Manage auditing and security log is set to Administrators MS only"
   win_user_right:
       name: SeSecurityPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_37 or
@@ -544,8 +557,7 @@
 - name: "2.2.40 | PATCH | Ensure Modify firmware environment values is set to Administrators"
   win_user_right:
       name: SeSystemEnvironmentPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_40
@@ -558,8 +570,7 @@
 - name: "2.2.41 | PATCH | Ensure Perform volume maintenance tasks is set to Administrators"
   win_user_right:
       name: SeManageVolumePrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_41
@@ -572,8 +583,7 @@
 - name: "2.2.42 | PATCH | Ensure Profile single process is set to Administrators"
   win_user_right:
       name: SeProfileSingleProcessPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_42
@@ -616,8 +626,7 @@
 - name: "2.2.45 | PATCH | Ensure Restore files and directories is set to Administrators"
   win_user_right:
       name: SeRestorePrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_45
@@ -630,8 +639,7 @@
 - name: "2.2.46 | PATCH | Ensure Shut down the system is set to Administrators"
   win_user_right:
       name: SeShutdownPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_46
@@ -657,8 +665,7 @@
 - name: "2.2.48 | PATCH | Ensure Take ownership of files or other objects is set to Administrators"
   win_user_right:
       name: SeTakeOwnershipPrivilege
-      users:
-          - Administrators
+      users: Administrators
       action: set
   when:
       - rule_2_2_48
@@ -819,7 +826,7 @@
       - rule_2.3.5.1
       - automated
 
-- name: "2.3.5.2 | PATCH | nsure 'Domain controller: Allow vulnerable Netlogon secure channel connections' is set to 'Not Configured' (DC Only)"
+- name: "2.3.5.2 | PATCH | Ensure 'Domain controller: Allow vulnerable Netlogon secure channel connections' is set to 'Not Configured' (DC Only)"
   win_regedit:
       path: HKLM:\System\CurrentControlSet\Services\NetLogon\Parameters
       name: VulnerableChannleAllowList
@@ -1043,6 +1050,7 @@
       type: string
   when:
       - rule_2_3_7_6
+      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level2-memberserver
       - rule_2.3.7.6
