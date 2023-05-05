@@ -3,19 +3,19 @@
 - name: Set system facts based on gather facts module
   block:
       - name: Set fact is system is standalone
-        set_fact:
+        ansible.builtin.set_fact:
             win2022cis_is_standalone: true
         when:
             - ansible_windows_domain_role ==  'Stand-alone server'
 
       - name: Set fact if domain controller role
-        set_fact:
+        ansible.builtin.set_fact:
             win2022cis_is_domain_controller: true
         when:
             - ansible_windows_domain_role | regex_search('(domain controller)')
 
       - name: set fact if domain member server
-        set_fact:
+        ansible.builtin.set_fact:
             win2022cis_is_domain_member: true
         when:
             - ansible_windows_domain_role == 'Member server'
