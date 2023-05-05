@@ -3,7 +3,7 @@
 - name: Run prereqs for standalone server
   block:
       - name: "run {{ audit_time }} remediation secedit export"
-        win_command: "powershell.exe -noninteractive -noprofile -command secedit.exe /export /cfg {{ audit_capture_path }}\\secedit_{{ audit_time }}.txt"
+        ansible.windows.win_command: "powershell.exe -noninteractive -noprofile -command secedit.exe /export /cfg {{ audit_capture_path }}\\secedit_{{ audit_time }}.txt"
 
       - name: "run {{ audit_time }} remediation auditpol report"
         win_shell: "auditpol.exe /get /category:* > {{ audit_capture_path }}auditpol_{{ audit_time }}.txt"
@@ -13,7 +13,7 @@
 - name: Run prereqs for Domain members or controllers
   block:
       - name: "run {{ audit_time }} remediation secedit export"
-        win_command: "powershell.exe -noninteractive -noprofile -command gpresult /v /r {{ audit_capture_path }}\\gpresult_{{ audit_time }}.txt"
+        ansible.windows.win_command: "powershell.exe -noninteractive -noprofile -command gpresult /v /r {{ audit_capture_path }}\\gpresult_{{ audit_time }}.txt"
 
       - name: "run {{ audit_time }} remediation auditpol report"
         win_shell: "auditpol.exe /get /category:* > {{ audit_capture_path }}auditpol_{{ audit_time }}.txt"
@@ -33,12 +33,12 @@
 - name: Capture the pre remediation audit data summary
   block:
       - name: Capture pre remediation audit data
-        win_command: "powershell.exe -noninteractive -noprofile -command (Get-Content {{ audit_results_file }} | ConvertFrom-Json).summary"
+        ansible.windows.win_command: "powershell.exe -noninteractive -noprofile -command (Get-Content {{ audit_results_file }} | ConvertFrom-Json).summary"
         register: pre_audit
         changed_when: false
 
       - name: Capture pre-audit result
-        set_fact:
+        ansible.builtin.set_fact:
             pre_audit_summary: "{{ pre_audit.stdout }}"
         vars:
             summary: 'summary."summary-line"'
@@ -48,12 +48,12 @@
 - name: Capture the post remediation audit data summary
   block:
       - name: Capture post remediation audit data
-        win_command: "powershell.exe -noninteractive -noprofile -command (Get-Content {{ audit_results_file }} | ConvertFrom-Json).summary"
+        ansible.windows.win_command: "powershell.exe -noninteractive -noprofile -command (Get-Content {{ audit_results_file }} | ConvertFrom-Json).summary"
         register: post_audit
         changed_when: false
 
       - name: Capture post-audit result
-        set_fact:
+        ansible.builtin.set_fact:
             post_audit_summary: "{{ post_audit.stdout }}"
         vars:
             summary: 'summary."summary-line"'

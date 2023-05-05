@@ -55,13 +55,13 @@
 - name: "17.2.2 | PATCH | Ensure Audit Computer Account Management is set to include Success DC only"
   block:
       - name: "17.2.2 | AUDIT | Ensure Audit Computer Account Management is set to include Success DC only | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Computer Account Management" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Computer Account Management" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_2_2_audit
 
       - name: "17.2.2 | PATCH | Ensure Audit Computer Account Management is set to include Success DC only | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Computer Account Management" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Computer Account Management" /success:enable
         changed_when: "'Success' not in win22cis_17_2_2_audit.stdout"
         when: "'Success' not in win22cis_17_2_2_audit.stdout"
   when:
@@ -75,13 +75,13 @@
 - name: "17.2.3 | PATCH | Ensure Audit Distribution Group Management is set to include Success DC only"
   block:
       - name: "17.2.3 | AUDIT | Ensure Audit Distribution Group Management is set to include Success DC only | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Distribution Group Management" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Distribution Group Management" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_2_3_audit
 
       - name: "17.2.3 | PATCH | Ensure Audit Distribution Group Management is set to include Success DC only | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Distribution Group Management" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Distribution Group Management" /success:enable
         when: "'Success' not in win22cis_17_2_3_audit.stdout"
   when:
       - rule_17_2_3
@@ -94,13 +94,13 @@
 - name: "17.2.4 | PATCH | Ensure Audit Other Account Management Events is set to include Success DC only"
   block:
       - name: "17.2.4 | AUDIT | Ensure Audit Other Account Management Events is set to include Success DC only | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Other Account Management Events" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Other Account Management Events" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_2_4_audit
 
       - name: "17.2.4 | PATCH | Ensure Audit Other Account Management Events is set to include Success DC only | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Other Account Management Events" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Other Account Management Events" /success:enable
         when: "'Success' not in win22cis_17_2_4_audit.stdout"
   when:
       - rule_17_2_4
@@ -113,13 +113,13 @@
 - name: "17.2.5 | AUDIT | Ensure Audit Security Group Management is set to include Success"
   block:
       - name: "17.2.5 | AUDIT | Ensure Audit Security Group Management is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Security Group Management" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Security Group Management" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_2_5_audit
 
       - name: "17.2.5 | PATCH | Ensure Audit Security Group Management is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Security Group Management" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Security Group Management" /success:enable
         when: "'Success' not in win22cis_17_2_5_audit.stdout"
   when:
       - rule_17_2_5
@@ -144,13 +144,13 @@
 - name: "17.3.1 | PATCH | Ensure Audit PNP Activity is set to include Success"
   block:
       - name: "17.3.1 | AUDIT | Ensure Audit PNP Activity is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Plug and Play Events" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Plug and Play Events" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_3_1_audit
 
       - name: "17.3.1 | PATCH | Ensure Audit PNP Activity is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Plug and Play Events" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Plug and Play Events" /success:enable
         when: "'Success' not in win22cis_17_3_1_audit.stdout"
   when:
       - rule_17_3_1
@@ -163,13 +163,13 @@
 - name: "17.3.2 | PATCH | Ensure Audit Process Creation is set to include Success"
   block:
       - name: "17.3.2 | AUDIT | Ensure Audit Process Creation is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Process Creation" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Process Creation" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_3_2_audit
 
       - name: "17.3.2 | PATCH | Ensure Audit Process Creation is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Process Creation" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Process Creation" /success:enable
         when: "'Success' not in win22cis_17_3_2_audit.stdout"
   when:
       - rule_17_3_2
@@ -182,13 +182,13 @@
 - name: "17.4.1 | PATCH | Ensure Audit Directory Service Access is set to include Failure DC only"
   block:
       - name: "17.4.1 | AUDIT | Ensure Audit Directory Service Access is set to include Failure DC only | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Directory Service Access" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Directory Service Access" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_4_1_audit
 
       - name: "17.4.1 | PATCH | Ensure Audit Directory Service Access is set to include Failure DC only | Set failure if needed"
-        win_shell: AuditPol /set /subcategory:"Directory Service Access" /failure:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Directory Service Access" /failure:enable
         when: "'Failure' not in win22cis_17_4_1_audit.stdout"
   when:
       - rule_17_4_1
@@ -201,13 +201,13 @@
 - name: "17.4.2 | PATCH | Ensure Audit Directory Service Changes is set to include Success DC only"
   block:
       - name: "17.4.2 | AUDIT | Ensure Audit Directory Service Changes is set to include Success DC only | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Directory Service Changes" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Directory Service Changes" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_4_2_audit
 
       - name: "17.4.2 | PATCH | Ensure Audit Directory Service Changes is set to include Success DC only | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Directory Service Changes" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Directory Service Changes" /success:enable
         when: "'Success' not in win22cis_17_4_2_audit.stdout"
   when:
       - rule_17_4_2
@@ -220,13 +220,13 @@
 - name: "17.5.1 | PATCH | Ensure Audit Account Lockout is set to include Failure"
   block:
       - name: "17.5.1 | AUDIT | Ensure Audit Account Lockout is set to include Failure | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Account Lockout" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Account Lockout" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_5_1_audit
 
       - name: "17.5.1 | PATCH | Ensure Audit Account Lockout is set to include Failure | Set failure if needed"
-        win_shell: AuditPol /set /subcategory:"Account Lockout" /failure:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Account Lockout" /failure:enable
         when: "'Failure' not in win22cis_17_5_1_audit.stdout"
   when:
       - rule_17_5_1
@@ -239,13 +239,13 @@
 - name: "17.5.2 | PATCH | Ensure Audit Group Membership is set to include Success"
   block:
       - name: "17.5.2 | AUDIT | Ensure Audit Group Membership is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Group Membership" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Group Membership" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_5_2_audit
 
       - name: "17.5.2 | PATCH | Ensure Audit Group Membership is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Group Membership" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Group Membership" /success:enable
         when: "'Success' not in win22cis_17_5_2_audit.stdout"
   when:
       - rule_17_5_2
@@ -258,13 +258,13 @@
 - name: "17.5.3 | AUDIT | Ensure Audit Logoff is set to include Success"
   block:
       - name: "17.5.3 | AUDIT | Ensure Audit Logoff is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Logoff" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Logoff" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_5_3_audit
 
       - name: "17.5.3 | PATCH | Ensure Audit Logoff is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Logoff" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Logoff" /success:enable
         when: "'Success' not in win22cis_17_5_3_audit.stdout"
   when:
       - rule_17_5_3
@@ -301,13 +301,13 @@
 - name: "17.5.6 | PATCH | Ensure Audit Special Logon is set to include Success"
   block:
       - name: "17.5.6 | AUDIT | Ensure Audit Special Logon is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Special Logon" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Special Logon" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_5_6_audit
 
       - name: "17.5.6 | PATCH | Ensure Audit Special Logon is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Special Logon" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Special Logon" /success:enable
         when: "'Success' not in win22cis_17_5_6_audit.stdout"
   when:
       - rule_17_5_6
@@ -320,13 +320,13 @@
 - name: "17.6.1 | PATCH | Ensure Audit Detailed File Share is set to include Failure"
   block:
       - name: "17.6.1 | AUDIT | Ensure Audit Detailed File Share is set to include Failure | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Detailed File Share" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Detailed File Share" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_6_1_audit
 
       - name: "17.6.1 | PATCH | Ensure Audit Detailed File Share is set to include Failure | Set failure if needed"
-        win_shell: AuditPol /set /subcategory:"Detailed File Share" /failure:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Detailed File Share" /failure:enable
         when: "'Failure' not in win22cis_17_6_1_audit.stdout"
   when:
       - rule_17_6_1
@@ -375,13 +375,13 @@
 - name: "17.7.1 | PATCH | Ensure Audit Audit Policy Change is set to include Success"
   block:
       - name: "17.7.1 | AUDIT | Ensure Audit Audit Policy Change is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Audit Policy Change" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Audit Policy Change" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_7_1_audit
 
       - name: "17.7.1 | PATCH | Ensure Audit Audit Policy Change is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Audit Policy Change" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Audit Policy Change" /success:enable
         when: "'Success' not in win22cis_17_7_1_audit.stdout"
   when:
       - rule_17_7_1
@@ -394,13 +394,13 @@
 - name: "17.7.2 | PATCH | Ensure Audit Authentication Policy Change is set to include Success"
   block:
       - name: "17.7.2 | AUDIT | Ensure Audit Authentication Policy Change is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Authentication Policy Change" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Authentication Policy Change" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_7_2_audit
 
       - name: "17.7.2 | PATCH | Ensure Audit Authentication Policy Change is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Authentication Policy Change" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Authentication Policy Change" /success:enable
         when: "'Success' not in win22cis_17_7_2_audit.stdout"
   when:
       - rule_17_7_2
@@ -413,13 +413,13 @@
 - name: "17.7.3 | PATCH | Ensure Audit Authorization Policy Change is set to include Success"
   block:
       - name: "17.7.3 | AUDIT | Ensure Audit Authorization Policy Change is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Authorization Policy Change" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Authorization Policy Change" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_7_3_audit
 
       - name: "17.7.3 | PATCH | Ensure Audit Authorization Policy Change is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Authorization Policy Change" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Authorization Policy Change" /success:enable
         when: "'Success' not in win22cis_17_7_3_audit.stdout"
   when:
       - rule_17_7_3
@@ -444,13 +444,13 @@
 - name: "17.7.5 | PATCH | Ensure Audit Other Policy Change Events is set to include Failure"
   block:
       - name: "17.7.5 | AUDIT | Ensure Audit Other Policy Change Events is set to include Failure | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Other Policy Change Events" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Other Policy Change Events" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_7_5_audit
 
       - name: "17.7.5 | PATCH | Ensure Audit Other Policy Change Events is set to include Failure | Set failure if needed"
-        win_shell: AuditPol /set /subcategory:"Other Policy Change Events" /failure:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Other Policy Change Events" /failure:enable
         when: "'Failure' not in win22cis_17_7_5_audit.stdout"
   when:
       - rule_17_7_5
@@ -499,13 +499,13 @@
 - name: "17.9.3 | PATCH | Ensure Audit Security State Change is set to include Success"
   block:
       - name: "17.9.3 | AUDIT | Ensure Audit Security State Change is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Security State Change" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Security State Change" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_9_3_audit
 
       - name: "17.9.3 | PATCH | Ensure Audit Security State Change is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Security State Change" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Security State Change" /success:enable
         when: "'Success' not in win22cis_17_9_3_audit.stdout"
   when:
       - rule_17_9_3
@@ -518,13 +518,13 @@
 - name: "17.9.4 | PATCH | Ensure Audit Security System Extension is set to include Success"
   block:
       - name: "17.9.4 | AUDIT | Ensure Audit Security System Extension is set to include Success | Gather existing settings"
-        win_shell: AuditPol /get /subcategory:"Security System Extension" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
+        ansible.windows.win_shell: AuditPol /get /subcategory:"Security System Extension" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         register: win22cis_17_9_4_audit
 
       - name: "17.9.4 | PATCH | Ensure Audit Security System Extension is set to include Success | Set success if needed"
-        win_shell: AuditPol /set /subcategory:"Security System Extension" /success:enable
+        ansible.windows.win_shell: AuditPol /set /subcategory:"Security System Extension" /success:enable
         when: "'Success' not in win22cis_17_9_4_audit.stdout"
   when:
       - rule_17_9_4

@@ -1,7 +1,7 @@
 ---
 
 - name: "18.1.1.1 | PATCH | Ensure Prevent enabling lock screen camera is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Personalization
       name: NoLockScreenCamera
       data: 1
@@ -15,7 +15,7 @@
       - automated
 
 - name: "18.1.1.2 | PATCH | Ensure Prevent enabling lock screen slide show is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Personalization
       name: NoLockScreenSlideshow
       data: 1
@@ -29,7 +29,7 @@
       - automated
 
 - name: "18.1.2.2 | PATCH | Ensure Allow users to enable online speech recognition services is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\InputPersonalization
       name: "AllowInputPersonalization"
       data: "0"
@@ -43,7 +43,7 @@
       - automated
 
 - name: "18.1.3 | PATCH | Ensure Allow Online Tips is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer
       name: AllowOnlineTips
       data: 0
@@ -57,7 +57,7 @@
       - automated
 
 - name: "18.2.1 | PATCH | Ensure LAPS AdmPwd GPO Extension  CSE is installed MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\GPExtensions\{D76B9641-3288-4f75-942D-087DE603E3EA}
       name: DllName
       data: C:\Program Files\LAPS\CSE\AdmPwd.dll
@@ -71,7 +71,7 @@
       - automated
 
 - name: "18.2.2 | PATCH | Ensure Do not allow password expiration time longer than required by policy is set to Enabled MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
       name: PwdExpirationProtectionEnabled
       data: 1
@@ -85,7 +85,7 @@
       - automated
 
 - name: "18.2.3 | PATCH | Ensure Enable Local Admin Password Management is set to Enabled MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
       name: AdmPwdEnabled
       data: 1
@@ -99,7 +99,7 @@
       - automated
 
 - name: "18.2.4 | PATCH | Ensure Password Settings Password Complexity is set to Enabled Large letters  small letters  numbers  special characters MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
       name: PasswordComplexity
       data: 4
@@ -113,7 +113,7 @@
       - automated
 
 - name: "18.2.5 | PATCH | Ensure Password Settings Password Length is set to Enabled 15 or more MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
       name: PasswordLength
       data: "{{ win22cis_laps_passwordlength }}"
@@ -127,7 +127,7 @@
       - automated
 
 - name: "18.2.6 | PATCH | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
       name: PasswordAgeDays
       data: "{{ win22cis_laps_passwordagedays }}"
@@ -141,7 +141,7 @@
       - automated
 
 - name: "18.3.1 | PATCH | Ensure Apply UAC restrictions to local accounts on network logons is set to Enabled MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: LocalAccountTokenFilterPolicy
       data: 0
@@ -155,7 +155,7 @@
       - automated
 
 - name: "18.3.2 | PATCH | Ensure Configure SMB v1 client driver is set to Enabled Disable driver recommended"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Services\mrxsmb10
       name: Start
       data: 4
@@ -169,7 +169,7 @@
       - automated
 
 - name: "18.3.3 | PATCH | Ensure Configure SMB v1 server is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters
       name: SMB1
       data: 0
@@ -185,7 +185,7 @@
       - automated
 
 - name: "18.3.4 | PATCH | Ensure Enable Structured Exception Handling Overwrite Protection SEHOP is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel
       name: DisableExceptionChainValidation
       data: 0
@@ -200,7 +200,7 @@
       - automated
 
 - name: "18.3.5 | PATCH | Ensure Limits print driver installation to Administrators is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint
       name: RestrictDriverInstallationtoAdministrators
       data: 1
@@ -214,7 +214,7 @@
       - automated
 
 - name: "18.3.6 | PATCH | Ensure 'NetBT NodeType configuration' is set to 'Enabled: P-node recommended'"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters
       state: present
       value: NodeType
@@ -229,7 +229,7 @@
       - automated
 
 - name: "18.3.7 | PATCH | Ensure WDigest Authentication is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\Wdigest
       state: present
       value: UseLogonCredential
@@ -244,7 +244,7 @@
       - automated
 
 - name: "18.4.1 | PATCH | Ensure MSS AutoAdminLogon Enable Automatic Logon not recommended is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon
       state: present
       value: AutoAdminLogon
@@ -259,7 +259,7 @@
       - automated
 
 - name: "18.4.2 | PATCH | Ensure MSS DisableIPSourceRouting IPv6 IP source routing protection level protects against packet spoofing is set to Enabled Highest protection source routing is completely disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters
       state: present
       value: DisableIPSourceRouting
@@ -274,7 +274,7 @@
       - automated
 
 - name: "18.4.3 | PATCH | Ensure MSS DisableIPSourceRouting IP source routing protection level protects against packet spoofing is set to Enabled Highest protection source routing is completely disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
       state: present
       value: DisableIPSourceRouting
@@ -289,7 +289,7 @@
       - automated
 
 - name: "18.4.4 | PATCH | Ensure MSS EnableICMPRedirect Allow ICMP redirects to override OSPF generated routes is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
       state: present
       value: EnableICMPRedirect
@@ -304,7 +304,7 @@
       - automated
 
 - name: "18.4.5 | PATCH | Ensure MSS KeepAliveTime How often keep-alive packets are sent in milliseconds is set to Enabled 300000 or 5 minutes recommended"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
       state: present
       value: KeepAliveTime
@@ -319,7 +319,7 @@
       - automated
 
 - name: "18.4.6 | PATCH | Ensure MSS NoNameReleaseOnDemand Allow the computer to ignore NetBIOS name release requests except from WINS servers is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Netbt\Parameters
       state: present
       name: NoNameReleaseOnDemand
@@ -334,7 +334,7 @@
       - automated
 
 - name: "18.4.7 | PATCH | Ensure MSS PerformRouterDiscovery Allow IRDP to detect and configure Default Gateway addresses could lead to DoS is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Tcpip\Parameters
       state: present
       name: PerformRouterDiscovery
@@ -349,7 +349,7 @@
       - automated
 
 - name: "18.4.8 | PATCH | Ensure MSS SafeDllSearchMode Enable Safe DLL search mode recommended is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Control\Session Manager
       name: SafeDllSearchMode
       data: 1
@@ -364,7 +364,7 @@
       - automated
 
 - name: "18.4.9 | PATCH | Ensure MSS ScreenSaverGracePeriod The time in seconds before the screen saver grace period expires 0 recommended is set to Enabled 5 or fewer seconds"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
       name: ScreenSaverGracePeriod
       data: "{{ win22cis_screen_saver_grace }}"
@@ -379,7 +379,7 @@
       - automated
 
 - name: "18.4.10 | PATCH | Ensure MSS TcpMaxDataRetransmissions IPv6 How many times unacknowledged data is retransmitted is set to Enabled 3"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Tcpip6\Parameters
       name: TcpMaxDataRetransmissions
       data: 3
@@ -393,7 +393,7 @@
       - automated
 
 - name: "18.4.11 | PATCH | Ensure MSS TcpMaxDataRetransmissions How many times unacknowledged data is retransmitted is set to Enabled 3"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Tcpip\Parameters
       name: TcpMaxDataRetransmissions
       data: 3
@@ -407,7 +407,7 @@
       - automated
 
 - name: "18.4.12 | PATCH | Ensure MSS WarningLevel Percentage threshold for the security event log at which the system will generate a warning is set to Enabled 90 or less"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Eventlog\Security
       name: WarningLevel
       data: "{{ win22cis_mss_security_warn_thresh }}"
@@ -421,7 +421,7 @@
       - automated
 
 - name: "18.5.4.1 | PATCH | Ensure Configure DNS over HTTPS (DoH) name resolution is set to Enabled Allow DoH or higher"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
       name: DoHPolicy
       data: "{{ win22cis_dns_over_https }}"
@@ -435,7 +435,7 @@
       - automated
 
 - name: "18.5.4.2 | PATCH | Ensure Turn off multicast name resolution is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
       name: EnableMulticast
       data: 0
@@ -449,7 +449,7 @@
       - automated
 
 - name: "18.5.5.1 | PATCH | Ensure Enable Font Providers is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\System
       name: EnableFontProviders
       data: 0
@@ -463,7 +463,7 @@
       - automated
 
 - name: "18.5.8.1 | PATCH | Ensure Enable insecure guest logons is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Lanmanworkstation
       name: AllowInsecureGuestAuth
       data: 0
@@ -479,28 +479,28 @@
 - name: "18.5.9.1 | PATCH | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled"
   block:
       - name: "18.5.9.1 | PATCH | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | AllowLLTDIOOndomain"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Lltd
             name: AllowLLTDIOOndomain
             data: 0
             type: dword
 
       - name: "18.5.9.1 | PATCH | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | AllowLLTDIOOnPublicNet"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Lltd
             name: AllowLLTDIOOnPublicNet
             data: 0
             type: dword
 
       - name: "18.5.9.1 | PATCH | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | EnableLLTDIO"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Lltd
             name: EnableLLTDIO
             data: 0
             type: dword
 
       - name: "18.5.9.1 | PATCH | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | ProhibitLLTDIOOnPrivateNet"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Lltd
             name: ProhibitLLTDIOOnPrivateNet
             data: 0
@@ -516,28 +516,28 @@
 - name: "18.5.9.2 | PATCH | Ensure Turn on Responder RSPNDR driver is set to Disabled"
   block:
       - name: "18.5.9.2 | PATCH | Ensure Turn on Responder RSPNDR driver is set to Disabled | AllowRspndrOnDomain"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Lltd
             name: AllowRspndrOnDomain
             data: 0
             type: dword
 
       - name: "18.5.9.2 | PATCH | Ensure Turn on Responder RSPNDR driver is set to Disabled | AllowRspndrOnPublicNet"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Lltd
             name: AllowRspndrOnPublicNet
             data: 0
             type: dword
 
       - name: "18.5.9.2 | PATCH | Ensure Turn on Responder RSPNDR driver is set to Disabled | EnableRspndr"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Lltd
             name: EnableRspndr
             data: 0
             type: dword
 
       - name: "18.5.9.2 | PATCH | Ensure Turn on Responder RSPNDR driver is set to Disabled | ProhibitRspndrOnPrivateNet"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Lltd
             name: ProhibitRspndrOnPrivateNet
             data: 0
@@ -551,7 +551,7 @@
       - automated
 
 - name: "18.5.10.2 | PATCH | Ensure Turn off Microsoft Peer-to-Peer Networking Services is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Peernet
       name: Disabled
       data: 1
@@ -565,7 +565,7 @@
       - automated
 
 - name: "18.5.11.2 | PATCH | Ensure Prohibit installation and configuration of Network Bridge on your DNS domain network is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Network Connections
       name: NC_AllowNetBridge_NLA
       data: 0
@@ -579,7 +579,7 @@
       - automated
 
 - name: "18.5.11.3 | PATCH | Ensure Prohibit use of Internet Connection Sharing on your DNS domain network is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections
       name: NC_ShowSharedAccessUI
       data: 0
@@ -593,7 +593,7 @@
       - automated
 
 - name: "18.5.11.4 | PATCH | Ensure Require domain users to elevate when setting a networks location is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Network Connections
       name: NC_StdDomainUserSetLocation
       data: 1
@@ -609,14 +609,14 @@
 - name: "18.5.14.1 | PATCH | Ensure Hardened UNC Paths is set to Enabled with Require Mutual Authentication and Require Integrity set for all NETLOGON and SYSVOL shares"
   block:
       - name: "18.5.14.1 | PATCH | Ensure Hardened UNC Paths is set to Enabled with Require Mutual Authentication and Require Integrity set for all NETLOGON shares"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Networkprovider\Hardenedpaths
             name: "\\\\*\\NETLOGON"
             data: "RequireMutualAuthentication=1, RequireIntegrity=1"
             type: string
 
       - name: "18.5.14.1 | PATCH | Ensure Hardened UNC Paths is set to Enabled with Require Mutual Authentication and Require Integrity set for all SYSVOL shares"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Networkprovider\Hardenedpaths
             name: "\\\\*\\SYSVOL"
             data: "RequireMutualAuthentication=1, RequireIntegrity=1"
@@ -630,7 +630,7 @@
       - automated
 
 - name: "18.5.19.2.1 | PATCH | Disable IPv6 Ensure TCPIP6 Parameter DisabledComponents is set to 0xff 255"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\System\CurrentControlSet\Services\TCPIP6\Parameters
       name: DisabledComponents
       data: 255
@@ -647,35 +647,35 @@
 - name: "18.5.20.1 | PATCH | Ensure Configuration of wireless settings using Windows Connect Now is set to Disabled"
   block:
       - name: "18.5.20.1 | PATCH | Ensure Configuration of wireless settings using Windows Connect Now is set to Disabled | EnableRegistrars"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Wcn\Registrars
             name: EnableRegistrars
             data: 0
             type: dword
 
       - name: "18.5.20.1 | PATCH | Ensure Configuration of wireless settings using Windows Connect Now is set to Disabled | DisableUPnPRegistrar"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Wcn\Registrars
             name: DisableUPnPRegistrar
             data: 0
             type: dword
 
       - name: "18.5.20.1 | PATCH | Ensure Configuration of wireless settings using Windows Connect Now is set to Disabled | DisableInBand802DOT11Registrar"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Wcn\Registrars
             name: DisableInBand802DOT11Registrar
             data: 0
             type: dword
 
       - name: "18.5.20.1 | PATCH | Ensure Configuration of wireless settings using Windows Connect Now is set to Disabled | DisableFlashConfigRegistrar"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Wcn\Registrars
             name: DisableFlashConfigRegistrar
             data: 0
             type: dword
 
       - name: "18.5.20.1 | PATCH | Ensure Configuration of wireless settings using Windows Connect Now is set to Disabled | DisableWPDRegistrar"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Wcn\Registrars
             name: DisableWPDRegistrar
             data: 0
@@ -689,7 +689,7 @@
       - automated
 
 - name: "18.5.20.2 | PATCH | Ensure Prohibit access of the Windows Connect Now wizards is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Wcn\Ui
       name: DisableWcnUi
       data: 1
@@ -703,7 +703,7 @@
       - automated
 
 - name: "18.5.21.1 | PATCH | Ensure Minimize the number of simultaneous connections to the Internet or a Windows Domain is set to Enabled:3 = Prevent Wi-Fi when on Ethernet"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Wcmsvc\Grouppolicy
       name: fMinimizeConnections
       data: 3
@@ -717,7 +717,7 @@
       - automated
 
 - name: "18.5.21.2 | PATCH | Ensure Prohibit connection to non-domain networks when connected to domain authenticated network is set to Enabled MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Wcmsvc\Grouppolicy
       name: fBlockNonDomain
       data: 1
@@ -731,7 +731,7 @@
       - automated
 
 - name: "18.6.1 | PATCH | Ensure 'Allow Print Spooler to accept client connections' is set to 'Disabled'"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers
       name: RegisterSpoolerRemoteRpcEndPoint
       data: 2
@@ -746,7 +746,7 @@
       - automated
 
 - name: "18.6.2 | PATCH | Ensure 'Point and Print Restrictions: When installing drivers for a new connection' is set to 'Enabled: Show warning and elevation prompt'"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint
       name: NoWarningNoElevationOnInstall
       data: 0
@@ -760,7 +760,7 @@
       - automated
 
 - name: "18.6.3 | PATCH | (L1) Ensure 'Point and Print Restrictions: When updating drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint
       name: UpdatePromptSettings
       data: 0
@@ -774,7 +774,7 @@
       - automated
 
 - name: "18.7.1.1 | PATCH | Ensure Turn off notifications network usage is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications
       name: NoCloudApplicationNotification
       data: 1
@@ -788,7 +788,7 @@
       - automated
 
 - name: "18.8.3.1 | PATCH | Ensure Include command line in process creation events is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System\Audit
       name: ProcessCreationIncludeCmdLine_Enabled
       data: 1
@@ -802,7 +802,7 @@
       - automated
 
 - name: "18.8.4.1 | PATCH | Ensure Encryption Oracle Remediation is set to Enabled Force Updated Clients"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
       name: AllowEncryptionOracle
       data: 0
@@ -816,7 +816,7 @@
       - automated
 
 - name: "18.8.4.2 | PATCH | Ensure Remote host allows delegation of non-exportable credentials is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation
       name: AllowProtectedCreds
       data: 1
@@ -830,7 +830,7 @@
       - automated
 
 - name: "18.8.5.1 | PATCH | Ensure Turn On Virtualization Based Security is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: EnableVirtualizationBasedSecurity
       data: 1
@@ -844,7 +844,7 @@
       - automated
 
 - name: "18.8.5.2 | PATCH | Ensure Turn On Virtualization Based Security Select Platform Security Level is set to Secure Boot and DMA Protection"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: RequirePlatformSecurityFeatures
       data: 3
@@ -858,7 +858,7 @@
       - automated
 
 - name: "18.8.5.3 | PATCH | Ensure Turn On Virtualization Based Security Virtualization Based Protection of Code Integrity is set to Enabled with UEFI lock"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: HypervisorEnforcedCodeIntegrity
       data: 1
@@ -872,7 +872,7 @@
       - automated
 
 - name: "18.8.5.4 | PATCH | Ensure Turn On Virtualization Based Security Require UEFI Memory Attributes Table is set to True checked"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: HVCIMATRequired
       data: 1
@@ -886,7 +886,7 @@
       - automated
 
 - name: "18.8.5.5 | PATCH | Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Enabled with UEFI lock MS Only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: LsaCfgFlags
       data: 1
@@ -900,7 +900,7 @@
       - automated
 
 - name: "18.8.5.6 | PATCH | Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Disabled DC Only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: LsaCfgFlags
       data: 0
@@ -914,7 +914,7 @@
       - automated
 
 - name: "18.8.5.7 | PATCH | Ensure Turn On Virtualization Based Security Secure Launch Configuration is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: ConfigureSystemGuardLaunch
       data: 1
@@ -928,7 +928,7 @@
       - automated
 
 - name: "18.8.7.2 | PATCH | Ensure Prevent device metadata retrieval from the Internet is set to Enabled'"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata
       name: PreventDeviceMetadataFromNetwork
       data: 1
@@ -942,7 +942,7 @@
       - automated
 
 - name: "18.8.14.1 | PATCH | Ensure Boot-Start Driver Initialization Policy is set to Enabled Good unknown and bad but critical"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Policies\Earlylaunch
       name: DriverLoadPolicy
       data: 3
@@ -956,7 +956,7 @@
       - automated
 
 - name: "18.8.21.2 | PATCH | Ensure Configure registry policy processing Do not apply during periodic background processing is set to Enabled FALSE"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378Eac-683F-11D2-A89A-00C04Fbbcfa2}
       name: NoBackgroundPolicy
       data: 0
@@ -970,7 +970,7 @@
       - automated
 
 - name: "18.8.21.3 | PATCH | Ensure Configure registry policy processing Process even if the Group Policy objects have not changed is set to Enabled TRUE"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378Eac-683F-11D2-A89A-00C04Fbbcfa2}
       name: NoGPOListChanges
       data: 0
@@ -984,7 +984,7 @@
       - automated
 
 - name: "18.8.21.4 | PATCH | Ensure Continue experiences on this device is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\System
       name: EnableCdp
       data: 0
@@ -998,7 +998,7 @@
       - automated
 
 - name: "18.8.21.5 | PATCH | Ensure Turn off background refresh of Group Policy is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System\DisableBkGndGroupPolicy
       state: absent
       delete_key: true
@@ -1011,7 +1011,7 @@
       - automated
 
 - name: "18.8.22.1.1 | PATCH | Ensure Turn off downloading of print drivers over HTTP is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Printers
       name: DisableWebPnPDownload
       data: 1
@@ -1025,7 +1025,7 @@
       - automated
 
 - name: "18.8.22.1.2 | PATCH | Ensure Turn off handwriting personalization data sharing is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Tabletpc
       name: PreventHandwritingDataSharing
       data: 1
@@ -1039,7 +1039,7 @@
       - automated
 
 - name: "18.8.22.1.3 | PATCH | Ensure Turn off handwriting recognition error reporting is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Handwritingerrorreports
       name: PreventHandwritingErrorReports
       data: 1
@@ -1053,7 +1053,7 @@
       - automated
 
 - name: "18.8.22.1.4 | PATCH | Ensure Turn off Internet Connection Wizard if URL connection is referring to Microsoft.com is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Internet Connection Wizard
       name: ExitOnMSICW
       data: 1
@@ -1067,7 +1067,7 @@
       - automated
 
 - name: "18.8.22.1.5 | PATCH | Ensure Turn off Internet download for Web publishing and online ordering wizards is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoWebServices
       data: 1
@@ -1081,7 +1081,7 @@
       - automated
 
 - name: "18.8.22.1.6 | PATCH | Ensure Turn off printing over HTTP is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Printers
       name: DisableHTTPPrinting
       data: 1
@@ -1095,7 +1095,7 @@
       - automated
 
 - name: "18.8.22.1.7 | PATCH | Ensure Turn off Registration if URL connection is referring to Microsoft.com is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Registration Wizard Control
       name: NoRegistration
       data: 1
@@ -1109,7 +1109,7 @@
       - automated
 
 - name: "18.8.22.1.8 | PATCH | Ensure Turn off Search Companion content file updates is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Searchcompanion
       name: DisableContentFileUpdates
       data: 1
@@ -1123,7 +1123,7 @@
       - automated
 
 - name: "18.8.22.1.9 | PATCH | Ensure Turn off the Order Prints picture task is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoOnlinePrintsWizard
       data: 1
@@ -1137,7 +1137,7 @@
       - automated
 
 - name: "18.8.22.1.10 | PATCH | Ensure Turn off the Publish to Web task for files and folders is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoPublishingWizard
       data: 1
@@ -1151,7 +1151,7 @@
       - automated
 
 - name: "18.8.22.1.11 | PATCH | Ensure Turn off the Windows Messenger Customer Experience Improvement Program is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Messenger\Client
       name: CEIP
       data: 2
@@ -1165,7 +1165,7 @@
       - automated
 
 - name: "18.8.22.1.12 | PATCH | Ensure Turn off Windows Customer Experience Improvement Program is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Sqmclient\Windows
       name: CEIPEnable
       data: 0
@@ -1181,14 +1181,14 @@
 - name: "18.8.22.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled"
   block:
       - name: "18.8.22.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled | Windows Error Reporting"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Windows Error Reporting
             name: Disabled
             data: 1
             type: dword
 
       - name: "18.8.22.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled | ErrorReporting"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting
             name: DoReport
             data: 0
@@ -1204,14 +1204,14 @@
 - name: "18.8.25.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic"
   block:
       - name: "18.8.25.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic | DevicePKInitBehavior"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\kerberos\parameters
             name: DevicePKInitBehavior
             data: 0
             type: dword
 
       - name: "18.8.25.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic | DevicePKInitEnabled"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\kerberos\parameters
             name: DevicePKInitEnabled
             data: 1
@@ -1225,7 +1225,7 @@
       - automated
 
 - name: "18.8.26.1 | PATCH | Ensure Enumeration policy for external devices incompatible with Kernel DMA Protection is set to Enabled Block All"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Kernel DMA Protection
       name: DeviceEnumerationPolicy
       data: 0
@@ -1239,7 +1239,7 @@
       - automated
 
 - name: "18.8.27.1 | PATCH | Ensure Disallow copying of user input methods to the system account for sign-in is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Control Panel\International
       name: BlockUserInputMethodsForSignIn
       data: 1
@@ -1253,7 +1253,7 @@
       - automated
 
 - name: "18.8.28.1 | PATCH | Ensure Block user from showing account details on sign-in is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: BlockUserFromShowingAccountDetailsOnSignin
       data: 1
@@ -1267,7 +1267,7 @@
       - automated
 
 - name: "18.8.28.2 | PATCH | Ensure Do not display network selection UI is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: DontDisplayNetworkSelectionUI
       data: 1
@@ -1281,7 +1281,7 @@
       - automated
 
 - name: "18.8.28.3 | PATCH | Ensure Do not enumerate connected users on domain-joined computers is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: DontEnumerateConnectedUsers
       data: 1
@@ -1295,7 +1295,7 @@
       - automated
 
 - name: "18.8.28.4 | PATCH | Ensure Enumerate local users on domain-joined computers is set to Disabled MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: EnumerateLocalUsers
       data: 0
@@ -1309,7 +1309,7 @@
       - automated
 
 - name: "18.8.28.5 | PATCH | Ensure Turn off app notifications on the lock screen is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: DisableLockScreenAppNotifications
       data: 1
@@ -1323,7 +1323,7 @@
       - automated
 
 - name: "18.8.28.6 | PATCH | Ensure Turn off picture password sign-in is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: BlockDomainPicturePassword
       data: 1
@@ -1337,7 +1337,7 @@
       - automated
 
 - name: "18.8.28.7 | PATCH | Ensure Turn on convenience PIN sign-in is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: AllowDomainPINLogon
       data: 0
@@ -1351,7 +1351,7 @@
       - automated
 
 - name: "18.8.31.1 | PATCH | Ensure Allow Clipboard synchronization across devices is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: AllowCrossDeviceClipboard
       data: 0
@@ -1365,7 +1365,7 @@
       - automated
 
 - name: "18.8.31.2 | PATCH | Ensure Allow upload of User Activities is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: UploadUserActivities
       data: 0
@@ -1379,7 +1379,7 @@
       - automated
 
 - name: "18.8.34.6.1 | PATCH | Ensure Allow network connectivity during connected-standby on battery is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\f15576e8-98b7-4186-b944-eafa664402d9
       name: DCSettingIndex
       data: 0
@@ -1393,7 +1393,7 @@
       - automated
 
 - name: "18.8.34.6.2 | PATCH | Ensure Allow network connectivity during connected-standby plugged in is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\f15576e8-98b7-4186-b944-eafa664402d9
       name: ACSettingIndex
       data: 0
@@ -1407,7 +1407,7 @@
       - automated
 
 - name: "18.8.34.6.3 | PATCH | Ensure Require a password when a computer wakes on battery is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51
       name: DCSettingIndex
       data: 1
@@ -1421,7 +1421,7 @@
       - automated
 
 - name: "18.8.34.6.4 | PATCH | Ensure Require a password when a computer wakes plugged in is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51
       name: ACSettingIndex
       data: 1
@@ -1435,7 +1435,7 @@
       - automated
 
 - name: "18.8.36.1 | PATCH | Ensure Configure Offer Remote Assistance is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fAllowUnsolicited
       data: 0
@@ -1449,7 +1449,7 @@
       - automated
 
 - name: "18.8.36.2 | PATCH | Ensure Configure Solicited Remote Assistance is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fAllowToGetHelp
       data: 0
@@ -1463,7 +1463,7 @@
       - automated
 
 - name: "18.8.37.1 | PATCH | Ensure Enable RPC Endpoint Mapper Client Authentication is set to Enabled MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Rpc
       name: EnableAuthEpResolution
       data: 1
@@ -1477,7 +1477,7 @@
       - automated
 
 - name: "18.8.37.2 | PATCH | Ensure Restrict Unauthenticated RPC clients is set to Enabled Authenticated MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Rpc
       name: RestrictRemoteClients
       data: 1
@@ -1491,7 +1491,7 @@
       - automated
 
 - name: "18.8.40.1 | PATCH | Ensure Configure validation of ROCA-vulnerable WHfB keys during authentication is set to Enabled Audit or higher (DC only)"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\SAM
       name: SamNGCKeyROCAValidation
       data: "{{ win22cis_sam_ng_key_roc }}"
@@ -1505,7 +1505,7 @@
       - automated
 
 - name: "18.8.48.5.1 | PATCH | Ensure Microsoft Support Diagnostic Tool Turn on MSDT interactive communication with support provider is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Scripteddiagnosticsprovider\Policy
       name: DisableQueryRemoteServer
       data: 0
@@ -1519,7 +1519,7 @@
       - automated
 
 - name: "18.8.48.11.1 | PATCH | Ensure EnableDisable PerfTrack is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Wdi\{9C5A40Da-B965-4Fc3-8781-88Dd50A6299D}
       name: ScenarioExecutionEnabled
       data: 0
@@ -1533,7 +1533,7 @@
       - automated
 
 - name: "18.8.50.1 | PATCH | Ensure Turn off the advertising ID is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Advertisinginfo
       name: DisabledByGroupPolicy
       data: 1
@@ -1547,7 +1547,7 @@
       - automated
 
 - name: "18.8.53.1.1 | PATCH | Ensure Enable Windows NTP Client is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\W32Time\Timeproviders\Ntpclient
       name: Enabled
       data: 1
@@ -1561,7 +1561,7 @@
       - automated
 
 - name: "18.8.53.1.2 | PATCH | Ensure Enable Windows NTP Server is set to Disabled MS only"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\W32Time\Timeproviders\Ntpserver
       name: Enabled
       data: 1
@@ -1575,7 +1575,7 @@
       - automated
 
 - name: "18.9.4.1 | PATCH | Ensure Allow a Windows app to share application data between users is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Currentversion\Appmodel\Statemanager
       name: AllowSharedLocalAppData
       data: 0
@@ -1589,7 +1589,7 @@
       - automated
 
 - name: "18.9.6.1 | PATCH | Ensure Allow Microsoft accounts to be optional is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: MSAOptional
       data: 1
@@ -1603,7 +1603,7 @@
       - automated
 
 - name: "18.9.8.1 | PATCH | Ensure Disallow Autoplay for non-volume devices is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Explorer
       name: NoAutoplayfornonVolume
       data: 1
@@ -1617,7 +1617,7 @@
       - automated
 
 - name: "18.9.8.2 | PATCH | Ensure Set the default behavior for AutoRun is set to Enabled Do not execute any autorun commands"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoAutorun
       data: 1
@@ -1631,7 +1631,7 @@
       - automated
 
 - name: "18.9.8.3 | PATCH | Ensure Turn off Autoplay is set to Enabled All drives"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoDriveTypeAutoRun
       data: 255
@@ -1645,7 +1645,7 @@
       - automated
 
 - name: "18.9.10.1.1 | PATCH | Ensure Configure enhanced anti-spoofing is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Biometrics\Facialfeatures
       name: EnhancedAntiSpoofing
       data: 1
@@ -1659,7 +1659,7 @@
       - automated
 
 - name: "18.9.12.1 | PATCH | Ensure Allow Use of Camera is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Camera
       name: AllowCamera
       data: 1
@@ -1673,7 +1673,7 @@
       - automated
 
 - name: "18.9.14.1 | PATCH | Ensure Turn off cloud consumer account state content is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Cloudcontent
       name: DisableConsumerAccountStateContent
       data: 1
@@ -1687,7 +1687,7 @@
       - manual
 
 - name: "18.9.14.2 | PATCH | Ensure Turn off Microsoft consumer experiences is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Cloudcontent
       name: DisableWindowsConsumerFeatures
       data: 1
@@ -1701,7 +1701,7 @@
       - automated
 
 - name: "18.9.15.1 | PATCH | Ensure Require pin for pairing is set to Enabled First Time OR Enabled Always"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\Connect
       name: RequirePinForPairing
       data: "{{ win22cis_require_pin_pairing }}"
@@ -1715,7 +1715,7 @@
       - automated
 
 - name: "18.9.16.1 | PATCH | Ensure Do not display the password reveal button is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Credui
       name: DisablePasswordReveal
       data: 1
@@ -1729,7 +1729,7 @@
       - automated
 
 - name: "18.9.16.2 | PATCH | Ensure Enumerate administrator accounts on elevation is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Credui
       name: EnumerateAdministrators
       data: 0
@@ -1743,7 +1743,7 @@
       - automated
 
 - name: "18.9.17.1 | PATCH | Ensure Allow Diagnostic Data is set to Enabled Diagnostic data off (not recommended) or Enabled Send required diagnostic data"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Datacollection
       name: AllowTelemetry
       data: "{{ win22cis_diag_data }}"
@@ -1757,7 +1757,7 @@
       - automated
 
 - name: "18.9.17.2 | PATCH | Ensure Configure Authenticated Proxy usage for the Connected User Experience and Telemetry service is set to Enabled Disable Authenticated Proxy usage"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Datacollection
       name: DisableEnterpriseAuthProxy
       data: 0
@@ -1771,7 +1771,7 @@
       - automated
 
 - name: "18.9.17.3 | PATCH | Ensure Disable OneSettings Downloads is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Datacollection
       name: DisableOneSettingsDownloads
       data: 1
@@ -1785,7 +1785,7 @@
       - automated
 
 - name: "18.9.17.4 | PATCH | Ensure Do not show feedback notifications is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Datacollection
       name: DoNotShowFeedbackNotifications
       data: 1
@@ -1799,7 +1799,7 @@
       - automated
 
 - name: "18.9.17.5 | PATCH | Ensure Enable OneSettings Auditing is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Datacollection
       name: EnableOneSettingsAuditing
       data: 1
@@ -1813,7 +1813,7 @@
       - automated
 
 - name: "18.9.17.6 | PATCH | Ensure Limit Diagnostic Log Collection is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Datacollection
       name: LimitDiagnosticLogCollection
       data: 1
@@ -1827,7 +1827,7 @@
       - automated
 
 - name: "18.9.17.7 | PATCH | Ensure Limit Dump Collection is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Datacollection
       name: LimitDumpCollection
       data: 1
@@ -1841,7 +1841,7 @@
       - automated
 
 - name: "18.9.17.8 | PATCH | Ensure Toggle user control over Insider builds is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Previewbuilds
       name: AllowBuildPreview
       data: 0
@@ -1855,7 +1855,7 @@
       - automated
 
 - name: "18.9.27.1.1 | PATCH | Ensure Application Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
       name: Retention
       data: 0
@@ -1869,7 +1869,7 @@
       - automated
 
 - name: "18.9.27.1.2 | PATCH | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Application
       name: MaxSize
       data: "{{ win22cis_elm_applog_max_size }}"
@@ -1883,7 +1883,7 @@
       - automated
 
 - name: "18.9.27.2.1 | PATCH | Ensure Security Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Security
       name: Retention
       data: 0
@@ -1897,7 +1897,7 @@
       - automated
 
 - name: "18.9.27.2.2 | PATCH | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Security
       name: MaxSize
       data: "{{ win22cis_elm_seclog_max_size }}"
@@ -1911,7 +1911,7 @@
       - automated
 
 - name: "18.9.27.3.1 | PATCH | Ensure Setup Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Setup
       name: Retention
       data: 0
@@ -1925,7 +1925,7 @@
       - automated
 
 - name: "18.9.27.3.2 | PATCH | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Setup
       name: MaxSize
       data: "{{ win22cis_elm_setup_max_size }}"
@@ -1939,7 +1939,7 @@
       - automated
 
 - name: "18.9.27.4.1 | PATCH | Ensure System Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\System
       name: Retention
       data: 0
@@ -1953,7 +1953,7 @@
       - automated
 
 - name: "18.9.27.4.2 | PATCH | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\System
       name: MaxSize
       data: "{{ win22cis_elm_syslog_max_size }}"
@@ -1967,7 +1967,7 @@
       - automated
 
 - name: "18.9.31.2 | PATCH | Ensure Turn off Data Execution Prevention for Explorer is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Explorer
       name: NoDataExecutionPrevention
       data: 0
@@ -1981,7 +1981,7 @@
       - automated
 
 - name: "18.9.31.3 | PATCH | Ensure Turn off heap termination on corruption is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Explorer
       name: NoHeapTerminationOnCorruption
       data: 0
@@ -1995,7 +1995,7 @@
       - automated
 
 - name: "18.9.31.4 | PATCH | Ensure Turn off shell protocol protected mode is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: PreXPSP2ShellProtocolBehavior
       data: 0
@@ -2009,7 +2009,7 @@
       - automated
 
 - name: "18.9.41.1| PATCH | Ensure Turn off location is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Locationandsensors
       name: DisableLocation
       data: 1
@@ -2023,7 +2023,7 @@
       - automated
 
 - name: "18.9.45.1 | PATCH | Ensure Allow Message Service Cloud Sync is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Messaging
       name: AllowMessageSync
       data: 0
@@ -2037,7 +2037,7 @@
       - automated
 
 - name: "18.9.46.1 | PATCH | Ensure Block all consumer Microsoft account user authentication is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\MicrosoftAccount
       name: DisableUserAuth
       data: 1
@@ -2051,7 +2051,7 @@
       - automated
 
 - name: "18.9.47.4.1 | PATCH | Ensure Configure local setting override for reporting to Microsoft MAPS is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
       name: LocalSettingOverrideSpynetReporting
       data: 0
@@ -2065,7 +2065,7 @@
       - automated
 
 - name: "18.9.47.4.2 | PATCH | Ensure Join Microsoft MAPS is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
       name: SpynetReporting
       data: 0
@@ -2079,7 +2079,7 @@
       - automated
 
 - name: "18.9.47.5.1.1 | PATCH | Ensure Configure Attack Surface Reduction rules is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR
       name: ExploitGuard_ASR_Rules
       data: 1
@@ -2093,7 +2093,7 @@
       - automated
 
 - name: "18.9.47.5.1.2 | PATCH | Ensure Configure Attack Surface Reduction rules Set the state for each ASR rule is configured"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules
       name: "{{ item }}"
       data: 1
@@ -2119,7 +2119,7 @@
       - automated
 
 - name: "18.9.47.5.3.1 | PATCH | Ensure Prevent users and apps from accessing dangerous websites is set to Enabled Block"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Network Protection
       name: EnableNetworkProtection
       data: 1
@@ -2133,7 +2133,7 @@
       - automated
 
 - name: "18.9.47.6.1 | PATCH | Ensure Enable file hash computation feature is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\MpEngine
       name: EnableFileHashComputation
       data: 1
@@ -2147,7 +2147,7 @@
       - automated
 
 - name: "18.9.47.9.1 | PATCH | Ensure Scan all downloaded files and attachments is set to Enabled'"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableIOAVProtection
       data: 0
@@ -2161,7 +2161,7 @@
       - automated
 
 - name: "18.9.47.9.2 | PATCH | Ensure Scan Turn off real-time protection is set to is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableRealtimeMonitoring
       data: 1
@@ -2175,7 +2175,7 @@
       - automated
 
 - name: "18.9.47.9.3 | PATCH | Ensure Scan Turn on behavior monitoring is set to is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableBehaviorMonitoring
       data: 1
@@ -2189,7 +2189,7 @@
       - automated
 
 - name: "18.9.47.9.4 | PATCH | Ensure Scan Turn on script scanning is set to is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableScriptScanning
       data: 1
@@ -2203,7 +2203,7 @@
       - automated
 
 - name: "18.9.47.11.1 | PATCH | Ensure Configure Watson events is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableGenericRePorts
       data: 1
@@ -2217,7 +2217,7 @@
       - automated
 
 - name: "18.9.47.12.1 | PATCH | Ensure Scan removable drives is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Scan
       name: DisableRemovableDriveScanning
       data: 0
@@ -2231,7 +2231,7 @@
       - automated
 
 - name: "18.9.47.12.2 | PATCH | Ensure Turn on e-mail scanning is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Scan
       name: DisableEmailScanning
       data: 0
@@ -2245,7 +2245,7 @@
       - automated
 
 - name: "18.9.47.15 | PATCH | Ensure Configure detection for potentially unwanted applications is set to Enabled Block"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender
       name: PUAProtection
       data: 1
@@ -2259,7 +2259,7 @@
       - automated
 
 - name: "18.9.47.16 | PATCH | Ensure Turn off Windows Defender AntiVirus is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender
       name: DisableAntiSpyware
       data: 0
@@ -2273,7 +2273,7 @@
       - automated
 
 - name: "18.9.58.1 | PATCH | Ensure Prevent the usage of OneDrive for file storage is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Onedrive
       name: DisableFileSyncNGSC
       data: 1
@@ -2287,7 +2287,7 @@
       - automated
 
 - name: "18.9.64.1 | PATCH | Ensure Turn off Push To Install service is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\PushToInstall
       name: DisablePushToInstall
       data: 1
@@ -2301,7 +2301,7 @@
       - automated
 
 - name: "18.9.65.2.2 | PATCH | Ensure Do not allow passwords to be saved is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: DisablePasswordSaving
       data: 1
@@ -2315,7 +2315,7 @@
       - automated
 
 - name: "18.9.65.3.2.1 | PATCH | Ensure Restrict Remote Desktop Services users to a single Remote Desktop Services session is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fSingleSessionPerUser
       data: 1
@@ -2329,7 +2329,7 @@
       - automated
 
 - name: "18.9.65.3.3.1 | PATCH | Ensure Allow UI Automation redirection is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: EnableUiaRedirection
       data: 1
@@ -2343,7 +2343,7 @@
       - automated
 
 - name: "18.9.65.3.3.2 | PATCH | Ensure Do not allow COM port redirection is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fDisableCcm
       data: 1
@@ -2357,7 +2357,7 @@
       - automated
 
 - name: "18.9.65.3.3.3 | PATCH | Ensure Do not allow drive redirection is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fDisableCdm
       data: 1
@@ -2371,7 +2371,7 @@
       - automated
 
 - name: "18.9.65.3.3.4 | PATCH | Ensure Do not allow location redirection is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fDisableLocationRedir
       data: 1
@@ -2384,7 +2384,7 @@
       - automated
 
 - name: "18.9.65.3.3.5 | PATCH | Ensure Do not allow LPT port redirection is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fDisableLPT
       data: 1
@@ -2398,7 +2398,7 @@
       - automated
 
 - name: "18.9.65.3.3.6 | PATCH | Ensure Do not allow supported Plug and Play device redirection is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fDisablePNPRedir
       data: 1
@@ -2412,7 +2412,7 @@
       - automated
 
 - name: "18.9.65.3.9.1 | PATCH | Ensure Always prompt for password upon connection is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fPromptForPassword
       data: 1
@@ -2426,7 +2426,7 @@
       - automated
 
 - name: "18.9.65.3.9.2 | PATCH | Ensure Require secure RPC communication is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fEncryptRPCTraffic
       data: 1
@@ -2440,7 +2440,7 @@
       - automated
 
 - name: "18.9.65.3.9.3 | PATCH | Ensure Require use of specific security layer for remote RDP connections is set to Enabled SSL"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: SecurityLayer
       data: 2
@@ -2454,7 +2454,7 @@
       - automated
 
 - name: "18.9.65.3.9.4 | PATCH | Ensure Require user authentication for remote connections by using Network Level Authentication is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: UserAuthentication
       data: 1
@@ -2468,7 +2468,7 @@
       - automated
 
 - name: "18.9.65.3.9.5 | PATCH | Ensure Set client connection encryption level is set to Enabled High Level"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: MinEncryptionLevel
       data: 3
@@ -2482,7 +2482,7 @@
       - automated
 
 - name: "18.9.65.3.10.1 | PATCH | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: MaxIdleTime
       data: "{{ win22cis_terminal_max_idle_time }}"
@@ -2496,7 +2496,7 @@
       - automated
 
 - name: "18.9.65.3.10.2 | PATCH | Ensure Set time limit for disconnected sessions is set to Enabled 1 minute"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: MaxDisconnectionTime
       data: 60000
@@ -2510,7 +2510,7 @@
       - automated
 
 - name: "18.9.65.3.11.1 | PATCH | Ensure Do not delete temp folders upon exit is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: DeleteTempDirsOnExit
       data: 1
@@ -2524,7 +2524,7 @@
       - automated
 
 - name: "18.9.65.3.11.2 | PATCH | Ensure Do not use temporary folders per session is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: PerSessionTempDir
       data: 1
@@ -2538,7 +2538,7 @@
       - automated
 
 - name: "18.9.66.1 | PATCH | Ensure Prevent downloading of enclosures is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
       name: DisableEnclosureDownload
       data: 1
@@ -2552,7 +2552,7 @@
       - automated
 
 - name: "18.9.67.2 | PATCH | Ensure Allow Cloud Search is set to Enabled Disable Cloud Search"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windows Search
       name: AllowCloudSearch
       data: 0
@@ -2566,7 +2566,7 @@
       - automated
 
 - name: "18.9.67.3 | PATCH | Ensure Allow indexing of encrypted files is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windows Search
       name: AllowIndexingEncryptedStoresOrItems
       data: 0
@@ -2580,7 +2580,7 @@
       - automated
 
 - name: "18.9.72.1 | PATCH | Ensure Turn off KMS Client Online AVS Validation is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Currentversion\Software Protection Platform
       name: NoGenTicket
       data: 1
@@ -2596,14 +2596,14 @@
 - name: "18.9.85.1.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass"
   block:
       - name: "18.9.85.1.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass | EnableSmartScreen"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\System
             name: EnableSmartScreen
             data: 1
             type: dword
 
       - name: "18.9.85.1.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass | ShellSmartScreenLevel"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\System
             name: ShellSmartScreenLevel
             data: Block
@@ -2617,7 +2617,7 @@
       - automated
 
 - name: "18.9.89.1 | PATCH | Ensure Allow suggested apps in Windows Ink Workspace is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
       name: AllowSuggestedAppsInWindowsInkWorkspace
       data: 0
@@ -2631,7 +2631,7 @@
       - automated
 
 - name: "18.9.89.2 | PATCH | Ensure Allow Windows Ink Workspace is set to Enabled On but disallow access above lock OR Disabled but not Enabled On"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\WindowsInkWorkspace
       name: AllowWindowsInkWorkspace
       data: "{{ win22cis_allow_ink_workspace }}"
@@ -2645,7 +2645,7 @@
       - automated
 
 - name: "18.9.90.1 | PATCH | Ensure Allow user control over installs is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Installer
       name: EnableUserControl
       data: 0
@@ -2659,7 +2659,7 @@
       - automated
 
 - name: "18.9.90.2 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Installer
       name: AlwaysInstallElevated
       data: 0
@@ -2673,7 +2673,7 @@
       - automated
 
 - name: "18.9.90.3 | PATCH | Ensure Prevent Internet Explorer security prompt for Windows Installer scripts is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Installer
       name: SafeForScripting
       data: 0
@@ -2687,7 +2687,7 @@
       - automated
 
 - name: "18.9.91.1 | PATCH | Ensure Sign-in last interactive user automatically after a restart is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: DisableAutomaticRestartSignOn
       data: 1
@@ -2701,7 +2701,7 @@
       - automated
 
 - name: "18.9.100.1 | PATCH | Ensure Turn on PowerShell Script Block Logging is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Powershell\Scriptblocklogging
       name: EnableScriptBlockLogging
       data: 1
@@ -2715,7 +2715,7 @@
       - automated
 
 - name: "18.9.100.2 | PATCH | Ensure Turn on PowerShell Transcription is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Powershell\Transcription
       name: EnableTranscripting
       data: 0
@@ -2729,7 +2729,7 @@
       - automated
 
 - name: "18.9.102.1.1 | PATCH | Ensure Allow Basic authentication is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Client
       name: AllowBasic
       data: 0
@@ -2744,7 +2744,7 @@
       - automated
 
 - name: "18.9.102.1.2 | PATCH | Ensure Allow unencrypted traffic is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Client
       name: AllowUnencryptedTraffic
       data: 0
@@ -2759,7 +2759,7 @@
       - automated
 
 - name: "18.9.102.1.3 | PATCH | Ensure Disallow Digest authentication is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Client
       name: AllowDigest
       data: 0
@@ -2773,7 +2773,7 @@
       - automated
 
 - name: "18.9.102.2.1 | PATCH | Ensure Allow Basic authentication is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service
       name: AllowBasic
       data: 0
@@ -2789,7 +2789,7 @@
 
 # This control will have to be set to Enabled (1) to allow for continued remote management via Ansible following machine restart
 - name: "18.9.102.2.2 | PATCH | Ensure Allow remote server management through WinRM is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service
       name: AllowAutoConfig
       data: 1
@@ -2804,7 +2804,7 @@
       - automated
 
 - name: "18.9.102.2.3 | PATCH | Ensure Allow unencrypted traffic is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service
       name: AllowUnencryptedTraffic
       data: 0
@@ -2819,7 +2819,7 @@
       - automated
 
 - name: "18.9.102.2.4 | PATCH | Ensure Disallow WinRM from storing RunAs credentials is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service
       name: DisableRunAs
       data: 1
@@ -2834,7 +2834,7 @@
 
 # This control will have to be set to Enabled (1) to allow for continued remote management via Ansible following machine restart
 - name: "18.9.103.1 | PATCH | Ensure Allow Remote Shell Access is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service\Winrs
       name: AllowRemoteShellAccess
       data: 1
@@ -2849,7 +2849,7 @@
       - automated
 
 - name: "18.9.105.2.1 | PATCH | Ensure Prevent users from modifying settings is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender Security Center\App and Browser protection
       name: DisallowExploitProtectionOverride
       data: 1
@@ -2863,7 +2863,7 @@
       - automated
 
 - name: "18.9.108.1.1 | PATCH | Ensure No auto-restart with logged on users for scheduled automatic updates installations is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windowsupdate\Au
       name: NoAutoRebootWithLoggedOnUsers
       data: 0
@@ -2877,7 +2877,7 @@
       - automated
 
 - name: "18.9.108.2.1 | PATCH | Ensure Configure Automatic Updates is set to Enabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windowsupdate\Au
       name: NoAutoUpdate
       data: 0
@@ -2891,7 +2891,7 @@
       - automated
 
 - name: "18.9.108.2.2 | PATCH | Ensure Configure Automatic Updates Scheduled install day is set to 0 - Every day"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windowsupdate\Au
       name: ScheduledInstallDay
       data: 0
@@ -2905,7 +2905,7 @@
       - automated
 
 - name: "18.9.108.4.1 | PATCH | Ensure Manage preview builds is set to Disabled"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
       name: ManagePreviewBuildsPolicyValue
       data: 1
@@ -2921,14 +2921,14 @@
 - name: "18.9.108.4.2 | PATCH | Ensure Select when Preview Builds and Feature Updates are received is set to Enabled 180 or more days"
   block:
       - name: "18.9.108.4.2 | PATCH | Ensure Select when Preview Builds and Feature Updates are received is set to Enabled 180 or more days | DeferFeatureUpdates"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
             name: DeferFeatureUpdates
             data: 1
             type: dword
 
       - name: "18.9.108.4.2 | PATCH | Ensure Select when Preview Builds and Feature Updates are received is set to Enabled 180 or more days | DeferFeatureUpdatesPeriodInDays"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
             name: DeferFeatureUpdatesPeriodInDays
             data: "{{ win22cis_defer_feature_update_period }}"
@@ -2944,14 +2944,14 @@
 - name: "18.9.108.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days"
   block:
       - name: "18.9.108.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days | DeferQualityUpdates"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate
             name: DeferQualityUpdates
             data: 1
             type: dword
 
       - name: "18.9.108.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days | DeferQualityUpdatesPeriodInDays"
-        win_regedit:
+        ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate
             name: DeferQualityUpdatesPeriodInDays
             data: 0
