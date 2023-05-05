@@ -635,6 +635,7 @@
       name: DisabledComponents
       data: 255
       type: dword
+  notify: reboot_windows
   when:
       - rule_18_5_19_2_1
   tags:
@@ -735,6 +736,7 @@
       name: RegisterSpoolerRemoteRpcEndPoint
       data: 2
       type: dword
+  notify: restart print spooler
   when:
       - rule_18_6_1
   tags:
@@ -1682,7 +1684,7 @@
       - level1-domaincontroller
       - level1-memberserver
       - rule_18.9.14.1
-      - automated
+      - manual
 
 - name: "18.9.14.2 | PATCH | Ensure Turn off Microsoft consumer experiences is set to Enabled"
   win_regedit:
@@ -1954,7 +1956,7 @@
   win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\System
       name: MaxSize
-      data: 65538
+      data: "{{ win22cis_elm_syslog_max_size }}"
       type: dword
   when:
       - rule_18_9_27_4_2
@@ -2144,11 +2146,11 @@
       - rule_18.9.47.6.1
       - automated
 
-- name: "18.9.47.9.1 | PATCH | Ensure Scan all downloaded files and attachments is set to Disabled"
+- name: "18.9.47.9.1 | PATCH | Ensure Scan all downloaded files and attachments is set to Enabled'"
   win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableIOAVProtection
-      data: 1
+      data: 0
       type: dword
   when:
       - rule_18_9_47_9_1
@@ -2172,7 +2174,7 @@
       - rule_18.9.47.9.2
       - automated
 
-- name: "18.9.47.9.3 | PATCH | Ensure Scan Turn on behavior monitoring is set to is set to enabled"
+- name: "18.9.47.9.3 | PATCH | Ensure Scan Turn on behavior monitoring is set to is set to Enabled"
   win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableBehaviorMonitoring
@@ -2186,7 +2188,7 @@
       - rule_18.9.47.9.3
       - automated
 
-- name: "18.9.47.9.4 | PATCH | Ensure Scan Turn on script scanning is set to is set to enabled"
+- name: "18.9.47.9.4 | PATCH | Ensure Scan Turn on script scanning is set to is set to Enabled"
   win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableScriptScanning
@@ -2483,7 +2485,7 @@
   win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: MaxIdleTime
-      data: 3600000
+      data: "{{ win22cis_terminal_max_idle_time }}"
       type: dword
   when:
       - rule_18_9_65_3_10_1
@@ -2497,7 +2499,7 @@
   win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: MaxDisconnectionTime
-      data: 28800000
+      data: 60000
       type: dword
   when:
       - rule_18_9_65_3_10_2
