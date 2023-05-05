@@ -462,7 +462,7 @@
 
 - name: "17.8.1 | PATCH | Ensure Audit Sensitive Privilege Use is set to Success and Failure"
   community.windows.win_audit_policy_system:
-      subcategory: Sensitive Privilege Us
+      subcategory: Sensitive Privilege Use
       audit_type: success, failure
   when:
       - rule_17_8_1
