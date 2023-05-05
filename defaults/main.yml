@@ -657,6 +657,11 @@ win22cis_elm_setup_max_size: 32768
 # To conform to CIS standards this value should be 32768 or higher
 win22cis_elm_syslog_max_size: 32768
 
+# 18.9.65.3.10.1
+# win22cis_terminal_max_idle_time is the time limit for active but idle remote desktop services connections in seconds
+# This value needs to be 15 minutes (900000) or less, but not zero (0) to conform to CIS standards
+win22cis_terminal_max_idle_time: 900000
+
 # 18.9.89.2
 # win22cis_allow_ink_workspace is the registry key value for the allowing windows ink workspace
 # To conform to CIS stadnards this value should be a 0 or 1
