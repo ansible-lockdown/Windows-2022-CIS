@@ -14,11 +14,11 @@
 ![Ansible Galaxy Quality](https://img.shields.io/ansible/quality/56324?label=Quality&&logo=ansible)
 ![Discord Badge](https://img.shields.io/discord/925818806838919229?logo=discord)
 
-![Devel Build Status](https://img.shields.io/github/actions/workflow/status/ansible-lockdown/Windows-2022-CIS/linux_benchmark_testing.yml?label=Devel%20Build%20Status)
+![Devel Build Status](https://img.shields.io/github/actions/workflow/status/ansible-lockdown/Windows-2022-CIS/testing_pipeline.yml?label=Devel%20Build%20Status)
 ![Devel Commits](https://img.shields.io/github/commit-activity/m/ansible-lockdown/Windows-2022-CIS/devel?color=dark%20green&label=Devel%20Branch%20commits)
 
 ![Release Branch](https://img.shields.io/badge/Release%20Branch-Main-brightgreen) 
-![Main Build Status](https://img.shields.io/github/actions/workflow/status/ansible-lockdown/Windows-2022-CIS/linux_benchmark_testing.yml?label=Build%20Status)
+![Main Build Status](https://img.shields.io/github/actions/workflow/status/ansible-lockdown/Windows-2022-CIS/testing_pipeline.yml?label=Build%20Status)
 ![Main Release Date](https://img.shields.io/github/release-date/ansible-lockdown/Windows-2022-CIS?label=Release%20Date)
 ![Release Tag](https://img.shields.io/github/v/tag/ansible-lockdown/Windows-2022-CIS?label=Release%20Tag&&color=success)
 
