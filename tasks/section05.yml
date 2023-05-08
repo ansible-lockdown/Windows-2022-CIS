@@ -3,14 +3,13 @@
 - name: |
     "5.1 | PATCH | Ensure 'Print Spooler (Spooler)' is set to 'Disabled' (DC only)"
     "5.2 | PATCH | Ensure 'Print Spooler (Spooler)' is set to 'Disabled' ( MS only)"
-  win_regedit:
+  ansible.windows.win_regedit:
       path: HKLM:\System\CurrentControlSet\Services\Spooler
       name: Start
       data: 0
       type: dword
   when:
       - rule_5_1
-      - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
       - level1-memberserver

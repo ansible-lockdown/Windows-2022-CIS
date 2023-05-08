@@ -1,4 +1,5 @@
 ---
+
 galaxy_info:
     author: "Mark Bolwell, George Nalen"
     description: "Ansible role to apply Windows Server 2022 CIS Benchmark"
@@ -6,7 +7,7 @@ galaxy_info:
     license: MIT
     namespace: mindpointgroup
     role_name: windows_2022_cis
-    min_ansible_version: 2.9.0
+    min_ansible_version: 2.10.0
     platforms:
         - name: Windows
           versions:
@@ -14,10 +15,13 @@ galaxy_info:
     galaxy_tags:
         - system
         - security
-        - stig
+        - cis
         - hardening
         - microsoft
         - windows
-    collections:
-        - community.windows
+        - compliance
+collections:
+    - community.windows
+    - ansible.builtin
+    - ansible.windows
 dependencies: []

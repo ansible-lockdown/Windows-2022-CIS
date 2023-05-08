@@ -1,7 +1,7 @@
 ---
 
 - name: Gather distribution info
-  setup:
+  ansible.builtin.setup:
       gather_subset: distribution,!all,!min
   when:
       - ansible_distribution is not defined
@@ -9,7 +9,7 @@
       - always
 
 - name: Check OS version and family
-  assert:
+  ansible.builtin.assert:
       that:
           - ansible_os_family == 'Windows'
           - ansible_distribution | regex_search('(Microsoft Windows Server 2022)')
@@ -19,71 +19,72 @@
       - always
 
 - name: Check ansible version
-  assert:
+  ansible.builtin.assert:
       that: ansible_version.full is version_compare(min_ansible_version, '>=')
       msg: You must use Ansible {{ min_ansible_version }} or greater
   tags:
       - always
 
 - name: Get Windows installation type
-  win_reg_stat:
+  ansible.windows.win_reg_stat:
       path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion
       name: InstallationType
   register: get_windows_installation_type
 
 - name: Set Windows installation type
-  set_fact:
+  ansible.builtin.set_fact:
       windows_installation_type: "{{ get_windows_installation_type.value | default('') }}"
 
 - name: Include the preliminary tasks
-  include_tasks: prelim.yml
+  ansible.builtin.import_tasks: prelim.yml
   tags:
       - prelim_tasks
 
 - name: Execute the section 1 tasks
-  import_tasks: section01.yml
+  ansible.builtin.import_tasks: section01.yml
   when:
       - section01_patch
   tags:
       - section01
 
 - name: Execute the section 2 tasks
-  import_tasks: section02.yml
+  ansible.builtin.import_tasks: section02.yml
   when:
       - section02_patch
   tags:
       - section02
 
 - name: Execute the section 5 tasks
-  import_tasks: section05.yml
+  ansible.builtin.import_tasks: section05.yml
   when:
       - section05_patch
   tags:
       - section05
 
 - name: Execute the section 9 tasks
-  import_tasks: section09.yml
+  ansible.builtin.import_tasks: section09.yml
   when:
       - section09_patch
   tags:
       - section09
 
 - name: Execute the section 17 tasks
-  import_tasks: section17.yml
+  ansible.builtin.import_tasks: section17.yml
   when:
       - section17_patch
   tags:
       - section17
 
 - name: Execute the section 18 tasks
-  import_tasks: section18.yml
+  ansible.builtin.import_tasks: section18.yml
   when:
       - section18_patch
   tags:
       - section18
 
 - name: Execute the section 19 tasks
-  import_tasks: section19.yml
-  when: section19_patch
+  ansible.builtin.import_tasks: section19.yml
+  when:
+      - section19_patch
   tags:
       - section19
