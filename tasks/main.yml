@@ -30,10 +30,14 @@
       path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion
       name: InstallationType
   register: get_windows_installation_type
+  tags:
+      - always
 
 - name: Set Windows installation type
   ansible.builtin.set_fact:
       windows_installation_type: "{{ get_windows_installation_type.value | default('') }}"
+  tags:
+      - always
 
 - name: Include the preliminary tasks
   ansible.builtin.import_tasks: prelim.yml
