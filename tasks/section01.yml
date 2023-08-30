@@ -1,7 +1,7 @@
 ---
 
 - name: "1.1.1 | PATCH | Ensure Enforce password history is set to 24 or more passwords"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: passwordhistorysize
       value: "{{ win22cis_passwordhistorysize }}"
@@ -15,7 +15,7 @@
       - passwords
 
 - name: "1.1.2 | PATCH | Ensure Maximum password age is set to 365 or fewer days but not 0"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: MaximumPasswordAge
       value: "{{ win22cis_maximumpasswordage }}"
@@ -29,7 +29,7 @@
       - passwords
 
 - name: "1.1.3 | PATCH | Ensure Minimum password age is set to 1 or more days"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: MinimumPasswordAge
       value: "{{ win22cis_minimumpasswordage }}"
@@ -43,7 +43,7 @@
       - passwords
 
 - name: "1.1.4 | PATCH | Ensure Minimum password length is set to 14 or more characters"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: MinimumPasswordLength
       value: "{{ win22cis_minimumpasswordlength }}"
@@ -57,7 +57,7 @@
       - passwords
 
 - name: "1.1.5 | PATCH | Ensure Password must meet complexity requirements is set to Enabled"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: PasswordComplexity
       value: 1
@@ -86,7 +86,7 @@
       - passwords
 
 - name: "1.1.7 | PATCH | Ensure Store passwords using reversible encryption is set to Disabled"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: ClearTextPassword
       value: "0"
@@ -101,7 +101,7 @@
 
 # This rule must be applied first to make rule_1.2.1 and rule_1.2.3 applicable
 - name: "1.2.2 | PATCH | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempts but not 0"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: LockoutBadCount
       value: "{{ win22cis_lockoutbadcount }}"
@@ -116,7 +116,7 @@
 
 # Speelman | added because of this error "Failed to import secedit.ini file from C:\\Users\\vagrant\\AppData\\Local\\Temp\\tmp81F3.tmp
 - name: "1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: LockoutDuration
       value: "{{ win22cis_lockoutduration }}"
@@ -130,7 +130,7 @@
       - account
 
 - name: "1.2.3 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: ResetLockoutCount
       value: "{{ win22cis_resetlockoutcount }}"
