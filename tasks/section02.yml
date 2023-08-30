@@ -676,7 +676,7 @@
       - automated
 
 - name: "2.3.1.1 | PATCH | Ensure Accounts Administrator account status is set to Disabled MS only"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: EnableAdminAccount
       value: 0
@@ -703,7 +703,7 @@
       - automated
 
 - name: "2.3.1.3 | PATCH | Ensure Accounts Guest account status is set to Disabled MS only"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: EnableGuestAccount
       value: 0
@@ -730,7 +730,7 @@
       - automated
 
 - name: "2.3.1.5 | PATCH | Configure Accounts Rename administrator account"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: newadministratorname
       value: "{{ win22cis_admin_username }}"
@@ -744,7 +744,7 @@
       - automated
 
 - name: "2.3.1.6 | PATCH | Configure Accounts Rename guest account"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: NewGuestName
       value: "{{ win22cis_guest_username }}"
@@ -1211,7 +1211,7 @@
       - automated
 
 - name: "2.3.10.1 | PATCH | Ensure Network access Allow anonymous SIDName translation is set to Disabled"
-  ansible.builtin.win_security_policy:
+  community.windows.win_security_policy:
       section: System Access
       key: LSAAnonymousNameLookup
       value: 0

@@ -1,5 +1,11 @@
 ---
 
+- name: Display Banner
+  ansible.builtin.debug:
+      msg: "{{ lockdown_banner.split('\n') }}"
+  tags:
+      - always
+
 - name: Gather distribution info
   ansible.builtin.setup:
       gather_subset: distribution,!all,!min
@@ -92,3 +98,10 @@
       - section19_patch
   tags:
       - section19
+
+- name: If Warnings found Output count and control IDs affected
+  ansible.builtin.debug:
+      msg:
+          - "You have {{ warn_count }} Warning(s) that require investigation(s). Their IDs are listed below:"
+          - "{{ warn_control_list }}"
+  when: warn_count != 0
