@@ -512,6 +512,12 @@ win22cis_resetlockoutcount: 15
 # is_hyperv_installed is Hyper-V installed
 win22cis_hyperv_installed: false
 
+# 2.2.33
+# Window Manager\Window Manager Group only exists on non Core installations
+# windows_installation_type should be 'Server Core' for Core installations
+# This is a variable to determine if Windows Manager should be included in this step
+win22cis_increase_scheduling_priority_users: '{{ ["Administrators"] if (windows_installation_type=="Server Core") else (["Administrators","Window Manager\Window Manager Group"]) }}'
+
 # 2.3.1.5
 # win22cis_admin_username is the name the administrator account will be renamed to
 win22cis_admin_username: adminchangethis
