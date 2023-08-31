@@ -1032,7 +1032,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: LegalNoticeCaption
-      data: "{{ win22cis_legalnoticecaption }}"
+      data: "{{ win22cis_legal_notice_caption }}"
       type: string
   when:
       - rule_2_3_7_5
