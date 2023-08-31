@@ -4,7 +4,7 @@
   community.windows.win_security_policy:
       section: System Access
       key: passwordhistorysize
-      value: "{{ win22cis_passwordhistorysize }}"
+      value: "{{ win22cis_max_passwords_saved }}"
   when:
       - win22cis_rule_1_1_1
   tags:
@@ -18,7 +18,7 @@
   community.windows.win_security_policy:
       section: System Access
       key: MaximumPasswordAge
-      value: "{{ win22cis_maximumpasswordage }}"
+      value: "{{ win22cis_maximum_password_age }}"
   when:
       - win22cis_rule_1_1_2
   tags:
@@ -32,7 +32,7 @@
   community.windows.win_security_policy:
       section: System Access
       key: MinimumPasswordAge
-      value: "{{ win22cis_minimumpasswordage }}"
+      value: "{{ win22cis_minimum_password_age }}"
   when:
       - win22cis_rule_1_1_3
   tags:
@@ -46,7 +46,7 @@
   community.windows.win_security_policy:
       section: System Access
       key: MinimumPasswordLength
-      value: "{{ win22cis_minimumpasswordlength }}"
+      value: "{{ win22cis_minimum_password_length }}"
   when:
       - win22cis_rule_1_1_4
   tags:
@@ -102,7 +102,7 @@
 # We have found the order of tasks varies between cloud based instances and VM based instances.
 # The task below loads the control group in the correct order for cloud based systems
 - name:
-      “1.2.2 | PATCH | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempt(s), but not 0.
+      "1.2.2 | PATCH | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempt(s), but not 0.
        1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes
        1.2.3 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes."
   ansible.builtin.import_tasks: section01_cloud_lockout_order.yml
