@@ -1,6 +1,6 @@
 ---
 
-# vars file for .
+# vars file for Windows-2022-CIS
 
 # Used to control warning summary
 warn_control_list: ""
@@ -10,10 +10,10 @@ warn_count: 0
 lockdown_banner: "{{lookup('file', './templates/banner.txt')}}"
 
 # This will be changed to true if discovered.
-win19cis_cloud_based_system: false
+win22cis_cloud_based_system: false
 
 # These are default values that will be changed when the prelim
 # runs and finds the correct setting.
-win2019cis_is_standalone: false
-win2019cis_is_domain_controller: false
-win2019cis_is_domain_member: false
+win2022cis_is_standalone: false
+win2022cis_is_domain_controller: false
+win2022cis_is_domain_member: false

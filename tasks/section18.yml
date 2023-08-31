@@ -7,11 +7,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_1_1_1
+      - win22cis_rule_18_1_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.1.1.1
+      - win22cis_rule_18.1.1.1
       - automated
 
 - name: "18.1.1.2 | PATCH | Ensure Prevent enabling lock screen slide show is set to Enabled"
@@ -21,11 +21,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_1_1_2
+      - win22cis_rule_18_1_1_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.1.1.2
+      - win22cis_rule_18.1.1.2
       - automated
 
 - name: "18.1.2.2 | PATCH | Ensure Allow users to enable online speech recognition services is set to Disabled"
@@ -35,11 +35,11 @@
       data: "0"
       type: dword
   when:
-      - rule_18_1_2_2
+      - win22cis_rule_18_1_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.1.2.2
+      - win22cis_rule_18.1.2.2
       - automated
 
 - name: "18.1.3 | PATCH | Ensure Allow Online Tips is set to Disabled"
@@ -49,11 +49,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_1_3
+      - win22cis_rule_18_1_3
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.1.3
+      - win22cis_rule_18.1.3
       - automated
 
 - name: "18.2.1 | PATCH | Ensure LAPS AdmPwd GPO Extension  CSE is installed MS only"
@@ -63,11 +63,11 @@
       data: C:\Program Files\LAPS\CSE\AdmPwd.dll
       type: string
   when:
-      - rule_18_2_1
+      - win22cis_rule_18_2_1
       - ansible_windows_domain_role == "Member Server"
   tags:
       - level1-memberserver
-      - rule_18.2.1
+      - win22cis_rule_18.2.1
       - automated
 
 - name: "18.2.2 | PATCH | Ensure Do not allow password expiration time longer than required by policy is set to Enabled MS only"
@@ -77,11 +77,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_2_2
+      - win22cis_rule_18_2_2
       - ansible_windows_domain_role == "Member Server"
   tags:
       - level1-memberserver
-      - rule_18.2.2
+      - win22cis_rule_18.2.2
       - automated
 
 - name: "18.2.3 | PATCH | Ensure Enable Local Admin Password Management is set to Enabled MS only"
@@ -91,11 +91,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_2_3
+      - win22cis_rule_18_2_3
       - ansible_windows_domain_role == "Member Server"
   tags:
       - level1-memberserver
-      - rule_18.2.3
+      - win22cis_rule_18.2.3
       - automated
 
 - name: "18.2.4 | PATCH | Ensure Password Settings Password Complexity is set to Enabled Large letters  small letters  numbers  special characters MS only"
@@ -105,11 +105,11 @@
       data: 4
       type: dword
   when:
-      - rule_18_2_4
+      - win22cis_rule_18_2_4
       - ansible_windows_domain_role == "Member Server"
   tags:
       - level1-memberserver
-      - rule_18.2.4
+      - win22cis_rule_18.2.4
       - automated
 
 - name: "18.2.5 | PATCH | Ensure Password Settings Password Length is set to Enabled 15 or more MS only"
@@ -119,11 +119,11 @@
       data: "{{ win22cis_laps_passwordlength }}"
       type: dword
   when:
-      - rule_18_2_5
+      - win22cis_rule_18_2_5
       - ansible_windows_domain_role == "Member Server"
   tags:
       - level1-memberserver
-      - rule_18.2.5
+      - win22cis_rule_18.2.5
       - automated
 
 - name: "18.2.6 | PATCH | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only"
@@ -133,11 +133,11 @@
       data: "{{ win22cis_laps_passwordagedays }}"
       type: dword
   when:
-      - rule_18_2_6
+      - win22cis_rule_18_2_6
       - ansible_windows_domain_role == "Memmber Server"
   tags:
       - level1-memberserver
-      - rule_18.2.6
+      - win22cis_rule_18.2.6
       - automated
 
 - name: "18.3.1 | PATCH | Ensure Apply UAC restrictions to local accounts on network logons is set to Enabled MS only"
@@ -147,11 +147,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_3_1
+      - win22cis_rule_18_3_1
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-memberserver
-      - rule_18.3.1
+      - win22cis_rule_18.3.1
       - automated
 
 - name: "18.3.2 | PATCH | Ensure Configure SMB v1 client driver is set to Enabled Disable driver recommended"
@@ -161,11 +161,11 @@
       data: 4
       type: dword
   when:
-      - rule_18_3_2
+      - win22cis_rule_18_3_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.3.2
+      - win22cis_rule_18.3.2
       - automated
 
 - name: "18.3.3 | PATCH | Ensure Configure SMB v1 server is set to Disabled"
@@ -177,11 +177,11 @@
       state: present
   notify: reboot_windows
   when:
-      - rule_18_3_3
+      - win22cis_rule_18_3_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.3.3
+      - win22cis_rule_18.3.3
       - automated
 
 - name: "18.3.4 | PATCH | Ensure Enable Structured Exception Handling Overwrite Protection SEHOP is set to Enabled"
@@ -192,11 +192,11 @@
       type: dword
       state: present
   when:
-      - rule_18_3_4
+      - win22cis_rule_18_3_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.3.4
+      - win22cis_rule_18.3.4
       - automated
 
 - name: "18.3.5 | PATCH | Ensure Limits print driver installation to Administrators is set to Enabled"
@@ -206,11 +206,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_3_5
+      - win22cis_rule_18_3_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.3.5
+      - win22cis_rule_18.3.5
       - automated
 
 - name: "18.3.6 | PATCH | Ensure 'NetBT NodeType configuration' is set to 'Enabled: P-node recommended'"
@@ -221,11 +221,11 @@
       data: "{{ win22cis_netbt_nodetype }}"
       datatype: dword
   when:
-      - rule_18_3_6
+      - win22cis_rule_18_3_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.3.6
+      - win22cis_rule_18.3.6
       - automated
 
 - name: "18.3.7 | PATCH | Ensure WDigest Authentication is set to Disabled"
@@ -236,11 +236,11 @@
       data: 0
       datatype: dword
   when:
-      - rule_18_3_7
+      - win22cis_rule_18_3_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.3.7
+      - win22cis_rule_18.3.7
       - automated
 
 - name: "18.4.1 | PATCH | Ensure MSS AutoAdminLogon Enable Automatic Logon not recommended is set to Disabled"
@@ -251,11 +251,11 @@
       data: 0
       datatype: string
   when:
-      - rule_18_4_1
+      - win22cis_rule_18_4_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.1
+      - win22cis_rule_18.4.1
       - automated
 
 - name: "18.4.2 | PATCH | Ensure MSS DisableIPSourceRouting IPv6 IP source routing protection level protects against packet spoofing is set to Enabled Highest protection source routing is completely disabled"
@@ -266,11 +266,11 @@
       data: 2
       datatype: dword
   when:
-      - rule_18_4_2
+      - win22cis_rule_18_4_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.2
+      - win22cis_rule_18.4.2
       - automated
 
 - name: "18.4.3 | PATCH | Ensure MSS DisableIPSourceRouting IP source routing protection level protects against packet spoofing is set to Enabled Highest protection source routing is completely disabled"
@@ -281,11 +281,11 @@
       data: 2
       datatype: dword
   when:
-      - rule_18_4_3
+      - win22cis_rule_18_4_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.3
+      - win22cis_rule_18.4.3
       - automated
 
 - name: "18.4.4 | PATCH | Ensure MSS EnableICMPRedirect Allow ICMP redirects to override OSPF generated routes is set to Disabled"
@@ -296,11 +296,11 @@
       data: 0
       datatype: dword
   when:
-      - rule_18_4_4
+      - win22cis_rule_18_4_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.4
+      - win22cis_rule_18.4.4
       - automated
 
 - name: "18.4.5 | PATCH | Ensure MSS KeepAliveTime How often keep-alive packets are sent in milliseconds is set to Enabled 300000 or 5 minutes recommended"
@@ -311,11 +311,11 @@
       data: 300000
       datatype: dword
   when:
-      - rule_18_4_5
+      - win22cis_rule_18_4_5
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.4.5
+      - win22cis_rule_18.4.5
       - automated
 
 - name: "18.4.6 | PATCH | Ensure MSS NoNameReleaseOnDemand Allow the computer to ignore NetBIOS name release requests except from WINS servers is set to Enabled"
@@ -326,11 +326,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_4_6
+      - win22cis_rule_18_4_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.6
+      - win22cis_rule_18.4.6
       - automated
 
 - name: "18.4.7 | PATCH | Ensure MSS PerformRouterDiscovery Allow IRDP to detect and configure Default Gateway addresses could lead to DoS is set to Disabled"
@@ -341,11 +341,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_4_7
+      - win22cis_rule_18_4_7
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.4.7
+      - win22cis_rule_18.4.7
       - automated
 
 - name: "18.4.8 | PATCH | Ensure MSS SafeDllSearchMode Enable Safe DLL search mode recommended is set to Enabled"
@@ -356,11 +356,11 @@
       type: dword
       state: present
   when:
-      - rule_18_4_8
+      - win22cis_rule_18_4_8
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.8
+      - win22cis_rule_18.4.8
       - automated
 
 - name: "18.4.9 | PATCH | Ensure MSS ScreenSaverGracePeriod The time in seconds before the screen saver grace period expires 0 recommended is set to Enabled 5 or fewer seconds"
@@ -371,11 +371,11 @@
       type: string
       state: present
   when:
-      - rule_18_4_9
+      - win22cis_rule_18_4_9
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.9
+      - win22cis_rule_18.4.9
       - automated
 
 - name: "18.4.10 | PATCH | Ensure MSS TcpMaxDataRetransmissions IPv6 How many times unacknowledged data is retransmitted is set to Enabled 3"
@@ -385,11 +385,11 @@
       data: 3
       type: dword
   when:
-      - rule_18_4_10
+      - win22cis_rule_18_4_10
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.4.10
+      - win22cis_rule_18.4.10
       - automated
 
 - name: "18.4.11 | PATCH | Ensure MSS TcpMaxDataRetransmissions How many times unacknowledged data is retransmitted is set to Enabled 3"
@@ -399,11 +399,11 @@
       data: 3
       type: dword
   when:
-      - rule_18_4_11
+      - win22cis_rule_18_4_11
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.11
+      - win22cis_rule_18.4.11
       - automated
 
 - name: "18.4.12 | PATCH | Ensure MSS WarningLevel Percentage threshold for the security event log at which the system will generate a warning is set to Enabled 90 or less"
@@ -413,11 +413,11 @@
       data: "{{ win22cis_mss_security_warn_thresh }}"
       type: dword
   when:
-      - rule_18_4_12
+      - win22cis_rule_18_4_12
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.12
+      - win22cis_rule_18.4.12
       - automated
 
 - name: "18.5.4.1 | PATCH | Ensure Configure DNS over HTTPS (DoH) name resolution is set to Enabled Allow DoH or higher"
@@ -427,11 +427,11 @@
       data: "{{ win22cis_dns_over_https }}"
       type: dword
   when:
-      - rule_18_5_4_1
+      - win22cis_rule_18_5_4_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.5.4.1
+      - win22cis_rule_18.5.4.1
       - automated
 
 - name: "18.5.4.2 | PATCH | Ensure Turn off multicast name resolution is set to Enabled"
@@ -441,11 +441,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_5_4_2
+      - win22cis_rule_18_5_4_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.5.4.2
+      - win22cis_rule_18.5.4.2
       - automated
 
 - name: "18.5.5.1 | PATCH | Ensure Enable Font Providers is set to Disabled"
@@ -455,11 +455,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_5_5_1
+      - win22cis_rule_18_5_5_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.5.5.1
+      - win22cis_rule_18.5.5.1
       - automated
 
 - name: "18.5.8.1 | PATCH | Ensure Enable insecure guest logons is set to Disabled"
@@ -469,11 +469,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_5_8_1
+      - win22cis_rule_18_5_8_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.5.8.1
+      - win22cis_rule_18.5.8.1
       - automated
 
 - name: "18.5.9.1 | PATCH | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled"
@@ -506,11 +506,11 @@
             data: 0
             type: dword
   when:
-      - rule_18_5_9_1
+      - win22cis_rule_18_5_9_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.5.9.1
+      - win22cis_rule_18.5.9.1
       - automated
 
 - name: "18.5.9.2 | PATCH | Ensure Turn on Responder RSPNDR driver is set to Disabled"
@@ -543,11 +543,11 @@
             data: 0
             type: dword
   when:
-      - rule_18_5_9_2
+      - win22cis_rule_18_5_9_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.5.9.2
+      - win22cis_rule_18.5.9.2
       - automated
 
 - name: "18.5.10.2 | PATCH | Ensure Turn off Microsoft Peer-to-Peer Networking Services is set to Enabled"
@@ -557,11 +557,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_5_10_2
+      - win22cis_rule_18_5_10_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.5.10.2
+      - win22cis_rule_18.5.10.2
       - automated
 
 - name: "18.5.11.2 | PATCH | Ensure Prohibit installation and configuration of Network Bridge on your DNS domain network is set to Enabled"
@@ -571,11 +571,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_5_11_2
+      - win22cis_rule_18_5_11_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.5.11.2
+      - win22cis_rule_18.5.11.2
       - automated
 
 - name: "18.5.11.3 | PATCH | Ensure Prohibit use of Internet Connection Sharing on your DNS domain network is set to Enabled"
@@ -585,11 +585,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_5_11_3
+      - win22cis_rule_18_5_11_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.5.11.3
+      - win22cis_rule_18.5.11.3
       - automated
 
 - name: "18.5.11.4 | PATCH | Ensure Require domain users to elevate when setting a networks location is set to Enabled"
@@ -599,11 +599,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_5_11_4
+      - win22cis_rule_18_5_11_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.5.11.4
+      - win22cis_rule_18.5.11.4
       - automated
 
 - name: "18.5.14.1 | PATCH | Ensure Hardened UNC Paths is set to Enabled with Require Mutual Authentication and Require Integrity set for all NETLOGON and SYSVOL shares"
@@ -622,11 +622,11 @@
             data: "RequireMutualAuthentication=1, RequireIntegrity=1"
             type: string
   when:
-      - rule_18_5_14_1
+      - win22cis_rule_18_5_14_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.5.14.1
+      - win22cis_rule_18.5.14.1
       - automated
 
 - name: "18.5.19.2.1 | PATCH | Disable IPv6 Ensure TCPIP6 Parameter DisabledComponents is set to 0xff 255"
@@ -637,11 +637,11 @@
       type: dword
   notify: reboot_windows
   when:
-      - rule_18_5_19_2_1
+      - win22cis_rule_18_5_19_2_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.5.19.2.1
+      - win22cis_rule_18.5.19.2.1
       - automated
 
 - name: "18.5.20.1 | PATCH | Ensure Configuration of wireless settings using Windows Connect Now is set to Disabled"
@@ -681,11 +681,11 @@
             data: 0
             type: dword
   when:
-      - rule_18_5_20_1
+      - win22cis_rule_18_5_20_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.5.20.1
+      - win22cis_rule_18.5.20.1
       - automated
 
 - name: "18.5.20.2 | PATCH | Ensure Prohibit access of the Windows Connect Now wizards is set to Enabled"
@@ -695,11 +695,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_5_20_2
+      - win22cis_rule_18_5_20_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.5.20.2
+      - win22cis_rule_18.5.20.2
       - automated
 
 - name: "18.5.21.1 | PATCH | Ensure Minimize the number of simultaneous connections to the Internet or a Windows Domain is set to Enabled:3 = Prevent Wi-Fi when on Ethernet"
@@ -709,11 +709,11 @@
       data: 3
       type: dword
   when:
-      - rule_18_5_21_1
+      - win22cis_rule_18_5_21_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.5.21.1
+      - win22cis_rule_18.5.21.1
       - automated
 
 - name: "18.5.21.2 | PATCH | Ensure Prohibit connection to non-domain networks when connected to domain authenticated network is set to Enabled MS only"
@@ -723,11 +723,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_5_21_2
+      - win22cis_rule_18_5_21_2
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level2-memberserver
-      - rule_18.5.21.2
+      - win22cis_rule_18.5.21.2
       - automated
 
 - name: "18.6.1 | PATCH | Ensure 'Allow Print Spooler to accept client connections' is set to 'Disabled'"
@@ -738,11 +738,11 @@
       type: dword
   notify: restart print spooler
   when:
-      - rule_18_6_1
+      - win22cis_rule_18_6_1
   tags:
       - level1-domaincontroller
       - level2-memberserver
-      - rule_18.6.1
+      - win22cis_rule_18.6.1
       - automated
 
 - name: "18.6.2 | PATCH | Ensure 'Point and Print Restrictions: When installing drivers for a new connection' is set to 'Enabled: Show warning and elevation prompt'"
@@ -752,11 +752,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_6_2
+      - win22cis_rule_18_6_2
   tags:
       - level1-memberserver
       - level1-domaincontroller
-      - rule_18.6.2
+      - win22cis_rule_18.6.2
       - automated
 
 - name: "18.6.3 | PATCH | (L1) Ensure 'Point and Print Restrictions: When updating drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'"
@@ -766,11 +766,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_6_3
+      - win22cis_rule_18_6_3
   tags:
       - level1-memberserver
       - level1-domaincontroller
-      - rule_18.6.3
+      - win22cis_rule_18.6.3
       - automated
 
 - name: "18.7.1.1 | PATCH | Ensure Turn off notifications network usage is set to Enabled"
@@ -780,11 +780,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_7_1_1
+      - win22cis_rule_18_7_1_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.7.1.1
+      - win22cis_rule_18.7.1.1
       - automated
 
 - name: "18.8.3.1 | PATCH | Ensure Include command line in process creation events is set to Enabled"
@@ -794,11 +794,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_3_1
+      - win22cis_rule_18_8_3_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.3.1
+      - win22cis_rule_18.8.3.1
       - automated
 
 - name: "18.8.4.1 | PATCH | Ensure Encryption Oracle Remediation is set to Enabled Force Updated Clients"
@@ -808,11 +808,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_4_1
+      - win22cis_rule_18_8_4_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.4.1
+      - win22cis_rule_18.8.4.1
       - automated
 
 - name: "18.8.4.2 | PATCH | Ensure Remote host allows delegation of non-exportable credentials is set to Enabled"
@@ -822,11 +822,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_4_2
+      - win22cis_rule_18_8_4_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.4.2
+      - win22cis_rule_18.8.4.2
       - automated
 
 - name: "18.8.5.1 | PATCH | Ensure Turn On Virtualization Based Security is set to Enabled"
@@ -836,11 +836,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_5_1
+      - win22cis_rule_18_8_5_1
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.1
+      - win22cis_rule_18.8.5.1
       - automated
 
 - name: "18.8.5.2 | PATCH | Ensure Turn On Virtualization Based Security Select Platform Security Level is set to Secure Boot and DMA Protection"
@@ -850,11 +850,11 @@
       data: 3
       type: dword
   when:
-      - rule_18_8_5_2
+      - win22cis_rule_18_8_5_2
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.2
+      - win22cis_rule_18.8.5.2
       - automated
 
 - name: "18.8.5.3 | PATCH | Ensure Turn On Virtualization Based Security Virtualization Based Protection of Code Integrity is set to Enabled with UEFI lock"
@@ -864,11 +864,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_5_3
+      - win22cis_rule_18_8_5_3
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.3
+      - win22cis_rule_18.8.5.3
       - automated
 
 - name: "18.8.5.4 | PATCH | Ensure Turn On Virtualization Based Security Require UEFI Memory Attributes Table is set to True checked"
@@ -878,11 +878,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_5_4
+      - win22cis_rule_18_8_5_4
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.4
+      - win22cis_rule_18.8.5.4
       - automated
 
 - name: "18.8.5.5 | PATCH | Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Enabled with UEFI lock MS Only"
@@ -892,11 +892,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_5_5
+      - win22cis_rule_18_8_5_5
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - ngws-memberserver
-      - rule_18.8.5.5
+      - win22cis_rule_18.8.5.5
       - automated
 
 - name: "18.8.5.6 | PATCH | Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Disabled DC Only"
@@ -906,11 +906,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_5_6
+      - win22cis_rule_18_8_5_6
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - ngws-domaincontroller
-      - rule_18.8.5.6
+      - win22cis_rule_18.8.5.6
       - automated
 
 - name: "18.8.5.7 | PATCH | Ensure Turn On Virtualization Based Security Secure Launch Configuration is set to Enabled"
@@ -920,11 +920,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_5_7
+      - win22cis_rule_18_8_5_7
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.7
+      - win22cis_rule_18.8.5.7
       - automated
 
 - name: "18.8.7.2 | PATCH | Ensure Prevent device metadata retrieval from the Internet is set to Enabled'"
@@ -934,11 +934,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_7_2
+      - win22cis_rule_18_8_7_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.7_2
+      - win22cis_rule_18.8.7_2
       - automated
 
 - name: "18.8.14.1 | PATCH | Ensure Boot-Start Driver Initialization Policy is set to Enabled Good unknown and bad but critical"
@@ -948,11 +948,11 @@
       data: 3
       type: dword
   when:
-      - rule_18_8_14_1
+      - win22cis_rule_18_8_14_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.14.1
+      - win22cis_rule_18.8.14.1
       - automated
 
 - name: "18.8.21.2 | PATCH | Ensure Configure registry policy processing Do not apply during periodic background processing is set to Enabled FALSE"
@@ -962,11 +962,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_21_2
+      - win22cis_rule_18_8_21_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.21.2
+      - win22cis_rule_18.8.21.2
       - automated
 
 - name: "18.8.21.3 | PATCH | Ensure Configure registry policy processing Process even if the Group Policy objects have not changed is set to Enabled TRUE"
@@ -976,11 +976,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_21_3
+      - win22cis_rule_18_8_21_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.21.3
+      - win22cis_rule_18.8.21.3
       - automated
 
 - name: "18.8.21.4 | PATCH | Ensure Continue experiences on this device is set to Disabled"
@@ -990,11 +990,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_21_4
+      - win22cis_rule_18_8_21_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.21.4
+      - win22cis_rule_18.8.21.4
       - automated
 
 - name: "18.8.21.5 | PATCH | Ensure Turn off background refresh of Group Policy is set to Disabled"
@@ -1003,11 +1003,11 @@
       state: absent
       delete_key: true
   when:
-      - rule_18_8_21_5
+      - win22cis_rule_18_8_21_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.21.5
+      - win22cis_rule_18.8.21.5
       - automated
 
 - name: "18.8.22.1.1 | PATCH | Ensure Turn off downloading of print drivers over HTTP is set to Enabled"
@@ -1017,11 +1017,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_1
+      - win22cis_rule_18_8_22_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.22.1.1
+      - win22cis_rule_18.8.22.1.1
       - automated
 
 - name: "18.8.22.1.2 | PATCH | Ensure Turn off handwriting personalization data sharing is set to Enabled"
@@ -1031,11 +1031,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_2
+      - win22cis_rule_18_8_22_1_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.22.1.2
+      - win22cis_rule_18.8.22.1.2
       - automated
 
 - name: "18.8.22.1.3 | PATCH | Ensure Turn off handwriting recognition error reporting is set to Enabled"
@@ -1045,11 +1045,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_3
+      - win22cis_rule_18_8_22_1_3
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.3
+      - win22cis_rule_18.8.22.1.3
       - automated
 
 - name: "18.8.22.1.4 | PATCH | Ensure Turn off Internet Connection Wizard if URL connection is referring to Microsoft.com is set to Enabled"
@@ -1059,11 +1059,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_4
+      - win22cis_rule_18_8_22_1_4
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.4
+      - win22cis_rule_18.8.22.1.4
       - automated
 
 - name: "18.8.22.1.5 | PATCH | Ensure Turn off Internet download for Web publishing and online ordering wizards is set to Enabled"
@@ -1073,11 +1073,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_5
+      - win22cis_rule_18_8_22_1_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.22.1.5
+      - win22cis_rule_18.8.22.1.5
       - automated
 
 - name: "18.8.22.1.6 | PATCH | Ensure Turn off printing over HTTP is set to Enabled"
@@ -1087,11 +1087,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_6
+      - win22cis_rule_18_8_22_1_6
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.6
+      - win22cis_rule_18.8.22.1.6
       - automated
 
 - name: "18.8.22.1.7 | PATCH | Ensure Turn off Registration if URL connection is referring to Microsoft.com is set to Enabled"
@@ -1101,11 +1101,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_7
+      - win22cis_rule_18_8_22_1_7
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.7
+      - win22cis_rule_18.8.22.1.7
       - automated
 
 - name: "18.8.22.1.8 | PATCH | Ensure Turn off Search Companion content file updates is set to Enabled"
@@ -1115,11 +1115,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_8
+      - win22cis_rule_18_8_22_1_8
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.8
+      - win22cis_rule_18.8.22.1.8
       - automated
 
 - name: "18.8.22.1.9 | PATCH | Ensure Turn off the Order Prints picture task is set to Enabled"
@@ -1129,11 +1129,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_9
+      - win22cis_rule_18_8_22_1_9
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.9
+      - win22cis_rule_18.8.22.1.9
       - automated
 
 - name: "18.8.22.1.10 | PATCH | Ensure Turn off the Publish to Web task for files and folders is set to Enabled"
@@ -1143,11 +1143,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_22_1_10
+      - win22cis_rule_18_8_22_1_10
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.10
+      - win22cis_rule_18.8.22.1.10
       - automated
 
 - name: "18.8.22.1.11 | PATCH | Ensure Turn off the Windows Messenger Customer Experience Improvement Program is set to Enabled"
@@ -1157,11 +1157,11 @@
       data: 2
       type: dword
   when:
-      - rule_18_8_22_1_11
+      - win22cis_rule_18_8_22_1_11
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.11
+      - win22cis_rule_18.8.22.1.11
       - automated
 
 - name: "18.8.22.1.12 | PATCH | Ensure Turn off Windows Customer Experience Improvement Program is set to Enabled"
@@ -1171,11 +1171,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_22_1_12
+      - win22cis_rule_18_8_22_1_12
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.12
+      - win22cis_rule_18.8.22.1.12
       - automated
 
 - name: "18.8.22.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled"
@@ -1194,11 +1194,11 @@
             data: 0
             type: dword
   when:
-      - rule_18_8_22_1_13
+      - win22cis_rule_18_8_22_1_13
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.13
+      - win22cis_rule_18.8.22.1.13
       - automated
 
 - name: "18.8.25.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic"
@@ -1217,11 +1217,11 @@
             data: 1
             type: dword
   when:
-      - rule_18_8_25_1
+      - win22cis_rule_18_8_25_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.25.1
+      - win22cis_rule_18.8.25.1
       - automated
 
 - name: "18.8.26.1 | PATCH | Ensure Enumeration policy for external devices incompatible with Kernel DMA Protection is set to Enabled Block All"
@@ -1231,11 +1231,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_26_1
+      - win22cis_rule_18_8_26_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.26.1
+      - win22cis_rule_18.8.26.1
       - automated
 
 - name: "18.8.27.1 | PATCH | Ensure Disallow copying of user input methods to the system account for sign-in is set to Enabled"
@@ -1245,11 +1245,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_27_1
+      - win22cis_rule_18_8_27_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.27.1
+      - win22cis_rule_18.8.27.1
       - automated
 
 - name: "18.8.28.1 | PATCH | Ensure Block user from showing account details on sign-in is set to Enabled"
@@ -1259,11 +1259,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_28_1
+      - win22cis_rule_18_8_28_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.1
+      - win22cis_rule_18.8.28.1
       - automated
 
 - name: "18.8.28.2 | PATCH | Ensure Do not display network selection UI is set to Enabled"
@@ -1273,11 +1273,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_28_2
+      - win22cis_rule_18_8_28_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.2
+      - win22cis_rule_18.8.28.2
       - automated
 
 - name: "18.8.28.3 | PATCH | Ensure Do not enumerate connected users on domain-joined computers is set to Enabled"
@@ -1287,11 +1287,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_28_3
+      - win22cis_rule_18_8_28_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.3
+      - win22cis_rule_18.8.28.3
       - automated
 
 - name: "18.8.28.4 | PATCH | Ensure Enumerate local users on domain-joined computers is set to Disabled MS only"
@@ -1301,11 +1301,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_28_4
+      - win22cis_rule_18_8_28_4
       - ansible_windows_domain_role == "Member server"
   tags:
       - level1-memberserver
-      - rule_18.8.28.4
+      - win22cis_rule_18.8.28.4
       - automated
 
 - name: "18.8.28.5 | PATCH | Ensure Turn off app notifications on the lock screen is set to Enabled"
@@ -1315,11 +1315,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_28_5
+      - win22cis_rule_18_8_28_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.5
+      - win22cis_rule_18.8.28.5
       - automated
 
 - name: "18.8.28.6 | PATCH | Ensure Turn off picture password sign-in is set to Enabled"
@@ -1329,11 +1329,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_28_6
+      - win22cis_rule_18_8_28_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.6
+      - win22cis_rule_18.8.28.6
       - automated
 
 - name: "18.8.28.7 | PATCH | Ensure Turn on convenience PIN sign-in is set to Disabled"
@@ -1343,11 +1343,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_28_7
+      - win22cis_rule_18_8_28_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.7
+      - win22cis_rule_18.8.28.7
       - automated
 
 - name: "18.8.31.1 | PATCH | Ensure Allow Clipboard synchronization across devices is set to Disabled"
@@ -1357,11 +1357,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_31_1
+      - win22cis_rule_18_8_31_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.31.1
+      - win22cis_rule_18.8.31.1
       - automated
 
 - name: "18.8.31.2 | PATCH | Ensure Allow upload of User Activities is set to Disabled"
@@ -1371,11 +1371,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_31_2
+      - win22cis_rule_18_8_31_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.31.2
+      - win22cis_rule_18.8.31.2
       - automated
 
 - name: "18.8.34.6.1 | PATCH | Ensure Allow network connectivity during connected-standby on battery is set to Disabled"
@@ -1385,11 +1385,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_34_6_1
+      - win22cis_rule_18_8_34_6_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.34.6.1
+      - win22cis_rule_18.8.34.6.1
       - automated
 
 - name: "18.8.34.6.2 | PATCH | Ensure Allow network connectivity during connected-standby plugged in is set to Disabled"
@@ -1399,11 +1399,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_34_6_2
+      - win22cis_rule_18_8_34_6_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.34.6.2
+      - win22cis_rule_18.8.34.6.2
       - automated
 
 - name: "18.8.34.6.3 | PATCH | Ensure Require a password when a computer wakes on battery is set to Enabled"
@@ -1413,11 +1413,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_34_6_3
+      - win22cis_rule_18_8_34_6_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.34.6.3
+      - win22cis_rule_18.8.34.6.3
       - automated
 
 - name: "18.8.34.6.4 | PATCH | Ensure Require a password when a computer wakes plugged in is set to Enabled"
@@ -1427,11 +1427,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_34_6_4
+      - win22cis_rule_18_8_34_6_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.34.6.4
+      - win22cis_rule_18.8.34.6.4
       - automated
 
 - name: "18.8.36.1 | PATCH | Ensure Configure Offer Remote Assistance is set to Disabled"
@@ -1441,11 +1441,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_36_1
+      - win22cis_rule_18_8_36_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.36.1
+      - win22cis_rule_18.8.36.1
       - automated
 
 - name: "18.8.36.2 | PATCH | Ensure Configure Solicited Remote Assistance is set to Disabled"
@@ -1455,11 +1455,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_36_2
+      - win22cis_rule_18_8_36_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.36.2
+      - win22cis_rule_18.8.36.2
       - automated
 
 - name: "18.8.37.1 | PATCH | Ensure Enable RPC Endpoint Mapper Client Authentication is set to Enabled MS only"
@@ -1469,11 +1469,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_37_1
+      - win22cis_rule_18_8_37_1
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-memberserver
-      - rule_18.8.37.1
+      - win22cis_rule_18.8.37.1
       - automated
 
 - name: "18.8.37.2 | PATCH | Ensure Restrict Unauthenticated RPC clients is set to Enabled Authenticated MS only"
@@ -1483,11 +1483,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_37_2
+      - win22cis_rule_18_8_37_2
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level2-memberserver
-      - rule_18.8.37.2
+      - win22cis_rule_18.8.37.2
       - automated
 
 - name: "18.8.40.1 | PATCH | Ensure Configure validation of ROCA-vulnerable WHfB keys during authentication is set to Enabled Audit or higher (DC only)"
@@ -1497,11 +1497,11 @@
       data: "{{ win22cis_sam_ng_key_roc }}"
       type: dword
   when:
-      - rule_18_8_40_1
+      - win22cis_rule_18_8_40_1
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-memberserver
-      - rule_18.8.40.1
+      - win22cis_rule_18.8.40.1
       - automated
 
 - name: "18.8.48.5.1 | PATCH | Ensure Microsoft Support Diagnostic Tool Turn on MSDT interactive communication with support provider is set to Disabled"
@@ -1511,11 +1511,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_48_5_1
+      - win22cis_rule_18_8_48_5_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.48.5.1
+      - win22cis_rule_18.8.48.5.1
       - automated
 
 - name: "18.8.48.11.1 | PATCH | Ensure EnableDisable PerfTrack is set to Disabled"
@@ -1525,11 +1525,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_8_48_11_1
+      - win22cis_rule_18_8_48_11_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.48.11.1
+      - win22cis_rule_18.8.48.11.1
       - automated
 
 - name: "18.8.50.1 | PATCH | Ensure Turn off the advertising ID is set to Enabled"
@@ -1539,11 +1539,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_50_1
+      - win22cis_rule_18_8_50_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.50.1
+      - win22cis_rule_18.8.50.1
       - automated
 
 - name: "18.8.53.1.1 | PATCH | Ensure Enable Windows NTP Client is set to Enabled"
@@ -1553,11 +1553,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_53_1_1
+      - win22cis_rule_18_8_53_1_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.53.1.1
+      - win22cis_rule_18.8.53.1.1
       - automated
 
 - name: "18.8.53.1.2 | PATCH | Ensure Enable Windows NTP Server is set to Disabled MS only"
@@ -1567,11 +1567,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_8_53_1_2
+      - win22cis_rule_18_8_53_1_2
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level2-memberserver
-      - rule_18.8.53.1.2
+      - win22cis_rule_18.8.53.1.2
       - automated
 
 - name: "18.9.4.1 | PATCH | Ensure Allow a Windows app to share application data between users is set to Disabled"
@@ -1581,11 +1581,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_4_1
+      - win22cis_rule_18_9_4_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.4.1
+      - win22cis_rule_18.9.4.1
       - automated
 
 - name: "18.9.6.1 | PATCH | Ensure Allow Microsoft accounts to be optional is set to Enabled"
@@ -1595,11 +1595,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_6_1
+      - win22cis_rule_18_9_6_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.6.1
+      - win22cis_rule_18.9.6.1
       - automated
 
 - name: "18.9.8.1 | PATCH | Ensure Disallow Autoplay for non-volume devices is set to Enabled"
@@ -1609,11 +1609,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_8_1
+      - win22cis_rule_18_9_8_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.8.1
+      - win22cis_rule_18.9.8.1
       - automated
 
 - name: "18.9.8.2 | PATCH | Ensure Set the default behavior for AutoRun is set to Enabled Do not execute any autorun commands"
@@ -1623,11 +1623,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_8_2
+      - win22cis_rule_18_9_8_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.8.2
+      - win22cis_rule_18.9.8.2
       - automated
 
 - name: "18.9.8.3 | PATCH | Ensure Turn off Autoplay is set to Enabled All drives"
@@ -1637,11 +1637,11 @@
       data: 255
       type: dword
   when:
-      - rule_18_9_8_3
+      - win22cis_rule_18_9_8_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.8.3
+      - win22cis_rule_18.9.8.3
       - automated
 
 - name: "18.9.10.1.1 | PATCH | Ensure Configure enhanced anti-spoofing is set to Enabled"
@@ -1651,11 +1651,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_10_1_1
+      - win22cis_rule_18_9_10_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.10.1.1
+      - win22cis_rule_18.9.10.1.1
       - automated
 
 - name: "18.9.12.1 | PATCH | Ensure Allow Use of Camera is set to Disabled"
@@ -1665,11 +1665,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_12_1
+      - win22cis_rule_18_9_12_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.12.1
+      - win22cis_rule_18.9.12.1
       - automated
 
 - name: "18.9.14.1 | PATCH | Ensure Turn off cloud consumer account state content is set to Enabled"
@@ -1679,11 +1679,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_14_1
+      - win22cis_rule_18_9_14_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.14.1
+      - win22cis_rule_18.9.14.1
       - manual
 
 - name: "18.9.14.2 | PATCH | Ensure Turn off Microsoft consumer experiences is set to Enabled"
@@ -1693,11 +1693,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_14_2
+      - win22cis_rule_18_9_14_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.14.2
+      - win22cis_rule_18.9.14.2
       - automated
 
 - name: "18.9.15.1 | PATCH | Ensure Require pin for pairing is set to Enabled First Time OR Enabled Always"
@@ -1707,11 +1707,11 @@
       data: "{{ win22cis_require_pin_pairing }}"
       type: dword
   when:
-      - rule_18_9_15_1
+      - win22cis_rule_18_9_15_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.15.1
+      - win22cis_rule_18.9.15.1
       - automated
 
 - name: "18.9.16.1 | PATCH | Ensure Do not display the password reveal button is set to Enabled"
@@ -1721,11 +1721,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_16_1
+      - win22cis_rule_18_9_16_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.16.1
+      - win22cis_rule_18.9.16.1
       - automated
 
 - name: "18.9.16.2 | PATCH | Ensure Enumerate administrator accounts on elevation is set to Disabled"
@@ -1735,11 +1735,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_16_2
+      - win22cis_rule_18_9_16_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.16.2
+      - win22cis_rule_18.9.16.2
       - automated
 
 - name: "18.9.17.1 | PATCH | Ensure Allow Diagnostic Data is set to Enabled Diagnostic data off (not recommended) or Enabled Send required diagnostic data"
@@ -1749,11 +1749,11 @@
       data: "{{ win22cis_diag_data }}"
       type: dword
   when:
-      - rule_18_9_17_1
+      - win22cis_rule_18_9_17_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.1
+      - win22cis_rule_18.9.17.1
       - automated
 
 - name: "18.9.17.2 | PATCH | Ensure Configure Authenticated Proxy usage for the Connected User Experience and Telemetry service is set to Enabled Disable Authenticated Proxy usage"
@@ -1763,11 +1763,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_17_2
+      - win22cis_rule_18_9_17_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.17.2
+      - win22cis_rule_18.9.17.2
       - automated
 
 - name: "18.9.17.3 | PATCH | Ensure Disable OneSettings Downloads is set to Enabled"
@@ -1777,11 +1777,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_17_3
+      - win22cis_rule_18_9_17_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.3
+      - win22cis_rule_18.9.17.3
       - automated
 
 - name: "18.9.17.4 | PATCH | Ensure Do not show feedback notifications is set to Enabled"
@@ -1791,11 +1791,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_17_4
+      - win22cis_rule_18_9_17_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.4
+      - win22cis_rule_18.9.17.4
       - automated
 
 - name: "18.9.17.5 | PATCH | Ensure Enable OneSettings Auditing is set to Enabled"
@@ -1805,11 +1805,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_17_5
+      - win22cis_rule_18_9_17_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.5
+      - win22cis_rule_18.9.17.5
       - automated
 
 - name: "18.9.17.6 | PATCH | Ensure Limit Diagnostic Log Collection is set to Enabled"
@@ -1819,11 +1819,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_17_6
+      - win22cis_rule_18_9_17_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.6
+      - win22cis_rule_18.9.17.6
       - automated
 
 - name: "18.9.17.7 | PATCH | Ensure Limit Dump Collection is set to Enabled"
@@ -1833,11 +1833,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_17_6
+      - win22cis_rule_18_9_17_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.6
+      - win22cis_rule_18.9.17.6
       - automated
 
 - name: "18.9.17.8 | PATCH | Ensure Toggle user control over Insider builds is set to Disabled"
@@ -1847,11 +1847,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_17_8
+      - win22cis_rule_18_9_17_8
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.8
+      - win22cis_rule_18.9.17.8
       - automated
 
 - name: "18.9.27.1.1 | PATCH | Ensure Application Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
@@ -1861,11 +1861,11 @@
       data: 0
       type: string
   when:
-      - rule_18_9_27_1_1
+      - win22cis_rule_18_9_27_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.1.1
+      - win22cis_rule_18.9.27.1.1
       - automated
 
 - name: "18.9.27.1.2 | PATCH | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater"
@@ -1875,11 +1875,11 @@
       data: "{{ win22cis_elm_applog_max_size }}"
       type: dword
   when:
-      - rule_18_9_27_1_2
+      - win22cis_rule_18_9_27_1_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.1.2
+      - win22cis_rule_18.9.27.1.2
       - automated
 
 - name: "18.9.27.2.1 | PATCH | Ensure Security Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
@@ -1889,11 +1889,11 @@
       data: 0
       type: string
   when:
-      - rule_18_9_27_2_1
+      - win22cis_rule_18_9_27_2_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.2.1
+      - win22cis_rule_18.9.27.2.1
       - automated
 
 - name: "18.9.27.2.2 | PATCH | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater"
@@ -1903,11 +1903,11 @@
       data: "{{ win22cis_elm_seclog_max_size }}"
       type: dword
   when:
-      - rule_18_9_27_2_2
+      - win22cis_rule_18_9_27_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.2.2
+      - win22cis_rule_18.9.27.2.2
       - automated
 
 - name: "18.9.27.3.1 | PATCH | Ensure Setup Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
@@ -1917,11 +1917,11 @@
       data: 0
       type: string
   when:
-      - rule_18_9_27_3_1
+      - win22cis_rule_18_9_27_3_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.3.1
+      - win22cis_rule_18.9.27.3.1
       - automated
 
 - name: "18.9.27.3.2 | PATCH | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater"
@@ -1931,11 +1931,11 @@
       data: "{{ win22cis_elm_setup_max_size }}"
       type: dword
   when:
-      - rule_18_9_27_3_2
+      - win22cis_rule_18_9_27_3_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.3.2
+      - win22cis_rule_18.9.27.3.2
       - automated
 
 - name: "18.9.27.4.1 | PATCH | Ensure System Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
@@ -1945,11 +1945,11 @@
       data: 0
       type: string
   when:
-      - rule_18_9_27_4_1
+      - win22cis_rule_18_9_27_4_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.4.1
+      - win22cis_rule_18.9.27.4.1
       - automated
 
 - name: "18.9.27.4.2 | PATCH | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater"
@@ -1959,11 +1959,11 @@
       data: "{{ win22cis_elm_syslog_max_size }}"
       type: dword
   when:
-      - rule_18_9_27_4_2
+      - win22cis_rule_18_9_27_4_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.4.2
+      - win22cis_rule_18.9.27.4.2
       - automated
 
 - name: "18.9.31.2 | PATCH | Ensure Turn off Data Execution Prevention for Explorer is set to Disabled"
@@ -1973,11 +1973,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_31_2
+      - win22cis_rule_18_9_31_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.31.2
+      - win22cis_rule_18.9.31.2
       - automated
 
 - name: "18.9.31.3 | PATCH | Ensure Turn off heap termination on corruption is set to Disabled"
@@ -1987,11 +1987,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_31_3
+      - win22cis_rule_18_9_31_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.31.3
+      - win22cis_rule_18.9.31.3
       - automated
 
 - name: "18.9.31.4 | PATCH | Ensure Turn off shell protocol protected mode is set to Disabled"
@@ -2001,11 +2001,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_31_4
+      - win22cis_rule_18_9_31_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.31.4
+      - win22cis_rule_18.9.31.4
       - automated
 
 - name: "18.9.41.1| PATCH | Ensure Turn off location is set to Enabled"
@@ -2015,11 +2015,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_41_1
+      - win22cis_rule_18_9_41_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.41.1
+      - win22cis_rule_18.9.41.1
       - automated
 
 - name: "18.9.45.1 | PATCH | Ensure Allow Message Service Cloud Sync is set to Disabled"
@@ -2029,11 +2029,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_45_1
+      - win22cis_rule_18_9_45_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.45.1
+      - win22cis_rule_18.9.45.1
       - automated
 
 - name: "18.9.46.1 | PATCH | Ensure Block all consumer Microsoft account user authentication is set to Enabled"
@@ -2043,11 +2043,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_46_1
+      - win22cis_rule_18_9_46_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.46.1
+      - win22cis_rule_18.9.46.1
       - automated
 
 - name: "18.9.47.4.1 | PATCH | Ensure Configure local setting override for reporting to Microsoft MAPS is set to Disabled"
@@ -2057,11 +2057,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_47_4_1
+      - win22cis_rule_18_9_47_4_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.4.1
+      - win22cis_rule_18.9.47.4.1
       - automated
 
 - name: "18.9.47.4.2 | PATCH | Ensure Join Microsoft MAPS is set to Disabled"
@@ -2071,11 +2071,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_47_4_2
+      - win22cis_rule_18_9_47_4_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.47.4.2
+      - win22cis_rule_18.9.47.4.2
       - automated
 
 - name: "18.9.47.5.1.1 | PATCH | Ensure Configure Attack Surface Reduction rules is set to Enabled"
@@ -2085,11 +2085,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_47_5_1_1
+      - win22cis_rule_18_9_47_5_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.5.1.1
+      - win22cis_rule_18.9.47.5.1.1
       - automated
 
 - name: "18.9.47.5.1.2 | PATCH | Ensure Configure Attack Surface Reduction rules Set the state for each ASR rule is configured"
@@ -2111,11 +2111,11 @@
       - d3e037e1-3eb8-44c8-a917-57927947596d
       - d4f940ab-401b-4efc-aadc-ad5f3c50688a
   when:
-      - rule_18_9_47_5_1_2
+      - win22cis_rule_18_9_47_5_1_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.5.1.2
+      - win22cis_rule_18.9.47.5.1.2
       - automated
 
 - name: "18.9.47.5.3.1 | PATCH | Ensure Prevent users and apps from accessing dangerous websites is set to Enabled Block"
@@ -2125,11 +2125,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_47_5_3_1
+      - win22cis_rule_18_9_47_5_3_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.5.3.1
+      - win22cis_rule_18.9.47.5.3.1
       - automated
 
 - name: "18.9.47.6.1 | PATCH | Ensure Enable file hash computation feature is set to Enabled"
@@ -2139,11 +2139,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_47_6_1
+      - win22cis_rule_18_9_47_6_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.47.6.1
+      - win22cis_rule_18.9.47.6.1
       - automated
 
 - name: "18.9.47.9.1 | PATCH | Ensure Scan all downloaded files and attachments is set to Enabled'"
@@ -2153,11 +2153,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_47_9_1
+      - win22cis_rule_18_9_47_9_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.9.1
+      - win22cis_rule_18.9.47.9.1
       - automated
 
 - name: "18.9.47.9.2 | PATCH | Ensure Scan Turn off real-time protection is set to is set to Disabled"
@@ -2167,11 +2167,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_47_9_2
+      - win22cis_rule_18_9_47_9_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.9.2
+      - win22cis_rule_18.9.47.9.2
       - automated
 
 - name: "18.9.47.9.3 | PATCH | Ensure Scan Turn on behavior monitoring is set to is set to Enabled"
@@ -2181,11 +2181,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_47_9_3
+      - win22cis_rule_18_9_47_9_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.9.3
+      - win22cis_rule_18.9.47.9.3
       - automated
 
 - name: "18.9.47.9.4 | PATCH | Ensure Scan Turn on script scanning is set to is set to Enabled"
@@ -2195,11 +2195,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_47_9_4
+      - win22cis_rule_18_9_47_9_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.9.4
+      - win22cis_rule_18.9.47.9.4
       - automated
 
 - name: "18.9.47.11.1 | PATCH | Ensure Configure Watson events is set to Disabled"
@@ -2209,11 +2209,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_47_11_1
+      - win22cis_rule_18_9_47_11_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.47.11.1
+      - win22cis_rule_18.9.47.11.1
       - automated
 
 - name: "18.9.47.12.1 | PATCH | Ensure Scan removable drives is set to Enabled"
@@ -2223,11 +2223,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_47_12_1
+      - win22cis_rule_18_9_47_12_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.12.1
+      - win22cis_rule_18.9.47.12.1
       - automated
 
 - name: "18.9.47.12.2 | PATCH | Ensure Turn on e-mail scanning is set to Enabled"
@@ -2237,11 +2237,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_47_12_2
+      - win22cis_rule_18_9_47_12_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.12.2
+      - win22cis_rule_18.9.47.12.2
       - automated
 
 - name: "18.9.47.15 | PATCH | Ensure Configure detection for potentially unwanted applications is set to Enabled Block"
@@ -2251,11 +2251,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_47_15
+      - win22cis_rule_18_9_47_15
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.15
+      - win22cis_rule_18.9.47.15
       - automated
 
 - name: "18.9.47.16 | PATCH | Ensure Turn off Windows Defender AntiVirus is set to Disabled"
@@ -2265,11 +2265,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_47_16
+      - win22cis_rule_18_9_47_16
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.16
+      - win22cis_rule_18.9.47.16
       - automated
 
 - name: "18.9.58.1 | PATCH | Ensure Prevent the usage of OneDrive for file storage is set to Enabled"
@@ -2279,11 +2279,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_58_1
+      - win22cis_rule_18_9_58_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.58.1
+      - win22cis_rule_18.9.58.1
       - automated
 
 - name: "18.9.64.1 | PATCH | Ensure Turn off Push To Install service is set to Enabled"
@@ -2293,11 +2293,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_64_1
+      - win22cis_rule_18_9_64_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.64.1
+      - win22cis_rule_18.9.64.1
       - automated
 
 - name: "18.9.65.2.2 | PATCH | Ensure Do not allow passwords to be saved is set to Enabled"
@@ -2307,11 +2307,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_2_2
+      - win22cis_rule_18_9_65_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.2.2
+      - win22cis_rule_18.9.65.2.2
       - automated
 
 - name: "18.9.65.3.2.1 | PATCH | Ensure Restrict Remote Desktop Services users to a single Remote Desktop Services session is set to Enabled"
@@ -2321,11 +2321,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_2_1
+      - win22cis_rule_18_9_65_3_2_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.2.1
+      - win22cis_rule_18.9.65.3.2.1
       - automated
 
 - name: "18.9.65.3.3.1 | PATCH | Ensure Allow UI Automation redirection is set to Disabled"
@@ -2335,11 +2335,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_3_1
+      - win22cis_rule_18_9_65_3_3_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.3.1
+      - win22cis_rule_18.9.65.3.3.1
       - automated
 
 - name: "18.9.65.3.3.2 | PATCH | Ensure Do not allow COM port redirection is set to Enabled"
@@ -2349,11 +2349,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_3_2
+      - win22cis_rule_18_9_65_3_3_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.3.2
+      - win22cis_rule_18.9.65.3.3.2
       - automated
 
 - name: "18.9.65.3.3.3 | PATCH | Ensure Do not allow drive redirection is set to Enabled"
@@ -2363,11 +2363,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_3_3
+      - win22cis_rule_18_9_65_3_3_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.3.3
+      - win22cis_rule_18.9.65.3.3.3
       - automated
 
 - name: "18.9.65.3.3.4 | PATCH | Ensure Do not allow location redirection is set to Enabled"
@@ -2377,10 +2377,10 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_3_4
+      - win22cis_rule_18_9_65_3_3_4
   tags:
       - level2-hssde
-      - rule_18.9.59.3.3.4
+      - win22cis_rule_18.9.59.3.3.4
       - automated
 
 - name: "18.9.65.3.3.5 | PATCH | Ensure Do not allow LPT port redirection is set to Enabled"
@@ -2390,11 +2390,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_3_5
+      - win22cis_rule_18_9_65_3_3_5
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.3.5
+      - win22cis_rule_18.9.65.3.3.5
       - automated
 
 - name: "18.9.65.3.3.6 | PATCH | Ensure Do not allow supported Plug and Play device redirection is set to Enabled"
@@ -2404,11 +2404,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_3_6
+      - win22cis_rule_18_9_65_3_3_6
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.3.6
+      - win22cis_rule_18.9.65.3.3.6
       - automated
 
 - name: "18.9.65.3.9.1 | PATCH | Ensure Always prompt for password upon connection is set to Enabled"
@@ -2418,11 +2418,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_9_1
+      - win22cis_rule_18_9_65_3_9_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.1
+      - win22cis_rule_18.9.65.3.9.1
       - automated
 
 - name: "18.9.65.3.9.2 | PATCH | Ensure Require secure RPC communication is set to Enabled"
@@ -2432,11 +2432,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_9_2
+      - win22cis_rule_18_9_65_3_9_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.2
+      - win22cis_rule_18.9.65.3.9.2
       - automated
 
 - name: "18.9.65.3.9.3 | PATCH | Ensure Require use of specific security layer for remote RDP connections is set to Enabled SSL"
@@ -2446,11 +2446,11 @@
       data: 2
       type: dword
   when:
-      - rule_18_9_65_3_9_3
+      - win22cis_rule_18_9_65_3_9_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.3
+      - win22cis_rule_18.9.65.3.9.3
       - automated
 
 - name: "18.9.65.3.9.4 | PATCH | Ensure Require user authentication for remote connections by using Network Level Authentication is set to Enabled"
@@ -2460,11 +2460,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_9_4
+      - win22cis_rule_18_9_65_3_9_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.4
+      - win22cis_rule_18.9.65.3.9.4
       - automated
 
 - name: "18.9.65.3.9.5 | PATCH | Ensure Set client connection encryption level is set to Enabled High Level"
@@ -2474,11 +2474,11 @@
       data: 3
       type: dword
   when:
-      - rule_18_9_65_3_9_5
+      - win22cis_rule_18_9_65_3_9_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.5
+      - win22cis_rule_18.9.65.3.9.5
       - automated
 
 - name: "18.9.65.3.10.1 | PATCH | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less"
@@ -2488,11 +2488,11 @@
       data: "{{ win22cis_terminal_max_idle_time }}"
       type: dword
   when:
-      - rule_18_9_65_3_10_1
+      - win22cis_rule_18_9_65_3_10_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.10.1
+      - win22cis_rule_18.9.65.3.10.1
       - automated
 
 - name: "18.9.65.3.10.2 | PATCH | Ensure Set time limit for disconnected sessions is set to Enabled 1 minute"
@@ -2502,11 +2502,11 @@
       data: 60000
       type: dword
   when:
-      - rule_18_9_65_3_10_2
+      - win22cis_rule_18_9_65_3_10_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.10.2
+      - win22cis_rule_18.9.65.3.10.2
       - automated
 
 - name: "18.9.65.3.11.1 | PATCH | Ensure Do not delete temp folders upon exit is set to Disabled"
@@ -2516,11 +2516,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_11_1
+      - win22cis_rule_18_9_65_3_11_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.11.1
+      - win22cis_rule_18.9.65.3.11.1
       - automated
 
 - name: "18.9.65.3.11.2 | PATCH | Ensure Do not use temporary folders per session is set to Disabled"
@@ -2530,11 +2530,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_65_3_11_2
+      - win22cis_rule_18_9_65_3_11_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.11.2
+      - win22cis_rule_18.9.65.3.11.2
       - automated
 
 - name: "18.9.66.1 | PATCH | Ensure Prevent downloading of enclosures is set to Enabled"
@@ -2544,11 +2544,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_66_1
+      - win22cis_rule_18_9_66_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.66.1
+      - win22cis_rule_18.9.66.1
       - automated
 
 - name: "18.9.67.2 | PATCH | Ensure Allow Cloud Search is set to Enabled Disable Cloud Search"
@@ -2558,11 +2558,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_67_2
+      - win22cis_rule_18_9_67_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.67.2
+      - win22cis_rule_18.9.67.2
       - automated
 
 - name: "18.9.67.3 | PATCH | Ensure Allow indexing of encrypted files is set to Disabled"
@@ -2572,11 +2572,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_67_3
+      - win22cis_rule_18_9_67_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.67.3
+      - win22cis_rule_18.9.67.3
       - automated
 
 - name: "18.9.72.1 | PATCH | Ensure Turn off KMS Client Online AVS Validation is set to Enabled"
@@ -2586,11 +2586,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_72_1
+      - win22cis_rule_18_9_72_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.72.1
+      - win22cis_rule_18.9.72.1
       - automated
 
 - name: "18.9.85.1.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass"
@@ -2609,11 +2609,11 @@
             data: Block
             type: string
   when:
-      - rule_18_9_85_1_1
+      - win22cis_rule_18_9_85_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.85.1.1
+      - win22cis_rule_18.9.85.1.1
       - automated
 
 - name: "18.9.89.1 | PATCH | Ensure Allow suggested apps in Windows Ink Workspace is set to Disabled"
@@ -2623,11 +2623,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_89_1
+      - win22cis_rule_18_9_89_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.89.1
+      - win22cis_rule_18.9.89.1
       - automated
 
 - name: "18.9.89.2 | PATCH | Ensure Allow Windows Ink Workspace is set to Enabled On but disallow access above lock OR Disabled but not Enabled On"
@@ -2637,11 +2637,11 @@
       data: "{{ win22cis_allow_ink_workspace }}"
       type: dword
   when:
-      - rule_18_9_89_2
+      - win22cis_rule_18_9_89_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.89.2
+      - win22cis_rule_18.9.89.2
       - automated
 
 - name: "18.9.90.1 | PATCH | Ensure Allow user control over installs is set to Disabled"
@@ -2651,11 +2651,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_90_1
+      - win22cis_rule_18_9_90_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.90.1
+      - win22cis_rule_18.9.90.1
       - automated
 
 - name: "18.9.90.2 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
@@ -2665,11 +2665,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_90_2
+      - win22cis_rule_18_9_90_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.90.2
+      - win22cis_rule_18.9.90.2
       - automated
 
 - name: "18.9.90.3 | PATCH | Ensure Prevent Internet Explorer security prompt for Windows Installer scripts is set to Disabled"
@@ -2679,11 +2679,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_90_3
+      - win22cis_rule_18_9_90_3
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.90.3
+      - win22cis_rule_18.9.90.3
       - automated
 
 - name: "18.9.91.1 | PATCH | Ensure Sign-in last interactive user automatically after a restart is set to Disabled"
@@ -2693,11 +2693,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_91_1
+      - win22cis_rule_18_9_91_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.91.1
+      - win22cis_rule_18.9.91.1
       - automated
 
 - name: "18.9.100.1 | PATCH | Ensure Turn on PowerShell Script Block Logging is set to Enabled"
@@ -2707,11 +2707,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_100_1
+      - win22cis_rule_18_9_100_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.100.1
+      - win22cis_rule_18.9.100.1
       - automated
 
 - name: "18.9.100.2 | PATCH | Ensure Turn on PowerShell Transcription is set to Disabled"
@@ -2721,11 +2721,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_100_2
+      - win22cis_rule_18_9_100_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.100.2
+      - win22cis_rule_18.9.100.2
       - automated
 
 - name: "18.9.102.1.1 | PATCH | Ensure Allow Basic authentication is set to Disabled"
@@ -2735,12 +2735,12 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_102_1_1
+      - win22cis_rule_18_9_102_1_1
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.1.1
+      - win22cis_rule_18.9.102.1.1
       - automated
 
 - name: "18.9.102.1.2 | PATCH | Ensure Allow unencrypted traffic is set to Disabled"
@@ -2750,12 +2750,12 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_102_1_2
+      - win22cis_rule_18_9_102_1_2
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.1.2
+      - win22cis_rule_18.9.102.1.2
       - automated
 
 - name: "18.9.102.1.3 | PATCH | Ensure Disallow Digest authentication is set to Enabled"
@@ -2765,11 +2765,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_102_1_3
+      - win22cis_rule_18_9_102_1_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.1.3
+      - win22cis_rule_18.9.102.1.3
       - automated
 
 - name: "18.9.102.2.1 | PATCH | Ensure Allow Basic authentication is set to Disabled"
@@ -2779,12 +2779,12 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_102_2_1
+      - win22cis_rule_18_9_102_2_1
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.2.1
+      - win22cis_rule_18.9.102.2.1
       - automated
 
 # This control will have to be set to Enabled (1) to allow for continued remote management via Ansible following machine restart
@@ -2795,12 +2795,12 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_102_2_2
+      - win22cis_rule_18_9_102_2_2
       - not win_skip_for_test
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.102.2.2
+      - win22cis_rule_18.9.102.2.2
       - automated
 
 - name: "18.9.102.2.3 | PATCH | Ensure Allow unencrypted traffic is set to Disabled"
@@ -2810,12 +2810,12 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_102_2_3
+      - win22cis_rule_18_9_102_2_3
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.2.3
+      - win22cis_rule_18.9.102.2.3
       - automated
 
 - name: "18.9.102.2.4 | PATCH | Ensure Disallow WinRM from storing RunAs credentials is set to Enabled"
@@ -2825,11 +2825,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_102_2_4
+      - win22cis_rule_18_9_102_2_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.2.4
+      - win22cis_rule_18.9.102.2.4
       - automated
 
 # This control will have to be set to Enabled (1) to allow for continued remote management via Ansible following machine restart
@@ -2840,12 +2840,12 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_103_1
+      - win22cis_rule_18_9_103_1
       - not win_skip_for_test
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.102.1
+      - win22cis_rule_18.9.102.1
       - automated
 
 - name: "18.9.105.2.1 | PATCH | Ensure Prevent users from modifying settings is set to Enabled"
@@ -2855,11 +2855,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_105_2_1
+      - win22cis_rule_18_9_105_2_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.105.2.1
+      - win22cis_rule_18.9.105.2.1
       - automated
 
 - name: "18.9.108.1.1 | PATCH | Ensure No auto-restart with logged on users for scheduled automatic updates installations is set to Disabled"
@@ -2869,11 +2869,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_108_1_1
+      - win22cis_rule_18_9_108_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108_1_1
+      - win22cis_rule_18.9.108_1_1
       - automated
 
 - name: "18.9.108.2.1 | PATCH | Ensure Configure Automatic Updates is set to Enabled"
@@ -2883,11 +2883,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_108_2_1
+      - win22cis_rule_18_9_108_2_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.2.1
+      - win22cis_rule_18.9.108.2.1
       - automated
 
 - name: "18.9.108.2.2 | PATCH | Ensure Configure Automatic Updates Scheduled install day is set to 0 - Every day"
@@ -2897,11 +2897,11 @@
       data: 0
       type: dword
   when:
-      - rule_18_9_108_2_2
+      - win22cis_rule_18_9_108_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.2.2
+      - win22cis_rule_18.9.108.2.2
       - automated
 
 - name: "18.9.108.4.1 | PATCH | Ensure Manage preview builds is set to Disabled"
@@ -2911,11 +2911,11 @@
       data: 1
       type: dword
   when:
-      - rule_18_9_108_4_1
+      - win22cis_rule_18_9_108_4_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.4.1
+      - win22cis_rule_18.9.108.4.1
       - automated
 
 - name: "18.9.108.4.2 | PATCH | Ensure Select when Preview Builds and Feature Updates are received is set to Enabled 180 or more days"
@@ -2934,11 +2934,11 @@
             data: "{{ win22cis_defer_feature_update_period }}"
             type: dword
   when:
-      - rule_18_9_108_4_2
+      - win22cis_rule_18_9_108_4_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.4.2
+      - win22cis_rule_18.9.108.4.2
       - automated
 
 - name: "18.9.108.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days"
@@ -2957,9 +2957,9 @@
             data: 0
             type: dword
   when:
-      - rule_18_9_108_4_3
+      - win22cis_rule_18_9_108_4_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.4.3
+      - win22cis_rule_18.9.108.4.3
       - automated

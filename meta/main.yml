@@ -17,11 +17,15 @@ galaxy_info:
         - security
         - cis
         - hardening
+        - benchmark
         - microsoft
         - windows
+        - complianceascode
         - compliance
-collections:
-    - community.windows
-    - ansible.builtin
-    - ansible.windows
-dependencies: []
+
+    collections:
+        - ansible.windows
+        - community.windows
+        - community.general
+
+    dependencies: []

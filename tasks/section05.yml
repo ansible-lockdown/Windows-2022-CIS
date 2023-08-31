@@ -9,10 +9,10 @@
       data: 0
       type: dword
   when:
-      - rule_5_1
+      - win22cis_rule_5_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_5.1
+      - win22cis_rule_5.1
       - automated
       - printer
