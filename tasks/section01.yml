@@ -102,7 +102,7 @@
 # We have found the order of tasks varies between cloud based instances and VM based instances.
 # The task below loads the control group in the correct order for cloud based systems
 - name:
-      “1.2.2 | PATCH | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempt(s), but not 0.
+      "1.2.2 | PATCH | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempt(s), but not 0.
        1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes
        1.2.3 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes."
   ansible.builtin.import_tasks: section01_cloud_lockout_order.yml
