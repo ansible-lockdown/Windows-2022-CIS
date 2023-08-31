@@ -7,11 +7,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_1_1
+      - win22cis_rule_9_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.1.1
+      - win22cis_rule_9.1.1
       - automated
 
 - name: "9.1.2 | PATCH | Ensure 'Windows Firewall: Domain: Inbound connections' is set to 'Block (default)'"
@@ -21,11 +21,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_1_2
+      - win22cis_rule_9_1_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.1.2
+      - win22cis_rule_9.1.2
       - automated
 
 - name: "9.1.3 | PATCH | Ensure 'Windows Firewall: Domain: Outbound connections' is set to 'Allow (default)'"
@@ -35,11 +35,11 @@
       data: 0
       type: dword
   when:
-      - rule_9_1_3
+      - win22cis_rule_9_1_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.1.3
+      - win22cis_rule_9.1.3
       - automated
 
 - name: "9.1.4 | PATCH | Ensure 'Windows Firewall: Domain: Settings: Display a notification' is set to 'No'"
@@ -49,11 +49,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_1_4
+      - win22cis_rule_9_1_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.1.4
+      - win22cis_rule_9.1.4
       - automated
 
 # title has slashes switched
@@ -64,11 +64,11 @@
       data: '{{ win22cis_domain_firewall_log_path }}'
       type: string
   when:
-      - rule_9_1_5
+      - win22cis_rule_9_1_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.1.5
+      - win22cis_rule_9.1.5
       - automated
 
 - name: "9.1.6 | PATCH | Ensure 'Windows Firewall: Domain: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
@@ -78,11 +78,11 @@
       data: '{{ win22cis_domain_firewall_log_size }}'
       type: dword
   when:
-      - rule_9_1_6
+      - win22cis_rule_9_1_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.1.6
+      - win22cis_rule_9.1.6
       - patch
 
 - name: "9.1.7 | PATCH | Ensure 'Windows Firewall: Domain: Logging: Log dropped packets' is set to 'Yes'"
@@ -92,11 +92,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_1_7
+      - win22cis_rule_9_1_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.1.7
+      - win22cis_rule_9.1.7
       - automated
 
 - name: "9.1.8 | PATCH | Ensure 'Windows Firewall: Domain: Logging: Log successful connections' is set to 'Yes'"
@@ -106,11 +106,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_1_8
+      - win22cis_rule_9_1_8
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.1.7
+      - win22cis_rule_9.1.7
       - automated
 
 - name: "9.2.1 | PATCH | Ensure 'Windows Firewall: Private: Firewall state' is set to 'On (recommended)'"
@@ -120,11 +120,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_2_1
+      - win22cis_rule_9_2_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.2.1
+      - win22cis_rule_9.2.1
       - automated
 
 - name: "9.2.2 | PATCH | Ensure 'Windows Firewall: Private: Inbound connections' is set to 'Block (default)'"
@@ -134,11 +134,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_2_2
+      - win22cis_rule_9_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.2.2
+      - win22cis_rule_9.2.2
       - automated
 
 - name: "9.2.3 | PATCH | Ensure 'Windows Firewall: Private: Outbound connections' is set to 'Allow (default)'"
@@ -148,11 +148,11 @@
       data: 0
       type: dword
   when:
-      - rule_9_2_3
+      - win22cis_rule_9_2_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.2.3
+      - win22cis_rule_9.2.3
       - automated
 
 - name: "9.2.4 | PATCH | Ensure 'Windows Firewall: Private: Settings: Display a notification' is set to 'No'"
@@ -162,11 +162,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_2_4
+      - win22cis_rule_9_2_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.2.4
+      - win22cis_rule_9.2.4
       - automated
 
 # title has slashes switched
@@ -177,11 +177,11 @@
       data: '{{ win22cis_private_firewall_log_path }}'
       type: string
   when:
-      - rule_9_2_5
+      - win22cis_rule_9_2_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.2.5
+      - win22cis_rule_9.2.5
       - automated
 
 - name: "9.2.6 | PATCH | Ensure 'Windows Firewall: Private: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
@@ -191,11 +191,11 @@
       data: '{{ win22cis_private_firewall_log_size }}'
       type: dword
   when:
-      - rule_9_2_6
+      - win22cis_rule_9_2_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.2.6
+      - win22cis_rule_9.2.6
       - patch
 
 - name: "9.2.7 | PATCH | Ensure 'Windows Firewall: Private: Logging: Log dropped packets' is set to 'Yes'"
@@ -205,11 +205,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_2_7
+      - win22cis_rule_9_2_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.2.7
+      - win22cis_rule_9.2.7
       - automated
 
 - name: "9.2.8 | PATCH | Ensure 'Windows Firewall: Private: Logging: Log successful connections' is set to 'Yes'"
@@ -219,11 +219,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_2_8
+      - win22cis_rule_9_2_8
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.2.8
+      - win22cis_rule_9.2.8
       - automated
 
 - name: "9.3.1 | PATCH | Ensure 'Windows Firewall: Public: Firewall state' is set to 'On (recommended)'"
@@ -233,11 +233,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_3_1
+      - win22cis_rule_9_3_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.1
+      - win22cis_rule_9.3.1
       - automated
 
 - name: "9.3.2 | PATCH | Ensure 'Windows Firewall: Public: Inbound connections' is set to 'Block (default)'"
@@ -247,11 +247,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_3_2
+      - win22cis_rule_9_3_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.2
+      - win22cis_rule_9.3.2
       - automated
 
 - name: "9.3.3 | PATCH | Ensure 'Windows Firewall: Public: Outbound connections' is set to 'Allow (default)'"
@@ -261,11 +261,11 @@
       data: 0
       type: dword
   when:
-      - rule_9_3_3
+      - win22cis_rule_9_3_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.3
+      - win22cis_rule_9.3.3
       - automated
 
 - name: "9.3.4 | PATCH | Ensure 'Windows Firewall: Public: Settings: Display a notification' is set to 'No'"
@@ -275,11 +275,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_3_4
+      - win22cis_rule_9_3_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.4
+      - win22cis_rule_9.3.4
       - automated
 
 - name: "9.3.5 | PATCH | Ensure 'Windows Firewall: Public: Settings: Apply local firewall rules' is set to 'No'"
@@ -289,12 +289,12 @@
       data: 0
       type: dword
   when:
-      - rule_9_3_5
+      - win22cis_rule_9_3_5
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.5
+      - win22cis_rule_9.3.5
       - automated
 
 - name: "9.3.6 | PATCH | Ensure 'Windows Firewall: Public: Settings: Apply local connection security rules' is set to 'No'"
@@ -304,11 +304,11 @@
       data: 0
       type: dword
   when:
-      - rule_9_3_6
+      - win22cis_rule_9_3_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.6
+      - win22cis_rule_9.3.6
       - automated
 
 # title has slashes switched
@@ -319,11 +319,11 @@
       data: '{{ win22cis_public_firewall_log_path }}'
       type: string
   when:
-      - rule_9_3_7
+      - win22cis_rule_9_3_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.7
+      - win22cis_rule_9.3.7
       - automated
 
 - name: "9.3.8 | PATCH | Ensure 'Windows Firewall: Public: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
@@ -333,11 +333,11 @@
       data: '{{ win22cis_public_firewall_log_size }}'
       type: dword
   when:
-      - rule_9_3_8
+      - win22cis_rule_9_3_8
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.8
+      - win22cis_rule_9.3.8
       - automated
 
 - name: "9.3.9 | PATCH | Ensure 'Windows Firewall: Public: Logging: Log dropped packets' is set to 'Yes'"
@@ -347,11 +347,11 @@
       data: 1
       type: dword
   when:
-      - rule_9_3_9
+      - win22cis_rule_9_3_9
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.9
+      - win22cis_rule_9.3.9
       - automated
 
 - name: "9.3.10 | PATCH | Ensure 'Windows Firewall: Public: Logging: Log successful connections' is set to 'Yes'"
@@ -361,9 +361,9 @@
       data: 1
       type: dword
   when:
-      - rule_9_3_10
+      - win22cis_rule_9_3_10
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.3.10
+      - win22cis_rule_9.3.10
       - automated

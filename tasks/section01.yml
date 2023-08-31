@@ -6,11 +6,11 @@
       key: passwordhistorysize
       value: "{{ win22cis_passwordhistorysize }}"
   when:
-      - rule_1_1_1
+      - win22cis_rule_1_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.1.1
+      - win22cis_rule_1.1.1
       - automated
       - passwords
 
@@ -20,11 +20,11 @@
       key: MaximumPasswordAge
       value: "{{ win22cis_maximumpasswordage }}"
   when:
-      - rule_1_1_2
+      - win22cis_rule_1_1_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.1.2
+      - win22cis_rule_1.1.2
       - automated
       - passwords
 
@@ -34,11 +34,11 @@
       key: MinimumPasswordAge
       value: "{{ win22cis_minimumpasswordage }}"
   when:
-      - rule_1_1_3
+      - win22cis_rule_1_1_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.1.3
+      - win22cis_rule_1.1.3
       - automated
       - passwords
 
@@ -48,11 +48,11 @@
       key: MinimumPasswordLength
       value: "{{ win22cis_minimumpasswordlength }}"
   when:
-      - rule_1_1_4
+      - win22cis_rule_1_1_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.1.4
+      - win22cis_rule_1.1.4
       - automated
       - passwords
 
@@ -62,11 +62,11 @@
       key: PasswordComplexity
       value: 1
   when:
-      - rule_1_1_5
+      - win22cis_rule_1_1_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.1.5
+      - win22cis_rule_1.1.5
       - automated
       - passwords
 
@@ -77,11 +77,11 @@
       data: 1
       type: dword
   when:
-      - rule_1_1_6
+      - win22cis_rule_1_1_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.1.6
+      - win22cis_rule_1.1.6
       - automated
       - passwords
 
@@ -91,26 +91,26 @@
       key: ClearTextPassword
       value: "0"
   when:
-      - rule_1_1_7
+      - win22cis_rule_1_1_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.1.7
+      - win22cis_rule_1.1.7
       - automated
       - passwords
 
-# This rule must be applied first to make rule_1.2.1 and rule_1.2.3 applicable
+# This rule must be applied first to make win22cis_rule_1.2.1 and win22cis_rule_1.2.3 applicable
 - name: "1.2.2 | PATCH | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempts but not 0"
   community.windows.win_security_policy:
       section: System Access
       key: LockoutBadCount
       value: "{{ win22cis_lockoutbadcount }}"
   when:
-      - rule_1_2_2
+      - win22cis_rule_1_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.2.2
+      - win22cis_rule_1.2.2
       - automated
       - account
 
@@ -121,11 +121,11 @@
       key: LockoutDuration
       value: "{{ win22cis_lockoutduration }}"
   when:
-      - rule_1_2_1
+      - win22cis_rule_1_2_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.2.1
+      - win22cis_rule_1.2.1
       - automated
       - account
 
@@ -135,10 +135,10 @@
       key: ResetLockoutCount
       value: "{{ win22cis_resetlockoutcount }}"
   when:
-      - rule_1_2_3
+      - win22cis_rule_1_2_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_1.2.3
+      - win22cis_rule_1.2.3
       - automated
       - account

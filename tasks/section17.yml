@@ -5,13 +5,13 @@
       subcategory: Credential Validation
       audit_type: success, failure
   when:
-      - rule_17_1_1
+      - win22cis_rule_17_1_1
       - ansible_windows_domain_role == "Primary domain controller" or
         ansible_windows_domain_role == "Member server"
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.1.1
+      - win22cis_rule_17.1.1
       - automated
 
 - name: "17.1.2 | PATCH | Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure' DC Only"
@@ -19,11 +19,11 @@
       subcategory: Kerberos Authentication Service
       audit_type: success, failure
   when:
-      - rule_17_1_2
+      - win22cis_rule_17_1_2
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - rule_17.1.2
+      - win22cis_rule_17.1.2
       - automated
 
 - name: "17.1.3 | PATCH | Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure' DC Only"
@@ -31,11 +31,11 @@
       subcategory: Kerberos Service Ticket Operations
       audit_type: success, failure
   when:
-      - rule_17_1_3
+      - win22cis_rule_17_1_3
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - rule_17.1.2
+      - win22cis_rule_17.1.2
       - automated
 
 - name: "17.2.1 | PATCH | Ensure Audit Application Group Management is set to Success and Failure"
@@ -43,13 +43,13 @@
       subcategory: Security Group Management
       audit_type: success, failure
   when:
-      - rule_17_2_1
+      - win22cis_rule_17_2_1
       - ansible_windows_domain_role == "Primary domain controller" or
         ansible_windows_domain_role == "Member server"
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.2.1
+      - win22cis_rule_17.2.1
       - automated
 
 - name: "17.2.2 | PATCH | Ensure Audit Computer Account Management is set to include Success DC only"
@@ -65,11 +65,11 @@
         changed_when: "'Success' not in win22cis_17_2_2_audit.stdout"
         when: "'Success' not in win22cis_17_2_2_audit.stdout"
   when:
-      - rule_17_2_2
+      - win22cis_rule_17_2_2
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - rule_17.2.2
+      - win22cis_rule_17.2.2
       - automated
 
 - name: "17.2.3 | PATCH | Ensure Audit Distribution Group Management is set to include Success DC only"
@@ -84,11 +84,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Distribution Group Management" /success:enable
         when: "'Success' not in win22cis_17_2_3_audit.stdout"
   when:
-      - rule_17_2_3
+      - win22cis_rule_17_2_3
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - rule_17.2.3
+      - win22cis_rule_17.2.3
       - automated
 
 - name: "17.2.4 | PATCH | Ensure Audit Other Account Management Events is set to include Success DC only"
@@ -103,11 +103,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Other Account Management Events" /success:enable
         when: "'Success' not in win22cis_17_2_4_audit.stdout"
   when:
-      - rule_17_2_4
+      - win22cis_rule_17_2_4
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - rule_17.2.4
+      - win22cis_rule_17.2.4
       - automated
 
 - name: "17.2.5 | AUDIT | Ensure Audit Security Group Management is set to include Success"
@@ -122,11 +122,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Security Group Management" /success:enable
         when: "'Success' not in win22cis_17_2_5_audit.stdout"
   when:
-      - rule_17_2_5
+      - win22cis_rule_17_2_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.2.5
+      - win22cis_rule_17.2.5
       - automated
 
 - name: "17.2.6 | PATCH | Ensure Audit User Account Management is set to Success and Failure"
@@ -134,11 +134,11 @@
       subcategory: User Account Management
       audit_type: success, failure
   when:
-      - rule_17_2_6
+      - win22cis_rule_17_2_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.2.6
+      - win22cis_rule_17.2.6
       - automated
 
 - name: "17.3.1 | PATCH | Ensure Audit PNP Activity is set to include Success"
@@ -153,11 +153,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Plug and Play Events" /success:enable
         when: "'Success' not in win22cis_17_3_1_audit.stdout"
   when:
-      - rule_17_3_1
+      - win22cis_rule_17_3_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.3.1
+      - win22cis_rule_17.3.1
       - automated
 
 - name: "17.3.2 | PATCH | Ensure Audit Process Creation is set to include Success"
@@ -172,11 +172,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Process Creation" /success:enable
         when: "'Success' not in win22cis_17_3_2_audit.stdout"
   when:
-      - rule_17_3_2
+      - win22cis_rule_17_3_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.3.2
+      - win22cis_rule_17.3.2
       - automated
 
 - name: "17.4.1 | PATCH | Ensure Audit Directory Service Access is set to include Failure DC only"
@@ -191,11 +191,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Directory Service Access" /failure:enable
         when: "'Failure' not in win22cis_17_4_1_audit.stdout"
   when:
-      - rule_17_4_1
+      - win22cis_rule_17_4_1
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - rule_17.4.1
+      - win22cis_rule_17.4.1
       - automated
 
 - name: "17.4.2 | PATCH | Ensure Audit Directory Service Changes is set to include Success DC only"
@@ -210,11 +210,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Directory Service Changes" /success:enable
         when: "'Success' not in win22cis_17_4_2_audit.stdout"
   when:
-      - rule_17_4_2
+      - win22cis_rule_17_4_2
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - rule_17.4.2
+      - win22cis_rule_17.4.2
       - automated
 
 - name: "17.5.1 | PATCH | Ensure Audit Account Lockout is set to include Failure"
@@ -229,11 +229,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Account Lockout" /failure:enable
         when: "'Failure' not in win22cis_17_5_1_audit.stdout"
   when:
-      - rule_17_5_1
+      - win22cis_rule_17_5_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.5.1
+      - win22cis_rule_17.5.1
       - automated
 
 - name: "17.5.2 | PATCH | Ensure Audit Group Membership is set to include Success"
@@ -248,11 +248,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Group Membership" /success:enable
         when: "'Success' not in win22cis_17_5_2_audit.stdout"
   when:
-      - rule_17_5_2
+      - win22cis_rule_17_5_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.5.2
+      - win22cis_rule_17.5.2
       - automated
 
 - name: "17.5.3 | AUDIT | Ensure Audit Logoff is set to include Success"
@@ -267,11 +267,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Logoff" /success:enable
         when: "'Success' not in win22cis_17_5_3_audit.stdout"
   when:
-      - rule_17_5_3
+      - win22cis_rule_17_5_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.5.3
+      - win22cis_rule_17.5.3
       - automated
 
 - name: "17.5.4 | PATCH | Ensure Audit Logon is set to Success and Failure"
@@ -279,11 +279,11 @@
       subcategory: Logon
       audit_type: success, failure
   when:
-      - rule_17_5_4
+      - win22cis_rule_17_5_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.5.4
+      - win22cis_rule_17.5.4
       - automated
 
 - name: "17.5.5 | PATCH | Ensure Audit Other LogonLogoff Events is set to Success and Failure"
@@ -291,11 +291,11 @@
       subcategory: Other Logon/Logoff Events
       audit_type: success, failure
   when:
-      - rule_17_5_5
+      - win22cis_rule_17_5_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.5.5
+      - win22cis_rule_17.5.5
       - automated
 
 - name: "17.5.6 | PATCH | Ensure Audit Special Logon is set to include Success"
@@ -310,11 +310,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Special Logon" /success:enable
         when: "'Success' not in win22cis_17_5_6_audit.stdout"
   when:
-      - rule_17_5_6
+      - win22cis_rule_17_5_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.5.6
+      - win22cis_rule_17.5.6
       - automated
 
 - name: "17.6.1 | PATCH | Ensure Audit Detailed File Share is set to include Failure"
@@ -329,11 +329,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Detailed File Share" /failure:enable
         when: "'Failure' not in win22cis_17_6_1_audit.stdout"
   when:
-      - rule_17_6_1
+      - win22cis_rule_17_6_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.6.1
+      - win22cis_rule_17.6.1
       - automated
 
 - name: "17.6.2 | PATCH | Ensure Audit File Share is set to Success and Failure"
@@ -341,11 +341,11 @@
       subcategory: File Share
       audit_type: success, failure
   when:
-      - rule_17_6_2
+      - win22cis_rule_17_6_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.6.2
+      - win22cis_rule_17.6.2
       - automated
 
 - name: "17.6.3 | PATCH | Ensure Audit Other Object Access Events is set to Success and Failure"
@@ -353,11 +353,11 @@
       subcategory: Other Object Access Events
       audit_type: success, failure
   when:
-      - rule_17_6_3
+      - win22cis_rule_17_6_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.6.3
+      - win22cis_rule_17.6.3
       - automated
 
 - name: "17.6.4 | PATCH | Ensure Audit Removable Storage is set to Success and Failure"
@@ -365,11 +365,11 @@
       subcategory: Removable Storage
       audit_type: success, failure
   when:
-      - rule_17_6_4
+      - win22cis_rule_17_6_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.6.4
+      - win22cis_rule_17.6.4
       - automated
 
 - name: "17.7.1 | PATCH | Ensure Audit Audit Policy Change is set to include Success"
@@ -384,11 +384,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Audit Policy Change" /success:enable
         when: "'Success' not in win22cis_17_7_1_audit.stdout"
   when:
-      - rule_17_7_1
+      - win22cis_rule_17_7_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.7.1
+      - win22cis_rule_17.7.1
       - automated
 
 - name: "17.7.2 | PATCH | Ensure Audit Authentication Policy Change is set to include Success"
@@ -403,11 +403,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Authentication Policy Change" /success:enable
         when: "'Success' not in win22cis_17_7_2_audit.stdout"
   when:
-      - rule_17_7_2
+      - win22cis_rule_17_7_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.7.2
+      - win22cis_rule_17.7.2
       - automated
 
 - name: "17.7.3 | PATCH | Ensure Audit Authorization Policy Change is set to include Success"
@@ -422,11 +422,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Authorization Policy Change" /success:enable
         when: "'Success' not in win22cis_17_7_3_audit.stdout"
   when:
-      - rule_17_7_3
+      - win22cis_rule_17_7_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.7.3
+      - win22cis_rule_17.7.3
       - automated
 
 - name: "17.7.4 | PATCH | Ensure Audit MPSSVC Rule-Level Policy Change is set to Success and Failure"
@@ -434,11 +434,11 @@
       subcategory: MPSSVC Rule-Level Policy Change
       audit_type: success, failure
   when:
-      - rule_17_7_4
+      - win22cis_rule_17_7_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.7.4
+      - win22cis_rule_17.7.4
       - automated
 
 - name: "17.7.5 | PATCH | Ensure Audit Other Policy Change Events is set to include Failure"
@@ -453,11 +453,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Other Policy Change Events" /failure:enable
         when: "'Failure' not in win22cis_17_7_5_audit.stdout"
   when:
-      - rule_17_7_5
+      - win22cis_rule_17_7_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.7.5
+      - win22cis_rule_17.7.5
       - automated
 
 - name: "17.8.1 | PATCH | Ensure Audit Sensitive Privilege Use is set to Success and Failure"
@@ -465,11 +465,11 @@
       subcategory: Sensitive Privilege Use
       audit_type: success, failure
   when:
-      - rule_17_8_1
+      - win22cis_rule_17_8_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.8.1
+      - win22cis_rule_17.8.1
       - automated
 
 - name: "17.9.1 | PATCH | Ensure Audit IPsec Driver is set to Success and Failure"
@@ -477,11 +477,11 @@
       subcategory: IPsec Driver
       audit_type: success, failure
   when:
-      - rule_17_9_1
+      - win22cis_rule_17_9_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.9.1
+      - win22cis_rule_17.9.1
       - automated
 
 - name: "17.9.2 | PATCH | Ensure Audit Other System Events is set to Success and Failure"
@@ -489,11 +489,11 @@
       subcategory: Other System Events
       audit_type: success, failure
   when:
-      - rule_17_9_2
+      - win22cis_rule_17_9_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.9.2
+      - win22cis_rule_17.9.2
       - automated
 
 - name: "17.9.3 | PATCH | Ensure Audit Security State Change is set to include Success"
@@ -508,11 +508,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Security State Change" /success:enable
         when: "'Success' not in win22cis_17_9_3_audit.stdout"
   when:
-      - rule_17_9_3
+      - win22cis_rule_17_9_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.9.3
+      - win22cis_rule_17.9.3
       - automated
 
 - name: "17.9.4 | PATCH | Ensure Audit Security System Extension is set to include Success"
@@ -527,11 +527,11 @@
         ansible.windows.win_shell: AuditPol /set /subcategory:"Security System Extension" /success:enable
         when: "'Success' not in win22cis_17_9_4_audit.stdout"
   when:
-      - rule_17_9_4
+      - win22cis_rule_17_9_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.9.4
+      - win22cis_rule_17.9.4
       - automated
 
 - name: "17.9.5 | PATCH | Ensure Audit System Integrity is set to Success and Failure"
@@ -539,9 +539,9 @@
       subcategory: System Integrity
       audit_type: success, failure
   when:
-      - rule_17_9_5
+      - win22cis_rule_17_9_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_17.9.5
+      - win22cis_rule_17.9.5
       - automated
