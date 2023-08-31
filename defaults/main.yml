@@ -40,8 +40,9 @@ is_implemented: false
 # set to false to skip long running tasks
 long_running: false
 
-# win_skip_for_test is the setting that will skip tasks that may cause changes that will affect the system.
-# Controls that will be skipped:
+# win_skip_for_test is used in the playbook to skip over WINRM based controls that
+# may cause WINRM Basic Connection Type to be disabled.
+# Setting win_skip_for_test to 'false' will enable Secure Connection types only.
 # win22cis_rule_2_3_1_5
 # win22cis_rule_9_3_5
 # win22cis_rule_18_9_102_1_1
@@ -50,7 +51,7 @@ long_running: false
 # win22cis_rule_18_9_102_2_2
 # win22cis_rule_18_9_102_2_3
 # win22cis_rule_18_9_103_1
-win_skip_for_test: false
+win_skip_for_test: true
 
 # These variables correspond with the STIG IDs defined in the STIG and allows you to enable/disable specific rules.
 # PLEASE NOTE: These work in coordination with the cat1, cat2, cat3 group variables. You must enable an entire group
