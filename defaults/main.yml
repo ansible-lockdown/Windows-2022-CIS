@@ -518,6 +518,14 @@ win22cis_hyperv_installed: false
 # This is a variable to determine if Windows Manager should be included in this step
 win22cis_increase_scheduling_priority_users: '{{ ["Administrators"] if (windows_installation_type=="Server Core") else (["Administrators","Window Manager\Window Manager Group"]) }}'
 
+# 2.2.37
+# win22cis_exchange_server_running is the policy setting determines which users can change the auditing options for
+# files and directories and clear the Security log. Setting to true will set both groups to be added.
+# False will only add Administrators.
+# True will add administrators and (when Exchange is running in the environment) Exchange Servers.
+# The recommended state for this setting is: Administrators and when Exchange is running in the environment) Exchange Servers.
+win22cis_exchange_server_running: false
+
 # 2.3.1.5
 # win22cis_admin_username is the name the administrator account will be renamed to
 win22cis_admin_username: adminchangethis
@@ -525,6 +533,12 @@ win22cis_admin_username: adminchangethis
 # 2.3.1.6
 # win22cis_guest_username is the name the guest account will be renamed to
 win22cis_guest_username: guestchangethis
+
+# 2.3.6.5
+# win22cis_domain_member_maximum_password_age is the policy setting determines the maximum allowable age for a
+# computer account password. By default, domain members automatically change their domain passwords every 30 days.
+# The recommended state for this setting is: 30 or fewer days, but not 0.
+win22cis_domain_member_maximum_password_age: 30
 
 # 2.3.6.5
 # win22cis_machine_acct_pw_age is the max machine account pw age in days
@@ -535,11 +549,6 @@ win22cis_machine_acct_pw_age: 30
 # win22cis_inactivity_timeout is the timeout in seconds for how long to wait for activity
 # This value should be 900 or vewer, but not zero, to be CIS compliant
 win22cis_inactivity_timeout: 900
-
-# 2.3.7.6
-# win22cis_cached_logons_count is the number of logons that are cached
-# This needs to be 4 or fewer to be CIS compliant
-win22cis_cached_logons_count: 4
 
 # 2.3.7.7
 # win22cis_passwd_expiry_warn is the number of days before an expring password users will receive warnings about the expring password
@@ -556,17 +565,64 @@ win22cis_smartc_remove_option: "1"
 # This needs to be set to 15 or fewer to be CIS compliant
 win22cis_auto_disconnect: 15
 
+# 2.3.7.3
+# win22cis_inactivity_timeout_seconds is the variable used to set when Windows notices inactivity of a logon session,
+# and if the amount of inactive time exceeds the inactivity limit, then the screen saver will run, locking the session.
+# The recommended state for this setting is: 900 or fewer second(s), but not 0.
+win22cis_inactivity_timeout_seconds: 900
+
+# 2.3.7.4
+# win22cis_legal_notice is the setting that specifies a text message that displays to users when they log on.
+# Configure this setting in a manner that is consistent with the security and operational requirements of your organization.
+win22cis_legal_notice: |
+    You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
+
+    By using this IS (which includes any device attached to this IS), you consent to the following conditions:
+
+    -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
+
+    -At any time, the USG may inspect and seize data stored on this IS.
+
+    -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose.
+
+    -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
+
+    -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
+
+# 2.3.7.5
+# win22cis_legal_notice_caption is the policy setting specifies the text displayed in the title bar of the window that users see
+# when they log on to the system. Configure this setting in a manner that is consistent with the security and operational
+# requirements of your organization.
+win22cis_legal_notice_caption: "DoD Notice and Consent Banner"
+
+# 2.3.7.6
+# win22cis_cached_logons_count is the number that is assigned to this policy setting indicates the number of users whose
+# logon information the computer will cache locally. If this value is set to 0, the logon cache feature is disabled.
+# The recommended state for this setting is: 4 or fewer logon(s).
+win22cis_cached_logons_count: 1
+
+# 2.3.7.7
+# win22cis_password_expiry_warning_days is the policy setting determines how far in advance users are warned that their password will expire.
+# The recommended state for this setting is: between 5 and 14 days.
+win22cis_password_expiry_warning_days: 14
+
+# 2.3.9.1
+# win22cis_smb_auto_disconnect_time is the policy setting allows you to specify the amount of continuous idle time that must pass in an
+# SMB session before the session is suspended because of inactivity.
+# The recommended state for this setting is: 15 or fewer minute(s).
+win22cis_smb_auto_disconnect_time: 15
+
 # Section 9 Variables
 
 # 9.1.5
-# domain_firewall_log_path is the path to the domain firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\domainfw.log
+# win22cis_domain_firewall_log_path is the path to the domain firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\domainfw.log
 # This is a variable to give some leway on where to store these log files
 win22cis_domain_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\domainfw.log'
 
 # 9.1.6
-# domain_firewall_log_size is the size of the log file generated
+# win22cis_domain_firewall_log_size is the size of the log file generated
 # To conform to CIS standards the value should be 16,384 or greater. Value is in KB
-win22cis_domain_firewall_log_size: 16,384
+win22cis_domain_firewall_log_size: 16384
 
 # 9.2.5
 # private_firewall_log_path is the path to the private firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\privatefw.log
@@ -576,17 +632,17 @@ win22cis_private_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\pri
 # 9.2.6
 # private_firewall_log_size is the size of the log file
 # To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
-win22cis_private_firewall_log_size: 16,384
+win22cis_private_firewall_log_size: 16384
 
 # 9.3.7
-# public_firewall_log_path is the path to the public firewall log file. The control suggests %SystemRoot%\System32\logfiles\firewall\publicfw.log
+# win22cis_public_firewall_log_path is the path to the public firewall log file. The control suggests %SystemRoot%\System32\logfiles\firewall\publicfw.log
 # This is a variable to give some leway on where to store these log files
 win22cis_public_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\publicfw.log'
 
 # 9.3.8
 # public_firewall_log_size is the size of the log file
 # To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
-win22cis_public_firewall_log_size: 16,384
+win22cis_public_firewall_log_size: 16384
 
 # Section 18 Variables
 
@@ -600,15 +656,37 @@ win22cis_laps_passwordlength: 15
 # To conform to CIS standards please use a max value of 30
 win22cis_laps_passwordagedays: 30
 
+# Control 18.2.5
+# win22cis_laps_password_length is the LAPS tool password length.
+# The recommended state for this setting is: Enabled: 15 or more.
+win22cis_laps_password_length: 15
+
+# Control 18.2.6
+# win22cis_laps_password_age_days is the LAPS tool password age in days.
+# The recommended state for this setting is: Enabled: 30 or fewer.
+win22cis_laps_password_age_days: 30
+
 # 18.3.6
-# netbt_nodetype is the node type value in HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters:NodeType
+# win22cis_netbt_nodetype is the node type value in HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters:NodeType
 # Options are B-node value of 1, P-node value of 2, M-node value of 4, H-node value of 8. P-node is the recommended setting from CIS
 win22cis_netbt_nodetype: 2
+
+# 18.4.9
+# win22cis_screen_saver_grace_period is the grace period between when the screen saver is launched and when the console is actually
+# locked automatically when screen saver locking is enabled.
+# The recommended state for this setting is: Enabled: 5 or fewer seconds.
+win22cis_screen_saver_grace_period: 5
 
 # 18.4.9
 # win22cis_screen_saver_grace is the time in seconds before the screen saver grace period expires
 # To conform to CIS standards the value should be 5 or fewer, with zero as recommended
 win22cis_screen_saver_grace: 0
+
+# 18.4.12
+# win22cis_log_threshold_audit_event is the setting that can generate a security audit in the Security event log when the
+# log reaches a user-defined threshold.
+# The recommended state for this setting is: Enabled: 90% or less.
+win22cis_log_threshold_audit_event: 90
 
 # 18.4.12
 # win22cis_mss_security_warn_thresh is the threshold at which the event log will start warning
@@ -645,6 +723,30 @@ win22cis_elm_applog_max_size: 65538
 # To confrom to CIS standards this value should be 196608 or greater
 win22cis_elm_seclog_max_size: 196608
 
+# 18.9.27.1.2
+# win22cis_application_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size can be
+# configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.
+# The recommended state for this setting is: Enabled: 32,768 or greater
+win22cis_application_max_log_file_size: 32768
+
+# 18.9.27.2.2
+# win22cis_security_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size can
+# be configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.
+# The recommended state for this setting is: Enabled: 196,608 or greater.
+win22cis_security_max_log_file_size: 196608
+
+# 18.9.27.3.2
+# win22cis_setup_max_log_file_size is the setting specifies the maximum size of the log file in kilobytes. The maximum log file size can be
+# configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.#
+# The recommended state for this setting is: Enabled: 32,768 or greater.
+win22cis_setup_max_log_file_size: 32768
+
+# 18.9.27.4.2
+# win22cis_system_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size
+# can be configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.
+# The recommended state for this setting is: Enabled: 32,768 or greater.
+win22cis_system_max_log_file_size: 32768
+
 # 18.9.27.3.2
 # win22cis_elm_setup_max_size is the max size of the Even Log Manager non- standard logs can become, in KB
 # To conform to CIS standards this value should be 32768 or higher
@@ -656,6 +758,13 @@ win22cis_elm_setup_max_size: 32768
 win22cis_elm_syslog_max_size: 32768
 
 # 18.9.65.3.10.1
+# win22cis_idle_rdp_session_disconnect_time is the setting allows you to specify the maximum amount of time that an active Remote Desktop
+# Services session can be idle (without user input) before it is automatically disconnected.
+# The recommended state for this setting is: Enabled: 15 minutes or less, but not Never (0).
+# 1 min = 60000, 5 min = 300000, 10 min = 600000, 15 min = 900000
+win22cis_idle_rdp_session_disconnect_time: 900000
+
+# 18.9.65.3.10.1
 # win22cis_terminal_max_idle_time is the time limit for active but idle remote desktop services connections in seconds
 # This value needs to be 15 minutes (900000) or less, but not zero (0) to conform to CIS standards
 win22cis_terminal_max_idle_time: 900000
@@ -665,13 +774,14 @@ win22cis_terminal_max_idle_time: 900000
 # To conform to CIS stadnards this value should be a 0 or 1
 win22cis_allow_ink_workspace: 1
 
+# Section 19 Variables
+
+# 19.1.3.3
+# win22cis_screen_saver_timeout is the setting that specifies how much user idle time must elapse before the screen saver is launched.
+# The recommended state for this setting is: Enabled: 900 seconds or fewer, but not 0.
+win22cis_screen_saver_timeout: 900
+
 # 19.9.108.4.2
 # win22cis_defer_feature_update_period is the duration in days to delay feature updates in automatic updates
 # To conform to CIS stadnards this value should be 180 or more (365 is max allowed by Windows)
 win22cis_defer_feature_update_period: 180
-
-# Section 19 Variables
-
-# win22cis_screen_saver_timeout is the time in seconds until the screen saver turns on
-# This needs to be set to 900 or fewer, but not zero, to be CIS compliant
-win22cis_screen_saver_timeout: 900
