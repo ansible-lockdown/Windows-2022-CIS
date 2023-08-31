@@ -513,6 +513,14 @@ win22cis_account_lockout_duration: 15
 # The recommended state for this setting is: 5 or fewer invalid logon attempt(s), but not 0.
 win22cis_bad_login_lockout_count: 5
 
+# 1.2.3
+# win22cis_account_lockout_counter_reset is the policy setting determines the length of time before the
+# Account lockout threshold resets to zero. The default value for this policy setting is Not Defined.
+# NOTE: If the Account lockout threshold is defined (win22cis_account_lockout_duration), this reset
+# time must be less than or equal to the value for the Account lockout duration setting.
+# The recommended state for this setting is: 15 or more minute(s).
+win22cis_account_lockout_counter_reset: 15
+
 # Section 2 Variables
 
 # 2.2.18
