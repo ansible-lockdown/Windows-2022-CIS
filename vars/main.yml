@@ -6,10 +6,10 @@
 warn_control_list: ""
 warn_count: 0
 
-# This sets the variable that is created for the banner.
+# lockdown_banner sets the variable that is created for the banner.
 lockdown_banner: "{{lookup('file', './templates/banner.txt')}}"
 
-# This will be changed to true if discovered.
+# win22cis_cloud_based_system will be changed to true if discovered.
 win22cis_cloud_based_system: false
 
 # These are default values that will be changed when the prelim
