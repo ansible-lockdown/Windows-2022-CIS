@@ -391,7 +391,7 @@
   when:
       - win22cis_rule_2_2_27
       - ansible_windows_domain_role == "Primary domain controller"
-      - win2019cis_is_standalone
+      - win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.27
@@ -756,7 +756,7 @@
   when:
       - win22cis_rule_2_3_1_1
       - not ansible_windows_domain_role == "Primary domain controller"
-      - not win2019cis_is_standalone
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.1.1
@@ -936,7 +936,7 @@
   when:
       - win22cis_rule_2_3_5_1
       - ansible_windows_domain_role == "Primary domain controller"
-      - not win2019cis_is_standalone
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.5.1
@@ -952,7 +952,7 @@
   when:
       - win22cis_rule_2_3_5_2
       - ansible_windows_domain_role == "Primary domain controller"
-      - not win2019cis_is_standalone
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.5.2
@@ -968,7 +968,7 @@
   when:
       - win22cis_rule_2_3_5_3
       - ansible_windows_domain_role == "Primary domain controller"
-      - not win2019cis_is_standalone
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.5.3
@@ -999,7 +999,7 @@
   when:
       - win22cis_rule_2_3_5_5
       - ansible_windows_domain_role == "Primary domain controller"
-      - not win2019cis_is_standalone
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.5.5
@@ -1015,7 +1015,7 @@
   when:
       - win22cis_rule_2_3_6_1
       - not ansible_windows_domain_role == "Primary domain controller"
-      - not win2019cis_is_standalone
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -1032,7 +1032,7 @@
   when:
       - win22cis_rule_2_3_6_2
       - not ansible_windows_domain_role == "Primary domain controller"
-      - not win2019cis_is_standalone
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - level1-memberserver
