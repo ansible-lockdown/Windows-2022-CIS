@@ -1,7 +1,7 @@
 ---
 
 galaxy_info:
-    author: "Stephen Williams, Mark Bolwell, George Nalen, Frederick Witty Jr."
+    author: "George Nalen, Mark Bolwell, Stephen Williams, Frederick Witty Jr."
     description: "Ansible role to apply Windows Server 2022 CIS Benchmark"
     company: "MindPoint Group"
     license: MIT
