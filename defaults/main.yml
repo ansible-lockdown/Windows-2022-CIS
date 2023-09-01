@@ -1,14 +1,34 @@
 ---
 
-win2022_os_distribution: Windows-2022
+# Section 1 Account Policies
+# 1.1.x Password Policy, 1.2.x Account Lockout Policy
+win22cis_section01: true
 
-section01_patch: true
-section02_patch: true
-section05_patch: true
-section09_patch: true
-section17_patch: true
-section18_patch: true
-section19_patch: true
+# Section 2 Local Policies
+# 2.2.x User Rights Assignment, 2.3.x Security Options
+win22cis_section02: true
+
+# Section 5 System Services
+# 5.x Printers
+win22cis_section05: true
+
+# Section 9 Windows Defender Firewall with Advanced Security (formerly Windows Firewall with Advanced Security)
+# 9.1.x Domain Profile, 9.2.x Private Profile, 9.3.x Public Profile
+win22cis_section09: true
+
+# Section 17 Advanced Audit Policy Configuration
+# 17.1.x Account Logon, 17.2.x Account Management, 17.3.x Detailed Tracking, 17.4.x DS Access, 17.5.x Logon/Logoff
+# 17.6.x Object Access, 17.7.x Policy Change, 17.8.x Privilege Use, 17.9.x System
+win22cis_section17: true
+
+# Section 18 Administrative Templates (Computer)
+# 18.1.x Control Panel, 18.2.x LAPS, 18.3.x MS Security Guide, 18.4.x MSS (Legacy), 18.5.x Network, 18.6.x Printers
+# 18.7.x Start Menu and Taskbar, 18.8.x System, 18.9.x Windows Components
+win22cis_section18: true
+
+# Section 19 Administrative Templates (User)
+# 19.1.x Control Panel, 19.5.x Start Menu and Taskbar, 19.6.x System, 19.7.x Windows Components
+win22cis_section19: true
 
 min_ansible_version: "2.10"
 
@@ -63,8 +83,14 @@ win22cis_rule_1_1_2: true
 win22cis_rule_1_1_3: true
 win22cis_rule_1_1_4: true
 win22cis_rule_1_1_5: true
+# win19cis_rule_1_1_6 set To false this control cannot be implemented on 2022.
+# This setting is only available within the built-in OS security template of
+# Windows 10 Release 2004 and Server 2022 (or newer). Control Commented out for now.
 win22cis_rule_1_1_6: true
 win22cis_rule_1_1_7: true
+# We have found the order of these three tasks below varies between cloud based instances
+# and VM based instances locally. The task below breaks out to run in a different order
+# for cloud based systems and local based systems. Notes are applied in the section01.yml file.
 win22cis_rule_1_2_1: true
 win22cis_rule_1_2_2: true
 win22cis_rule_1_2_3: true
@@ -122,6 +148,8 @@ win22cis_rule_2_3_1_1: true
 win22cis_rule_2_3_1_2: true
 win22cis_rule_2_3_1_3: true
 win22cis_rule_2_3_1_4: true
+# Setting win19cis_rule_2_3_1_5 Control To True Will Break Ansible Connection
+# Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
 win22cis_rule_2_3_1_5: true
 win22cis_rule_2_3_1_6: true
 win22cis_rule_2_3_2_1: true
@@ -216,6 +244,8 @@ win22cis_rule_9_3_1: true
 win22cis_rule_9_3_2: true
 win22cis_rule_9_3_3: true
 win22cis_rule_9_3_4: true
+# Setting win19cis_rule_9_3_5 Control To True Will Break Ansible Connection
+# Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
 win22cis_rule_9_3_5: true
 win22cis_rule_9_3_6: true
 win22cis_rule_9_3_7: true
@@ -445,13 +475,25 @@ win22cis_rule_18_9_90_3: true
 win22cis_rule_18_9_91_1: true
 win22cis_rule_18_9_100_1: true
 win22cis_rule_18_9_100_2: true
+# WINRM CONTROLS #
+# Setting The Following Controls To True Will Break Ansible Connection
+# Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
+# win19cis_rule_18_9_102_1_1
+# win19cis_rule_18_9_102_1_2
+# win19cis_rule_18_9_102_2_1
+# win19cis_rule_18_9_102_2_2
+# win19cis_rule_18_9_102_2_3
+# win19cis_rule_18_9_103_1
 win22cis_rule_18_9_102_1_1: true
 win22cis_rule_18_9_102_1_2: true
 win22cis_rule_18_9_102_1_3: true
 win22cis_rule_18_9_102_2_1: true
+# This control will have to be set to Enabled (1) to allow for continued remote management via Ansible following
+# machine restart. The CIS standard calls for 0 but doing so will break all remote connections to the system.
 win22cis_rule_18_9_102_2_2: true
 win22cis_rule_18_9_102_2_3: true
 win22cis_rule_18_9_102_2_4: true
+# WINRM CONTROLS END #
 win22cis_rule_18_9_102_1: true
 win22cis_rule_18_9_99_2_1: true
 win22cis_rule_18_9_103_1: true
