@@ -86,7 +86,7 @@ win22cis_rule_1_1_5: true
 # win19cis_rule_1_1_6 set To false this control cannot be implemented on 2022.
 # This setting is only available within the built-in OS security template of
 # Windows 10 Release 2004 and Server 2022 (or newer). Control Commented out for now.
-win22cis_rule_1_1_6: true
+win22cis_rule_1_1_6: false
 win22cis_rule_1_1_7: true
 # We have found the order of these three tasks below varies between cloud based instances
 # and VM based instances locally. The task below breaks out to run in a different order
