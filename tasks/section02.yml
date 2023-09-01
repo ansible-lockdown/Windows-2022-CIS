@@ -10,42 +10,27 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.1
-      - automated
-      - credential_manager
+      - rule_2.2.1
+      - patch
+      - userrights
 
-- name: "2.2.2 | PATCH | Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users, ENTERPRISE DOMAIN CONTROLLERS' (DC only)"
+- name: "2.2.2 & 2.2.3 | PATCH | Ensure Access this computer from the network is set to Administrators, Authenticated Users, & ENTERPRISE DOMAIN CONTROLLERS DC only."
   ansible.windows.win_user_right:
       name: SeNetworkLogonRight
       users:
           - Administrators
           - Authenticated Users
-          - ENTERPRISE DOMAIN CONTROLLERS
       action: set
   when:
-      - win22cis_rule_2_2_2
-      - "'Primary domain controller' in ansible_windows_domain_role"
+      - win22cis_rule_2_2_2 or
+        win22cis_rule_2_2_3
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.2.2
-      - automated
-      - access
-
-- name: "2.2.3 | PATCH | Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users' (MS only)"
-  ansible.windows.win_user_right:
-      name: SeNetworkLogonRight
-      users:
-          - Administrators
-          - Authenticated Users
-      action: set
-  when:
-      - win22cis_rule_2_2_3
-      - "'Primary domain controller' not in ansible_windows_domain_role"
-  tags:
       - level1-memberserver
-      - win22cis_rule_2.2.3
-      - automated
-      - access
+      - rule_2.2.2
+      - rule_2.2.3
+      - patch
+      - userrights
 
 - name: "2.2.4 | PATCH | Ensure Act as part of the operating system is set to No One"
   ansible.windows.win_user_right:
@@ -57,8 +42,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.4
-      - automated
+      - rule_2.2.4
+      - patch
+      - userrights
 
 - name: "2.2.5 | PATCH | Ensure Add workstations to domain is set to Administrators DC only"
   ansible.windows.win_user_right:
@@ -70,8 +56,9 @@
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.2.5
-      - automated
+      - rule_2.2.5
+      - patch
+      - userrights
 
 - name: "2.2.6 | PATCH | Ensure Adjust memory quotas for a process is set to Administrators LOCAL SERVICE NETWORK SERVICE"
   ansible.windows.win_user_right:
@@ -86,36 +73,26 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.6
-      - automated
+      - rule_2.2.6
+      - patch
+      - userrights
 
 - name: "2.2.7 | PATCH | Ensure Allow log on locally is set to Administrators"
   ansible.windows.win_user_right:
       name: SeInteractiveLogonRight
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.7
-      - automated
+      - rule_2.2.7
+      - patch
+      - userrights
 
-- name: "2.2.8 | PATCH | Ensure Allow log on through Remote Desktop Services is set to Administrators DC only"
-  ansible.windows.win_user_right:
-      name: SeRemoteInteractiveLogonRight
-      users: Administrators
-      action: set
-  when:
-      - win22cis_rule_2_2_8
-      - "'Primary domain controller' in ansible_windows_domain_role"
-  tags:
-      - level1-domaincontroller
-      - win22cis_rule_2.2.8
-      - automated
-
-- name: "2.2.9 | PATCH | Ensure 'Allow log on through Remote Desktop Services' is set to 'Administrators, Remote Desktop Users' (MS only)"
+- name: "2.2.8 & 2.2.9 | PATCH | Ensure Allow log on through Remote Desktop Services is set to Administrators DC only"
   ansible.windows.win_user_right:
       name: SeRemoteInteractiveLogonRight
       users:
@@ -123,25 +100,30 @@
           - Remote Desktop Users
       action: set
   when:
-      - win22cis_rule_2_2_9
-      - "'Primary domain controller' not in ansible_windows_domain_role"
+      - win22cis_rule_2_2_8 or
+        win22cis_rule_2_2_9
   tags:
+      - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.9
-      - automated
+      - rule_2.2.8
+      - rule_2.2.9
+      - patch
+      - userrights
 
 - name: "2.2.10 | PATCH | Ensure Back up files and directories is set to Administrators"
   ansible.windows.win_user_right:
       name: SeBackupPrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_10
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.10
-      - automated
+      - rule_2.2.10
+      - patch
+      - userrights
 
 - name: "2.2.11 | PATCH | Ensure Change the system time is set to Administrators LOCAL SERVICE"
   ansible.windows.win_user_right:
@@ -155,8 +137,8 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.11
-      - automated
+      - rule_2.2.11
+      - patch
 
 - name: "2.2.12 | PATCH | Ensure Change the time zone is set to Administrators LOCAL SERVICE"
   ansible.windows.win_user_right:
@@ -170,21 +152,24 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.12
-      - automated
+      - rule_2.2.12
+      - patch
+      - userrights
 
 - name: "2.2.13 | PATCH | Ensure Create a pagefile is set to Administrators"
   ansible.windows.win_user_right:
       name: SeCreatePagefilePrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_13
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.13
-      - automated
+      - rule_2.2.13
+      - patch
+      - userrights
 
 - name: "2.2.14 | PATCH | Ensure Create a token object is set to No One"
   ansible.windows.win_user_right:
@@ -196,8 +181,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.14
-      - automated
+      - rule_2.2.14
+      - patch
+      - userrights
 
 - name: "2.2.15 | PATCH | Ensure Create global objects is set to Administrators LOCAL SERVICE NETWORK SERVICE SERVICE"
   ansible.windows.win_user_right:
@@ -213,8 +199,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.15
-      - automated
+      - rule_2.2.15
+      - patch
+      - userrights
 
 - name: "2.2.16 | PATCH | Ensure Create permanent shared objects is set to No One"
   ansible.windows.win_user_right:
@@ -226,28 +213,32 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.16
-      - automated
+      - rule_2.2.16
+      - patch
+      - userrights
 
 - name: "2.2.17 | PATCH | Ensure Create symbolic links is set to Administrators DC only"
   ansible.windows.win_user_right:
       name: SeCreateSymbolicLinkPrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_17
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.2.17
-      - automated
+      - rule_2.2.17
+      - patch
+      - userrights
 
 - name: "2.2.18 | PATCH | Ensure Create symbolic links is set to Administrators NT VIRTUAL MACHINEVirtual Machines MS only"
   block:
       - name: "2.2.18 | PATCH | (L1 Ensure Create symbolic links is set to Administrators NT VIRTUAL MACHINEVirtual Machines MS only | No Hyper-v"
         ansible.windows.win_user_right:
             name: SeCreateSymbolicLinkPrivilege
-            users: Administrators
+            users:
+                - Administrators
             action: set
         when: not win22cis_hyperv_installed
 
@@ -264,91 +255,101 @@
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.2.18
-      - automated
+      - rule_2.2.18
+      - patch
+      - userrights
 
 - name: "2.2.19 | PATCH | Ensure Debug programs is set to Administrators"
   ansible.windows.win_user_right:
       name: SeDebugPrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_19
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.19
-      - automated
+      - rule_2.2.19
+      - patch
+      - userrights
 
-# Limiting hardening to only include the Guests group, since Local Account access will still be needed for non-domain-joined nodes
 - name: "2.2.20 | PATCH | Ensure Deny access to this computer from the network to include Guests DC only"
   ansible.windows.win_user_right:
       name: SeDenyNetworkLogonRight
-      users: Guests
-      action: set
+      users:
+          - Guests
+      action: add
   when:
       - win22cis_rule_2_2_20
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.2.20
-      - automated
+      - rule_2.2.20
+      - patch
+      - userrights
 
 - name: "2.2.21 | PATCH | Ensure Deny access to this computer from the network to include Guests Local account and member of Administrators group MS only"
   ansible.windows.win_user_right:
       name: SeDenyNetworkLogonRight
       users:
           - Guests
-          # - Local Account
-          # - Administrators
-      action: set
+          - Local Account
+          - Administrators
+      action: add
   when:
       - win22cis_rule_2_2_21
       - ansible_windows_domain_member
-      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.2.21
-      - automated
+      - rule_2.2.21
+      - patch
+      - userrights
 
 - name: "2.2.22 | PATCH | Ensure Deny log on as a batch job to include Guests"
   ansible.windows.win_user_right:
       name: SeDenyBatchLogonRight
-      users: Guests
-      action: set
+      users:
+          - Guests
+      action: add
   when:
       - win22cis_rule_2_2_22
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.22
-      - automated
+      - rule_2.2.22
+      - patch
+      - userrights
 
 - name: "2.2.23 | PATCH | Ensure Deny log on as a service to include Guests"
   ansible.windows.win_user_right:
       name: SeDenyServiceLogonRight
-      users: Guests
-      action: set
+      users:
+          - Guests
+      action: add
   when:
       - win22cis_rule_2_2_23
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.23
-      - automated
+      - rule_2.2.23
+      - patch
+      - userrights
 
 - name: "2.2.24 | PATCH | Ensure Deny log on locally to include Guests"
   ansible.windows.win_user_right:
       name: SeDenyInteractiveLogonRight
-      users: Guests
-      action: set
+      users:
+          - Guests
+      action: add
   when:
       - win22cis_rule_2_2_24
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.24
-      - automated
+      - rule_2.2.24
+      - patch
+      - userrights
 
 - name: "2.2.25 | PATCH | Ensure Deny log on through Remote Desktop Services to include Guests DC only"
   ansible.windows.win_user_right:
@@ -356,14 +357,15 @@
       users:
           - Guests
           # - Local Account
-      action: set
+      action: add
   when:
       - win22cis_rule_2_2_25
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.2.25
-      - automated
+      - rule_2.2.25
+      - patch
+      - guest
 
 - name: "2.2.26 | PATCH | Ensure Deny log on through Remote Desktop Services is set to Guests Local account MS only"
   ansible.windows.win_user_right:
@@ -375,11 +377,11 @@
   when:
       - win22cis_rule_2_2_26
       - ansible_windows_domain_member
-      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.2.26
-      - automated
+      - rule_2.2.26
+      - patch
+      - guest
 
 - name: "2.2.27 | PATCH | Ensure Enable computer and user accounts to be trusted for delegation is set to Administrators DC only"
   ansible.windows.win_user_right:
@@ -389,10 +391,13 @@
   when:
       - win22cis_rule_2_2_27
       - ansible_windows_domain_role == "Primary domain controller"
+      - win2019cis_is_standalone
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.2.27
-      - automated
+      - rule_2.2.27
+      - patch
+      - userrights
+      - administrators
 
 - name: "2.2.28 | PATCH | Ensure Enable computer and user accounts to be trusted for delegation is set to No One MS only"
   ansible.windows.win_user_right:
@@ -402,24 +407,27 @@
   when:
       - win22cis_rule_2_2_28
       - ansible_windows_domain_member
-      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.2.28
-      - automated
+      - rule_2.2.28
+      - patch
+      - userrights
 
 - name: "2.2.29 | PATCH | Ensure Force shutdown from a remote system is set to Administrators"
   ansible.windows.win_user_right:
       name: SeRemoteShutdownPrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_29
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.29
-      - automated
+      - rule_2.2.29
+      - patch
+      - userrights
+      - administrators
 
 - name: "2.2.30 | PATCH | Ensure Generate security audits is set to LOCAL SERVICE NETWORK SERVICE"
   ansible.windows.win_user_right:
@@ -433,8 +441,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.30
-      - automated
+      - rule_2.2.30
+      - patch
+      - userrights
+      - services
 
 - name: "2.2.31 | PATCH | Ensure Impersonate a client after authentication is set to Administrators LOCAL SERVICE NETWORK SERVICE SERVICE DC only"
   ansible.windows.win_user_right:
@@ -450,8 +460,11 @@
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.2.31
-      - automated
+      - rule_2.2.31
+      - patch
+      - userrights
+      - services
+      - administrators
 
 - name: "2.2.32 | PATCH | Ensure Impersonate a client after authentication is set to Administrators LOCAL SERVICE NETWORK SERVICE SERVICE and when the Web Server IIS Role with Web Services Role Service is installed IIS IUSRS MS only"
   ansible.windows.win_user_right:
@@ -466,11 +479,13 @@
   when:
       - win22cis_rule_2_2_32
       - ansible_windows_domain_member
-      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.2.32
-      - automated
+      - rule_2.2.32
+      - patch
+      - userrights
+      - administrators
+      - services
 
 - name: "2.2.33 | PATCH | Ensure Increase scheduling priority is set to Administrators Window ManagerWindow Manager Group"
   ansible.windows.win_user_right:
@@ -482,21 +497,24 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.33
-      - automated
+      - rule_2.2.33
+      - patch
+      - userrights
 
 - name: "2.2.34 | PATCH | Ensure Load and unload device drivers is set to Administrators"
   ansible.windows.win_user_right:
       name: SeLoadDriverPrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_34
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.34
-      - automated
+      - rule_2.2.34
+      - patch
+      - userrights
 
 - name: "2.2.35 | PATCH | Ensure Lock pages in memory is set to No One"
   ansible.windows.win_user_right:
@@ -508,8 +526,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.35
-      - automated
+      - rule_2.2.35
+      - patch
+      - userrights
 
 - name: "2.2.36 | PATCH | Ensure Log on as a batch job is set to Administrators DC Only"
   ansible.windows.win_user_right:
@@ -521,25 +540,54 @@
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level2-domaincontroller
-      - win22cis_rule_2.2.36
-      - automated
+      - rule_2.2.36
+      - patch
+      - userrights
+      - administrators
 
-- name: |
-    "2.2.37 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only"
-    "2.2.38 | PATCH | Ensure Manage auditing and security log is set to Administrators MS only"
-  ansible.windows.win_user_right:
-      name: SeSecurityPrivilege
-      users: Administrators
-      action: set
+- name: "2.2.37 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only"
+  block:
+      - name: "2.2.37 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only. | Set Non-Exchange Server Groups."
+        ansible.windows.win_user_right:
+            name: SeSecurityPrivilege
+            users:
+                - Administrators
+            action: set
+        when: not win22cis_exchange_server_running
+
+      - name: "2.2.37 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only. | Set Exchange Server Groups."
+        ansible.windows.win_user_right:
+            name: SeSecurityPrivilege
+            users:
+                - Administrators
+                - Exchange Servers
+            action: set
+        when: win22cis_exchange_server_running
   when:
-      - win22cis_rule_2_2_37 or
-        win22cis_rule_2_2_38
+      - win22cis_rule_2_2_37
+      - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
+      - rule_2.2.37
+      - patch
+      - userrights
+      - administrators
+
+- name: "2.2.38 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only"
+  ansible.windows.win_user_right:
+      name: SeSecurityPrivilege
+      users:
+          - Administrators
+      action: set
+  when:
+      - win22cis_rule_2_2_38
+      - ansible_windows_domain_member
+  tags:
       - level1-memberserver
-      - win22cis_rule_2.2.37
-      - win22cis_rule_2.2.38
-      - automated
+      - rule_2.2.38
+      - patch
+      - userrights
+      - administrators
 
 - name: "2.2.39 | PATCH | Ensure Modify an object label is set to No One"
   ansible.windows.win_user_right:
@@ -551,47 +599,57 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.39
-      - automated
+      - rule_2.2.39
+      - patch
+      - userrights
 
 - name: "2.2.40 | PATCH | Ensure Modify firmware environment values is set to Administrators"
   ansible.windows.win_user_right:
       name: SeSystemEnvironmentPrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_40
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.40
-      - automated
+      - rule_2.2.40
+      - patch
+      - userrights
+      - administrators
 
 - name: "2.2.41 | PATCH | Ensure Perform volume maintenance tasks is set to Administrators"
   ansible.windows.win_user_right:
       name: SeManageVolumePrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_41
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.41
-      - automated
+      - rule_2.2.41
+      - patch
+      - userrights
+      - administrators
 
 - name: "2.2.42 | PATCH | Ensure Profile single process is set to Administrators"
   ansible.windows.win_user_right:
       name: SeProfileSingleProcessPrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_42
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.42
-      - automated
+      - rule_2.2.42
+      - patch
+      - userrights
+      - administrators
 
 - name: "2.2.43 | PATCH | Ensure Profile system performance is set to Administrators NT SERVICEWdiServiceHost"
   ansible.windows.win_user_right:
@@ -605,8 +663,11 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.43
-      - automated
+      - rule_2.2.43
+      - patch
+      - userrights
+      - administrator
+      - service
 
 - name: "2.2.44 | PATCH | Ensure Replace a process level token is set to LOCAL SERVICE NETWORK SERVICE"
   ansible.windows.win_user_right:
@@ -620,34 +681,42 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.44
-      - automated
+      - rule_2.2.44
+      - patch
+      - userrights
+      - service
 
 - name: "2.2.45 | PATCH | Ensure Restore files and directories is set to Administrators"
   ansible.windows.win_user_right:
       name: SeRestorePrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_45
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.45
-      - automated
+      - rule_2.2.45
+      - patch
+      - userright
+      - administrator
 
 - name: "2.2.46 | PATCH | Ensure Shut down the system is set to Administrators"
   ansible.windows.win_user_right:
       name: SeShutdownPrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_46
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.46
-      - automated
+      - rule_2.2.46
+      - patch
+      - userright
+      - administrator
 
 - name: "2.2.47 | PATCH | Ensure Synchronize directory service data is set to No One DC only"
   ansible.windows.win_user_right:
@@ -659,21 +728,25 @@
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.2.47
-      - automated
+      - rule_2.2.47
+      - patch
+      - userright
 
 - name: "2.2.48 | PATCH | Ensure Take ownership of files or other objects is set to Administrators"
   ansible.windows.win_user_right:
       name: SeTakeOwnershipPrivilege
-      users: Administrators
+      users:
+          - Administrators
       action: set
   when:
       - win22cis_rule_2_2_48
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.2.48
-      - automated
+      - rule_2.2.48
+      - patch
+      - userright
+      - administrator
 
 - name: "2.3.1.1 | PATCH | Ensure Accounts Administrator account status is set to Disabled MS only"
   community.windows.win_security_policy:
@@ -683,10 +756,12 @@
   when:
       - win22cis_rule_2_3_1_1
       - not ansible_windows_domain_role == "Primary domain controller"
+      - not win2019cis_is_standalone
   tags:
       - level1-memberserver
-      - win22cis_rule_2.3.1.1
-      - automated
+      - rule_2.3.1.1
+      - patch
+      - securitypolicy
 
 - name: "2.3.1.2 | PATCH | Ensure Accounts Block Microsoft accounts is set to Users cant add or log on with Microsoft accounts"
   ansible.windows.win_regedit:
@@ -699,8 +774,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.1.2
-      - automated
+      - rule_2.3.1.2
+      - patch
+      - securitypolicy
 
 - name: "2.3.1.3 | PATCH | Ensure Accounts Guest account status is set to Disabled MS only"
   community.windows.win_security_policy:
@@ -709,11 +785,11 @@
       value: 0
   when:
       - win22cis_rule_2_3_1_3
-      - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.3.1.3
-      - automated
+      - rule_2.3.1.3
+      - patch
+      - securitypolicy
 
 - name: "2.3.1.4 | PATCH | Ensure Accounts Limit local account use of blank passwords to console logon only is set to Enabled"
   ansible.windows.win_regedit:
@@ -726,39 +802,74 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.1.4
-      - automated
+      - rule_2.3.1.4
+      - patch
+      - account
 
 - name: "2.3.1.5 | PATCH | Configure Accounts Rename administrator account"
-  community.windows.win_security_policy:
-      section: System Access
-      key: newadministratorname
-      value: "{{ win22cis_admin_username }}"
+  block:
+      - name: "2.3.1.5 | AUDIT | Configure Accounts Rename administrator account. | Warning Msg For Default Variable Not Edited."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have not changed the default admin username in win22cis_admin_username please"
+                - "make the necessary change to the variable to be in compliance."
+        when: "'adminchangethis' in win22cis_admin_username"
+
+      - name: "2.3.1.5 | AUDIT | Configure Accounts Rename administrator account. | Add Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '2.3.1.5'
+        when: "'adminchangethis' in win22cis_admin_username"
+
+      - name: "2.3.1.5 | PATCH | Configure Accounts Rename administrator account. | Make Changes To Admin Name."
+        community.windows.win_security_policy:
+            section: System Access
+            key: newadministratorname
+            value: "{{ win22cis_admin_username }}"
+        when: "'adminchangethis' not in win22cis_admin_username"
   when:
       - win22cis_rule_2_3_1_5
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.1.5
-      - automated
+      - rule_2.3.1.5
+      - patch
+      - securitypolicy
 
 - name: "2.3.1.6 | PATCH | Configure Accounts Rename guest account"
-  community.windows.win_security_policy:
-      section: System Access
-      key: NewGuestName
-      value: "{{ win22cis_guest_username }}"
+  block:
+      - name: "2.3.1.6 | AUDIT | Configure Accounts Rename guest account. | Warning Msg For Default Variable Not Edited."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have not changed the default guest name in win22cis_guest_username please"
+                - "make the necessary change to the variable to be in compliance."
+        when: "'guestchangethis' in win22cis_guest_username"
+
+      - name: "2.3.1.6 | AUDIT | Configure Accounts Rename guest account. | Add Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '2.3.1.6'
+        when: "'guestchangethis' in win22cis_guest_username"
+
+      - name: "2.3.1.6 | AUDIT | Configure Accounts Rename guest account. | Make Changes To Guest Name."
+        community.windows.win_security_policy:
+            section: System Access
+            key: NewGuestName
+            value: "{{ win22cis_guest_username }}"
+        when: "'guestchangethis' not in win22cis_guest_username"
   when:
       - win22cis_rule_2_3_1_6
   tags:
       - level1-domaincontroller
       - level1-memberservers
-      - win22cis_rule_2.3.1.6
-      - automated
+      - rule_2.3.1.6
+      - patch
+      - securitypolicy
 
 - name: "2.3.2.1 | PATCH | Ensure Audit Force audit policy subcategory settings Windows Vista or later to override audit policy category settings is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\System\CurrentControlSet\Control\Lsa
       name: SCENoApplyLegacyAuditPolicy
       data: 1
       type: dword
@@ -767,12 +878,13 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.2.1
-      - automated
+      - rule_2.3.2.1
+      - patch
+      - auditpolicy
 
 - name: "2.3.2.2 | PATCH | Ensure Audit Shut down system immediately if unable to log security audits is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\System\CurrentControlSet\Control\Lsa
       name: CrashOnAuditFail
       data: 0
       type: dword
@@ -781,8 +893,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.2.2
-      - automated
+      - rule_2.3.2.2
+      - patch
+      - auditpolicy
 
 - name: "2.3.4.1 | PATCH | Ensure Devices Allowed to format and eject removable media is set to Administrators"
   ansible.windows.win_regedit:
@@ -795,8 +908,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.4.1
-      - automated
+      - rule_2.3.4.1
+      - patch
+      - devices
 
 - name: "2.3.4.2 | PATCH | Ensure Devices Prevent users from installing printer drivers is set to Enabled"
   ansible.windows.win_regedit:
@@ -809,8 +923,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.4.2
-      - automated
+      - rule_2.3.4.2
+      - patch
+      - devices
 
 - name: "2.3.5.1 | PATCH | Ensure Domain controller Allow server operators to schedule tasks is set to Disabled DC only"
   ansible.windows.win_regedit:
@@ -821,38 +936,44 @@
   when:
       - win22cis_rule_2_3_5_1
       - ansible_windows_domain_role == "Primary domain controller"
+      - not win2019cis_is_standalone
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.3.5.1
-      - automated
+      - rule_2.3.5.1
+      - patch
+      - scheduledtasks
 
-- name: "2.3.5.2 | PATCH | Ensure 'Domain controller: Allow vulnerable Netlogon secure channel connections' is set to 'Not Configured' (DC Only)"
+- name: "2.3.5.2 | PATCH | Ensure Domain controller Allow vulnerable Netlogon secure channel connections' is set to 'Not Configured DC only"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Services\NetLogon\Parameters
-      name: VulnerableChannleAllowList
+      path: HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+      name: VulnerableChannelAllowList
       data: 0
       type: dword
   when:
       - win22cis_rule_2_3_5_2
       - ansible_windows_domain_role == "Primary domain controller"
+      - not win2019cis_is_standalone
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.3.5.2
-      - automated
+      - rule_2.3.5.2
+      - patch
+      - logon
 
-- name: "2.3.5.3 | PATCH | Ensure Domain controller LDAP server channel binding token requirements is set to Always DC only"
+- name: "2.3.5.3 | PATCH | Ensure Domain controller LDAP server channel binding token requirements' is set to 'Always' DC only"
   ansible.windows.win_regedit:
       path: HKLM:\System\CurrentControlSet\Services\NTDS\Parameters
       name: LdapEnforceChannelBinding
-      data: 0
+      data: 2
       type: dword
   when:
       - win22cis_rule_2_3_5_3
       - ansible_windows_domain_role == "Primary domain controller"
+      - not win2019cis_is_standalone
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.3.5.3
-      - automated
+      - rule_2.3.5.3
+      - patch
+      - ladp
 
 - name: "2.3.5.4 | PATCH | Ensure Domain controller LDAP server signing requirements is set to Require signing DC only"
   ansible.windows.win_regedit:
@@ -865,8 +986,9 @@
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.3.5.4
-      - automated
+      - rule_2.3.5.4
+      - patch
+      - ladp
 
 - name: "2.3.5.5 | PATCH | Ensure Domain controller Refuse machine account password changes is set to Disabled DC only"
   ansible.windows.win_regedit:
@@ -877,10 +999,12 @@
   when:
       - win22cis_rule_2_3_5_5
       - ansible_windows_domain_role == "Primary domain controller"
+      - not win2019cis_is_standalone
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.3.5.5
-      - automated
+      - rule_2.3.5.5
+      - patch
+      - account
 
 - name: "2.3.6.1 | PATCH | Ensure Domain member Digitally encrypt or sign secure channel data always is set to Enabled"
   ansible.windows.win_regedit:
@@ -891,31 +1015,35 @@
   when:
       - win22cis_rule_2_3_6_1
       - not ansible_windows_domain_role == "Primary domain controller"
+      - not win2019cis_is_standalone
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.6.1
-      - automated
+      - rule_2.3.6.1
+      - patch
+      - encryption
 
 - name: "2.3.6.2 | PATCH | Ensure Domain member Digitally encrypt secure channel data when possible is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
-      name: sealsecurechannel
+      name: SealSecureChannel
       data: 1
       type: dword
   when:
       - win22cis_rule_2_3_6_2
       - not ansible_windows_domain_role == "Primary domain controller"
+      - not win2019cis_is_standalone
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.6.2
-      - automated
+      - rule_2.3.6.2
+      - patch
+      - encryption
 
 - name: "2.3.6.3 | PATCH | Ensure Domain member Digitally sign secure channel data when possible is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
-      name: signsecurechannel
+      name: SignSecureChannel
       data: 1
       type: dword
   when:
@@ -924,13 +1052,14 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.6.3
-      - automated
+      - rule_2.3.6.3
+      - patch
+      - logon
 
 - name: "2.3.6.4 | PATCH | Ensure Domain member Disable machine account password changes is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
-      name: disablepasswordchange
+      name: DisablePasswordChange
       data: 0
       type: dword
   when:
@@ -939,23 +1068,47 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.6.4
-      - automated
+      - rule_2.3.6.4
+      - patch
+      - logon
 
 - name: "2.3.6.5 | PATCH | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0"
-  ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
-      name: MaximumPasswordAge
-      data: "{{ win22cis_machine_acct_pw_age }}"
-      type: dword
+  block:
+      - name: "2.3.6.5 | AUDIT | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0. | Warning Check For Variable Standards."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have a invalid number of days set for win22cis_domain_member_maximum_password_age please read"
+                - "the notes for the variable and make the necessary change to the variable to be in compliance."
+        when:
+            - win22cis_domain_member_maximum_password_age > 30 or
+              win22cis_domain_member_maximum_password_age == 0
+
+      - name: "2.3.6.5 | AUDIT | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0. | Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '2.3.6.5'
+        when:
+            - win22cis_domain_member_maximum_password_age > 30 or
+              win22cis_domain_member_maximum_password_age == 0
+
+      - name: "2.3.6.5 | PATCH | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0. | Apply Settings To Registry."
+        ansible.windows.win_regedit:
+            path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
+            name: MaximumPasswordAge
+            data: "{{ win22cis_domain_member_maximum_password_age }}"
+            type: dword
+        when:
+            - win22cis_domain_member_maximum_password_age <= 30
+            - win22cis_domain_member_maximum_password_age > 0
   when:
       - win22cis_rule_2_3_6_5
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.6.5
-      - automated
+      - rule_2.3.6.5
+      - patch
+      - account
 
 - name: "2.3.6.6 | PATCH | Ensure Domain member Require strong Windows 2000 or later session key is set to Enabled"
   ansible.windows.win_regedit:
@@ -969,8 +1122,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.6.6
-      - automated
+      - rule_2.3.6.6
+      - patch
+      - logon
 
 - name: "2.3.7.1 | PATCH | Ensure Interactive logon Do not require CTRLALTDEL is set to Disabled"
   ansible.windows.win_regedit:
@@ -983,8 +1137,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.7.1
-      - automated
+      - rule_2.3.7.1
+      - patch
+      - logon
 
 - name: "2.3.7.2 | PATCH | Ensure Interactive logon Dont display last signed-in is set to Enabled"
   ansible.windows.win_regedit:
@@ -997,22 +1152,46 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.7.2
-      - automated
+      - rule_2.3.7.2
+      - patch
+      - logon
 
 - name: "2.3.7.3 | PATCH | Ensure Interactive logon Machine inactivity limit is set to 900 or fewer seconds but not 0"
-  ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
-      name: InactivityTimeoutSecs
-      data: "{{ win22cis_inactivity_timeout }}"
-      type: dword
+  block:
+      - name: "2.3.7.3 | AUDIT | Ensure Interactive logon Machine inactivity limit is set to 900 or fewer seconds but not 0. | Warning Check For Variable Standards."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have a invalid number of seconds set for win22cis_inactivity_timeout_seconds please read"
+                - "the notes for the variable and make the necessary change to the variable to be in compliance."
+        when:
+            - win22cis_inactivity_timeout_seconds > 900 or
+              win22cis_inactivity_timeout_seconds == 0
+
+      - name: "2.3.7.3 | AUDIT | Ensure Interactive logon Machine inactivity limit is set to 900 or fewer seconds but not 0. | Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '2.3.7.3'
+        when:
+            - win22cis_inactivity_timeout_seconds > 900 or
+              win22cis_inactivity_timeout_seconds == 0
+
+      - name: "2.3.7.3 | PATCH | Ensure Interactive logon Machine inactivity limit is set to 900 or fewer seconds but not 0. | Apply Settings To Registry."
+        ansible.windows.win_regedit:
+            path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+            name: InactivityTimeoutSecs
+            data: "{{ win22cis_inactivity_timeout_seconds }}"
+            type: dword
+        when:
+            - win22cis_inactivity_timeout_seconds <= 900
+            - win22cis_inactivity_timeout_seconds > 0
   when:
       - win22cis_rule_2_3_7_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.7.3
-      - automated
+      - rule_2.3.7.3
+      - patch
+      - logon
 
 - name: "2.3.7.4 | PATCH | Configure Interactive logon Message text for users attempting to log on"
   ansible.windows.win_regedit:
@@ -1025,8 +1204,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.7.4
-      - automated
+      - rule_2.3.7.4
+      - patch
+      - logon
 
 - name: "2.3.7.5 | PATCH | Configure Interactive logon Message title for users attempting to log on"
   ansible.windows.win_regedit:
@@ -1039,36 +1219,76 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.7.5
-      - automated
+      - rule_2.3.7.5
+      - patch
+      - logon
 
 - name: "2.3.7.6 | PATCH | Ensure Interactive logon Number of previous logons to cache in case domain controller is not available is set to 4 or fewer logons MS only"
-  ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
-      name: cachedlogonscount
-      data: "{{ win22cis_cached_logons_count }}"
-      type: string
+  block:
+      - name: "2.3.7.6 | AUDIT| Ensure Interactive logon Number of previous logons to cache in case domain controller is not available is set to 4 or fewer logons MS only. | Warning Check For Variable Standards."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have a invalid number of logons set for win22cis_cached_logons_count please read"
+                - "the notes for the variable and make the necessary change to the variable to be in compliance."
+        when: win22cis_cached_logons_count > 4
+
+      - name: "2.3.7.6 | AUDIT | Ensure Interactive logon Number of previous logons to cache in case domain controller is not available is set to 4 or fewer logons MS only. | Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '2.3.7.6'
+        when: win22cis_cached_logons_count > 4
+
+      - name: "2.3.7.6 | PATCH | Ensure Interactive logon Number of previous logons to cache in case domain controller is not available is set to 4 or fewer logons MS only. | Apply Settings To Registry."
+        ansible.windows.win_regedit:
+            path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
+            name: CachedLogonsCount
+            data: "{{ win22cis_cached_logons_count }}"
+            type: string
+        when: win22cis_cached_logons_count <= 4
   when:
       - win22cis_rule_2_3_7_6
-      - "'domain controller' not in ansible_windows_domain_role"
   tags:
       - level2-memberserver
-      - win22cis_rule_2.3.7.6
-      - automated
+      - rule_2.3.7.6
+      - patch
+      - logon
 
 - name: "2.3.7.7 | PATCH | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days"
-  ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
-      name: PasswordExpiryWarning
-      data: "{{ win22cis_passwd_expiry_warn }}"
-      type: dword
+  block:
+      - name: "2.3.7.7 | AUDIT | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days. | Warning Check For Variable Standards."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have a invalid number of days set for win22cis_password_expiry_warning_days please read"
+                - "the notes for the variable and make the necessary change to the variable to be in compliance."
+        when:
+            - win22cis_password_expiry_warning_days < 5 or
+              win22cis_password_expiry_warning_days > 14
+
+      - name: "2.3.7.7 | AUDIT | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days. | Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '2.3.7.7'
+        when:
+            - win22cis_password_expiry_warning_days < 5 or
+              win22cis_password_expiry_warning_days > 14
+
+      - name: "2.3.7.7 | PATCH | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days. | Apply Settings To Registry."
+        ansible.windows.win_regedit:
+            path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
+            name: PasswordExpiryWarning
+            data: "{{ win22cis_password_expiry_warning_days }}"
+            type: dword
+        when:
+            - win22cis_password_expiry_warning_days >= 5
+            - win22cis_password_expiry_warning_days <= 14
   when:
       - win22cis_rule_2_3_7_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.7.7
-      - automated
+      - rule_2.3.7.7
+      - patch
+      - logon
 
 - name: "2.3.7.8 | PATCH | Ensure Interactive logon Require Domain Controller Authentication to unlock workstation is set to Enabled MS only"
   ansible.windows.win_regedit:
@@ -1081,22 +1301,24 @@
       - ansible_windows_domain_role == "Member server"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.3.7.8
-      - automated
+      - rule_2.3.7.8
+      - patch
+      - logon
 
 - name: "2.3.7.9 | PATCH | Ensure Interactive logon Smart card removal behavior is set to Lock Workstation or higher"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
-      name: scremoveoption
-      data: "{{ win22cis_smartc_remove_option }}"
+      name: ScRemoveOption
+      data: 1
       type: string
   when:
       - win22cis_rule_2_3_7_9
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.7.9
-      - automated
+      - rule_2.3.7.9
+      - patch
+      - logon
 
 - name: "2.3.8.1 | PATCH | Ensure Microsoft network client Digitally sign communications always is set to Enabled"
   ansible.windows.win_regedit:
@@ -1109,8 +1331,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.8.1
-      - automated
+      - rule_2.3.8.1
+      - patch
+      - logon
 
 - name: "2.3.8.2 | PATCH | Ensure Microsoft network client Digitally sign communications if server agrees is set to Enabled"
   ansible.windows.win_regedit:
@@ -1123,8 +1346,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.8.2
-      - automated
+      - rule_2.3.8.2
+      - patch
+      - logon
 
 - name: "2.3.8.3 | PATCH | Ensure Microsoft network client Send unencrypted password to third-party SMB servers is set to Disabled"
   ansible.windows.win_regedit:
@@ -1137,27 +1361,45 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.8.3
-      - automated
+      - rule_2.3.8.3
+      - patch
+      - encryption
 
 - name: "2.3.9.1 | PATCH | Ensure Microsoft network server Amount of idle time required before suspending session is set to 15 or fewer minutes"
-  ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
-      name: autodisconnect
-      data: "{{ win22cis_auto_disconnect }}"
-      type: dword
+  block:
+      - name: "2.3.9.1 | AUDIT | Ensure Microsoft network server Amount of idle time required before suspending session is set to 15 or fewer minutes. | Warning Check For Variable Standards."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have a invalid number of minutes set for win22cis_smb_auto_disconnect_time please read"
+                - "the notes for the variable and make the necessary change to the variable to be in compliance."
+        when: win22cis_smb_auto_disconnect_time > 15
+
+      - name: "2.3.9.1 | AUDIT | Ensure Microsoft network server Amount of idle time required before suspending session is set to 15 or fewer minutes. | Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '2.3.7.7'
+        when: win22cis_smb_auto_disconnect_time > 15
+
+      - name: "2.3.9.1 | PATCH | Ensure Microsoft network server Amount of idle time required before suspending session is set to 15 or fewer minutes. | Apply Settings To Registry."
+        ansible.windows.win_regedit:
+            path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+            name: AutoDisconnect
+            data: "{{ win22cis_smb_auto_disconnect_time }}"
+            type: dword
+        when: win22cis_smb_auto_disconnect_time <= 15
   when:
       - win22cis_rule_2_3_9_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.9.1
-      - automated
+      - rule_2.3.9.1
+      - patch
+      - account
 
 - name: "2.3.9.2 | PATCH | Ensure Microsoft network server Digitally sign communications always is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
-      name: requiresecuritysignature
+      name: RequireSecuritySignature
       data: 1
       type: dword
   when:
@@ -1165,13 +1407,14 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.9.2
-      - automated
+      - rule_2.3.9.2
+      - patch
+      - account
 
 - name: "2.3.9.3 | PATCH | Ensure Microsoft network server Digitally sign communications if client agrees is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
-      name: enablesecuritysignature
+      name: EnableSecuritySignature
       data: 1
       type: dword
   when:
@@ -1179,13 +1422,14 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.9.3
-      - automated
+      - rule_2.3.9.3
+      - patch
+      - account
 
 - name: "2.3.9.4 | PATCH | Ensure Microsoft network server Disconnect clients when logon hours expire is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
-      name: enableforcedlogoff
+      name: EnableForcedLogoff
       data: 1
       type: dword
   when:
@@ -1193,8 +1437,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.9.4
-      - automated
+      - rule_2.3.9.4
+      - patch
+      - account
 
 - name: "2.3.9.5 | PATCH | Ensure Microsoft network server Server SPN target name validation level is set to Accept if provided by client or higher MS only"
   ansible.windows.win_regedit:
@@ -1204,11 +1449,13 @@
       type: dword
   when:
       - win22cis_rule_2_3_9_5
-      - ansible_windows_domain_role == "Member server"
+      - ansible_windows_domain_role == "Member server" or
+        ansible_windows_domain_role == "Stand-alone server"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.3.9.5
-      - automated
+      - rule_2.3.9.5
+      - patch
+      - account
 
 - name: "2.3.10.1 | PATCH | Ensure Network access Allow anonymous SIDName translation is set to Disabled"
   community.windows.win_security_policy:
@@ -1220,8 +1467,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.10.1
-      - automated
+      - rule_2.3.10.1
+      - patch
+      - securitypolicy
 
 - name: "2.3.10.2 | PATCH | Ensure Network access Do not allow anonymous enumeration of SAM accounts is set to Enabled MS only"
   ansible.windows.win_regedit:
@@ -1234,8 +1482,9 @@
       - ansible_windows_domain_role == "Member server"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.3.10.2
-      - automated
+      - rule_2.3.10.2
+      - patch
+      - sam
 
 - name: "2.3.10.3 | PATCH | Ensure Network access Do not allow anonymous enumeration of SAM accounts and shares is set to Enabled MS only"
   ansible.windows.win_regedit:
@@ -1248,8 +1497,9 @@
       - ansible_windows_domain_role == "Member server"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.3.10.3
-      - automated
+      - rule_2.3.10.3
+      - patch
+      - sam
 
 - name: "2.3.10.4 | PATCH | Ensure Network access Do not allow storage of passwords and credentials for network authentication is set to Enabled"
   ansible.windows.win_regedit:
@@ -1262,8 +1512,9 @@
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - win22cis_rule_2.3.10.4
-      - automated
+      - rule_2.3.10.4
+      - patch
+      - accounts
 
 - name: "2.3.10.5 | PATCH | Ensure Network access Let Everyone permissions apply to anonymous users is set to Disabled"
   ansible.windows.win_regedit:
@@ -1276,8 +1527,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.10.5
-      - automated
+      - rule_2.3.10.5
+      - patch
+      - accounts
 
 - name: "2.3.10.6 | PATCH | Configure Network access Named Pipes that can be accessed anonymously DC only"
   ansible.windows.win_regedit:
@@ -1290,8 +1542,9 @@
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - win22cis_rule_2.3.10.6
-      - automated
+      - rule_2.3.10.6
+      - patch
+      - namedpipes
 
 - name: "2.3.10.7 | PATCH | Configure Network access Named Pipes that can be accessed anonymously MS only"
   ansible.windows.win_regedit:
@@ -1304,10 +1557,11 @@
       - ansible_windows_domain_role == "Member server"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.3.10.7
-      - automated
+      - rule_2.3.10.7
+      - patch
+      - namedpipes
 
-- name: "2.3.10.8 | PATCH | Configure Network access Remotely accessible registry paths is configured"
+- name: "2.3.10.8 | PATCH | Configure Network access Remotely accessible registry paths"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Control\Securepipeservers\Winreg\AllowedExactpaths
       name: "Machine"
@@ -1318,22 +1572,22 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.10.8
-      - automated
+      - rule_2.3.10.8
+      - patch
 
-- name: "2.3.10.9 | PATCH | Configure Network access Remotely accessible registry paths and sub-paths is configured"
+- name: "2.3.10.9 | PATCH | Configure Network access Remotely accessible registry paths and sub-paths"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Control\Securepipeservers\Winreg\Allowedpaths
       name: "Machine"
-      data: ['System\CurrentControlSet\Control\Print\Printers', 'System\CurrentControlSet\Services\Eventlog', 'Software\Microsoft\OLAP Server', 'Software\Microsoft\Windows NT\CurrentVersion\Print', 'Software\Microsoft\Windows NT\CurrentVersion\Windows', 'System\CurrentControlSet\Control\ContentIndex', 'System\CurrentControlSet\Control\Terminal Server', 'System\CurrentControlSet\Control\Terminal Server\UserConfig', 'System\CurrentControlSet\Control\Terminal Server\DefaultUserConfiguration', 'Software\Microsoft\Windows NT\CurrentVersion\Perflib', 'System\CurrentControlSet\Services\WINS', 'System\CurrentControlSet\Services\CertSvc']
+      data: ['System\CurrentControlSet\Control\Print\Printers', 'System\CurrentControlSet\Services\Eventlog', 'Software\Microsoft\OLAP Server', 'Software\Microsoft\Windows NT\CurrentVersion\Print', 'Software\Microsoft\Windows NT\CurrentVersion\Windows', 'System\CurrentControlSet\Control\ContentIndex', 'System\CurrentControlSet\Control\Terminal Server', 'System\CurrentControlSet\Control\Terminal Server\UserConfig', 'System\CurrentControlSet\Control\Terminal Server\DefaultUserConfiguration', 'Software\Microsoft\Windows NT\CurrentVersion\Perflib', 'System\CurrentControlSet\Services\WINS', 'System\CurrentControlSet\Services\CertSvc', 'System\CurrentControlSet\Services\SysmonLog']
       type: multistring
   when:
       - win22cis_rule_2_3_10_9
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.10.9
-      - automated
+      - rule_2.3.10.9
+      - patch
 
 - name: "2.3.10.10 | PATCH | Ensure Network access Restrict anonymous access to Named Pipes and Shares is set to Enabled"
   ansible.windows.win_regedit:
@@ -1346,8 +1600,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.10.10
-      - automated
+      - rule_2.3.10.10
+      - patch
+      - namedpipes
 
 - name: "2.3.10.11 | PATCH | Ensure Network access Restrict clients allowed to make remote calls to SAM is set to Administrators Remote Access Allow MS only"
   ansible.windows.win_regedit:
@@ -1357,11 +1612,11 @@
       type: string
   when:
       - win22cis_rule_2_3_10_11
-      - ansible_windows_domain_role == "Member server"
   tags:
       - level1-memberserver
-      - win22cis_rule_2.3.10.11
-      - automated
+      - rule_2.3.10.11
+      - patch
+      - sam
 
 - name: "2.3.10.12 | PATCH | Ensure Network access Shares that can be accessed anonymously is set to None"
   ansible.windows.win_regedit:
@@ -1374,8 +1629,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.10.12
-      - automated
+      - rule_2.3.10.12
+      - patch
+      - shares
 
 - name: "2.3.10.13 | PATCH | Ensure Network access Sharing and security model for local accounts is set to Classic - local users authenticate as themselves"
   ansible.windows.win_regedit:
@@ -1388,8 +1644,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.10.13
-      - automated
+      - rule_2.3.10.13
+      - patch
+      - guest
 
 - name: "2.3.11.1 | PATCH | Ensure Network security Allow Local System to use computer identity for NTLM is set to Enabled"
   ansible.windows.win_regedit:
@@ -1402,13 +1659,14 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.1
-      - automated
+      - rule_2.3.11.1
+      - patch
+      - ntlm
 
 - name: "2.3.11.2 | PATCH | Ensure Network security Allow LocalSystem NULL session fallback is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Control\Lsa\Msv1_0
-      name: allownullsessionfallback
+      name: AllowNullSessionFallback
       data: 0
       type: dword
   when:
@@ -1416,8 +1674,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.2
-      - automated
+      - rule_2.3.11.2
+      - patch
+      - localsystem
 
 - name: "2.3.11.3 | PATCH | Ensure Network Security Allow PKU2U authentication requests to this computer to use online identities is set to Disabled"
   ansible.windows.win_regedit:
@@ -1430,8 +1689,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.3
-      - automated
+      - rule_2.3.11.3
+      - patch
+      - authentication
 
 - name: "2.3.11.4 | PATCH | Ensure Network security Configure encryption types allowed for Kerberos is set to AES128 HMAC SHA1 AES256 HMAC SHA1 Future encryption types"
   ansible.windows.win_regedit:
@@ -1444,8 +1704,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.4
-      - automated
+      - rule_2.3.11.4
+      - patch
+      - encryption
 
 - name: "2.3.11.5 | PATCH | Ensure Network security Do not store LAN Manager hash value on next password change is set to Enabled"
   ansible.windows.win_regedit:
@@ -1458,8 +1719,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.5
-      - automated
+      - rule_2.3.11.5
+      - patch
+      - network
 
 - name: "2.3.11.6 | PATCH | Ensure Network security Force logoff when logon hours expire is set to Enabled"
   ansible.windows.win_regedit:
@@ -1472,8 +1734,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.6
-      - manual
+      - rule_2.3.11.6
+      - patch
+      - network
 
 - name: "2.3.11.7 | PATCH | Ensure Network security LAN Manager authentication level is set to Send NTLMv2 response only. Refuse LM  NTLM"
   ansible.windows.win_regedit:
@@ -1486,8 +1749,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.7
-      - automated
+      - rule_2.3.11.7
+      - patch
+      - network
 
 - name: "2.3.11.8 | PATCH | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher"
   ansible.windows.win_regedit:
@@ -1500,8 +1764,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.8
-      - automated
+      - rule_2.3.11.8
+      - patch
+      - ladp
 
 - name: "2.3.11.9 | PATCH | Ensure Network security Minimum session security for NTLM SSP based including secure RPC clients is set to Require NTLMv2 session security Require 128-bit encryption"
   ansible.windows.win_regedit:
@@ -1514,8 +1779,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.9
-      - automated
+      - rule_2.3.11.9
+      - patch
+      - ntlm
 
 - name: "2.3.11.10 | PATCH | Ensure Network security Minimum session security for NTLM SSP based including secure RPC servers is set to Require NTLMv2 session security Require 128-bit encryption"
   ansible.windows.win_regedit:
@@ -1528,8 +1794,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.11.10
-      - automated
+      - rule_2.3.11.10
+      - patch
+      - ntlm
 
 - name: "2.3.13.1 | PATCH | Ensure Shutdown Allow system to be shut down without having to log on is set to Disabled"
   ansible.windows.win_regedit:
@@ -1542,8 +1809,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.13.1
-      - automated
+      - rule_2.3.13.1
+      - patch
+      - system
+      - shutdown
 
 - name: "2.3.15.1 | PATCH | Ensure System objects Require case insensitivity for non-Windows subsystems is set to Enabled"
   ansible.windows.win_regedit:
@@ -1556,8 +1825,8 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.15.1
-      - automated
+      - rule_2.3.15.1
+      - patch
 
 - name: "2.3.15.2 | PATCH | Ensure System objects Strengthen default permissions of internal system objects e.g. Symbolic Links is set to Enabled"
   ansible.windows.win_regedit:
@@ -1570,8 +1839,8 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.15.2
-      - automated
+      - rule_2.3.15.2
+      - patch
 
 - name: "2.3.17.1 | PATCH | Ensure User Account Control Admin Approval Mode for the Built-in Administrator account is set to Enabled"
   ansible.windows.win_regedit:
@@ -1584,8 +1853,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.17.1
-      - automated
+      - rule_2.3.17.1
+      - patch
+      - uac
 
 - name: "2.3.17.2 | PATCH | Ensure User Account Control Behavior of the elevation prompt for administrators in Admin Approval Mode is set to Prompt for consent on the secure desktop"
   ansible.windows.win_regedit:
@@ -1598,8 +1868,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.17.2
-      - automated
+      - rule_2.3.17.2
+      - patch
+      - uac
 
 - name: "2.3.17.3 | PATCH | Ensure User Account Control Behavior of the elevation prompt for standard users is set to Automatically deny elevation requests"
   ansible.windows.win_regedit:
@@ -1612,8 +1883,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.17.3
-      - automated
+      - rule_2.3.17.3
+      - patch
+      - uac
 
 - name: "2.3.17.4 | PATCH | Ensure User Account Control Detect application installations and prompt for elevation is set to Enabled"
   ansible.windows.win_regedit:
@@ -1626,8 +1898,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.17.4
-      - automated
+      - rule_2.3.17.4
+      - patch
+      - uac
 
 - name: "2.3.17.5 | PATCH | Ensure User Account Control Only elevate UIAccess applications that are installed in secure locations is set to Enabled"
   ansible.windows.win_regedit:
@@ -1640,8 +1913,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.17.5
-      - automated
+      - rule_2.3.17.5
+      - patch
+      - uac
 
 - name: "2.3.17.6 | PATCH | Ensure User Account Control Run all administrators in Admin Approval Mode is set to Enabled"
   ansible.windows.win_regedit:
@@ -1654,8 +1928,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.17.6
-      - automated
+      - rule_2.3.17.6
+      - patch
+      - uac
 
 - name: "2.3.17.7 | PATCH | Ensure User Account Control Switch to the secure desktop when prompting for elevation is set to Enabled"
   ansible.windows.win_regedit:
@@ -1668,8 +1943,9 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.17.7
-      - automated
+      - rule_2.3.17.7
+      - patch
+      - uac
 
 - name: "2.3.17.8 | PATCH | Ensure User Account Control Virtualize file and registry write failures to per-user locations is set to Enabled"
   ansible.windows.win_regedit:
@@ -1682,5 +1958,6 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_2.3.17.8
-      - automated
+      - rule_2.3.17.8
+      - patch
+      - uac

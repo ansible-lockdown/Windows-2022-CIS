@@ -11,8 +11,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.1.1
-      - automated
+      - rule_9.1.1
+      - patch
+      - firewall
+      - domain
 
 - name: "9.1.2 | PATCH | Ensure 'Windows Firewall: Domain: Inbound connections' is set to 'Block (default)'"
   ansible.windows.win_regedit:
@@ -25,8 +27,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.1.2
-      - automated
+      - rule_9.1.2
+      - patch
+      - firewall
+      - domain
 
 - name: "9.1.3 | PATCH | Ensure 'Windows Firewall: Domain: Outbound connections' is set to 'Allow (default)'"
   ansible.windows.win_regedit:
@@ -39,8 +43,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.1.3
-      - automated
+      - rule_9.1.3
+      - patch
+      - firewall
+      - domain
 
 - name: "9.1.4 | PATCH | Ensure 'Windows Firewall: Domain: Settings: Display a notification' is set to 'No'"
   ansible.windows.win_regedit:
@@ -53,8 +59,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.1.4
-      - automated
+      - rule_9.1.4
+      - patch
+      - firewall
+      - domain
 
 # title has slashes switched
 - name: "9.1.5 | PATCH | Ensure 'Windows Firewall: Domain: Logging: Name' is set to '%SystemRoot%/System32/logfiles/firewall/domainfw.log'"
@@ -68,22 +76,42 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.1.5
-      - automated
+      - rule_9.1.5
+      - patch
+      - firewall
+      - domain
 
 - name: "9.1.6 | PATCH | Ensure 'Windows Firewall: Domain: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
-  ansible.windows.win_regedit:
-      path: HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging
-      name: LogFileSize
-      data: '{{ win22cis_domain_firewall_log_size }}'
-      type: dword
+  block:
+      - name: "9.1.6 | AUDIT | Ensure 'Windows Firewall: Domain: Logging: Size limit (KB)' is set to '16,384 KB or greater'. | Warning Check For Variable Standards."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have a invalid size set for win22cis_domain_firewall_log_size please read"
+                - "the notes for the variable and make the necessary change to the variable to be in compliance."
+        when: win22cis_domain_firewall_log_size < 16384
+
+      - name: "9.1.6 | AUDIT | Ensure 'Windows Firewall: Domain: Logging: Size limit (KB)' is set to '16,384 KB or greater' | Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '9.1.6'
+        when: win22cis_domain_firewall_log_size < 16384
+
+      - name: "9.1.6 | PATCH | Ensure 'Windows Firewall: Domain: Logging: Size limit (KB)' is set to '16,384 KB or greater' | Apply Settings To Registry."
+        ansible.windows.win_regedit:
+            path: HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging
+            name: LogFileSize
+            data: '{{ win22cis_domain_firewall_log_size }}'
+            type: dword
+        when: win22cis_domain_firewall_log_size >= 16384
   when:
       - win22cis_rule_9_1_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.1.6
+      - rule_9.1.6
       - patch
+      - firewall
+      - domain
 
 - name: "9.1.7 | PATCH | Ensure 'Windows Firewall: Domain: Logging: Log dropped packets' is set to 'Yes'"
   ansible.windows.win_regedit:
@@ -96,8 +124,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.1.7
-      - automated
+      - rule_9.1.7
+      - patch
+      - firewall
+      - domain
 
 - name: "9.1.8 | PATCH | Ensure 'Windows Firewall: Domain: Logging: Log successful connections' is set to 'Yes'"
   ansible.windows.win_regedit:
@@ -110,8 +140,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.1.7
-      - automated
+      - rule_9.1.7
+      - patch
+      - firewall
+      - domain
 
 - name: "9.2.1 | PATCH | Ensure 'Windows Firewall: Private: Firewall state' is set to 'On (recommended)'"
   ansible.windows.win_regedit:
@@ -124,8 +156,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.2.1
-      - automated
+      - rule_9.2.1
+      - patch
+      - firewall
+      - private
 
 - name: "9.2.2 | PATCH | Ensure 'Windows Firewall: Private: Inbound connections' is set to 'Block (default)'"
   ansible.windows.win_regedit:
@@ -138,8 +172,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.2.2
-      - automated
+      - rule_9.2.2
+      - patch
+      - firewall
+      - private
 
 - name: "9.2.3 | PATCH | Ensure 'Windows Firewall: Private: Outbound connections' is set to 'Allow (default)'"
   ansible.windows.win_regedit:
@@ -152,8 +188,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.2.3
-      - automated
+      - rule_9.2.3
+      - patch
+      - firewall
+      - private
 
 - name: "9.2.4 | PATCH | Ensure 'Windows Firewall: Private: Settings: Display a notification' is set to 'No'"
   ansible.windows.win_regedit:
@@ -166,8 +204,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.2.4
-      - automated
+      - rule_9.2.4
+      - patch
+      - firewall
+      - private
 
 # title has slashes switched
 - name: "9.2.5 | PATCH | Ensure 'Windows Firewall: Private: Logging: Name' is set to '%SystemRoot%/System32/logfiles/firewall/privatefw.log'"
@@ -181,22 +221,42 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.2.5
-      - automated
+      - rule_9.2.5
+      - patch
+      - firewall
+      - private
 
 - name: "9.2.6 | PATCH | Ensure 'Windows Firewall: Private: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
-  ansible.windows.win_regedit:
-      path: HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging
-      name: LogFileSize
-      data: '{{ win22cis_private_firewall_log_size }}'
-      type: dword
+  block:
+      - name: "9.2.6 | AUDIT | Ensure 'Windows Firewall: Private: Logging: Size limit (KB)' is set to '16,384 KB or greater' | Warning Check For Variable Standards."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have a invalid size set for win22cis_private_firewall_log_size please read"
+                - "the notes for the variable and make the necessary change to the variable to be in compliance."
+        when: win22cis_private_firewall_log_size < 16384
+
+      - name: "9.2.6 | AUDIT | Ensure 'Windows Firewall: Private: Logging: Size limit (KB)' is set to '16,384 KB or greater' | Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '9.2.6'
+        when: win22cis_private_firewall_log_size < 16384
+
+      - name: "9.2.6 | PATCH | Ensure 'Windows Firewall: Private: Logging: Size limit (KB)' is set to '16,384 KB or greater' | Apply Settings To Registry."
+        ansible.windows.win_regedit:
+            path: HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging
+            name: LogFileSize
+            data: '{{ win22cis_private_firewall_log_size }}'
+            type: dword
+        when: win22cis_private_firewall_log_size >= 16384
   when:
       - win22cis_rule_9_2_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.2.6
+      - rule_9.2.6
       - patch
+      - firewall
+      - private
 
 - name: "9.2.7 | PATCH | Ensure 'Windows Firewall: Private: Logging: Log dropped packets' is set to 'Yes'"
   ansible.windows.win_regedit:
@@ -209,8 +269,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.2.7
-      - automated
+      - rule_9.2.7
+      - patch
+      - firewall
+      - private
 
 - name: "9.2.8 | PATCH | Ensure 'Windows Firewall: Private: Logging: Log successful connections' is set to 'Yes'"
   ansible.windows.win_regedit:
@@ -223,8 +285,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.2.8
-      - automated
+      - rule_9.2.8
+      - patch
+      - firewall
+      - private
 
 - name: "9.3.1 | PATCH | Ensure 'Windows Firewall: Public: Firewall state' is set to 'On (recommended)'"
   ansible.windows.win_regedit:
@@ -237,8 +301,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.1
-      - automated
+      - rule_9.3.1
+      - patch
+      - firewall
+      - public
 
 - name: "9.3.2 | PATCH | Ensure 'Windows Firewall: Public: Inbound connections' is set to 'Block (default)'"
   ansible.windows.win_regedit:
@@ -251,8 +317,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.2
-      - automated
+      - rule_9.3.2
+      - patch
+      - firewall
+      - public
 
 - name: "9.3.3 | PATCH | Ensure 'Windows Firewall: Public: Outbound connections' is set to 'Allow (default)'"
   ansible.windows.win_regedit:
@@ -265,8 +333,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.3
-      - automated
+      - rule_9.3.3
+      - patch
+      - firewall
+      - public
 
 - name: "9.3.4 | PATCH | Ensure 'Windows Firewall: Public: Settings: Display a notification' is set to 'No'"
   ansible.windows.win_regedit:
@@ -279,8 +349,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.4
-      - automated
+      - rule_9.3.4
+      - patch
+      - firewall
+      - public
 
 - name: "9.3.5 | PATCH | Ensure 'Windows Firewall: Public: Settings: Apply local firewall rules' is set to 'No'"
   ansible.windows.win_regedit:
@@ -294,8 +366,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.5
-      - automated
+      - rule_9.3.5
+      - patch
+      - firewall
+      - public
 
 - name: "9.3.6 | PATCH | Ensure 'Windows Firewall: Public: Settings: Apply local connection security rules' is set to 'No'"
   ansible.windows.win_regedit:
@@ -308,8 +382,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.6
-      - automated
+      - rule_9.3.6
+      - patch
+      - firewall
+      - public
 
 # title has slashes switched
 - name: "9.3.7 | PATCH | Ensure 'Windows Firewall: Public: Logging: Name' is set to '%SystemRoot%/System32/logfiles/firewall/publicfw.log'"
@@ -323,22 +399,42 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.7
-      - automated
+      - rule_9.3.7
+      - patch
+      - firewall
+      - public
 
 - name: "9.3.8 | PATCH | Ensure 'Windows Firewall: Public: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
-  ansible.windows.win_regedit:
-      path: HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging
-      name: LogFileSize
-      data: '{{ win22cis_public_firewall_log_size }}'
-      type: dword
+  block:
+      - name: "9.3.8 | AUDIT | Ensure 'Windows Firewall: Public: Logging: Size limit (KB)' is set to '16,384 KB or greater' | Warning Check For Variable Standards."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have a invalid size set for win22cis_public_firewall_log_size please read"
+                - "the notes for the variable and make the necessary change to the variable to be in compliance."
+        when: win22cis_public_firewall_log_size < 16384
+
+      - name: "9.3.8 | AUDIT | Ensure 'Windows Firewall: Public: Logging: Size limit (KB)' is set to '16,384 KB or greater' | Warn Count."
+        ansible.builtin.import_tasks: warning_facts.yml
+        vars:
+            warn_control_id: '9.3.8'
+        when: win22cis_public_firewall_log_size < 16384
+
+      - name: Apply Settings To Registry."
+        ansible.windows.win_regedit:
+            path: HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging
+            name: LogFileSize
+            data: '{{ win22cis_public_firewall_log_size }}'
+            type: dword
+        when: win22cis_public_firewall_log_size >= 16384
   when:
       - win22cis_rule_9_3_8
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.8
-      - automated
+      - rule_9.3.8
+      - patch
+      - firewall
+      - public
 
 - name: "9.3.9 | PATCH | Ensure 'Windows Firewall: Public: Logging: Log dropped packets' is set to 'Yes'"
   ansible.windows.win_regedit:
@@ -351,8 +447,10 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.9
-      - automated
+      - rule_9.3.9
+      - patch
+      - firewall
+      - public
 
 - name: "9.3.10 | PATCH | Ensure 'Windows Firewall: Public: Logging: Log successful connections' is set to 'Yes'"
   ansible.windows.win_regedit:
@@ -365,5 +463,7 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_9.3.10
-      - automated
+      - rule_9.3.10
+      - patch
+      - firewall
+      - public
