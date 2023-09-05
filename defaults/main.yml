@@ -94,6 +94,7 @@ win22cis_rule_1_1_7: true
 win22cis_rule_1_2_1: true
 win22cis_rule_1_2_2: true
 win22cis_rule_1_2_3: true
+win22cis_rule_1_2_4: true
 
 # section02
 win22cis_rule_2_2_1: true
@@ -567,6 +568,11 @@ win22cis_account_lockout_duration: 15
 win22cis_bad_login_lockout_count: 5
 
 # 1.2.3
+# win22cis_allow_admin_account_lockout is the policy setting determines whether the built-in
+# Administrator account is subject to the following Account Lockout Policy settings.
+# win22cis_allow_admin_account_lockout: 1
+
+# 1.2.4
 # win22cis_account_lockout_counter_reset is the policy setting determines the length of time before the
 # Account lockout threshold resets to zero. The default value for this policy setting is Not Defined.
 # NOTE: If the Account lockout threshold is defined (win22cis_account_lockout_duration), this reset
