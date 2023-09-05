@@ -232,7 +232,7 @@
   community.windows.win_security_policy:
       section: System Access
       key: AllowAdministratoraccountlockout
-      value: Enabled
+      value: 1
   when:
       - win22cis_rule_1_2_3
       - not win22cis_cloud_based_system
