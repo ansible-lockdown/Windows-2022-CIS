@@ -300,11 +300,10 @@
   community.windows.win_security_policy:
       section: System Access
       key: AllowAdministratorAccountLockout
-      value: 1
+      value: "Enabled"
   when:
       - win22cis_rule_1_2_3
   tags:
-      - level1-domaincontroller
       - level1-memberserver
       - rule_1.2.3
       - patch
