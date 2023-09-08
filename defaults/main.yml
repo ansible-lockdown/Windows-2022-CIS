@@ -152,7 +152,6 @@ win22cis_rule_2_3_1_4: true
 # Setting win19cis_rule_2_3_1_5 Control To True Will Break Ansible Connection
 # Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
 win22cis_rule_2_3_1_5: true
-win22cis_rule_2_3_1_6: true
 win22cis_rule_2_3_2_1: true
 win22cis_rule_2_3_2_2: true
 win22cis_rule_2_3_4_1: true
@@ -600,11 +599,11 @@ win22cis_increase_scheduling_priority_users: '{{ ["Administrators"] if (windows_
 # The recommended state for this setting is: Administrators and when Exchange is running in the environment) Exchange Servers.
 win22cis_exchange_server_running: false
 
-# 2.3.1.5
+# 2.3.1.4
 # win22cis_admin_username is the name the administrator account will be renamed to
 win22cis_admin_username: adminchangethis
 
-# 2.3.1.6
+# 2.3.1.5
 # win22cis_guest_username is the name the guest account will be renamed to
 win22cis_guest_username: guestchangethis
 

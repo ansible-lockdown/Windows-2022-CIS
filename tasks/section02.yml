@@ -232,9 +232,9 @@
       - patch
       - userrights
 
-- name: "2.2.18 | PATCH | Ensure Create symbolic links is set to Administrators NT VIRTUAL MACHINEVirtual Machines MS only"
+- name: "2.2.18 | PATCH | Ensure Create symbolic links is set to Administrators NT VIRTUAL MACHINE-Virtual Machines MS only"
   block:
-      - name: "2.2.18 | PATCH | (L1 Ensure Create symbolic links is set to Administrators NT VIRTUAL MACHINEVirtual Machines MS only | No Hyper-v"
+      - name: "2.2.18 | PATCH | (L1 Ensure Create symbolic links is set to Administrators NT VIRTUAL MACHINE-Virtual Machines MS only | No Hyper-v"
         ansible.windows.win_user_right:
             name: SeCreateSymbolicLinkPrivilege
             users:
@@ -242,7 +242,7 @@
             action: set
         when: not win22cis_hyperv_installed
 
-      - name: "2.2.18 | PATCH | Ensure Create symbolic links is set to Administrators NT VIRTUAL MACHINEVirtual Machines MS only | With Hyper-v"
+      - name: "2.2.18 | PATCH | Ensure Create symbolic links is set to Administrators NT VIRTUAL MACHINE-Virtual Machines MS only | With Hyper-v"
         ansible.windows.win_user_right:
             name: SeCreateSymbolicLinkPrivilege
             users:
@@ -651,7 +651,7 @@
       - userrights
       - administrators
 
-- name: "2.2.43 | PATCH | Ensure Profile system performance is set to Administrators NT SERVICEWdiServiceHost"
+- name: "2.2.43 | PATCH | Ensure Profile system performance is set to Administrators NT SERVICE.WdiServiceHost"
   ansible.windows.win_user_right:
       name: SeSystemProfilePrivilege
       users:
@@ -748,7 +748,7 @@
       - userright
       - administrator
 
-- name: "2.3.1.1 | PATCH | Ensure Accounts Administrator account status is set to Disabled MS only"
+- name: "2.3.1.1 | PATCH | Ensure Accounts: Block Microsoft accounts is set to Users can't add or log on with Microsoft accounts (Automated)"
   community.windows.win_security_policy:
       section: System Access
       key: EnableAdminAccount
