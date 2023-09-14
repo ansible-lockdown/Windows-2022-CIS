@@ -365,20 +365,20 @@
       - rule_17.5.4
       - patch
 
-- name: "17.5.5 | PATCH | Ensure Audit Other LogonLogoff Events is set to Success and Failure"
+- name: "17.5.5 | PATCH | Ensure Audit Other Logon,Logoff Events is set to Success and Failure"
   block:
-      - name: "17.5.5 | AUDIT | Ensure Audit Other LogonLogoff Events is set to Success and Failurr | Get current audit events."
+      - name: "17.5.5 | AUDIT | Ensure Audit Other Logon,Logoff Events is set to Success and Failurr | Get current audit events."
         ansible.windows.win_shell: AuditPol /get /subcategory:"Other Logon/Logoff Events" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         check_mode: false
         register: rule_17_5_5_audit
 
-      - name: "17.5.5 | PATCH | Ensure Audit Other LogonLogoff Events is set to Success and Failure | Success"
+      - name: "17.5.5 | PATCH | Ensure Audit Other Logon,Logoff Events is set to Success and Failure | Success"
         ansible.windows.win_shell: AuditPol /set /subcategory:"Other Logon/Logoff Events" /success:enable
         when: "'Success' not in rule_17_5_5_audit.stdout"
 
-      - name: "17.5.5 | PATCH | Ensure Audit Other LogonLogoff Events is set to Success and Failure | Failure"
+      - name: "17.5.5 | PATCH | Ensure Audit Other Logon,Logoff Events is set to Success and Failure | Failure"
         ansible.windows.win_shell: AuditPol /set /subcategory:"Other Logon/Logoff Events" /failure:enable
         when: "'Failure' not in rule_17_5_5_audit.stdout"
   when:

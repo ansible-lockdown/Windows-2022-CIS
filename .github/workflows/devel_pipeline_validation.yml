@@ -32,7 +32,7 @@ jobs:
                   repo-token: ${{ secrets.GITHUB_TOKEN }}
                   pr-message: |-
                     Congrats on opening your first pull request and thank you for taking the time to help improve Ansible-Lockdown!
-                    Please join in the conversation happening on the [Discord Server](https://discord.io/ansible-lockdown) as well.
+                    Please join in the conversation happening on the [Discord Server](https://www.lockdownenterprise.com/discord) as well.
 
     # This workflow will run terraform to load a instance in azure to test the playbook against a live cloud based instance.
     playbook-test:
