@@ -1062,7 +1062,7 @@
       - name: "2.3.6.5 | AUDIT | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0. | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
-                - "Warning!! You have a invalid number of days set for win22cis_domain_member_maximum_password_age please read"
+                - "Warning!! You have an invalid number of days set for win22cis_domain_member_maximum_password_age please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when:
             - win22cis_domain_member_maximum_password_age > 30 or
@@ -1111,7 +1111,7 @@
       - patch
       - logon
 
-- name: "2.3.7.1 | PATCH | Ensure Interactive logon Do not require CTRLALTDEL is set to Disabled"
+- name: "2.3.7.1 | PATCH | Ensure Interactive logon Do not require CTRL+ALT+DEL is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: DisableCAD
@@ -1126,7 +1126,7 @@
       - patch
       - logon
 
-- name: "2.3.7.2 | PATCH | Ensure Interactive logon Dont display last signed-in is set to Enabled"
+- name: "2.3.7.2 | PATCH | Ensure Interactive logon Do not display last signed-in is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: DontDisplayLastUserName
@@ -1146,7 +1146,7 @@
       - name: "2.3.7.3 | AUDIT | Ensure Interactive logon Machine inactivity limit is set to 900 or fewer seconds but not 0. | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
-                - "Warning!! You have a invalid number of seconds set for win22cis_inactivity_timeout_seconds please read"
+                - "Warning!! You have an invalid number of seconds set for win22cis_inactivity_timeout_seconds please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when:
             - win22cis_inactivity_timeout_seconds > 900 or
@@ -1213,7 +1213,7 @@
       - name: "2.3.7.6 | AUDIT| Ensure Interactive logon Number of previous logons to cache in case domain controller is not available is set to 4 or fewer logons MS only. | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
-                - "Warning!! You have a invalid number of logons set for win22cis_cached_logons_count please read"
+                - "Warning!! You have an invalid number of logons set for win22cis_cached_logons_count please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when: win22cis_cached_logons_count > 4
 
@@ -1243,7 +1243,7 @@
       - name: "2.3.7.7 | AUDIT | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days. | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
-                - "Warning!! You have a invalid number of days set for win22cis_password_expiry_warning_days please read"
+                - "Warning!! You have an invalid number of days set for win22cis_password_expiry_warning_days please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when:
             - win22cis_password_expiry_warning_days < 5 or
@@ -1355,7 +1355,7 @@
       - name: "2.3.9.1 | AUDIT | Ensure Microsoft network server Amount of idle time required before suspending session is set to 15 or fewer minutes. | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
-                - "Warning!! You have a invalid number of minutes set for win22cis_smb_auto_disconnect_time please read"
+                - "Warning!! You have an invalid number of minutes set for win22cis_smb_auto_disconnect_time please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when: win22cis_smb_auto_disconnect_time > 15
 
@@ -1442,7 +1442,7 @@
       - patch
       - account
 
-- name: "2.3.10.1 | PATCH | Ensure Network access Allow anonymous SIDName translation is set to Disabled"
+- name: "2.3.10.1 | PATCH | Ensure Network access Allow anonymous SID/Name translation is set to Disabled"
   community.windows.win_security_policy:
       section: System Access
       key: LSAAnonymousNameLookup

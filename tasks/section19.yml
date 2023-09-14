@@ -53,7 +53,7 @@
       - name: Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
-                - "Warning!! You have a invalid time set for win22cis_screen_saver_timeout please read"
+                - "Warning!! You have an invalid time set for win22cis_screen_saver_timeout please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when:
             - win22cis_screen_saver_timeout == 0 or
