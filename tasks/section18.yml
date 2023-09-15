@@ -60,7 +60,7 @@
       - patch
       - onlinetips
 
-- name: "18.3.1 | PATCH | Ensure LAPS AdmPwd GPO Extension CSE is installed MS only"
+- name: "18.3.1 | PATCH | Ensure LAPS AdmPwd GPO Extension / CSE is installed MS only"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\GPExtensions\{D76B9641-3288-4f75-942D-087DE603E3EA}
       name: DllName
@@ -107,7 +107,7 @@
       - accounts
       - admin
 
-- name: "18.3.4 | PATCH | Ensure Password Settings Password Complexity is set to Enabled Large letters  small letters  numbers  special characters MS only"
+- name: "18.3.4 | PATCH | Ensure Password Settings: Password Complexity is set to Enabled: Large letters + small letters + numbers + special characters  MS only"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
       name: PasswordComplexity
@@ -199,7 +199,7 @@
       - patch
       - uac
 
-- name: "18.4.2 | PATCH | Ensure 'Configure RPC packet level privacy setting for incoming connections' is set to 'Enabled'"
+- name: "18.4.2 | PATCH | Ensure Configure RPC packet level privacy setting for incoming connections is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Control\Print
       name: RpcAuthnLevelPrivacyEnabled
@@ -263,22 +263,6 @@
       - patch
       - sehop
 
-- name: "18.7.8 | PATCH | Ensure Limits print driver installation to Administrators is set to Enabled"
-  ansible.windows.win_regedit:
-      path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint
-      name: RestrictDriverInstallationToAdministrators
-      data: 1
-      type: dword
-  when:
-      - win22cis_rule_18_7_8
-  tags:
-      - level1-domaincontroller
-      - level1-memberserver
-      - rule_18.7.8
-      - patch
-      - printers
-      - drivers
-
 - name: "18.4.6 | PATCH | Ensure 'NetBT NodeType configuration' is set to 'Enabled: P-node recommended'"
   ansible.windows.win_regedit:
       path: HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters
@@ -319,11 +303,11 @@
       data: 0
       datatype: string
   when:
-      - win22cis_rule_18_4_1
+      - win22cis_rule_18_5_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.4.1
+      - rule_18.5.1
       - patch
       - mss
       - logon
@@ -387,11 +371,11 @@
       data: 300000
       datatype: dword
   when:
-      - win22cis_rule_18_4_5
+      - win22cis_rule_18_5_5
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.4.5
+      - rule_18.5.5
       - patch
       - mss
       - keepalive
@@ -549,23 +533,38 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.5.4.1
+      - rule_18.6.4.1
       - patch
       - dns
 
-- name: "18.6.4.2 | PATCH | Ensure Turn off multicast name resolution is set to Enabled MS Only"
+- name: "18.6.4.2 | PATCH | Ensure Configure NetBIOS settings is set to Enabled: Disable NetBIOS name resolution on public networks"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
-      name: EnableMulticast
-      data: 0
+      path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient
+      name: EnableNetbios
+      data: 2
       type: dword
   when:
       - win22cis_rule_18_6_4_2
-      - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
       - level1-memberserver
       - rule_18.6.4.2
+      - patch
+      - netbios
+
+- name: "18.6.4.3 | PATCH | Ensure Turn off multicast name resolution is set to Enabled MS Only"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
+      name: EnableMulticast
+      data: 1
+      type: dword
+  when:
+      - win22cis_rule_18_6_4_3
+      - not ansible_windows_domain_role == "Primary domain controller"
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.6.4.3
       - patch
       - dns
 
@@ -599,7 +598,7 @@
       - patch
       - fonts
 
-- name: "18.6.9.1 | PATCH | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled"
+- name: "18.6.9.1 | PATCH | Ensure Turn on Mapper I/O LLTDIO driver is set to Disabled"
   block:
       - name: "18.6.9.1 | PATCH | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | AllowLLTDIOOndomain"
         ansible.windows.win_regedit:
@@ -926,6 +925,22 @@
       - rule_18.7.1.1
       - patch
       - notifications
+
+- name: "18.7.8 | PATCH | Ensure Limits print driver installation to Administrators is set to Enabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint
+      name: RestrictDriverInstallationToAdministrators
+      data: 1
+      type: dword
+  when:
+      - win22cis_rule_18_7_8
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.7.8
+      - patch
+      - printers
+      - drivers
 
 - name: "18.8.3.1 | PATCH | Ensure Include command line in process creation events is set to Enabled."
   ansible.windows.win_regedit:
