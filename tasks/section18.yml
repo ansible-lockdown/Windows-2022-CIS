@@ -866,63 +866,63 @@
       - patch
       - gpo
 
-- name: "18.6.1 | PATCH | Ensure Allow Print Spooler to accept client connections is set to Disabled"
+- name: "18.7.1 | PATCH | Ensure Allow Print Spooler to accept client connections is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers
       name: RegisterSpoolerRemoteRpcEndPoint
       data: 2
       type: dword
   when:
-      - win22cis_rule_18_6_1
+      - win22cis_rule_18_7_1
   tags:
       - level1-domaincontroller
       - level2-memberserver
-      - rule_18.6.1
+      - rule_18.7.1
       - patch
       - printers
 
-- name: "18.6.2 | PATCH | Ensure Point and Print Restrictions: When installing drivers for a new connection is set to Enabled: Show warning and elevation prompt"
+- name: "18.7.10 | PATCH | Ensure Point and Print Restrictions: When installing drivers for a new connection is set to Enabled: Show warning and elevation prompt"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint
       name: NoWarningNoElevationOnInstall
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_6_2
+      - win22cis_rule_18_7_10
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.6.2
+      - rule_18.7.10
       - patch
       - printers
 
-- name: "18.6.3 | PATCH | Ensure Point and Print Restrictions: When updating drivers for an existing connection is set to Enabled: Show warning and elevation prompt"
+- name: "18.7.11 | PATCH | Ensure Point and Print Restrictions: When updating drivers for an existing connection is set to Enabled: Show warning and elevation prompt"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint
       name: UpdatePromptSettings
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_6_3
+      - win22cis_rule_18_7_11
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.6.3
+      - rule_18.7.11
       - patch
       - printers
 
-- name: "18.7.1.1 | PATCH | Ensure Turn off notifications network usage is set to Enabled"
+- name: "18.8.1.1 | PATCH | Ensure Turn off notifications network usage is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications
       name: NoCloudApplicationNotification
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_7_1_1
+      - win22cis_rule_18_8_1_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.7.1.1
+      - rule_18.8.1.1
       - patch
       - notifications
 
@@ -942,152 +942,152 @@
       - printers
       - drivers
 
-- name: "18.8.3.1 | PATCH | Ensure Include command line in process creation events is set to Enabled."
+- name: "18.9.3.1 | PATCH | Ensure Include command line in process creation events is set to Enabled."
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System\Audit
       name: ProcessCreationIncludeCmdLine_Enabled
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_3_1
+      - win22cis_rule_18_9_3_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.3.1
+      - rule_18.9.3.1
       - patch
 
-- name: "18.8.4.1 | PATCH | Ensure Encryption Oracle Remediation is set to Enabled Force Updated Clients"
+- name: "18.9.4.1 | PATCH | Ensure Encryption Oracle Remediation is set to Enabled Force Updated Clients"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters
       name: AllowEncryptionOracle
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_4_1
+      - win22cis_rule_18_9_4_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.4.1
+      - rule_18.9.4.1
       - patch
       - encryption_oracle
 
-- name: "18.8.4.2 | PATCH | Ensure Remote host allows delegation of non-exportable credentials is set to Enabled"
+- name: "18.9.4.2 | PATCH | Ensure Remote host allows delegation of non-exportable credentials is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation
       name: AllowProtectedCreds
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_4_2
+      - win22cis_rule_18_9_4_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.4.2
+      - rule_18.9.4.2
       - patch
       - credentialsdelecation
 
-- name: "18.8.5.1 | PATCH | NG Ensure Turn On Virtualization Based Security is set to Enabled"
+- name: "18.9.5.1 | PATCH | NG Ensure Turn On Virtualization Based Security is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: EnableVirtualizationBasedSecurity
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_5_1
+      - win22cis_rule_18_9_5_1
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.1
+      - rule_18.9.5.1
       - patch
       - vbs
 
-- name: "18.8.5.2 | PATCH | NG Ensure Turn On Virtualization Based Security Select Platform Security Level is set to Secure Boot and DMA Protection"
+- name: "18.9.5.2 | PATCH | NG Ensure Turn On Virtualization Based Security Select Platform Security Level is set to Secure Boot and DMA Protection"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: RequirePlatformSecurityFeatures
       data: 3
       type: dword
   when:
-      - win22cis_rule_18_8_5_2
+      - win22cis_rule_18_9_5_2
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.2
+      - rule_18.9.5.2
       - patch
       - vbs
 
-- name: "18.8.5.3 | PATCH | NG Ensure Turn On Virtualization Based Security Virtualization Based Protection of Code Integrity is set to Enabled with UEFI lock"
+- name: "18.9.5.3 | PATCH | NG Ensure Turn On Virtualization Based Security Virtualization Based Protection of Code Integrity is set to Enabled with UEFI lock"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: HypervisorEnforcedCodeIntegrity
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_5_3
+      - win22cis_rule_18_9_5_3
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.3
+      - rule_18.9.5.3
       - patch
       - vbs
 
-- name: "18.8.5.4 | PATCH | NG Ensure Turn On Virtualization Based Security Require UEFI Memory Attributes Table is set to True checked"
+- name: "18.9.5.4 | PATCH | NG Ensure Turn On Virtualization Based Security Require UEFI Memory Attributes Table is set to True checked"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: HVCIMATRequired
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_5_4
+      - win22cis_rule_18_9_5_4
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.4
+      - rule_18.9.5.4
       - patch
       - vbs
 
-- name: "18.8.5.5 | PATCH | NG Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Enabled with UEFI lock MS Only"
+- name: "18.9.5.5 | PATCH | NG Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Enabled with UEFI lock MS Only"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: LsaCfgFlags
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_5_5
+      - win22cis_rule_18_9_5_5
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - ngws-memberserver
-      - rule_18.8.5.5
+      - rule_18.9.5.5
       - patch
       - vbs
 
-- name: "18.8.5.6 | PATCH | NG Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Disabled DC Only"
+- name: "18.9.5.6 | PATCH | NG Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Disabled DC Only"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: LsaCfgFlags
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_5_6
+      - win22cis_rule_18_9_5_6
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - ngws-domaincontroller
-      - rule_18.8.5.6
+      - rule_18.9.5.6
       - patch
       - vbs
 
-- name: "18.8.5.7 | PATCH | NG Ensure Turn On Virtualization Based Security Secure Launch Configuration is set to Enabled"
+- name: "18.9.5.7 | PATCH | NG Ensure Turn On Virtualization Based Security Secure Launch Configuration is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: ConfigureSystemGuardLaunch
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_5_7
+      - win22cis_rule_18_9_5_7
   tags:
       - ngws-domaincontroller
       - ngws-memberserver
-      - rule_18.8.5.7
+      - rule_18.9.5.7
       - patch
       - vbs
 
@@ -1106,606 +1106,636 @@
       - patch
       - metadata
 
-- name: "18.8.14.1 | PATCH | Ensure Boot-Start Driver Initialization Policy is set to Enabled Good unknown and bad but critical"
+- name: "18.9.13.1 | PATCH | Ensure Boot-Start Driver Initialization Policy is set to Enabled Good unknown and bad but critical"
   ansible.windows.win_regedit:
       path: HKLM:\System\Currentcontrolset\Policies\Earlylaunch
       name: DriverLoadPolicy
       data: 3
       type: dword
   when:
-      - win22cis_rule_18_8_14_1
+      - win22cis_rule_18_9_13_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.14.1
+      - rule_18.9.13.1
       - patch
       - drivers
 
-- name: "18.8.21.2 | PATCH | Ensure Configure registry policy processing Do not apply during periodic background processing is set to Enabled FALSE"
+- name: "18.9.19.2 | PATCH | Ensure Configure registry policy processing Do not apply during periodic background processing is set to Enabled FALSE"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378Eac-683F-11D2-A89A-00C04Fbbcfa2}
       name: NoBackgroundPolicy
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_21_2
+      - win22cis_rule_18_9_19_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.21.2
+      - rule_18.9.19.2
       - patch
       - gpo
 
-- name: "18.8.21.3 | PATCH | Ensure Configure registry policy processing Process even if the Group Policy objects have not changed is set to Enabled TRUE"
+- name: "18.9.19.3 | PATCH | Ensure Configure registry policy processing Process even if the Group Policy objects have not changed is set to Enabled TRUE"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Group Policy\{35378Eac-683F-11D2-A89A-00C04Fbbcfa2}
       name: NoGPOListChanges
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_21_3
+      - win22cis_rule_18_9_19_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.21.3
+      - rule_18.9.19.3
       - patch
       - gpo
 
-- name: "18.8.21.4 | PATCH | Ensure Continue experiences on this device is set to Disabled"
+- name: "18.9.19.4 | PATCH | Ensure Continue experiences on this device is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\System
       name: EnableCdp
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_21_4
+      - win22cis_rule_18_9_19_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.21.4
+      - rule_18.9.19.4
       - patch
 
-- name: "18.8.21.5 | PATCH | Ensure Turn off background refresh of Group Policy is set to Disabled"
+- name: "18.9.19.5 | PATCH | Ensure Turn off background refresh of Group Policy is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System\DisableBkGndGroupPolicy
       name: DisableBkGndGroupPolicy
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_21_5
+      - win22cis_rule_18_9_19_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.21.5
+      - rule_18.9.19.5
       - patch
       - gpo
 
-- name: "18.8.22.1.1 | PATCH | Ensure Turn off downloading of print drivers over HTTP is set to Enabled"
+- name: "18.9.20.1.1 | PATCH | Ensure Turn off downloading of print drivers over HTTP is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Printers
       name: DisableWebPnPDownload
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_1
+      - win22cis_rule_18_9_20_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.22.1.1
+      - rule_18.9.20.1.1
       - patch
       - drivers
       - printers
 
-- name: "18.8.22.1.2 | PATCH | Ensure Turn off handwriting personalization data sharing is set to Enabled"
+- name: "18.9.20.1.2 | PATCH | Ensure Turn off handwriting personalization data sharing is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Tabletpc
       name: PreventHandwritingDataSharing
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_2
+      - win22cis_rule_18_9_20_1_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.2
+      - rule_18.9.20.1.2
       - patch
       - handwriting
 
-- name: "18.8.22.1.3 | PATCH | Ensure Turn off handwriting recognition error reporting is set to Enabled"
+- name: "18.9.20.1.3 | PATCH | Ensure Turn off handwriting recognition error reporting is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Handwritingerrorreports
       name: PreventHandwritingErrorReports
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_3
+      - win22cis_rule_18_9_20_1_3
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.3
+      - rule_18.9.20.1.3
       - patch
       - handwriting
 
-- name: "18.8.22.1.4 | PATCH | Ensure Turn off Internet Connection Wizard if URL connection is referring to Microsoft.com is set to Enabled"
+- name: "18.9.20.1.4 | PATCH | Ensure Turn off Internet Connection Wizard if URL connection is referring to Microsoft.com is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Internet Connection Wizard
       name: ExitOnMSICW
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_4
+      - win22cis_rule_18_9_20_1_4
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.4
+      - rule_18.9.20.1.4
       - patch
       - wizard
       - internetconnectionwizard
 
-- name: "18.8.22.1.5 | PATCH | Ensure Turn off Internet download for Web publishing and online ordering wizards is set to Enabled"
+- name: "18.9.20.1.5 | PATCH | Ensure Turn off Internet download for Web publishing and online ordering wizards is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoWebServices
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_5
+      - win22cis_rule_18_9_20_1_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.22.1.5
+      - rule_18.9.20.1.5
       - patch
       - wizard
       - internetdownloadwizard
 
-- name: "18.8.22.1.6 | PATCH | Ensure Turn off printing over HTTP is set to Enabled"
+- name: "18.9.20.1.6 | PATCH | Ensure Turn off printing over HTTP is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Printers
       name: DisableHTTPPrinting
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_6
+      - win22cis_rule_18_9_20_1_6
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.6
+      - rule_18.9.20.1.6
       - patch
       - printers
 
-- name: "18.8.22.1.7 | PATCH | Ensure Turn off Registration if URL connection is referring to Microsoft.com is set to Enabled"
+- name: "18.9.20.1.7 | PATCH | Ensure Turn off Registration if URL connection is referring to Microsoft.com is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Registration Wizard Control
       name: NoRegistration
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_7
+      - win22cis_rule_18_9_20_1_7
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.7
+      - rule_18.9.20.1.7
       - patch
       - wizard
       - registration
 
-- name: "18.8.22.1.8 | PATCH | Ensure Turn off Search Companion content file updates is set to Enabled"
+- name: "18.9.20.1.8 | PATCH | Ensure Turn off Search Companion content file updates is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Searchcompanion
       name: DisableContentFileUpdates
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_8
+      - win22cis_rule_18_9_20_1_8
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.8
+      - rule_18.9.20.1.8
       - patch
       - search
 
-- name: "18.8.22.1.9 | PATCH | Ensure Turn off the Order Prints picture task is set to Enabled"
+- name: "18.9.20.1.9 | PATCH | Ensure Turn off the Order Prints picture task is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoOnlinePrintsWizard
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_9
+      - win22cis_rule_18_9_20_1_9
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.9
+      - rule_18.9.20.1.9
       - patch
       - printers
 
-- name: "18.8.22.1.10 | PATCH | Ensure Turn off the Publish to Web task for files and folders is set to Enabled"
+- name: "18.9.20.1.10 | PATCH | Ensure Turn off the Publish to Web task for files and folders is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoPublishingWizard
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_10
+      - win22cis_rule_18_9_20_1_10
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.10
+      - rule_18.8.20.1.10
       - patch
       - wizard
 
-- name: "18.8.22.1.11 | PATCH | Ensure Turn off the Windows Messenger Customer Experience Improvement Program is set to Enabled"
+- name: "18.9.20.1.11 | PATCH | Ensure Turn off the Windows Messenger Customer Experience Improvement Program is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Messenger\Client
       name: CEIP
       data: 2
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_11
+      - win22cis_rule_18_9_20_1_11
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.11
+      - rule_18.9.20.1.11
       - patch
       - wmcei
 
-- name: "18.8.22.1.12 | PATCH | Ensure Turn off Windows Customer Experience Improvement Program is set to Enabled"
+- name: "18.9.20.1.12 | PATCH | Ensure Turn off Windows Customer Experience Improvement Program is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Sqmclient\Windows
       name: CEIPEnable
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_22_1_12
+      - win22cis_rule_18_9_20_1_12
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.12
+      - rule_18.9.20.1.12
       - patch
       - wmcei
 
-- name: "18.8.22.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled"
+- name: "18.9.20.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled"
   block:
-      - name: "18.8.22.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled | Windows Error Reporting"
+      - name: "18.9.20.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled | Windows Error Reporting"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Windows Error Reporting
             name: Disabled
             data: 1
             type: dword
 
-      - name: "18.8.22.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled | ErrorReporting"
+      - name: "18.9.20.1.13 | PATCH | Ensure Turn off Windows Error Reporting is set to Enabled | ErrorReporting"
         ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting
             name: DoReport
             data: 0
             type: dword
   when:
-      - win22cis_rule_18_8_22_1_13
+      - win22cis_rule_18_9_20_1_13
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.22.1.13
+      - rule_18.9.20.1.13
       - patch
       - errorreporting
 
-- name: "18.8.25.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic"
+- name: "18.9.23.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic"
   block:
-      - name: "18.8.25.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic | DevicePKInitBehavior"
+      - name: "18.9.23.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic | DevicePKInitBehavior"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\kerberos\parameters
             name: DevicePKInitBehavior
             data: 0
             type: dword
 
-      - name: "18.8.25.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic | DevicePKInitEnabled"
+      - name: "18.9.23.1 | PATCH | Ensure Support device authentication using certificate is set to Enabled Automatic | DevicePKInitEnabled"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\kerberos\parameters
             name: DevicePKInitEnabled
             data: 1
             type: dword
   when:
-      - win22cis_rule_18_8_25_1
+      - win22cis_rule_18_9_23_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.25.1
+      - rule_18.9.23.1
       - patch
       - certifcates
 
-- name: "18.8.26.1 | PATCH | Ensure Enumeration policy for external devices incompatible with Kernel DMA Protection is set to Enabled Block All"
+- name: "18.9.24.1 | PATCH | Ensure Enumeration policy for external devices incompatible with Kernel DMA Protection is set to Enabled Block All"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Kernel DMA Protection
       name: DeviceEnumerationPolicy
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_26_1
+      - win22cis_rule_18_9_24_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.26.1
+      - rule_18.9.24.1
       - patch
       - dma
 
-- name: "18.8.27.1 | PATCH | Ensure Disallow copying of user input methods to the system account for sign-in is set to Enabled"
+- name: "18.9.25.1 | PATCH | Ensure Allow Custom SSPs and APs to be loaded into LSASS' is set to 'Disabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\System
+      name: AllowCustomSSPsAPs
+      data: 0
+      type: dword
+  when:
+      - win22cis_rule_18_9_25_1
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.9.25.1
+      - patch
+      - lsass
+
+- name: "18.9.25.2 | PATCH | Ensure Configures LSASS to run as a protected process is set to Enabled: Enabled with UEFI Lock"
+  ansible.windows.win_regedit:
+      path: HKLM:\SYSTEM\CurrentControlSet\Control\Lsa
+      name: RunAsPPL
+      data: 1
+      type: dword
+  when:
+      - win22cis_rule_18_9_25_2
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.9.25.2
+      - patch
+      - lsa
+
+- name: "18.9.26.1 | PATCH | Ensure Disallow copying of user input methods to the system account for sign-in is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Control Panel\International
       name: BlockUserInputMethodsForSignIn
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_27_1
+      - win22cis_rule_18_9_26_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.27.1
+      - rule_18.9.26.1
       - patch
 
-- name: "18.8.28.1 | PATCH | Ensure Block user from showing account details on sign-in is set to Enabled"
+- name: "18.9.17.1 | PATCH | Ensure Block user from showing account details on sign-in is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: BlockUserFromShowingAccountDetailsOnSignin
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_28_1
+      - win22cis_rule_18_9_27_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.1
+      - rule_18.9.27.1
       - patch
       - accounts
 
-- name: "18.8.28.2 | PATCH | Ensure Do not display network selection UI is set to Enabled"
+- name: "18.9.27.2 | PATCH | Ensure Do not display network selection UI is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: DontDisplayNetworkSelectionUI
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_28_2
+      - win22cis_rule_18_9_27_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.2
+      - rule_18.9.27.2
       - patch
 
-- name: "18.8.28.3 | PATCH | Ensure Do not enumerate connected users on domain-joined computers is set to Enabled"
+- name: "18.9.27.3 | PATCH | Ensure Do not enumerate connected users on domain-joined computers is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: DontEnumerateConnectedUsers
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_28_3
+      - win22cis_rule_18_9_27_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.3
+      - rule_18.9.27.3
       - patch
       - enumerate
 
-- name: "18.8.28.4 | PATCH | Ensure Enumerate local users on domain-joined computers is set to Disabled MS only"
+- name: "18.9.27.4 | PATCH | Ensure Enumerate local users on domain-joined computers is set to Disabled MS only"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: EnumerateLocalUsers
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_28_4
+      - win22cis_rule_18_9_27_4
   tags:
       - level1-memberserver
-      - rule_18.8.28.4
+      - rule_18.9.27.4
       - patch
       - enumerate
 
-- name: "18.8.28.5 | PATCH | Ensure Turn off app notifications on the lock screen is set to Enabled"
+- name: "18.9.27.5 | PATCH | Ensure Turn off app notifications on the lock screen is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: DisableLockScreenAppNotifications
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_28_5
+      - win22cis_rule_18_9_27_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.5
+      - rule_18.9.27.5
       - patch
       - notifications
 
-- name: "18.8.28.6 | PATCH | Ensure Turn off picture password sign-in is set to Enabled"
+- name: "18.9.27.6 | PATCH | Ensure Turn off picture password sign-in is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: BlockDomainPicturePassword
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_28_6
+      - win22cis_rule_18_9_27_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.6
+      - rule_18.9.27.6
       - patch
       - logon
 
-- name: "18.8.28.7 | PATCH | Ensure Turn on convenience PIN sign-in is set to Disabled"
+- name: "18.9.27.7 | PATCH | Ensure Turn on convenience PIN sign-in is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: AllowDomainPINLogon
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_28_7
+      - win22cis_rule_18_9_27_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.28.7
+      - rule_18.9.27.7
       - patch
       - pin
 
-- name: "18.8.31.1 | PATCH | Ensure Allow Clipboard synchronization across devices is set to Disabled"
+- name: "18.9.30.1 | PATCH | Ensure Allow Clipboard synchronization across devices is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: AllowCrossDeviceClipboard
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_31_1
+      - win22cis_rule_18_9_30_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.31.1
+      - rule_18.9.30.1
       - patch
       - clipboard
 
-- name: "18.8.31.2 | PATCH | Ensure Allow upload of User Activities is set to Disabled"
+- name: "18.9.30.2 | PATCH | Ensure Allow upload of User Activities is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: UploadUserActivities
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_31_2
+      - win22cis_rule_18_9_30_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.31.2
+      - rule_18.9.30.2
       - patch
 
-- name: "18.8.34.6.1 | PATCH | Ensure Allow network connectivity during connected-standby on battery is set to Disabled"
+- name: "18.9.32.6.1 | PATCH | Ensure Allow network connectivity during connected-standby on battery is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\f15576e8-98b7-4186-b944-eafa664402d9
       name: DCSettingIndex
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_34_6_1
+      - win22cis_rule_18_9_32_6_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.34.6.1
+      - rule_18.9.32.6.1
       - patch
       - power
 
-- name: "18.8.34.6.2 | PATCH | Ensure Allow network connectivity during connected-standby plugged in is set to Disabled"
+- name: "18.9.32.6.2 | PATCH | Ensure Allow network connectivity during connected-standby plugged in is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\f15576e8-98b7-4186-b944-eafa664402d9
       name: ACSettingIndex
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_34_6_2
+      - win22cis_rule_18_3_32_6_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.34.6.2
+      - rule_18.9.32.6.2
       - patch
       - power
 
-- name: "18.8.34.6.3 | PATCH | Ensure Require a password when a computer wakes on battery is set to Enabled"
+- name: "18.9.32.6.3 | PATCH | Ensure Require a password when a computer wakes on battery is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51
       name: DCSettingIndex
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_34_6_3
+      - win22cis_rule_18_9_32_6_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.34.6.3
+      - rule_18.9.32.6.3
       - patch
       - power
       - logon
 
-- name: "18.8.34.6.4 | PATCH | Ensure Require a password when a computer wakes plugged in is set to Enabled"
+- name: "18.9.32.6.4 | PATCH | Ensure Require a password when a computer wakes plugged in is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Power\PowerSettings\0e796bdb-100d-47d6-a2d5-f7d2daa51f51
       name: ACSettingIndex
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_34_6_4
+      - win22cis_rule_18_9_32_6_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.34.6.4
+      - rule_18.9.32.6.4
       - patch
       - logon
 
-- name: "18.8.36.1 | PATCH | Ensure Configure Offer Remote Assistance is set to Disabled"
+- name: "18.9.34.1 | PATCH | Ensure Configure Offer Remote Assistance is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fAllowUnsolicited
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_36_1
+      - win22cis_rule_18_9_34_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.36.1
+      - rule_18.9.34.1
       - patch
       - cora
 
-- name: "18.8.36.2 | PATCH | Ensure Configure Solicited Remote Assistance is set to Disabled"
+- name: "18.9.34.2 | PATCH | Ensure Configure Solicited Remote Assistance is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fAllowToGetHelp
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_36_2
+      - win22cis_rule_18_9_34_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.36.2
+      - rule_18.9.34.2
       - patch
       - csra
 
-- name: "18.8.37.1 | PATCH | Ensure Enable RPC Endpoint Mapper Client Authentication is set to Enabled MS only"
+- name: "18.9.35.1 | PATCH | Ensure Enable RPC Endpoint Mapper Client Authentication is set to Enabled MS only"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Rpc
       name: EnableAuthEpResolution
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_37_1
+      - win22cis_rule_18_9_35_1
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-memberserver
-      - rule_18.8.37.1
+      - rule_18.9.35.1
       - patch
       - rpc
 
-- name: "18.8.37.2 | PATCH | Ensure Restrict Unauthenticated RPC clients is set to Enabled Authenticated MS only"
+- name: "18.9.35.2 | PATCH | Ensure Restrict Unauthenticated RPC clients is set to Enabled Authenticated MS only"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Rpc
       name: RestrictRemoteClients
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_37_2
+      - win22cis_rule_18_9_35_2
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level2-memberserver
-      - rule_18.8.37.2
+      - rule_18.9.35.2
       - patch
       - rpc
 
-- name: "18.8.40.1 | PATCH | Ensure Configure validation of ROCA-vulnerable WHfB keys during authentication is set to Enabled: Audit or higher"
+- name: "18.9.38.1 | PATCH | Ensure Configure validation of ROCA-vulnerable WHfB keys during authentication is set to Enabled: Audit or higher"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\SAM
       name: SamNGCKeyROCAValidation
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_40_1
+      - win22cis_rule_18_9_38_1
       - ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level1-domaincontroller
-      - rule_18.8.40.1
+      - rule_18.9.38.1
       - patch
       - sam
 
