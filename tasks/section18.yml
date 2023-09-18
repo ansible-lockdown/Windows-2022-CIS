@@ -1739,411 +1739,487 @@
       - patch
       - sam
 
-- name: "18.8.48.5.1 | PATCH | Ensure Microsoft Support Diagnostic Tool Turn on MSDT interactive communication with support provider is set to Disabled"
+- name: "18.9.46.5.1 | PATCH | Ensure Microsoft Support Diagnostic Tool Turn on MSDT interactive communication with support provider is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Scripteddiagnosticsprovider\Policy
       name: DisableQueryRemoteServer
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_48_5_1
+      - win22cis_rule_18_9_46_5_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.48.5.1
+      - rule_18.9.46.5.1
       - patch
       - msdt
 
-- name: "18.8.48.11.1 | PATCH | Ensure EnableDisable PerfTrack is set to Disabled"
+- name: "18.9.46.11.1 | PATCH | Ensure EnableDisable PerfTrack is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Wdi\{9C5A40Da-B965-4Fc3-8781-88Dd50A6299D}
       name: ScenarioExecutionEnabled
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_8_48_11_1
+      - win22cis_rule_18_9_46_11_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.48.11.1
+      - rule_18.9.46.11.1
       - patch
       - pertrack
 
-- name: "18.8.50.1 | PATCH | Ensure Turn off the advertising ID is set to Enabled"
+- name: "18.9.48.1 | PATCH | Ensure Turn off the advertising ID is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Advertisinginfo
       name: DisabledByGroupPolicy
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_50_1
+      - win22cis_rule_18_9_48_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.50.1
+      - rule_18.9.48.1
       - patch
       - advertising
 
-- name: "18.8.53.1.1 | PATCH | Ensure Enable Windows NTP Client is set to Enabled"
+- name: "18.9.50.1.1 | PATCH | Ensure Enable Windows NTP Client is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\W32Time\Timeproviders\Ntpclient
       name: Enabled
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_53_1_1
+      - win22cis_rule_18_9_50_1_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.8.53.1.1
+      - rule_18.9.50.1.1
       - patch
       - ntp
 
-- name: "18.8.53.1.2 | PATCH | Ensure Enable Windows NTP Server is set to Disabled MS only"
+- name: "18.9.50.1.2 | PATCH | Ensure Enable Windows NTP Server is set to Disabled MS only"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\W32Time\Timeproviders\Ntpserver
       name: Enabled
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_53_1_2
+      - win22cis_rule_18_9_50_1_2
       - not ansible_windows_domain_role == "Primary domain controller"
   tags:
       - level2-memberserver
-      - rule_18.8.53.1.2
+      - rule_18.9.50.1.2
       - patch
       - ntp
 
-- name: "18.9.4.1 | PATCH | Ensure Allow a Windows app to share application data between users is set to Disabled"
+- name: "18.10.3.1 | PATCH | Ensure Allow a Windows app to share application data between users is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Currentversion\Appmodel\Statemanager
       name: AllowSharedLocalAppData
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_4_1
+      - win22cis_rule_18_10_3_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.4.1
+      - rule_18.10.3.1
       - patch
       - data
 
-- name: "18.9.6.1 | PATCH | Ensure Allow Microsoft accounts to be optional is set to Enabled"
+- name: "18.10.5.1 | PATCH | Ensure Allow Microsoft accounts to be optional is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: MSAOptional
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_6_1
+      - win22cis_rule_18_10_5_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.6.1
+      - rule_18.10.5.1
       - patch
       - accounts
 
-- name: "18.9.8.1 | PATCH | Ensure Disallow Autoplay for non-volume devices is set to Enabled"
+- name: "18.10.7.1 | PATCH | Ensure Disallow Autoplay for non-volume devices is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Explorer
       name: NoAutoplayfornonVolume
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_8_1
+      - win22cis_rule_18_10_7_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.8.1
+      - rule_18.10.7.1
       - patch
       - autoplay
 
-- name: "18.9.8.2 | PATCH | Ensure Set the default behavior for AutoRun is set to Enabled Do not execute any autorun commands"
+- name: "18.10.7.2 | PATCH | Ensure Set the default behavior for AutoRun is set to Enabled Do not execute any autorun commands"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoAutorun
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_8_2
+      - win22cis_rule_18_10_7_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.8.2
+      - rule_18.10.7.2
       - patch
       - autorun
 
-- name: "18.9.8.3 | PATCH | Ensure Turn off Autoplay is set to Enabled All drives"
+- name: "18.10.7.3 | PATCH | Ensure Turn off Autoplay is set to Enabled All drives"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoDriveTypeAutoRun
       data: 255
       type: dword
   when:
-      - win22cis_rule_18_9_8_3
+      - win22cis_rule_18_10_7_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.8.3
+      - rule_18.10.7.3
       - patch
       - autoplay
 
-- name: "18.9.10.1.1 | PATCH | Ensure Configure enhanced anti-spoofing is set to Enabled"
+- name: "18.10.8.1.1 | PATCH | Ensure Configure enhanced anti-spoofing is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Biometrics\Facialfeatures
       name: EnhancedAntiSpoofing
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_10_1_1
+      - win22cis_rule_18_10_8_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.10.1.1
+      - rule_18.10.8.1.1
       - patch
       - antispoofing
 
-- name: "18.9.12.1 | PATCH | Ensure Allow Use of Camera is set to Disabled"
+- name: "18.10.10.1 | PATCH | Ensure Allow Use of Camera is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Camera
       name: AllowCamera
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_12_1
+      - win22cis_rule_18_10_10_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.12.1
+      - rule_18.10.10.1
       - patch
       - camera
 
-- name: "18.9.14.1 | PATCH | Ensure Turn off cloud consumer account state content is set to Enabled"
+- name: "18.10.12.1 | PATCH | Ensure Turn off cloud consumer account state content is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent
       name: DisableConsumerAccountStateContent
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_14_1
+      - win22cis_rule_18_10_12_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.14.1
+      - rule_18.10.12.1
       - patch
       - cloud
 
-- name: "18.9.14.2 | PATCH | Ensure Turn off Microsoft consumer experiences is set to Enabled"
+- name: "18.10.12.2 | PATCH | Ensure Turn off cloud optimized content is set to Enabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent
+      name: DisableCloudOptimizedContent
+      data: 1
+      type: dword
+  when:
+      - win22cis_rule_18_10_12_2
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.12.2
+      - patch
+      - cloud
+
+- name: "18.9.14.3 | PATCH | Ensure Turn off Microsoft consumer experiences is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Cloudcontent
       name: DisableWindowsConsumerFeatures
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_14_2
+      - win22cis_rule_18_9_14_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.14.2
+      - rule_18.9.14.3
       - patch
       - cloud
 
-- name: "18.9.15.1 | PATCH | Ensure Require pin for pairing is set to Enabled First Time OR Enabled Always"
+- name: "18.10.13.1 | PATCH | Ensure Require pin for pairing is set to Enabled First Time OR Enabled Always"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\Connect
       name: RequirePinForPairing
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_15_1
+      - win22cis_rule_18_10_13_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.15.1
+      - rule_18.10.13.1
       - patch
       - pin
 
-- name: "18.9.16.1 | PATCH | Ensure Do not display the password reveal button is set to Enabled"
+- name: "18.10.14.1 | PATCH | Ensure Do not display the password reveal button is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Credui
       name: DisablePasswordReveal
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_16_1
+      - win22cis_rule_18_10_14_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.16.1
+      - rule_18.10.14.1
       - patch
       - gui
 
-- name: "18.9.16.2 | PATCH | Ensure Enumerate administrator accounts on elevation is set to Disabled"
+- name: "18.10.14.2 | PATCH | Ensure Enumerate administrator accounts on elevation is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Credui
       name: EnumerateAdministrators
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_16_2
+      - win22cis_rule_18_10_14_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.16.2
+      - rule_18.10.14.2
       - patch
       - accounts
 
-- name: "18.9.17.1 | PATCH | Ensure Allow Diagnostic Data is set to Enabled: Diagnostic data off (not recommended) or Enabled: Send required diagnostic data"
+- name: "18.10.15.1 | PATCH | Ensure Allow Diagnostic Data is set to Enabled: Diagnostic data off (not recommended) or Enabled: Send required diagnostic data"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection
       name: AllowTelemetry
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_17_1
+      - win22cis_rule_18_10_15_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.1
+      - rule_18.10.15.1
       - patch
-      - diagnostrics
+      - datacollection
 
-- name: "18.9.17.2 | PATCH | Ensure Configure Authenticated Proxy usage for the Connected User Experience and Telemetry service is set to Enabled Disable Authenticated Proxy usage"
+- name: "18.10.15.2 | PATCH | Ensure Configure Authenticated Proxy usage for the Connected User Experience and Telemetry service is set to Enabled Disable Authenticated Proxy usage"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\DataCollection
       name: DisableEnterpriseAuthProxy
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_17_2
+      - win22cis_rule_18_10_15_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.17.2
+      - rule_18.10.15.2
       - patch
       - datacollection
 
-- name: "18.9.17.3 | PATCH | Ensure Disable OneSettings Downloads is set to Enabled"
+- name: "18.10.15.3 | PATCH | Ensure Disable OneSettings Downloads is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection
       name: DisableOneSettingsDownloads
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_17_3
+      - win22cis_rule_18_10_15_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.3
+      - rule_18.10.15.3
       - patch
       - onesettings
 
-- name: "18.9.17.4 | PATCH | Ensure Do not show feedback notifications is set to Enabled"
+- name: "18.10.15.4 | PATCH | Ensure Do not show feedback notifications is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Datacollection
       name: DoNotShowFeedbackNotifications
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_17_4
+      - win22cis_rule_18_10_15_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.4
+      - rule_18.10.15.4
       - patch
       - datacollection
 
-- name: "18.9.17.5 | PATCH | Ensure Enable OneSettings Auditing' is set to Enabled"
+- name: "18.10.15.5 | PATCH | Ensure Enable OneSettings Auditing' is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection
       name: EnableOneSettingsAuditing
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_17_5
+      - win22cis_rule_18_10_15_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.5
+      - rule_18.10.15.5
       - patch
       - datacollection
 
-- name: "18.9.17.6 | PATCH | Ensure Limit Diagnostic Log Collection is set to Enabled"
+- name: "18.10.15.6 | PATCH | Ensure Limit Diagnostic Log Collection is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection
       name: LimitDiagnosticLogCollection
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_17_6
+      - win22cis_rule_18_10_15_6
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.6
+      - rule_18.10.15.6
       - patch
       - datacollection
 
-- name: "18.9.17.7 | PATCH | Ensure Limit Dump Collection is set to Enabled"
+- name: "18.10.15.7 | PATCH | Ensure Limit Dump Collection is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection
       name: LimitDumpCollection
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_17_7
+      - win22cis_rule_18_10_15_7
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.7
+      - rule_18.10.15.7
       - patch
       - datacollection
 
-- name: "18.9.17.8 | PATCH | Ensure Toggle user control over Insider builds is set to Disabled"
+- name: "18.10.15.8 | PATCH | Ensure Toggle user control over Insider builds is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Previewbuilds
       name: AllowBuildPreview
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_17_8
+      - win22cis_rule_18_10_15_8
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.17.8
+      - rule_18.10.15.8
       - patch
+      - previewbuilds
 
-- name: "18.9.27.1.1 | PATCH | Ensure Application Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+- name: "18.10.17.1 | PATCH | Ensure Enable App Installer is set to Disabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows\AppInstaller
+      name: EnableAppInstaller
+      data: 0
+      type: dword
+  when:
+      - win22cis_rule_18_10_17_1
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.17.1
+      - patch
+      - appinstaller
+
+- name: "18.10.17.2 | PATCH | Ensure Enable App Installer Experimental Features is set to Disabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows\AppInstaller
+      name: EnableExperimentalFeatures
+      data: 0
+      type: dword
+  when:
+      - win22cis_rule_18_10_17_2
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.17.2
+      - patch
+      - appinstaller
+
+- name: "18.10.17.3 | PATCH | Ensure Enable App Installer Hash Override is set to Disabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows\AppInstaller
+      name: EnableHashOverride
+      data: 0
+      type: dword
+  when:
+      - win22cis_rule_18_10_17_3
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.17.3
+      - patch
+      - appinstaller
+
+- name: "18.10.17.4 | PATCH | Ensure Enable App Installer ms-appinstaller protocol is set to Disabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows\AppInstaller
+      name: EnableMSAppInstallerProtocol
+      data: 0
+      type: dword
+  when:
+      - win22cis_rule_18_10_17_4
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.17.4
+      - patch
+      - appinstaller
+
+- name: "18.10.26.1.1 | PATCH | Ensure Application Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application
       name: Retention
       data: 0
       type: string
   when:
-      - win22cis_rule_18_9_27_1_1
+      - win22cis_rule_18_10_26_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.1.1
+      - rule_18.10.26.1.1
       - patch
       - eventlog
 
-- name: "18.9.27.1.2 | PATCH | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater"
+- name: "18.10.26.1.2 | PATCH | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater"
   block:
-      - name: "18.9.27.1.2 | AUDIT | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check For Variable Standards."
+      - name: "18.10.26.1.2 | AUDIT | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
                 - "Warning!! You have an invalid file size set for win22cis_application_max_log_file_size please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when: win22cis_application_max_log_file_size < 32768
 
-      - name: "18.9.27.1.2 | AUDIT | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Warn Count."
+      - name: "18.10.26.1.2 | AUDIT | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Warn Count."
         ansible.builtin.import_tasks: warning_facts.yml
         vars:
-            warn_control_id: '18.9.27.1.2'
+            warn_control_id: '18.10.26.1.2'
         when: win22cis_application_max_log_file_size < 32768
 
-      - name: "18.9.27.1.2 | PATCH | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Set File Size."
+      - name: "18.10.26.1.2 | PATCH | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Set File Size."
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Application
             name: MaxSize
@@ -2151,45 +2227,45 @@
             type: dword
         when: win22cis_application_max_log_file_size >= 32768
   when:
-      - win22cis_rule_18_9_27_1_2
+      - win22cis_rule_18_10_26_1_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.1.2
+      - rule_18.10.26.1.2
       - patch
       - eventlog
 
-- name: "18.9.27.2.1 | PATCH | Ensure Security Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+- name: "18.10.26.2.1 | PATCH | Ensure Security Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Security
       name: Retention
       data: 0
       type: string
   when:
-      - win22cis_rule_18_9_27_2_1
+      - win22cis_rule_18_10_26_2_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.2.1
+      - rule_18.10.26.2.1
       - patch
       - eventlog
 
-- name: "18.9.27.2.2 | PATCH | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater"
+- name: "18.10.26.2.2 | PATCH | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater"
   block:
-      - name: "18.9.27.2.2 | AUDIT | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Warning Check For Variable Standards."
+      - name: "18.10.26.2.2 | AUDIT | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
                 - "Warning!! You have an invalid file size set for win22cis_security_max_log_file_size please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when: win22cis_security_max_log_file_size < 196608
 
-      - name: "18.9.27.2.2 | AUDIT | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Warn Count."
+      - name: "18.10.26.2.2 | AUDIT | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Warn Count."
         ansible.builtin.import_tasks: warning_facts.yml
         vars:
-            warn_control_id: '18.9.27.2.2'
+            warn_control_id: '18.10.26.2.2'
         when: win22cis_security_max_log_file_size < 196608
 
-      - name: "18.9.27.2.2 | PATCH | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Set Variable."
+      - name: "18.10.26.2.2 | PATCH | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Set Variable."
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Security
             name: MaxSize
@@ -2197,45 +2273,45 @@
             type: dword
         when: win22cis_security_max_log_file_size >= 196608
   when:
-      - win22cis_rule_18_9_27_2_2
+      - win22cis_rule_18_10_26_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.2.2
+      - rule_18.10.26.2.2
       - patch
       - eventlog
 
-- name: "18.9.27.3.1 | PATCH | Ensure Setup Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+- name: "18.10.26.3.1 | PATCH | Ensure Setup Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Setup
       name: Retention
       data: 0
       type: string
   when:
-      - win22cis_rule_18_9_27_3_1
+      - win22cis_rule_18_10_26_3_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.3.1
+      - rule_18.10.26.3.1
       - patch
       - eventlog
 
-- name: "18.9.27.3.2 | PATCH | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater"
+- name: "18.10.26.3.2 | PATCH | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater"
   block:
-      - name: "18.9.27.3.2 | AUDIT | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check For Variable Standards."
+      - name: "18.10.26.3.2 | AUDIT | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
                 - "Warning!! You have an invalid file size set for win22cis_setup_max_log_file_size please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when: win22cis_setup_max_log_file_size < 32768
 
-      - name: "18.9.27.3.2 | AUDIT | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Warn Count."
+      - name: "18.10.26.3.2 | AUDIT | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Warn Count."
         ansible.builtin.import_tasks: warning_facts.yml
         vars:
-            warn_control_id: '18.9.27.3.2'
+            warn_control_id: '18.10.26.3.2'
         when: win22cis_setup_max_log_file_size < 32768
 
-      - name: "18.9.27.3.2 | PATCH | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Set Variable."
+      - name: "18.10.26.3.2 | PATCH | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Set Variable."
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\Setup
             name: MaxSize
@@ -2243,45 +2319,45 @@
             type: dword
         when: win22cis_setup_max_log_file_size >= 32768
   when:
-      - win22cis_rule_18_9_27_3_2
+      - win22cis_rule_18_10_26_3_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.3.2
+      - rule_18.10.26.3.2
       - patch
       - eventlog
 
-- name: "18.9.27.4.1 | PATCH | Ensure System Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+- name: "18.10.26.4.1 | PATCH | Ensure System Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\System
       name: Retention
       data: 0
       type: string
   when:
-      - win22cis_rule_18_9_27_4_1
+      - win22cis_rule_18_10_26_4_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.4.1
+      - rule_18.10.26.4.1
       - patch
       - eventlog
 
-- name: "18.9.27.4.2 | PATCH | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater"
+- name: "18.10.26.4.2 | PATCH | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater"
   block:
-      - name: "18.9.27.4.2 | AUDIT | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check For Variable Standards."
+      - name: "18.10.26.4.2 | AUDIT | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
                 - "Warning!! You have an invalid file size set for win22cis_system_max_log_file_size please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when: win22cis_system_max_log_file_size < 32768
 
-      - name: "18.9.27.4.2 | AUDIT | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Warn Count."
+      - name: "18.10.26.4.2 | AUDIT | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Warn Count."
         ansible.builtin.import_tasks: warning_facts.yml
         vars:
-            warn_control_id: '18.9.27.4.2'
+            warn_control_id: '18.10.26.4.2'
         when: win22cis_system_max_log_file_size < 32768
 
-      - name: "18.9.27.4.2 | PATCH | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Set Variable."
+      - name: "18.10.26.4.2 | PATCH | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Set Variable."
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\Eventlog\System
             name: MaxSize
@@ -2289,150 +2365,150 @@
             type: dword
         when: win22cis_system_max_log_file_size >= 32768
   when:
-      - win22cis_rule_18_9_27_4_2
+      - win22cis_rule_18_10_26_4_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.27.4.2
+      - rule_18.10.26.4.2
       - patch
       - eventlog
 
-- name: "18.9.31.2 | PATCH | Ensure Turn off Data Execution Prevention for Explorer is set to Disabled"
+- name: "18.10.29.2 | PATCH | Ensure Turn off Data Execution Prevention for Explorer is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Explorer
       name: NoDataExecutionPrevention
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_31_2
+      - win22cis_rule_18_10_29_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.31.2
+      - rule_18.10.29.2
       - patch
       - dep
 
-- name: "18.9.31.3 | PATCH | Ensure Turn off heap termination on corruption is set to Disabled"
+- name: "18.10.29.3 | PATCH | Ensure Turn off heap termination on corruption is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Explorer
       name: NoHeapTerminationOnCorruption
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_31_3
+      - win22cis_rule_18_10_29_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.31.3
+      - rule_18.10.29.3
       - patch
       - heap
 
-- name: "18.9.31.4 | PATCH | Ensure Turn off shell protocol protected mode is set to Disabled"
+- name: "18.10.29.4 | PATCH | Ensure Turn off shell protocol protected mode is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
       name: PreXPSP2ShellProtocolBehavior
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_31_4
+      - win22cis_rule_18_10_29_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.31.4
+      - rule_18.10.29.4
       - patch
       - shell
 
-- name: "18.9.41.1 | PATCH | Ensure Turn off location is set to Enabled"
+- name: "18.10.37.1 | PATCH | Ensure Turn off location is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Locationandsensors
       name: DisableLocation
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_41_1
+      - win22cis_rule_18_10_37_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.41.1
+      - rule_18.10.37.1
       - patch
       - location
 
-- name: "18.9.45.1 | PATCH | Ensure Allow Message Service Cloud Sync is set to Disabled"
+- name: "18.10.41.1 | PATCH | Ensure Allow Message Service Cloud Sync is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Messaging
       name: AllowMessageSync
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_45_1
+      - win22cis_rule_18_10_41_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.45.1
+      - rule_18.10.41.1
       - patch
       - msc
 
-- name: "18.9.46.1 | PATCH | Ensure Block all consumer Microsoft account user authentication is set to Enabled"
+- name: "18.10.42.1 | PATCH | Ensure Block all consumer Microsoft account user authentication is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\MicrosoftAccount
       name: DisableUserAuth
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_46_1
+      - win22cis_rule_18_10_42_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.46.1
+      - rule_18.10.42.1
       - patch
       - account
 
-- name: "18.9.47.4.1 | PATCH | Ensure Configure local setting override for reporting to Microsoft MAPS is set to Disabled"
+- name: "18.10.43.5.1 | PATCH | Ensure Configure local setting override for reporting to Microsoft MAPS is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
       name: LocalSettingOverrideSpynetReporting
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_47_4_1
+      - win22cis_rule_18_10_43_5_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.4.1
+      - rule_18.10.43.5.1
       - patch
       - maps
 
-- name: "18.9.47.4.2 | PATCH | Ensure Join Microsoft MAPS is set to Disabled"
+- name: "18.10.43.5.2 | PATCH | Ensure Join Microsoft MAPS is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
       name: SpynetReporting
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_47_4_2
+      - win22cis_rule_18_10_43_5_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.47.4.2
+      - rule_18.10.43.5.2
       - patch
       - maps
 
-- name: "18.9.47.5.1.1  | PATCH | Ensure Configure Attack Surface Reduction rules is set to Enabled"
+- name: "18.10.43.6.1.1  | PATCH | Ensure Configure Attack Surface Reduction rules is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR
       name: ExploitGuard_ASR_Rules
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_47_5_1_1
+      - win22cis_rule_18_10_43_6_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.5.1.1
+      - rule_18.10.43.6.1.1
       - patch
       - defender
 
-- name: "18.9.47.5.1.2 | PATCH | Ensure Configure Attack Surface Reduction rules Set the state for each ASR rule is configured"
+- name: "18.10.43.6.1.2 | PATCH | Ensure Configure Attack Surface Reduction rules Set the state for each ASR rule is configured"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules
       name: "{{ item }}"
@@ -2452,381 +2528,426 @@
       - d4f940ab-401b-4efc-aadc-ad5f3c50688a
       - e6db77e5-3df2-4cf1-b95a-636979351e5b
   when:
-      - win22cis_rule_18_9_47_5_1_2
+      - win22cis_rule_18_10_43_6_1_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.5.1.2
+      - rule_18.10.43.6.1.2
       - patch
       - defender
 
-- name: "18.9.47.5.3.1 | PATCH | Ensure Prevent users and apps from accessing dangerous websites is set to Enabled Block"
+- name: "18.10.43.6.3.1 | PATCH | Ensure Prevent users and apps from accessing dangerous websites is set to Enabled Block"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Network Protection
       name: EnableNetworkProtection
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_47_5_3_1
+      - win22cis_rule_18_10_43_6_3_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.5.3.1
+      - rule_18.10.43.6.3.1
       - patch
       - defender
 
-- name: "18.9.47.6.1 | PATCH | (L2) Ensure 'Enable file hash computation feature' is set to 'Enabled'"
+- name: "18.10.43.7.1 | PATCH | (L2) Ensure Enable file hash computation feature is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\MpEngine
       name: EnableFileHashComputation
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_47_6_1
+      - win22cis_rule_18_10_43_7_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.47.6.1
+      - rule_18.10.43.7.1
       - patch
       - defender
 
-- name: "18.9.47.9.1 | PATCH | Ensure Scan all downloaded files and attachments is set to Enabled"
+- name: "18.10.43.10.1 | PATCH | Ensure Scan all downloaded files and attachments is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableIOAVProtection
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_47_9_1
+      - win22cis_rule_18_10_43_10_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.9.1
+      - rule_18.10.43.10.1
       - patch
       - defender
       - real_time_protection
 
-- name: "18.9.47.9.2 | PATCH | Ensure 'Turn off real-time protection' is set to 'Disabled'"
+- name: "18.10.43.10.2 | PATCH | Ensure 'Turn off real-time protection' is set to 'Disabled'"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableRealtimeMonitoring
       data: 1
       datatype: dword
   when:
-      - win22cis_rule_18_9_47_9_2
+      - win22cis_rule_18_10_43_10_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.9.2
+      - rule_18.10.43.10.2
       - patch
       - defender
       - real_time_protection
 
-- name: "18.9.47.9.3 | PATCH | Ensure Turn on behavior monitoring is set to Enabled"
+- name: "18.10.43.10.3  | PATCH | Ensure Turn on behavior monitoring is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableBehaviorMonitoring
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_47_9_3
+      - win22cis_rule_18_10_43_10_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.9.3
+      - rule_18.10.43.10.3
       - patch
       - defender
       - real_time_protection
 
-- name: "18.9.47.9.4 | PATCH | Ensure 'Turn on script scanning' is set to 'Enabled'"
+- name: "18.10.43.10.4 | PATCH | Ensure 'Turn on script scanning' is set to 'Enabled'"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection
       name: DisableScriptScanning
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_47_9_4
+      - win22cis_rule_18_10_43_10_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.9.4
+      - rule_18.10.43.10.4
       - patch
       - defender
       - real_time_protection
 
-- name: "18.9.47.11.1 | PATCH | Ensure Configure Watson events is set to Disabled"
+- name: "18.10.43.12.1 | PATCH | Ensure Configure Watson events is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Reporting
       name: DisableGenericRePorts
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_47_11_1
+      - win22cis_rule_18_10_43_12_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.47.11.1
+      - rule_18.10.43.12.1
       - patch
       - defender
 
-- name: "18.9.47.12.1 | PATCH | Ensure Scan removable drives is set to Enabled"
+- name: "18.10.43.13.1 | PATCH | Ensure Scan removable drives is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Scan
       name: DisableRemovableDriveScanning
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_47_12_1
+      - win22cis_rule_18_10_43_13_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.12.1
+      - rule_18.10.43.13.1
       - patch
       - defender
 
-- name: "18.9.47.12.2 | PATCH | Ensure Turn on e-mail scanning is set to Enabled"
+- name: "18.10.43.13.2  | PATCH | Ensure Turn on e-mail scanning is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender\Scan
       name: DisableEmailScanning
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_47_12_2
+      - win22cis_rule_18_10_43_13_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.12.2
+      - rule_18.10.43.13.2
       - patch
       - defender
 
-- name: "18.9.47.15 | PATCH | Ensure Configure detection for potentially unwanted applications is set to Enabled Block"
+- name: "18.10.43.16 | PATCH | Ensure Configure detection for potentially unwanted applications is set to Enabled Block"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender
       name: PUAProtection
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_47_15
+      - win22cis_rule_18_10_43_16
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.15
+      - rule_18.10.43.16
       - patch
       - defender
 
-- name: "18.9.47.16 | PATCH | Ensure Turn off Windows Defender AntiVirus is set to Disabled"
+- name: "18.10.43.17 | PATCH | Ensure Turn off Windows Defender AntiVirus is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender
       name: DisableAntiSpyware
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_47_16
+      - win22cis_rule_18_10_43_17
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.47.16
+      - rule_18.10.43.17
       - patch
       - defender
 
-- name: "18.9.58.1 | PATCH | Ensure Prevent the usage of OneDrive for file storage is set to Enabled"
+- name: "18.10.51.1 | PATCH | Ensure Prevent the usage of OneDrive for file storage is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Onedrive
       name: DisableFileSyncNGSC
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_58_1
+      - win22cis_rule_18_10_51_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.58.1
+      - rule_18.10.51.1
       - patch
       - onedrive
 
-- name: "18.9.64.1 | PATCH | (L2) Ensure 'Turn off Push To Install service' is set to 'Enabled'"
+- name: "18.10.56.1 | PATCH | (L2) Ensure 'Turn off Push To Install service' is set to 'Enabled'"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\PushToInstall
       name: DisablePushToInstall
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_64_1
+      - win22cis_rule_18_10_56_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.64.1
+      - rule_18.10.56.1
       - patch
       - pushtoinstall
 
-- name: "18.9.65.2.2 | PATCH | Ensure Do not allow passwords to be saved is set to Enabled"
+- name: "18.10.57.2.2 | PATCH | Ensure Do not allow passwords to be saved is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: DisablePasswordSaving
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_2_2
+      - win22cis_rule_18_10_57_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.2.2
+      - rule_18.10.57.2.2
       - patch
       - terminalservices
 
-- name: "18.9.65.3.2.1 | PATCH | Ensure Restrict Remote Desktop Services users to a single Remote Desktop Services session is set to Enabled"
+- name: "18.10.57.3.2.1 | PATCH | Ensure Restrict Remote Desktop Services users to a single Remote Desktop Services session is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fSingleSessionPerUser
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_2_1
+      - win22cis_rule_18_10_57_3_2_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.2.1
+      - rule_18.10.57.3.2.1
       - patch
       - terminalservices
 
-- name: "18.9.65.3.3.1 | PATCH | Ensure Do not allow COM port redirection is set to Enabled"
+- name: "18.10.57.3.3.1 | PATCH | Ensure Allow UI Automation redirection is set to Disabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
+      name: EnableUiaRedirection
+      data: 0
+      type: dword
+  when:
+      - win22cis_rule_18.10.57.3.3.1
+  tags:
+      - level2-domaincontroller
+      - level2-memberserver
+      - rule_18.10.57.3.3.1
+      - patch
+      - terminalservices
+
+- name: "18.10.57.3.3.2 | PATCH | Ensure Do not allow COM port redirection is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fDisableCcm
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_3_1
+      - win22cis_rule_18_10_57_3_3_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.3.1
+      - rule_18.10.57.3.3.2
       - patch
       - terminalservices
 
-- name: "18.9.65.3.3.2 | PATCH | Ensure Do not allow drive redirection is set to Enabled"
+- name: "18.10.57.3.3.3 | PATCH | Ensure Do not allow drive redirection is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fDisableCdm
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_3_2
+      - win22cis_rule_18_10_57_3_3_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.3.2
+      - rule_18.10.57.3.3.3
       - patch
       - terminalservices
 
-- name: "18.9.65.3.3.3 | PATCH | Ensure Do not allow LPT port redirection is set to Enabled"
+- name: "18.10.57.3.3.4 | PATCH | Ensure Do not allow location redirection is set to Enabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
+      name: fDisableLocationRedir
+      data: 1
+      type: dword
+  when:
+      - win22cis_rule_18.10.57.3.3.4
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.57.3.3.4
+      - patch
+      - terminalservices
+
+- name: "18.10.57.3.3.5 | PATCH | Ensure Do not allow LPT port redirection is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fDisableLPT
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_3_3
+      - win22cis_rule_18_10_57_3_3_5
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.3.3
+      - rule_18.10.57.3.3.5
       - patch
       - terminalservices
 
-- name: "18.9.65.3.3.4 | PATCH | Ensure Do not allow supported Plug and Play device redirection is set to Enabled"
+- name: "18.10.57.3.3.6 | PATCH | Ensure Do not allow supported Plug and Play device redirection is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fDisablePNPRedir
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_3_4
+      - win22cis_rule_18_10_57_3_3_6
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.3.4
+      - rule_18.10.57.3.3.6
       - patch
       - terminalservicess
 
-- name: "18.9.65.3.9.1 | PATCH | Ensure Always prompt for password upon connection is set to Enabled"
+- name: "18.10.57.3.3.7 | PATCH | Ensure Do not allow WebAuthn redirection is set to Enabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
+      name: fDisableWebAuthn
+      data: 1
+      type: dword
+  when:
+      - win22cis_rule_18_10_57_3_3_6
+  tags:
+      - level2-domaincontroller
+      - level2-memberserver
+      - rule_18.10.57.3.3.7
+      - patch
+      - terminalservicess
+
+- name: "18.10.57.3.9.1 | PATCH | Ensure Always prompt for password upon connection is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fPromptForPassword
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_9_1
+      - win22cis_rule_18_10_57_3_9_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.1
+      - rule_18.10.57.3.9.1
       - patch
       - terminalservices
 
-- name: "18.9.65.3.9.2 | PATCH | Ensure Require secure RPC communication is set to Enabled"
+- name: "18.10.57.3.9.2 | PATCH | Ensure Require secure RPC communication is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: fEncryptRPCTraffic
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_9_2
+      - win22cis_rule_18_10_57_3_9_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.2
+      - rule_18.10.57.3.9.2
       - patch
       - terminalservices
 
-- name: "18.9.65.3.9.3 | PATCH | Ensure Require use of specific security layer for remote RDP connections is set to Enabled SSL"
+- name: "18.10.57.3.9.3 | PATCH | Ensure Require use of specific security layer for remote RDP connections is set to Enabled SSL"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: SecurityLayer
       data: 2
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_9_3
+      - win22cis_rule_18_10_57_3_9_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.3
+      - rule_18.10.57.3.9.3
       - patch
       - terminalservices
 
-- name: "18.9.65.3.9.4 | PATCH | Ensure Require user authentication for remote connections by using Network Level Authentication is set to Enabled"
+- name: "18.10.57.3.9.4 | PATCH | Ensure Require user authentication for remote connections by using Network Level Authentication is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: UserAuthentication
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_9_4
+      - win22cis_rule_18_10_57_3_9_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.4
+      - rule_18.10.57.3.9.4
       - patch
       - terminalservices
 
-- name: "18.9.65.3.9.5 | PATCH | Ensure Set client connection encryption level is set to Enabled High Level"
+- name: "18.10.57.3.9.5 | PATCH | Ensure Set client connection encryption level is set to Enabled High Level"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: MinEncryptionLevel
       data: 3
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_9_5
+      - win22cis_rule_18_10_57_3_9_5
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.9.5
+      - rule_18.10.57.3.9.5
       - patch
       - terminalservices
 
-- name: "18.9.65.3.10.1 | PATCH | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less"
+- name: "18.10.57.3.10.1 | PATCH | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less"
   block:
-      - name: "18.9.65.3.10.1 | AUDIT | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | Warning Check For Variable Standards."
+      - name: "18.10.57.3.10.1 | AUDIT | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | Warning Check For Variable Standards."
         ansible.builtin.debug:
             msg:
                 - "Warning!! You have an invalid time set for win22cis_idle_rdp_session_disconnect_time please read"
@@ -2835,15 +2956,15 @@
             - win22cis_idle_rdp_session_disconnect_time == 0 or
               win22cis_idle_rdp_session_disconnect_time > 900000
 
-      - name: "18.9.65.3.10.1 | AUDIT | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | Warn Count."
+      - name: "18.10.57.3.10.1 | AUDIT | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | Warn Count."
         ansible.builtin.import_tasks: warning_facts.yml
         vars:
-            warn_control_id: '18.9.65.3.10.1'
+            warn_control_id: '18.10.57.3.10.1'
         when:
             - win22cis_idle_rdp_session_disconnect_time == 0 or
               win22cis_idle_rdp_session_disconnect_time > 900000
 
-      - name: "18.9.65.3.10.1 | PATCH | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | Set Variable."
+      - name: "18.10.57.3.10.1 | PATCH | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | Set Variable."
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
             name: MaxIdleTime
@@ -2855,526 +2976,556 @@
               win22cis_idle_rdp_session_disconnect_time == 600000 or
               win22cis_idle_rdp_session_disconnect_time == 900000
   when:
-      - win22cis_rule_18_9_65_3_10_1
+      - win22cis_rule_18_10_57_3_10_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.10.1
+      - rule_18.10.57.3.10.1
       - patch
       - terminalservices
 
-- name: "18.9.65.3.10.2 | PATCH | Ensure Set time limit for disconnected sessions is set to Enabled 1 minute"
+- name: "18.10.57.3.10.2 | PATCH | Ensure Set time limit for disconnected sessions is set to Enabled 1 minute"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: MaxDisconnectionTime
       data: 60000
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_10_2
+      - win22cis_rule_18_10_57_3_10_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.65.3.10.2
+      - rule_18.10.57.3.10.2
       - patch
       - terminalservices
 
-- name: "18.9.65.3.11.1 | PATCH | Ensure Do not delete temp folders upon exit is set to Disabled"
+- name: "18.10.57.3.11.1 | PATCH | Ensure Do not delete temp folders upon exit is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: DeleteTempDirsOnExit
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_11_1
+      - win22cis_rule_18_10_57_3_11_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.11.1
+      - rule_18.10.57.3.11.1
       - patch
       - terminalservices
 
-- name: "18.9.65.3.11.2 | PATCH | Ensure Do not use temporary folders per session is set to Disabled"
+- name: "18.10.57.3.11.2 | PATCH | Ensure Do not use temporary folders per session is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Terminal Services
       name: PerSessionTempDir
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_65_3_11_2
+      - win22cis_rule_18_10_57_3_11_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.65.3.11.2
+      - rule_18.10.57.3.11.2
       - patch
       - terminalservices
 
-- name: "18.9.66.1 | PATCH | Ensure Prevent downloading of enclosures is set to Enabled"
+- name: "18.10.58.1 | PATCH | Ensure Prevent downloading of enclosures is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Internet Explorer\Feeds
       name: DisableEnclosureDownload
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_66_1
+      - win22cis_rule_18_10_58_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.66.1
+      - rule_18.10.58.1
       - patch
       - enclosure
 
-- name: "18.9.67.2 | PATCH | Ensure Allow Cloud Search is set to Enabled Disable Cloud Search"
+- name: "18.10.59.2 | PATCH | Ensure Allow Cloud Search is set to Enabled Disable Cloud Search"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windows Search
       name: AllowCloudSearch
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_67_2
+      - win22cis_rule_18_10_59_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.67.2
+      - rule_18.10.59.2
       - patch
       - search
       - cloud
 
-- name: "18.9.67.3 | PATCH | Ensure Allow indexing of encrypted files is set to Disabled"
+- name: "18.10.59.3 | PATCH | Ensure Allow indexing of encrypted files is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windows Search
       name: AllowIndexingEncryptedStoresOrItems
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_67_3
+      - win22cis_rule_18_10_59_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.67.3
+      - rule_18.10.59.3
       - patch
       - search
       - encrypted
 
-- name: "18.9.72.1 | PATCH | Ensure Turn off KMS Client Online AVS Validation is set to Enabled"
+- name: "18.10.59.4 | PATCH | Ensure Allow search highlights is set to Disabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows\Windows Search
+      name: EnableDynamicContentInWSB
+      data: 0
+      type: dword
+  when:
+      - win22cis_rule_18_10_59_4
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.59.4
+      - patch
+      - search
+
+- name: "18.10.63.1 | PATCH | Ensure Turn off KMS Client Online AVS Validation is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Currentversion\Software Protection Platform
       name: NoGenTicket
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_72_1
+      - win22cis_rule_18_10_63_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.72.1
+      - rule_18.10.63.1
       - patch
       - kms
 
-- name: "18.9.85.1.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass"
+- name: "18.10.76.2.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass"
   block:
-      - name: "18.9.85.1.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass | EnableSmartScreen"
+      - name: "18.10.76.2.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass | EnableSmartScreen"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\System
             name: EnableSmartScreen
             data: 1
             type: dword
 
-      - name: "18.9.85.1.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass | ShellSmartScreenLevel"
+      - name: "18.10.76.2.1 | PATCH | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass | ShellSmartScreenLevel"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\System
             name: ShellSmartScreenLevel
             data: Block
             type: string
   when:
-      - win22cis_rule_18_9_85_1_1
+      - win22cis_rule_18_10_76_2_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.85.1.1
+      - rule_18.10.76.2.1
       - patch
       - defender
 
-- name: "18.9.89.1 | PATCH | Ensure Allow suggested apps in Windows Ink Workspace is set to Disabled"
+- name: "18.10.80.1 | PATCH | Ensure Allow suggested apps in Windows Ink Workspace is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\WindowsInkWorkspace
       name: AllowSuggestedAppsInWindowsInkWorkspace
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_89_1
+      - win22cis_rule_18_10_80_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.89.1
+      - rule_18.10.80.1
       - patch
       - wik
 
-- name: "18.9.89.2 | PATCH | Ensure Allow Windows Ink Workspace is set to Enabled On but disallow access above lock OR Disabled but not Enabled On"
+- name: "18.10.80.2 | PATCH | Ensure Allow Windows Ink Workspace is set to Enabled On but disallow access above lock OR Disabled but not Enabled On"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\WindowsInkWorkspace
       name: AllowWindowsInkWorkspace
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_89_2
+      - win22cis_rule_18_10_80_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.89.2
+      - rule_18.10.80.2
       - patch
       - wik
 
-- name: "18.9.90.1 | PATCH | Ensure Allow user control over installs is set to Disabled"
+- name: "18.10.81.1 | PATCH | Ensure Allow user control over installs is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Installer
       name: EnableUserControl
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_90_1
+      - win22cis_rule_18_10_81_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.90.1
+      - rule_18.10.81.1
       - patch
 
-- name: "18.9.90.2 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
+- name: "18.10.81.2 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Installer
       name: AlwaysInstallElevated
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_90_2
+      - win22cis_rule_18_10_81_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.90.2
+      - rule_18.10.81.2
       - patch
 
-- name: "18.9.90.3 | PATCH | Ensure Prevent Internet Explorer security prompt for Windows Installer scripts is set to Disabled"
+- name: "18.10.81.3 | PATCH | Ensure Prevent Internet Explorer security prompt for Windows Installer scripts is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Installer
       name: SafeForScripting
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_90_3
+      - win22cis_rule_18_10_81_3
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.90.3
+      - rule_18.10.81.3
       - patch
       - ie
 
-- name: "18.9.91.1 | PATCH | Ensure Sign-in last interactive user automatically after a system-initiated restart is set to Disabled"
+- name: "18.10.82.1 | PATCH | Ensure Enable MPR notifications for the system is set to Disabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      name: EnableMPR
+      data: 1
+      type: dword
+  when:
+      - win22cis_rule_18_10_82_1
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.82.1
+      - patch
+      - logon
+
+- name: "18.10.82.2 | PATCH | Ensure Sign-in last interactive user automatically after a system-initiated restart is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: DisableAutomaticRestartSignOn
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_91_1
+      - win22cis_rule_18_10_82_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.91.1
+      - rule_18.10.82.2
       - patch
       - logon
 
-- name: "19.9.100.1 | PATCH | Ensure Turn on PowerShell Script Block Logging is set to Enabled"
+- name: "18.10.87.1 | PATCH | Ensure Turn on PowerShell Script Block Logging is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
       name: EnableScriptBlockLogging
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_100_1
+      - win22cis_rule_18_10_87_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.100.1
+      - rule_18.10.87.1
       - patch
       - powershell
 
-- name: "18.9.100.2 | PATCH | Ensure Turn on PowerShell Transcription is set to Disabled"
+- name: "18.10.87.2 | PATCH | Ensure Turn on PowerShell Transcription is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Powershell\Transcription
       name: EnableTranscripting
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_100_2
+      - win22cis_rule_18_10_87_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.100.2
+      - rule_18.10.87.2
       - patch
       - powershell
 
-- name: "18.9.102.1.1 | PATCH | Ensure Allow Basic authentication is set to Disabled"
+- name: "18.10.89.1.1 | PATCH | Ensure Allow Basic authentication is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Client
       name: AllowBasic
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_102_1_1
+      - win22cis_rule_18_10_89_1_1
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.1.1
+      - rule_18.10.89.1.1
       - patch
       - winrm
 
-- name: "18.9.102.1.2 | PATCH | Ensure Allow unencrypted traffic is set to Disabled"
+- name: "18.10.89.1.2 | PATCH | Ensure Allow unencrypted traffic is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Client
       name: AllowUnencryptedTraffic
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_102_1_2
+      - win22cis_rule_18_10_89_1_2
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.1.2
+      - rule_18.10.89.1.2
       - patch
       - winrm
 
-- name: "18.9.102.1.3 | PATCH | Ensure Disallow Digest authentication is set to Enabled"
+- name: "18.10.89.1.3 | PATCH | Ensure Disallow Digest authentication is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Client
       name: AllowDigest
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_102_1_3
+      - win22cis_rule_18_10_89_1_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.1.3
+      - rule_18.10.89.1.3
       - patch
       - winrm
 
-- name: "18.9.102.2.1 | PATCH | Ensure Allow Basic authentication is set to Disabled"
+- name: "18.10.89.2.1 | PATCH | Ensure Allow Basic authentication is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service
       name: AllowBasic
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_102_2_1
+      - win22cis_rule_18_10_89_2_1
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.2.1
+      - rule_18.10.89.2.1
       - patch
       - winrm
 
 # This control will have to be set to Enabled (1) to allow for continued remote management via Ansible following machine restart
-- name: "18.9.102.2.2 | PATCH | Ensure Allow remote server management through WinRM is set to Disabled"
+- name: "18.10.89.2.2 | PATCH | Ensure Allow remote server management through WinRM is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service
       name: AllowAutoConfig
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_102_2_2
+      - win22cis_rule_18_10_89_2_2
       - not win_skip_for_test
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.102.2.2
+      - rule_18.10.89.2.2
       - patch
       - winrm
 
-- name: "18.9.102.2.3 | PATCH | Ensure Allow unencrypted traffic is set to Disabled"
+- name: "18.10.89.2.3 | PATCH | Ensure Allow unencrypted traffic is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service
       name: AllowUnencryptedTraffic
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_102_2_3
+      - win22cis_rule_18_10_89_2_3
       - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.2.3
+      - rule_18.10.89.2.3
       - patch
       - winrm
       - encryption
 
-- name: "18.9.102.2.4 | PATCH | Ensure Disallow WinRM from storing RunAs credentials is set to Enabled"
+- name: "18.10.89.2.4 | PATCH | Ensure Disallow WinRM from storing RunAs credentials is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service
       name: DisableRunAs
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_102_2_4
+      - win22cis_rule_18_10_89_2_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.2.4
+      - rule_18.10.89.2.4
       - patch
       - winrm
 
-- name: "18.9.103.1 | PATCH | Ensure Allow Remote Shell Access is set to Disabled"
+- name: "18.10.90.1 | PATCH | Ensure Allow Remote Shell Access is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service\Winrs
       name: AllowRemoteShellAccess
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_103_1
+      - win22cis_rule_18_10_90_1
       - not win_skip_for_test
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_18.9.103.1
+      - rule_18.10.90.1
       - patch
       - winrm
 
-- name: "18.9.105.2.1 | PATCH | Ensure Prevent users from modifying settings is set to Enabled"
+- name: "18.10.92.2.1 | PATCH | Ensure Prevent users from modifying settings is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Defender Security Center\App and Browser protection
       name: DisallowExploitProtectionOverride
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_9_105_2_1
+      - win22cis_rule_18_10_92_2_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.105.2.1
+      - rule_18.10.92.2.1
       - patch
       - accounts
 
-- name: "18.9.108.1.1 | PATCH | Ensure No auto-restart with logged on users for scheduled automatic updates installations is set to Disabled"
+- name: "18.10.93.1.1 | PATCH | Ensure No auto-restart with logged on users for scheduled automatic updates installations is set to Disabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windowsupdate\Au
       name: NoAutoRebootWithLoggedOnUsers
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_108_1_1
+      - win22cis_rule_18_10_93_1_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.1.1
+      - rule_18.10.93.1.1
       - patch
       - winupdate
 
-- name: "18.9.108.2.1 | PATCH | Ensure Configure Automatic Updates is set to Enabled"
+- name: "18.10.93.2.1 | PATCH | Ensure Configure Automatic Updates is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windowsupdate\Au
       name: NoAutoUpdate
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_108_2_1
+      - win22cis_rule_18_10_93_2_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.2.1
+      - rule_18.10.93.2.1
       - patch
       - winupdate
 
-- name: "18.9.108.2.2 | PATCH | Ensure Configure Automatic Updates Scheduled install day is set to 0 - Every day"
+- name: "18.10.93.2.2 | PATCH | Ensure Configure Automatic Updates Scheduled install day is set to 0 - Every day"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Windowsupdate\Au
       name: ScheduledInstallDay
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_9_108_2_2
+      - win22cis_rule_18_10_93_2_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.2.2
+      - rule_18.10.93.2.2
       - patch
       - winupdate
 
-- name: "18.9.108.4.1 | PATCH | Ensure Manage preview builds is set to Enabled Disable preview builds"
+- name: "18.10.93.4.1 | PATCH | Ensure Manage preview builds is set to Enabled Disable preview builds"
   block:
-      - name: "18.9.108.4.1 | PATCH | Ensure Manage preview builds is set to Enabled Disable preview builds | ManagePreviewBuilds"
+      - name: "18.10.93.4.1 | PATCH | Ensure Manage preview builds is set to Enabled Disable preview builds | ManagePreviewBuilds"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
             name: ManagePreviewBuilds
             data: 1
             type: dword
 
-      - name: "18.9.108.4.1 | PATCH | Ensure Manage preview builds is set to Enabled Disable preview builds | ManagePreviewBuilds"
+      - name: "18.10.93.4.1 | PATCH | Ensure Manage preview builds is set to Enabled Disable preview builds | ManagePreviewBuilds"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
             name: ManagePreviewBuildsPolicyValue
             data: 0
             type: dword
   when:
-      - win22cis_rule_18_9_108_4_1
+      - win22cis_rule_18_10_93_4_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.102.1.1
+      - rule_18.10.93.4.1
       - patch
       - winupdate
 
-- name: "18.9.108.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days'"
+- name: "18.10.93.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days'"
   block:
-      - name: "18.9.108.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | DeferFeatureUpdates"
+      - name: "18.10.93.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | DeferFeatureUpdates"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
             name: DeferFeatureUpdates
             data: 1
             type: dword
 
-      - name: "18.9.108.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | DeferFeatureUpdatesPeriodInDays"
+      - name: "18.10.93.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | DeferFeatureUpdatesPeriodInDays"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
             name: DeferFeatureUpdatesPeriodInDays
             data: 180
             type: dword
 
-      - name: "18.9.108.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | BranchReadinessLevel"
+      - name: "18.10.93.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | BranchReadinessLevel"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
             name: BranchReadinessLevel
             data: 16
             type: dword
   when:
-      - win22cis_rule_18_9_108_4_2
+      - win22cis_rule_18_10_93_4_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.4.2
+      - rule_18.10.93.4.2
       - patch
       - winupdate
 
-- name: "18.9.108.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days"
+- name: "18.10.93.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days"
   block:
-      - name: "18.9.108.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days | DeferQualityUpdates"
+      - name: "18.10.93.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days | DeferQualityUpdates"
         ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate
             name: DeferQualityUpdates
             data: 1
             type: dword
 
-      - name: "18.9.108.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days | DeferQualityUpdatesPeriodInDays"
+      - name: "18.10.93.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days | DeferQualityUpdatesPeriodInDays"
         ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate
             name: DeferQualityUpdatesPeriodInDays
             data: 0
             type: dword
   when:
-      - win22cis_rule_18_9_108_4_3
+      - win22cis_rule_18_10_93_4_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.9.108.4.3
+      - rule_18.10.93.4.3
       - patch
       - winupdate

@@ -191,6 +191,54 @@
       - patch
       - antivirus
 
+- name: "19.7.7.1 | PATCH | Ensure Notify antivirus programs when opening attachments is set to Enabled"
+  block:
+      - name: "19.7.7.1 | PATCH | Ensure Notify antivirus programs when opening attachments is set to Enabled"
+        ansible.windows.win_regedit:
+            path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
+            name: ConfigureWindowsSpotlight
+            data: 3
+            type: dword
+
+      - name: "19.7.7.1 | PATCH | Ensure Notify antivirus programs when opening attachments is set to Enabled"
+        ansible.windows.win_regedit:
+            path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
+            name: ConfigureWindowsSpotlight
+            data: 3
+            type: dword
+  when:
+      - win22cis_rule_19_7_7_1
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_19.7.7.1
+      - patch
+      - CloudContent
+
+- name: "19.7.7.2 | PATCH | Ensure Do not suggest third-party content in Windows spotlight is set to Enabled"
+  block:
+      - name: "19.7.7.2 | PATCH | Ensure Do not suggest third-party content in Windows spotlight is set to Enabled"
+        ansible.windows.win_regedit:
+            path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
+            name: DisableThirdPartySuggestions
+            data: 3
+            type: dword
+
+      - name: "19.7.7.2 | PATCH | Ensure Do not suggest third-party content in Windows spotlight is set to Enabled"
+        ansible.windows.win_regedit:
+            path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
+            name: DisableThirdPartySuggestions
+            data: 3
+            type: dword
+  when:
+      - win22cis_rule_19_7_7_2
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_19.7.7.2
+      - patch
+      - CloudContent
+
 - name: "19.7.8.1 | PATCH | Ensure Configure Windows spotlight on lock screen is set to Disabled"
   block:
       - name: "19.7.8.1 | PATCH | Ensure Configure Windows spotlight on lock screen is set to Disabled"

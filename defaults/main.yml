@@ -417,7 +417,7 @@ win22cis_rule_18_9_17_8: true
 win22cis_rule_18_9_27_1_1: true
 win22cis_rule_18_9_27_1_2: true
 win22cis_rule_18_9_27_2_1: true
-win22cis_rule_18_9_27_2_2: true
+win22cis_rule_18_10_26_2_2: true
 win22cis_rule_18_9_27_3_1: true
 win22cis_rule_18_9_27_3_2: true
 win22cis_rule_18_9_27_4_1: true
@@ -781,40 +781,40 @@ win22cis_sam_ng_key_roc: 1
 # To conform to CIS standards this value should be 1 or 2
 win22cis_require_pin_pairing: 1
 
-# 18.9.17.1
+# 18.10.17.1
 # win22cis_diag_data is the value for the Allow Diagnostic Data registry key
 # To confrom to CIS standards this value should be a 0 or 1
 win22cis_diag_data: 0
 
-# 18.9.27.1.2
+# 18.10.26.1.2
 # win22cis_elm_applog_max_size is the max size of the Event Log Manager Application logs can become, in KB
 # To conform to CIS stadnards this value should be 32768 or greater
 win22cis_elm_applog_max_size: 65538
 
-# 18.9.27.2.2
+# 18.10.26.2.2
 # win22cis_elm_seclog_max_size is the max size of the Event Log Manager Security logs can become, in KB
 # To confrom to CIS standards this value should be 196608 or greater
 win22cis_elm_seclog_max_size: 196608
 
-# 18.9.27.1.2
+# 18.10.26.1.2
 # win22cis_application_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size can be
 # configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.
 # The recommended state for this setting is: Enabled: 32,768 or greater
 win22cis_application_max_log_file_size: 32768
 
-# 18.9.27.2.2
+# 18.10.26.2.2
 # win22cis_security_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size can
 # be configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.
 # The recommended state for this setting is: Enabled: 196,608 or greater.
 win22cis_security_max_log_file_size: 196608
 
-# 18.9.27.3.2
+# 18.10.26.3.2
 # win22cis_setup_max_log_file_size is the setting specifies the maximum size of the log file in kilobytes. The maximum log file size can be
 # configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.#
 # The recommended state for this setting is: Enabled: 32,768 or greater.
 win22cis_setup_max_log_file_size: 32768
 
-# 18.9.27.4.2
+# 18.10.26.4.2
 # win22cis_system_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size
 # can be configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.
 # The recommended state for this setting is: Enabled: 32,768 or greater.
