@@ -2772,7 +2772,7 @@
       data: 0
       type: dword
   when:
-      - win22cis_rule_18.10.57.3.3.1
+      - win22cis_rule_18_10_57_3_3_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
@@ -2817,7 +2817,7 @@
       data: 1
       type: dword
   when:
-      - win22cis_rule_18.10.57.3.3.4
+      - win22cis_rule_18_10_57_3_3_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
