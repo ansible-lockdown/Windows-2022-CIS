@@ -191,20 +191,20 @@
       - patch
       - antivirus
 
-- name: "19.7.7.1 | PATCH | Ensure Notify antivirus programs when opening attachments is set to Enabled"
+- name: "19.7.7.1 | PATCH | Ensure Configure Windows spotlight on lock screen is set to Disabled"
   block:
-      - name: "19.7.7.1 | PATCH | Ensure Notify antivirus programs when opening attachments is set to Enabled"
+      - name: "19.7.7.1 | PATCH | Ensure Configure Windows spotlight on lock screen is set to Disabled"
         ansible.windows.win_regedit:
             path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
             name: ConfigureWindowsSpotlight
-            data: 3
+            data: 2
             type: dword
 
-      - name: "19.7.7.1 | PATCH | Ensure Notify antivirus programs when opening attachments is set to Enabled"
+      - name: "19.7.7.1 | PATCH | Ensure Configure Windows spotlight on lock screen is set to Disabled"
         ansible.windows.win_regedit:
             path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
             name: ConfigureWindowsSpotlight
-            data: 3
+            data: 2
             type: dword
   when:
       - win22cis_rule_19_7_7_1
@@ -213,7 +213,7 @@
       - level1-memberserver
       - rule_19.7.7.1
       - patch
-      - CloudContent
+      - cloudcontent
 
 - name: "19.7.7.2 | PATCH | Ensure Do not suggest third-party content in Windows spotlight is set to Enabled"
   block:
@@ -221,14 +221,14 @@
         ansible.windows.win_regedit:
             path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
             name: DisableThirdPartySuggestions
-            data: 3
+            data: 1
             type: dword
 
       - name: "19.7.7.2 | PATCH | Ensure Do not suggest third-party content in Windows spotlight is set to Enabled"
         ansible.windows.win_regedit:
             path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
             name: DisableThirdPartySuggestions
-            data: 3
+            data: 1
             type: dword
   when:
       - win22cis_rule_19_7_7_2
@@ -237,188 +237,149 @@
       - level1-memberserver
       - rule_19.7.7.2
       - patch
-      - CloudContent
+      - cloudcontent
 
-- name: "19.7.8.1 | PATCH | Ensure Configure Windows spotlight on lock screen is set to Disabled"
+- name: "19.7.7.3 | PATCH | Ensure Do not use diagnostic data for tailored experiences is set to Enabled"
   block:
-      - name: "19.7.8.1 | PATCH | Ensure Configure Windows spotlight on lock screen is set to Disabled"
-        ansible.windows.win_regedit:
-            path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
-            name: ConfigureWindowsSpotlight
-            data: 2
-            type: dword
-
-      - name: "19.7.8.1 | PATCH | Ensure Configure Windows spotlight on lock screen is set to Disabled"
-        ansible.windows.win_regedit:
-            path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
-            name: ConfigureWindowsSpotlight
-            data: 2
-            type: dword
-  when:
-      - win22cis_rule_19_7_8_1
-  tags:
-      - level1-domaincontroller
-      - level1-memberserver
-      - rule_19.7.8.1
-      - patch
-      - spotlight
-
-- name: "19.7.8.2 | PATCH | Ensure Do not suggest third-party content in Windows spotlight is set to Enabled"
-  block:
-      - name: "19.7.8.2 | PATCH | Ensure Do not suggest third-party content in Windows spotlight is set to Enabled"
-        ansible.windows.win_regedit:
-            path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
-            name: DisableThirdPartySuggestions
-            data: 1
-            type: dword
-
-      - name: "19.7.8.2 | PATCH | Ensure Do not suggest third-party content in Windows spotlight is set to Enabled"
-        ansible.windows.win_regedit:
-            path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
-            name: DisableThirdPartySuggestions
-            data: 1
-            type: dword
-  when:
-      - win22cis_rule_19_7_8_2
-  tags:
-      - level1-domaincontroller
-      - level1-memberserver
-      - rule_19.7.8.2
-      - patch
-      - spotlight
-
-- name: "19.7.8.3 | PATCH | Ensure Do not use diagnostic data for tailored experiences is set to Enabled"
-  block:
-      - name: "19.7.8.3 | PATCH | Ensure Do not use diagnostic data for tailored experiences is set to Enabled"
+      - name: "19.7.7.3 | PATCH | Ensure Do not use diagnostic data for tailored experiences is set to Enabled"
         ansible.windows.win_regedit:
             path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
             name: DisableTailoredExperiencesWithDiagnosticData
             data: 1
             type: dword
 
-      - name: "19.7.8.3 | PATCH | Ensure Do not use diagnostic data for tailored experiences is set to Enabled"
+      - name: "19.7.7.3 | PATCH | Ensure Do not use diagnostic data for tailored experiences is set to Enabled"
         ansible.windows.win_regedit:
             path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
             name: DisableTailoredExperiencesWithDiagnosticData
             data: 1
             type: dword
   when:
-      - win22cis_rule_19_7_8_3
+      - win22cis_rule_19_7_7_3
   tags:
-      - level2-domaincontroller
-      - level2-memberserver
-      - rule_19.7.8.3
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_19.7.7.3
       - patch
-      - tailoredexperiences
+      - cloudcontent
 
-- name: "19.7.8.4 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
+- name: "19.7.7.4 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
   block:
-      - name: "19.7.8.4 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
+      - name: "19.7.7.4 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
         ansible.windows.win_regedit:
             path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
             name: DisableWindowsSpotlightFeatures
             data: 1
             type: dword
 
-      - name: "19.7.8.4 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
+      - name: "19.7.7.4 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
         ansible.windows.win_regedit:
             path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
             name: DisableWindowsSpotlightFeatures
             data: 1
             type: dword
   when:
-      - win22cis_rule_19_7_8_4
-  tags:
-      - level2-domaincontroller
-      - level2-memberserver
-      - rule_19.7.8.4
-      - patch
-      - spotlight
-
-- name: "19.7.8.5 | PATCH | Ensure Turn off Spotlight collection on Desktop is set to Enabled"
-  ansible.windows.win_regedit:
-      path: HKCU:\SOFTWARE\Policies\Microsoft\Windows\CloudContent
-      name: DisableSpotlightCollectionOnDesktop
-      data: 1
-      type: dword
-  when:
-      - win22cis_rule_19_7_8_5
+      - win22cis_rule_19_7_7_4
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_19.7.8.4
+      - rule_19.7.7.4
       - patch
-      - spotlight
+      - cloudcontent
 
-- name: "19.7.28.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
+- name: "19.7.7.5 | PATCH | Ensure Turn off Spotlight collection on Desktop is set to Enabled"
   block:
-      - name: "19.7.28.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
+      - name: "19.7.7.5 | PATCH | Ensure Turn off Spotlight collection on Desktop is set to Enabled"
+        ansible.windows.win_regedit:
+            path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\CloudContent
+            name: DisableSpotlightCollectionOnDesktop
+            data: 1
+            type: dword
+
+      - name: "19.7.7.5 | PATCH | Ensure Turn off Spotlight collection on Desktop is set to Enabled"
+        ansible.windows.win_regedit:
+            path: HKCU:\Software\Policies\Microsoft\Windows\CloudContent
+            name: DisableSpotlightCollectionOnDesktop
+            data: 1
+            type: dword
+  when:
+      - win22cis_rule_19_7_7_5
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_19.7.7.5
+      - patch
+      - cloudcontent
+
+- name: "19.7.25.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
+  block:
+      - name: "19.7.25.1| PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
         ansible.windows.win_regedit:
             path: HKU:\.DEFAULT\Software\Microsoft\Windows\Currentversion\Policies\Explorer
             name: NoInplaceSharing
             data: 1
             type: dword
 
-      - name: "19.7.28.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
+      - name: "19.7.25.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
         ansible.windows.win_regedit:
             path: HKCU:\Software\Microsoft\Windows\Currentversion\Policies\Explorer
             name: NoInplaceSharing
             data: 1
             type: dword
   when:
-      - win22cis_rule_19_7_28_1
+      - win22cis_rule_19_7_25_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_19.7.28.1
+      - rule_19.7.25.1
       - patch
       - profiles
       - sharing
 
-- name: "19.7.43.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
+- name: "19.7.40.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
   block:
-      - name: "19.7.43.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
+      - name: "19.7.40.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
         ansible.windows.win_regedit:
             path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windows\Installer
             name: AlwaysInstallElevated
             data: 0
             type: dword
 
-      - name: "19.7.43.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
+      - name: "19.7.40.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
         ansible.windows.win_regedit:
             path: HKCU:\Software\Policies\Microsoft\Windows\Installer
             name: AlwaysInstallElevated
             data: 0
             type: dword
   when:
-      - win22cis_rule_19_7_43_1
+      - win22cis_rule_19_7_40_1
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_19.7.43.1
+      - rule_19.7.40.1
       - patch
       - permissions
 
-- name: "19.7.47.2.1 | PATCH | Ensure Prevent Codec Download is set to Enabled"
+- name: "19.7.42.2.1 | PATCH | Ensure Prevent Codec Download is set to Enabled"
   block:
-      - name: "19.7.47.2.1 | PATCH | Ensure Prevent Codec Download is set to Enabled"
+      - name: "19.7.42.2.1 | PATCH | Ensure Prevent Codec Download is set to Enabled"
         ansible.windows.win_regedit:
             path: HKU:\.DEFAULT\Software\Policies\Microsoft\Windowsmediaplayer
             name: PreventCodecDownload
             data: 1
             type: dword
 
-      - name: "19.7.47.2.1 | PATCH | Ensure Prevent Codec Download is set to Enabled"
+      - name: "19.7.42.2.1 | PATCH | Ensure Prevent Codec Download is set to Enabled"
         ansible.windows.win_regedit:
             path: HKCU:\Software\Policies\Microsoft\Windowsmediaplayer
             name: PreventCodecDownload
             data: 1
             type: dword
   when:
-      - win22cis_rule_19_7_47_2_1
+      - win22cis_rule_19_7_42_2_1
   tags:
       - level2-domaincontroller
       - level2-memberserver
-      - rule_19.7.47.2.1
+      - rule_19.7.42.2.1
       - patch
       - codec
