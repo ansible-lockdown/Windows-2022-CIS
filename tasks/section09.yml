@@ -140,7 +140,7 @@
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_9.1.7
+      - rule_9.1.8
       - patch
       - firewall
       - domain
