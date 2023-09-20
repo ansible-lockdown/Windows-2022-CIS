@@ -1366,7 +1366,8 @@
         when: win22cis_smb_auto_disconnect_time > 15
 
       - name: "2.3.9.1 | AUDIT | Ensure Microsoft network server Amount of idle time required before suspending session is set to 15 or fewer minutes. | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '2.3.7.7'
         when: win22cis_smb_auto_disconnect_time > 15

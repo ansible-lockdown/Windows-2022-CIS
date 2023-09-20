@@ -43,7 +43,7 @@ complexity_high: true
 audit_complex: true
 
 # We've defined disruption-high to indicate items that are likely to cause
-# disruption in a normal workflow.  These items can be remediated automatically
+# disruption in a normal workflow. These items can be remediated automatically
 # but are disabled by default to avoid disruption.
 disruption_high: false
 
