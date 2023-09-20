@@ -801,7 +801,8 @@
         when: "'adminchangethis' in win22cis_admin_username"
 
       - name: "2.3.1.4 | AUDIT | Configure Accounts Rename administrator account. | Add Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '2.3.1.4'
         when: "'adminchangethis' in win22cis_admin_username"
@@ -832,7 +833,8 @@
         when: "'guestchangethis' in win22cis_guest_username"
 
       - name: "2.3.1.5 | AUDIT | Configure Accounts Rename guest account. | Add Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '2.3.1.5'
         when: "'guestchangethis' in win22cis_guest_username"
@@ -1069,7 +1071,8 @@
               win22cis_domain_member_maximum_password_age == 0
 
       - name: "2.3.6.5 | AUDIT | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0. | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '2.3.6.5'
         when:
@@ -1153,7 +1156,8 @@
               win22cis_inactivity_timeout_seconds == 0
 
       - name: "2.3.7.3 | AUDIT | Ensure Interactive logon Machine inactivity limit is set to 900 or fewer seconds but not 0. | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '2.3.7.3'
         when:
@@ -1218,7 +1222,8 @@
         when: win22cis_cached_logons_count > 4
 
       - name: "2.3.7.6 | AUDIT | Ensure Interactive logon Number of previous logons to cache in case domain controller is not available is set to 4 or fewer logons MS only. | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '2.3.7.6'
         when: win22cis_cached_logons_count > 4
@@ -1250,7 +1255,8 @@
               win22cis_password_expiry_warning_days > 14
 
       - name: "2.3.7.7 | AUDIT | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days. | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '2.3.7.7'
         when:

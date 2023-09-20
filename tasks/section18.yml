@@ -132,7 +132,8 @@
         when: win22cis_laps_password_length < 15
 
       - name: "18.3.5 | AUDIT | Ensure Password Settings Password Length is set to Enabled 15 or more MS only. | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '18.3.5'
         when: win22cis_laps_password_length < 15
@@ -163,7 +164,8 @@
         when: win22cis_laps_password_age_days > 30
 
       - name: "18.3.6 | AUDIT | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '18.3.6'
         when: win22cis_laps_password_age_days > 30
@@ -439,7 +441,8 @@
         when: win22cis_screen_saver_grace_period > 5
 
       - name: "18.5.9 | PATCH | Ensure MSS ScreenSaverGracePeriod The time in seconds before the screen saver grace period expires 0 recommended is set to Enabled 5 or fewer seconds | Set Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '18.5.9'
         when: win22cis_screen_saver_grace_period > 5
@@ -501,7 +504,8 @@
         when: win22cis_log_threshold_audit_event > 90
 
       - name: "18.5.12 | AUDIT | Ensure MSS WarningLevel Percentage threshold for the security event log at which the system will generate a warning is set to Enabled 90 or less | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '18.5.12'
         when: win22cis_log_threshold_audit_event > 90
@@ -2214,7 +2218,8 @@
         when: win22cis_application_max_log_file_size < 32768
 
       - name: "18.10.26.1.2 | AUDIT | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '18.10.26.1.2'
         when: win22cis_application_max_log_file_size < 32768
@@ -2260,7 +2265,8 @@
         when: win22cis_security_max_log_file_size < 196608
 
       - name: "18.10.26.2.2 | AUDIT | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '18.10.26.2.2'
         when: win22cis_security_max_log_file_size < 196608
@@ -2306,7 +2312,8 @@
         when: win22cis_setup_max_log_file_size < 32768
 
       - name: "18.10.26.3.2 | AUDIT | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '18.10.26.3.2'
         when: win22cis_setup_max_log_file_size < 32768
@@ -2352,7 +2359,8 @@
         when: win22cis_system_max_log_file_size < 32768
 
       - name: "18.10.26.4.2 | AUDIT | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '18.10.26.4.2'
         when: win22cis_system_max_log_file_size < 32768
@@ -2957,7 +2965,8 @@
               win22cis_idle_rdp_session_disconnect_time > 900000
 
       - name: "18.10.57.3.10.1 | AUDIT | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | Warn Count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '18.10.57.3.10.1'
         when:
