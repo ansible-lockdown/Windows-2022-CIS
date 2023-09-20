@@ -12,7 +12,8 @@
               win22cis_max_passwords_saved <= 23
 
       - name: "1.1.1 | AUDIT | Ensure Enforce password history is set to 24 or more passwords. | Set warning count"
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '1.1.1'
         when:
@@ -46,7 +47,8 @@
               win22cis_maximum_password_age == 0
 
       - name: "1.1.2 | AUDIT | Ensure Maximum password age is set to 365 or fewer days but not 0. | Set warning count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '1.1.2'
         when:
@@ -82,7 +84,8 @@
               win22cis_maximum_password_age == 0
 
       - name: "1.1.3 | AUDIT | Ensure Minimum password age is set to 1 or more days. | Set warning count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '1.1.3'
         when:
@@ -116,7 +119,8 @@
         when: win22cis_maximum_password_age < 14
 
       - name: "1.1.4 | AUDIT | Ensure Minimum password length is set to 14 or more characters. | Set warning count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '1.1.4'
         when: win22cis_maximum_password_age < 14
@@ -183,7 +187,8 @@
       “1.2.2 | PATCH | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempt(s), but not 0.
        1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes
        1.2.4 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes."
-  ansible.builtin.import_tasks: section01_cloud_lockout_order.yml
+  ansible.builtin.import_tasks:
+      file: section01_cloud_lockout_order.yml
   when:
       - win22cis_cloud_based_system
   tags:
@@ -203,7 +208,8 @@
               win22cis_bad_login_lockout_count == 0
 
       - name: "1.2.2 | AUDIT | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempt(s), but not 0. | Set warning count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '1.2.2'
         when:
@@ -228,19 +234,19 @@
       - patch
       - account
 
-# - name: "1.2.3 | PATCH | Ensure Allow Administrator account lockout is set to Enabled"
-#   community.windows.win_security_policy:
-#       section: System Access
-#       key: AllowAdministratoraccountlockout
-#       value: 1
-#   when:
-#       - win22cis_rule_1_2_3
-#       - not win22cis_cloud_based_system
-#   tags:
-#       - level1-memberserver
-#       - rule_1.2.3
-#       - patch
-#       - password
+- name: "1.2.3 | PATCH | Ensure Allow Administrator account lockout is set to Enabled"
+  community.windows.win_security_policy:
+      section: System Access
+      key: AllowAdministratorLockout
+      value: 1
+  when:
+      - win22cis_rule_1_2_3
+      - not win22cis_cloud_based_system
+  tags:
+      - level1-memberserver
+      - rule_1.2.3
+      - patch
+      - password
 
 - name: "1.2.4 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes."
   block:
@@ -254,7 +260,8 @@
               win22cis_account_lockout_counter_reset < 15
 
       - name: "1.2.4 | PATCH | Ensure Reset account lockout counter after is set to 15 or more minutes. | | Set warning count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '1.2.4'
         when:
@@ -289,7 +296,8 @@
         when: win22cis_account_lockout_duration < 15
 
       - name: "1.2.1 | AUDIT | Ensure Account lockout duration is set to 15 or more minutes. | Set warning count."
-        ansible.builtin.import_tasks: warning_facts.yml
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
         vars:
             warn_control_id: '1.2.1'
         when: win22cis_account_lockout_duration < 15
