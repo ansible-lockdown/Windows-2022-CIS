@@ -126,7 +126,7 @@ Below is an example of the tag section from a control within this role. Using th
       tags:
       - level1-domaincontroller
       - level1-memberserver
-      - win22cis_rule_18.3.3
+      - rule_18.3.3
       - patch
       - smb
 ```
