@@ -60,18 +60,18 @@ long_running: false
 # win_skip_for_test is used in the playbook to skip over WINRM based controls that
 # may cause WINRM Basic Connection Type to be disabled.
 # Setting win_skip_for_test to 'false' will enable Secure Connection types only.
-# win22cis_rule_2_3_1_5
+# win22cis_rule_2_3_1_4
 # win22cis_rule_9_3_5
-# win22cis_rule_18_9_102_1_1
-# win22cis_rule_18_9_102_1_2
-# win22cis_rule_18_9_102_2_1
-# win22cis_rule_18_9_102_2_2
-# win22cis_rule_18_9_102_2_3
-# win22cis_rule_18_9_103_1
+# win22cis_rule_18_10_89_1_1
+# win22cis_rule_18_10_89_1_2
+# win22cis_rule_18_10_89_2_1
+# win22cis_rule_18_10_89_2_2
+# win22cis_rule_18_10_89_2_3
+# win22cis_rule_18_10_90_1
 win_skip_for_test: true
 
-# These variables correspond with the STIG IDs defined in the STIG and allows you to enable/disable specific rules.
-# PLEASE NOTE: These work in coordination with the cat1, cat2, cat3 group variables. You must enable an entire group
+# These variables correspond with the CIS Rule IDs defined in the CIS and allows you to enable/disable specific rules.
+# PLEASE NOTE: These work in coordination with the level1 and level2 group variables. You must enable an entire group
 # in order for the variables below to take effect.
 
 # section01
@@ -575,7 +575,8 @@ win22cis_bad_login_lockout_count: 5
 # 1.2.3
 # win22cis_allow_admin_account_lockout is the policy setting determines whether the built-in
 # Administrator account is subject to the following Account Lockout Policy settings.
-# win22cis_allow_admin_account_lockout: 1
+# 1 = enabled or 0 = disabled
+win22cis_allow_admin_account_lockout: 1
 
 # 1.2.4
 # win22cis_account_lockout_counter_reset is the policy setting determines the length of time before the
@@ -618,31 +619,6 @@ win22cis_guest_username: guestchangethis
 # computer account password. By default, domain members automatically change their domain passwords every 30 days.
 # The recommended state for this setting is: 30 or fewer days, but not 0.
 win22cis_domain_member_maximum_password_age: 30
-
-# 2.3.6.5
-# win22cis_machine_acct_pw_age is the max machine account pw age in days
-# This value should be set to 30 or fewer, but not zero, to be CIS compliant
-win22cis_machine_acct_pw_age: 30
-
-# 2.3.7.3
-# win22cis_inactivity_timeout is the timeout in seconds for how long to wait for activity
-# This value should be 900 or vewer, but not zero, to be CIS compliant
-win22cis_inactivity_timeout: 900
-
-# 2.3.7.7
-# win22cis_passwd_expiry_warn is the number of days before an expring password users will receive warnings about the expring password
-# This needs to be between 4 adn 14 days to be CIS compliant
-win22cis_passwd_expiry_warn: 14
-
-# 2.3.7.9
-# win22cis_smartc_remove_option is the reg key option on the action when a SmartCard is removed
-# This needs to be set to 1 (Lock Workstation) or 2 (Force Logoff) to be CIS compliant
-win22cis_smartc_remove_option: "1"
-
-# 2.3.9.1
-# win22cis_auto_disconnect is the duration in minutes of idle time before suspending the session
-# This needs to be set to 15 or fewer to be CIS compliant
-win22cis_auto_disconnect: 15
 
 # 2.3.7.3
 # win22cis_inactivity_timeout_seconds is the variable used to set when Windows notices inactivity of a logon session,
@@ -725,82 +701,22 @@ win22cis_public_firewall_log_size: 16384
 
 # Section 18 Variables
 
-# Control 18.2.5
-# laps_passwordlength is the LAPS tool password length.
-# To conform to CIS standards please use a min value of 15 and max value of 127
-win22cis_laps_passwordlength: 15
-
-# Control 18.2.6
-# laps_passwordagedays is the LAPS tool password age in days
-# To conform to CIS standards please use a max value of 30
-win22cis_laps_passwordagedays: 30
-
-# Control 18.2.5
-# win22cis_laps_password_length is the LAPS tool password length.
-# The recommended state for this setting is: Enabled: 15 or more.
-win22cis_laps_password_length: 15
-
-# Control 18.2.6
-# win22cis_laps_password_age_days is the LAPS tool password age in days.
-# The recommended state for this setting is: Enabled: 30 or fewer.
-win22cis_laps_password_age_days: 30
-
-# 18.3.6
+# 18.4.6
 # win22cis_netbt_nodetype is the node type value in HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters:NodeType
 # Options are B-node value of 1, P-node value of 2, M-node value of 4, H-node value of 8. P-node is the recommended setting from CIS
 win22cis_netbt_nodetype: 2
 
-# 18.4.9
+# 18.5.9
 # win22cis_screen_saver_grace_period is the grace period between when the screen saver is launched and when the console is actually
 # locked automatically when screen saver locking is enabled.
 # The recommended state for this setting is: Enabled: 5 or fewer seconds.
 win22cis_screen_saver_grace_period: 5
 
-# 18.4.9
-# win22cis_screen_saver_grace is the time in seconds before the screen saver grace period expires
-# To conform to CIS standards the value should be 5 or fewer, with zero as recommended
-win22cis_screen_saver_grace: 0
-
-# 18.4.12
+# 18.5.12
 # win22cis_log_threshold_audit_event is the setting that can generate a security audit in the Security event log when the
 # log reaches a user-defined threshold.
 # The recommended state for this setting is: Enabled: 90% or less.
 win22cis_log_threshold_audit_event: 90
-
-# 18.4.12
-# win22cis_mss_security_warn_thresh is the threshold at which the event log will start warning
-# To conform to CIS standards the value should be 90 or less
-win22cis_mss_security_warn_thresh: 90
-
-# 18.5.4.1
-# win22cis_dns_over_https is the registry value for the DoHPolicy regkey entry
-# To conform to CIS standards this value needs to be 0 or 1
-win22cis_dns_over_https: 1
-
-# 18.8.40.1
-# win22cis_sam_ng_key_roc is the value for the ROCA-vulnerable WHfB keys during authentication registry key value
-# To conform to CIS standards this value needs to be 1 or 2
-win22cis_sam_ng_key_roc: 1
-
-# 18.9.15.1
-# wincis_require_pin_pairing is the value for the require pin for pairing registry key
-# To conform to CIS standards this value should be 1 or 2
-win22cis_require_pin_pairing: 1
-
-# 18.10.17.1
-# win22cis_diag_data is the value for the Allow Diagnostic Data registry key
-# To confrom to CIS standards this value should be a 0 or 1
-win22cis_diag_data: 0
-
-# 18.10.26.1.2
-# win22cis_elm_applog_max_size is the max size of the Event Log Manager Application logs can become, in KB
-# To conform to CIS stadnards this value should be 32768 or greater
-win22cis_elm_applog_max_size: 65538
-
-# 18.10.26.2.2
-# win22cis_elm_seclog_max_size is the max size of the Event Log Manager Security logs can become, in KB
-# To confrom to CIS standards this value should be 196608 or greater
-win22cis_elm_seclog_max_size: 196608
 
 # 18.10.26.1.2
 # win22cis_application_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size can be
@@ -826,32 +742,12 @@ win22cis_setup_max_log_file_size: 32768
 # The recommended state for this setting is: Enabled: 32,768 or greater.
 win22cis_system_max_log_file_size: 32768
 
-# 18.9.27.3.2
-# win22cis_elm_setup_max_size is the max size of the Even Log Manager non- standard logs can become, in KB
-# To conform to CIS standards this value should be 32768 or higher
-win22cis_elm_setup_max_size: 32768
-
-# 18.9.27.4.2
-# win22cis_elm_syslog_max_size is the max size of the Event Long Manager System logs can become, in KB
-# To conform to CIS standards this value should be 32768 or higher
-win22cis_elm_syslog_max_size: 32768
-
-# 18.9.65.3.10.1
+# 18.10.57.3.10.1
 # win22cis_idle_rdp_session_disconnect_time is the setting allows you to specify the maximum amount of time that an active Remote Desktop
 # Services session can be idle (without user input) before it is automatically disconnected.
 # The recommended state for this setting is: Enabled: 15 minutes or less, but not Never (0).
 # 1 min = 60000, 5 min = 300000, 10 min = 600000, 15 min = 900000
 win22cis_idle_rdp_session_disconnect_time: 900000
-
-# 18.9.65.3.10.1
-# win22cis_terminal_max_idle_time is the time limit for active but idle remote desktop services connections in seconds
-# This value needs to be 15 minutes (900000) or less, but not zero (0) to conform to CIS standards
-win22cis_terminal_max_idle_time: 900000
-
-# 18.9.89.2
-# win22cis_allow_ink_workspace is the registry key value for the allowing windows ink workspace
-# To conform to CIS stadnards this value should be a 0 or 1
-win22cis_allow_ink_workspace: 1
 
 # Section 19 Variables
 
@@ -859,8 +755,3 @@ win22cis_allow_ink_workspace: 1
 # win22cis_screen_saver_timeout is the setting that specifies how much user idle time must elapse before the screen saver is launched.
 # The recommended state for this setting is: Enabled: 900 seconds or fewer, but not 0.
 win22cis_screen_saver_timeout: 900
-
-# 19.9.108.4.2
-# win22cis_defer_feature_update_period is the duration in days to delay feature updates in automatic updates
-# To conform to CIS stadnards this value should be 180 or more (365 is max allowed by Windows)
-win22cis_defer_feature_update_period: 180
