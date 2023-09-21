@@ -77,7 +77,7 @@
   community.windows.win_security_policy:
       section: System Access
       key: AllowAdministratorLockout
-      value: 1
+      value: "{{ win22cis_allow_admin_account_lockout }}"
   when:
       - win22cis_rule_1_2_3
   tags:
