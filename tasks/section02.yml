@@ -748,7 +748,7 @@
       - userright
       - administrator
 
-- name: "2.3.1.1 | PATCH | Ensure Accounts Block Microsoft accounts is set to Users cant add or log on with Microsoft accounts"
+- name: "2.3.1.1 | PATCH | Ensure Accounts Block Microsoft accounts is set to Users can not add or log on with Microsoft accounts"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: NoConnectedUser

@@ -20,9 +20,9 @@ on:  # yamllint disable-line rule:truthy
             - '**.cfg'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-# This setion contains all the jobs below that are running in the workflow.
+# This section contains all the jobs below that are running in the workflow.
 jobs:
-    # This will create messages for first time contributers and direct them to the Discord server
+    # This will create messages for the first time contributors and direct them to the Discord server
     welcome:
         # The type of runner that the job will run on.
         runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
                     Congrats on opening your first pull request and thank you for taking the time to help improve Ansible-Lockdown!
                     Please join in the conversation happening on the [Discord Server](https://www.lockdownenterprise.com/discord) as well.
 
-    # This workflow will run terraform to load a instance in azure to test the playbook against a live cloud based instance.
+    # This workflow will run Terraform to load an instance in Azure to test the playbook against a live cloud-based instance.
     playbook-test:
         # The type of runner that the job will run on.
         runs-on: ubuntu-latest
@@ -84,7 +84,7 @@ jobs:
                 pwd
                 ls
               env:
-                  # Imported from github variables this is used to load the relvent OS.tfvars file
+                  # Imported from github variables this is used to load the relevant OS.tfvars file
                   OSVAR: ${{ vars.OSVAR }}
                   TF_VAR_benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
@@ -93,7 +93,7 @@ jobs:
               id: init
               run: terraform init
               env:
-                # Imported from github variables this is used to load the relvent OS.tfvars file
+                # Imported from github variables this is used to load the relevant OS.tfvars file
                   OSVAR: ${{ vars.OSVAR }}
                   TF_VAR_benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
@@ -102,7 +102,7 @@ jobs:
               id: validate
               run: terraform validate
               env:
-                # Imported from github variables this is used to load the relvent OS.tfvars file
+                # Imported from github variables this is used to load the relevant OS.tfvars file
                   OSVAR: ${{ vars.OSVAR }}
                   TF_VAR_benchmark_type: ${{ vars.BENCHMARK_TYPE }}
 
@@ -110,7 +110,7 @@ jobs:
             - name: Terraform_Apply
               id: apply
               env:
-                # Imported from github variables this is used to load the relvent OS.tfvars file
+                # Imported from github variables this is used to load the relevant OS.tfvars file
                   WIN_USERNAME: ${{ secrets.WIN_USERNAME }}
                   WIN_PASSWORD: ${{ secrets.WIN_PASSWORD }}
                   OSVAR: ${{ vars.OSVAR }}

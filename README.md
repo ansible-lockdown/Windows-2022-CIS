@@ -64,18 +64,18 @@ This is managed using tags:
 - level2-domaincontroller
 - level2-memberserver
 
-The control found in defaults/main.yml also needs to reflect this as this control the testing that takes place if you are using the audit component.
+The control found in defaults/main.yml also needs to reflect this as this controls the testing that takes place if you are using the audit component.
 
 ## Coming from a previous release
 
-CIS release always contains changes, so it is highly recommended to review the new references and available variables. This has changed significantly since ansible-lockdown initial release.
+CIS release always contains changes, so it is highly recommended to review the new references and available variables. This has changed significantly since the ansible-lockdown initial release.
 This is now compatible with python3 if it is found to be the default interpreter. This does come with prerequisites that configure the system accordingly.
 
 Further details can be seen in the [Changelog](./ChangeLog.md)
 
 ## Auditing (new)
 
-Currently this release does not have a auditing tool that is up to date.
+Currently, this release does not have a auditing tool that is up to date.
 
 ## Documentation
 
@@ -117,7 +117,7 @@ This role is designed so that the end user should not have to edit the tasks the
 
 ## Tags
 
-There are many tags available for added control precision. Each control has its own set of tags noting what level, what OS element it relates to, if it's a patch or audit, and the rule number.
+There are many tags available for added control precision. Each control has its own set of tags noting what level, what OS element it relates to if it's a patch or audit, and the rule number.
 
 Below is an example of the tag section from a control within this role. Using this example if you set your run to skip all controls with the tag smb, this task will be skipped. The opposite can also happen where you run only controls tagged with smb.
 
@@ -144,6 +144,6 @@ We encourage you (the community) to contribute to this role. Please read the rul
 uses:
 
 - ansible-core 2.12
-- ansible collections - pulls in the latest version based on requirements file
+- ansible collections - pulls in the latest version based on the requirements file
 - runs the audit using the devel branch
 - This is an automated test that occurs on pull requests into devel
