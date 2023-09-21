@@ -33,7 +33,7 @@ win22cis_section19: true
 min_ansible_version: "2.10"
 
 # We've defined complexity-high to mean that we cannot automatically remediate
-# the rule in question.  In the future this might mean that the remediation
+# the rule in question.  In the future, this might mean that the remediation
 # may fail in some cases.
 complexity_high: true
 
@@ -54,10 +54,10 @@ audit_disruptive: false
 # tweak role to run in a non-privileged container
 system_is_container: false
 
-# set to false to skip long running tasks
+# set to false to skip long_running tasks
 long_running: false
 
-# win_skip_for_test is used in the playbook to skip over WINRM based controls that
+# win_skip_for_test is used in the playbook to skip over WINRM-based controls that
 # may cause WINRM Basic Connection Type to be disabled.
 # Setting win_skip_for_test to 'false' will enable Secure Connection types only.
 # win22cis_rule_2_3_1_4
@@ -70,7 +70,7 @@ long_running: false
 # win22cis_rule_18_10_90_1
 win_skip_for_test: true
 
-# These variables correspond with the CIS Rule IDs defined in the CIS and allows you to enable/disable specific rules.
+# These variables correspond with the CIS Rule IDs defined in the CIS and allow you to enable/disable specific rules.
 # PLEASE NOTE: These work in coordination with the level1 and level2 group variables. You must enable an entire group
 # in order for the variables below to take effect.
 
@@ -80,14 +80,14 @@ win22cis_rule_1_1_2: true
 win22cis_rule_1_1_3: true
 win22cis_rule_1_1_4: true
 win22cis_rule_1_1_5: true
-# win22cis_rule_1_1_6 set To false this control cannot be implemented on 2022.
+# win22cis_rule_1_1_6 set To false this control cannot be implemented in 2022.
 # This setting is only available within the built-in OS security template of
-# Windows 10 Release 2004 and Server 2022 (or newer). Control Commented out for now.
+# Windows 10 Release 2004 and Server 2022 (or newer). Control is Commented out for now.
 win22cis_rule_1_1_6: false
 win22cis_rule_1_1_7: true
-# We have found the order of these three tasks below varies between cloud based instances
-# and VM based instances locally. The task below breaks out to run in a different order
-# for cloud based systems and local based systems. Notes are applied in the section01.yml file.
+# We have found the order of these three tasks below varies between cloud-based instances
+# and VM-based instances locally. The task below breaks out to run in a different order
+# for cloud-based systems and local-based systems. Notes are applied in the section01.yml file.
 win22cis_rule_1_2_1: true
 win22cis_rule_1_2_2: true
 win22cis_rule_1_2_3: true
@@ -484,7 +484,7 @@ win22cis_rule_18_10_82_2: true
 win22cis_rule_18_10_87_1: true
 win22cis_rule_18_10_87_2: true
 # WINRM CONTROLS #
-# Setting The Following Controls To True Will Break Ansible Connection
+# Setting The Following Controls To True Will Break the Ansible Connection
 # Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
 # win22cis_rule_18_10_89_1_1
 # win22cis_rule_18_10_89_1_2
@@ -534,18 +534,18 @@ win22cis_rule_19_7_42_2_1: true
 # win22cis_max_passwords_saved is the variable used to dictate the number of unique passwords
 # that have to be associated with a user account before you can reuse an old password.
 # The recommended state for this setting is 24 Or More passwords.
-# NOTE: As Of the publication if this benchmark, Microsoft has a maximum limit of 24 saved passwords.
-# This may change at a later date but we have left it setup as a variable for that reason.
+# NOTE: As Of the publication of this benchmark, Microsoft has a maximum limit of 24 saved passwords.
+# This may change at a later date but we have left it set up as a variable for that reason.
 win22cis_max_passwords_saved: 24
 
 # 1.1.2
-# win22cis_maximum_password_age is the policy setting defines how long a user can use their
+# win22cis_maximum_password_age is the policy setting that defines how long a user can use their
 # password before it expires.
 # The recommended state for this setting is 365 or fewer days, but not 0 (zero).
 win22cis_maximum_password_age: 365
 
 # 1.1.3
-# win22cis_minimum_password_age is the policy setting determines the number of days that you
+# win22cis_minimum_password_age is the policy setting that determines the number of days that you
 # must use a password before you can change it. The range of values for this policy setting is
 # between 1 and 999 days. (You may also set the value to 0 to allow immediate password changes.)
 # The default value for this setting is 0 days.
@@ -553,7 +553,7 @@ win22cis_maximum_password_age: 365
 win22cis_minimum_password_age: 1
 
 # 1.1.4
-# win22cis_minimum_password_length is the policy setting determines the least number of characters
+# win22cis_minimum_password_length is the policy setting that determines the least number of characters
 # that make up a password for a user account.
 # The recommended state for this setting is: 14 or more character(s).
 win22cis_minimum_password_length: 14
@@ -561,25 +561,25 @@ win22cis_minimum_password_length: 14
 # 1.2.1
 # win22cis_account_lockout_duration is the  policy setting determines the length of time that
 # must pass before a locked account is unlocked and a user can try to log on again.
-# NOTE: If the value for this policy setting is configured to 0, locked out accounts will remain locked out
+# NOTE: If the value for this policy setting is configured to 0, locked-out accounts will remain locked-out
 # until an administrator manually unlocks them.
 # The recommended state for this setting is: 15 or more minute(s).
 win22cis_account_lockout_duration: 15
 
 # 1.2.2
-# win22cis_lockout_bad_count is the policy setting determines the number of failed logon
+# win22cis_lockout_bad_count is the policy setting that determines the number of failed logon
 # attempts before the account is locked.
 # The recommended state for this setting is: 5 or fewer invalid logon attempt(s), but not 0.
 win22cis_bad_login_lockout_count: 5
 
 # 1.2.3
-# win22cis_allow_admin_account_lockout is the policy setting determines whether the built-in
+# win22cis_allow_admin_account_lockout is the policy setting that determines whether the built-in
 # Administrator account is subject to the following Account Lockout Policy settings.
 # 1 = enabled or 0 = disabled
 win22cis_allow_admin_account_lockout: 1
 
 # 1.2.4
-# win22cis_account_lockout_counter_reset is the policy setting determines the length of time before the
+# win22cis_account_lockout_counter_reset is the policy setting that determines the length of time before the
 # Account lockout threshold resets to zero. The default value for this policy setting is Not Defined.
 # NOTE: If the Account lockout threshold is defined (win22cis_account_lockout_duration), this reset
 # time must be less than or equal to the value for the Account lockout duration setting.
@@ -593,13 +593,13 @@ win22cis_account_lockout_counter_reset: 15
 win22cis_hyperv_installed: false
 
 # 2.2.33
-# Window Manager\Window Manager Group only exists on non Core installations
+# Window Manager\Window Manager Group only exists on non-Core installations
 # windows_installation_type should be 'Server Core' for Core installations
 # This is a variable to determine if Windows Manager should be included in this step
 win22cis_increase_scheduling_priority_users: '{{ ["Administrators"] if (windows_installation_type=="Server Core") else (["Administrators","Window Manager\Window Manager Group"]) }}'
 
 # 2.2.37
-# win22cis_exchange_server_running is the policy setting determines which users can change the auditing options for
+# win22cis_exchange_server_running is the policy setting that determines which users can change the auditing options for
 # files and directories and clear the Security log. Setting to true will set both groups to be added.
 # False will only add Administrators.
 # True will add administrators and (when Exchange is running in the environment) Exchange Servers.
@@ -615,7 +615,7 @@ win22cis_admin_username: adminchangethis
 win22cis_guest_username: guestchangethis
 
 # 2.3.6.5
-# win22cis_domain_member_maximum_password_age is the policy setting determines the maximum allowable age for a
+# win22cis_domain_member_maximum_password_age is the policy setting that determines the maximum allowable age for a
 # computer account password. By default, domain members automatically change their domain passwords every 30 days.
 # The recommended state for this setting is: 30 or fewer days, but not 0.
 win22cis_domain_member_maximum_password_age: 30
@@ -645,24 +645,24 @@ win22cis_legal_notice: |
     -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
 
 # 2.3.7.5
-# win22cis_legal_notice_caption is the policy setting specifies the text displayed in the title bar of the window that users see
+# win22cis_legal_notice_caption is the policy setting that specifies the text displayed in the title bar of the window that users see
 # when they log on to the system. Configure this setting in a manner that is consistent with the security and operational
 # requirements of your organization.
 win22cis_legal_notice_caption: "DoD Notice and Consent Banner"
 
 # 2.3.7.6
-# win22cis_cached_logons_count is the number that is assigned to this policy setting indicates the number of users whose
+# win22cis_cached_logons_count is the number that is assigned to this policy setting and indicates the number of users whose
 # logon information the computer will cache locally. If this value is set to 0, the logon cache feature is disabled.
 # The recommended state for this setting is: 4 or fewer logon(s).
 win22cis_cached_logons_count: 1
 
 # 2.3.7.7
-# win22cis_password_expiry_warning_days is the policy setting determines how far in advance users are warned that their password will expire.
+# win22cis_password_expiry_warning_days is the policy setting that determines how far in advance users are warned that their password will expire.
 # The recommended state for this setting is: between 5 and 14 days.
 win22cis_password_expiry_warning_days: 14
 
 # 2.3.9.1
-# win22cis_smb_auto_disconnect_time is the policy setting allows you to specify the amount of continuous idle time that must pass in an
+# win22cis_smb_auto_disconnect_time is the policy setting that allows you to specify the amount of continuous idle time that must pass in an
 # SMB session before the session is suspended because of inactivity.
 # The recommended state for this setting is: 15 or fewer minute(s).
 win22cis_smb_auto_disconnect_time: 15
@@ -671,7 +671,7 @@ win22cis_smb_auto_disconnect_time: 15
 
 # 9.1.5
 # win22cis_domain_firewall_log_path is the path to the domain firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\domainfw.log
-# This is a variable to give some leway on where to store these log files
+# This is a variable to give some leeway on where to store these log files
 win22cis_domain_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\domainfw.log'
 
 # 9.1.6
@@ -681,22 +681,22 @@ win22cis_domain_firewall_log_size: 16384
 
 # 9.2.5
 # private_firewall_log_path is the path to the private firewall log files. The control suggests %SystemRoot%\System32\logfiles\firewall\privatefw.log
-# This is a variable to give some leway on where to store these log files
+# This is a variable to give some leeway on where to store these log files
 win22cis_private_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\privatefw.log'
 
 # 9.2.6
 # private_firewall_log_size is the size of the log file
-# To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
+# To conform to CIS standards the value should be 16,384 or greater. Value is in KB
 win22cis_private_firewall_log_size: 16384
 
 # 9.3.7
 # win22cis_public_firewall_log_path is the path to the public firewall log file. The control suggests %SystemRoot%\System32\logfiles\firewall\publicfw.log
-# This is a variable to give some leway on where to store these log files
+# This is a variable to give some leeway on where to store these log files
 win22cis_public_firewall_log_path: '%SystemRoot%\System32\logfiles\firewall\publicfw.log'
 
 # 9.3.8
 # public_firewall_log_size is the size of the log file
-# To conform to CIS stadnards the value should be 16,384 or greater. Value is in KB
+# To conform to CIS standards the value should be 16,384 or greater. Value is in KB
 win22cis_public_firewall_log_size: 16384
 
 # Section 18 Variables
@@ -731,7 +731,7 @@ win22cis_application_max_log_file_size: 32768
 win22cis_security_max_log_file_size: 196608
 
 # 18.10.26.3.2
-# win22cis_setup_max_log_file_size is the setting specifies the maximum size of the log file in kilobytes. The maximum log file size can be
+# win22cis_setup_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size can be
 # configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.#
 # The recommended state for this setting is: Enabled: 32,768 or greater.
 win22cis_setup_max_log_file_size: 32768
@@ -743,7 +743,7 @@ win22cis_setup_max_log_file_size: 32768
 win22cis_system_max_log_file_size: 32768
 
 # 18.10.57.3.10.1
-# win22cis_idle_rdp_session_disconnect_time is the setting allows you to specify the maximum amount of time that an active Remote Desktop
+# win22cis_idle_rdp_session_disconnect_time is the setting that allows you to specify the maximum amount of time that an active Remote Desktop
 # Services session can be idle (without user input) before it is automatically disconnected.
 # The recommended state for this setting is: Enabled: 15 minutes or less, but not Never (0).
 # 1 min = 60000, 5 min = 300000, 10 min = 600000, 15 min = 900000
