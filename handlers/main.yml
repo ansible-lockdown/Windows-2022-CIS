@@ -1,9 +1,5 @@
 ---
+
 - name: reboot_windows
   ansible.windows.win_reboot:
       reboot_timeout: 3600
-
-- name: restart print spooler
-  ansible.windows.win_service:
-      name: Spooler
-      state: restarted
