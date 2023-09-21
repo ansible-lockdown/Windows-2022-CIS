@@ -38,7 +38,6 @@
 
 ### Community
 
-
 On our [Discord Server](https://www.lockdownenterprise.com/discord) to ask questions, discuss features, or just chat with other Ansible-Lockdown users
 
 ---

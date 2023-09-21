@@ -3,4 +3,8 @@
 ## Release 1.0.0
 
 September 2023
-- Initial Release
+- Release based CIS Benchmarck v2.0.0
+
+Incorporated order fix for Lockout Controls:
+https://github.com/ansible-lockdown/Windows-2022-CIS/pull/16
+https://github.com/ansible/ansible/issues/62594
