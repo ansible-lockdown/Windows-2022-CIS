@@ -60,7 +60,7 @@
       - patch
       - onlinetips
 
-- name: "18.3.1 | PATCH | Ensure LAPS AdmPwd GPO Extension / CSE is installed MS only"
+- name: "18.3.1 | PATCH | Ensure LAPS AdmPwd GPO Extension / CSE is installed MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\GPExtensions\{D76B9641-3288-4f75-942D-087DE603E3EA}
       name: DllName
@@ -68,7 +68,7 @@
       type: string
   when:
       - win22cis_rule_18_3_1
-      - ansible_windows_domain_role == "Member Server"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level1-memberserver
       - rule_18.3.1
@@ -76,7 +76,7 @@
       - laps
       - gpo
 
-- name: "18.3.2 | PATCH | Ensure Do not allow password expiration time longer than required by policy is set to Enabled MS only"
+- name: "18.3.2 | PATCH | Ensure Do not allow password expiration time longer than required by policy is set to Enabled MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
       name: PwdExpirationProtectionEnabled
@@ -84,14 +84,14 @@
       type: dword
   when:
       - win22cis_rule_18_3_2
-      - ansible_windows_domain_role == "Member Server"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level1-memberserver
       - rule_18.3.2
       - patch
       - accounts
 
-- name: "18.3.3 | PATCH | Ensure Enable Local Admin Password Management is set to Enabled MS only"
+- name: "18.3.3 | PATCH | Ensure Enable Local Admin Password Management is set to Enabled MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
       name: AdmPwdEnabled
@@ -99,7 +99,7 @@
       type: dword
   when:
       - win22cis_rule_18_3_3
-      - ansible_windows_domain_role == "Member Server"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level1-memberserver
       - rule_18.3.3
@@ -107,7 +107,7 @@
       - accounts
       - admin
 
-- name: "18.3.4 | PATCH | Ensure Password Settings: Password Complexity is set to Enabled: Large letters + small letters + numbers + special characters  MS only"
+- name: "18.3.4 | PATCH | Ensure Password Settings: Password Complexity is set to Enabled: Large letters + small letters + numbers + special characters  MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
       name: PasswordComplexity
@@ -115,30 +115,30 @@
       type: dword
   when:
       - win22cis_rule_18_3_4
-      - ansible_windows_domain_role != "Member Server"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level1-memberserver
       - rule_18.3.4
       - patch
       - accounts
 
-- name: "18.3.5 | PATCH | Ensure Password Settings Password Length is set to Enabled 15 or more MS only"
+- name: "18.3.5 | PATCH | Ensure Password Settings Password Length is set to Enabled 15 or more MS only | Member Server"
   block:
-      - name: "18.3.5 | AUDIT | Ensure Password Settings Password Length is set to Enabled 15 or more MS only. | Warning Check For Variable Standards."
+      - name: "18.3.5 | AUDIT | Ensure Password Settings Password Length is set to Enabled 15 or more MS only | Warning Check For Variable Standards | Member Server"
         ansible.builtin.debug:
             msg:
                 - "Warning!! You have an invalid password length set for win22cis_laps_password_length please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when: win22cis_laps_password_length < 15
 
-      - name: "18.3.5 | AUDIT | Ensure Password Settings Password Length is set to Enabled 15 or more MS only. | Warn Count."
+      - name: "18.3.5 | AUDIT | Ensure Password Settings Password Length is set to Enabled 15 or more MS only | Warn Count | Member Server"
         ansible.builtin.import_tasks:
             file: warning_facts.yml
         vars:
             warn_control_id: '18.3.5'
         when: win22cis_laps_password_length < 15
 
-      - name: "18.3.5 | PATCH | Ensure Password Settings Password Length is set to Enabled 15 or more MS only. | Set Variable."
+      - name: "18.3.5 | PATCH | Ensure Password Settings Password Length is set to Enabled 15 or more MS only. | Set Variable | Member Server"
         ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
             name: PasswordLength
@@ -147,30 +147,30 @@
         when: win22cis_laps_password_length >= 15
   when:
       - win22cis_rule_18_3_5
-      - ansible_windows_domain_role == "Member Server"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level1-memberserver
       - rule_18.3.5
       - patch
       - accounts
 
-- name: "18.3.6 | PATCH | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only"
+- name: "18.3.6 | PATCH | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only | Member Server"
   block:
-      - name: "18.3.6 | AUDIT | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only | Warning Check For Variable Standards."
+      - name: "18.3.6 | AUDIT | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only | Warning Check For Variable Standards | Member Server"
         ansible.builtin.debug:
             msg:
                 - "Warning!! You have an invalid password length set for win22cis_laps_password_length please read"
                 - "the notes for the variable and make the necessary change to the variable to be in compliance."
         when: win22cis_laps_password_age_days > 30
 
-      - name: "18.3.6 | AUDIT | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only | Warn Count."
+      - name: "18.3.6 | AUDIT | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only | Warn Count | Member Server"
         ansible.builtin.import_tasks:
             file: warning_facts.yml
         vars:
             warn_control_id: '18.3.6'
         when: win22cis_laps_password_age_days > 30
 
-      - name: "18.3.6 | PATCH | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only | Set Variable."
+      - name: "18.3.6 | PATCH | Ensure Password Settings Password Age Days is set to Enabled 30 or fewer MS only | Set Variable | Member Server"
         ansible.windows.win_regedit:
             path: HKLM:\SOFTWARE\Policies\Microsoft Services\AdmPwd
             name: PasswordAgeDays
@@ -179,14 +179,14 @@
         when: win22cis_laps_password_age_days <= 30
   when:
       - win22cis_rule_18_3_6
-      - ansible_windows_domain_role == "Member Server"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level1-memberserver
       - rule_18.3.6
       - patch
       - accounts
 
-- name: "18.4.1 | PATCH | Ensure Apply UAC restrictions to local accounts on network logons is set to Enabled MS only"
+- name: "18.4.1 | PATCH | Ensure Apply UAC restrictions to local accounts on network logons is set to Enabled MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: LocalAccountTokenFilterPolicy
@@ -194,7 +194,7 @@
       type: dword
   when:
       - win22cis_rule_18_4_1
-      - not ansible_windows_domain_role == "Primary domain controller"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level1-memberserver
       - rule_18.4.1
@@ -556,7 +556,7 @@
       - patch
       - netbios
 
-- name: "18.6.4.3 | PATCH | Ensure Turn off multicast name resolution is set to Enabled MS Only"
+- name: "18.6.4.3 | PATCH | Ensure Turn off multicast name resolution is set to Enabled MS Only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
       name: EnableMulticast
@@ -564,7 +564,7 @@
       type: dword
   when:
       - win22cis_rule_18_6_4_3
-      - not ansible_windows_domain_role == "Primary domain controller"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -855,7 +855,7 @@
       - patch
       - gpo
 
-- name: "18.6.21.2 | PATCH | Ensure Prohibit connection to non-domain networks when connected to domain authenticated network is set to Enabled MS only"
+- name: "18.6.21.2 | PATCH | Ensure Prohibit connection to non-domain networks when connected to domain authenticated network is set to Enabled MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Wcmsvc\Grouppolicy
       name: fBlockNonDomain
@@ -863,7 +863,7 @@
       type: dword
   when:
       - win22cis_rule_18_6_21_2
-      - not ansible_windows_domain_role == "Primary domain controller"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level2-memberserver
       - rule_18.6.21.2
@@ -1050,7 +1050,7 @@
       - patch
       - vbs
 
-- name: "18.9.5.5 | PATCH | NG Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Enabled with UEFI lock MS Only"
+- name: "18.9.5.5 | PATCH | NG Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Enabled with UEFI lock MS Only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: LsaCfgFlags
@@ -1058,14 +1058,14 @@
       type: dword
   when:
       - win22cis_rule_18_9_5_5
-      - not ansible_windows_domain_role == "Primary domain controller"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - ngws-memberserver
       - rule_18.9.5.5
       - patch
       - vbs
 
-- name: "18.9.5.6 | PATCH | NG Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Disabled DC Only"
+- name: "18.9.5.6 | PATCH | NG Ensure Turn On Virtualization Based Security Credential Guard Configuration is set to Disabled DC Only | Domain Controller"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard
       name: LsaCfgFlags
@@ -1519,7 +1519,7 @@
       - patch
       - enumerate
 
-- name: "18.9.27.4 | PATCH | Ensure Enumerate local users on domain-joined computers is set to Disabled MS only"
+- name: "18.9.27.4 | PATCH | Ensure Enumerate local users on domain-joined computers is set to Disabled MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: EnumerateLocalUsers
@@ -1698,7 +1698,7 @@
       - patch
       - csra
 
-- name: "18.9.35.1 | PATCH | Ensure Enable RPC Endpoint Mapper Client Authentication is set to Enabled MS only"
+- name: "18.9.35.1 | PATCH | Ensure Enable RPC Endpoint Mapper Client Authentication is set to Enabled MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Rpc
       name: EnableAuthEpResolution
@@ -1706,14 +1706,14 @@
       type: dword
   when:
       - win22cis_rule_18_9_35_1
-      - not ansible_windows_domain_role == "Primary domain controller"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level1-memberserver
       - rule_18.9.35.1
       - patch
       - rpc
 
-- name: "18.9.35.2 | PATCH | Ensure Restrict Unauthenticated RPC clients is set to Enabled Authenticated MS only"
+- name: "18.9.35.2 | PATCH | Ensure Restrict Unauthenticated RPC clients is set to Enabled Authenticated MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows Nt\Rpc
       name: RestrictRemoteClients
@@ -1721,7 +1721,7 @@
       type: dword
   when:
       - win22cis_rule_18_9_35_2
-      - not ansible_windows_domain_role == "Primary domain controller"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level2-memberserver
       - rule_18.9.35.2
@@ -1803,7 +1803,7 @@
       - patch
       - ntp
 
-- name: "18.9.50.1.2 | PATCH | Ensure Enable Windows NTP Server is set to Disabled MS only"
+- name: "18.9.50.1.2 | PATCH | Ensure Enable Windows NTP Server is set to Disabled MS only | Member Server"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\W32Time\Timeproviders\Ntpserver
       name: Enabled
@@ -1811,7 +1811,7 @@
       type: dword
   when:
       - win22cis_rule_18_9_50_1_2
-      - not ansible_windows_domain_role == "Primary domain controller"
+      - ansible_windows_domain_role not "Primary domain controller"
   tags:
       - level2-memberserver
       - rule_18.9.50.1.2
