@@ -69,7 +69,6 @@
   when:
       - win22cis_rule_18_3_1
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_18.3.1
@@ -86,7 +85,6 @@
   when:
       - win22cis_rule_18_3_2
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_18.3.2
@@ -102,7 +100,6 @@
   when:
       - win22cis_rule_18_3_3
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_18.3.3
@@ -119,7 +116,6 @@
   when:
       - win22cis_rule_18_3_4
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_18.3.4
@@ -152,7 +148,6 @@
   when:
       - win22cis_rule_18_3_5
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_18.3.5
@@ -185,7 +180,6 @@
   when:
       - win22cis_rule_18_3_6
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_18.3.6
@@ -201,7 +195,6 @@
   when:
       - win22cis_rule_18_4_1
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_18.4.1
@@ -572,7 +565,6 @@
   when:
       - win22cis_rule_18_6_4_3
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -872,7 +864,6 @@
   when:
       - win22cis_rule_18_6_21_2
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level2-memberserver
       - rule_18.6.21.2
@@ -1068,7 +1059,6 @@
   when:
       - win22cis_rule_18_9_5_5
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - ngws-memberserver
       - rule_18.9.5.5
@@ -1084,7 +1074,6 @@
   when:
       - win22cis_rule_18_9_5_6
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - ngws-domaincontroller
       - rule_18.9.5.6
@@ -1539,7 +1528,6 @@
   when:
       - win22cis_rule_18_9_27_4
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_18.9.27.4
@@ -1720,7 +1708,6 @@
   when:
       - win22cis_rule_18_9_35_1
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_18.9.35.1
@@ -1736,7 +1723,6 @@
   when:
       - win22cis_rule_18_9_35_2
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level2-memberserver
       - rule_18.9.35.2
@@ -1827,7 +1813,6 @@
   when:
       - win22cis_rule_18_9_50_1_2
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level2-memberserver
       - rule_18.9.50.1.2
