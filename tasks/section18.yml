@@ -3616,7 +3616,7 @@
             warn_control_id: '18.10.93.4.2'
         when: win22cis_defer_feature_updates_period_in_days < 180
 
-      - name: "18.9.108.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | DeferFeatureUpdatesPeriodInDays"
+      - name: "18.10.93.4.2 | PATCH | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | DeferFeatureUpdatesPeriodInDays"
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
             name: DeferFeatureUpdatesPeriodInDays
