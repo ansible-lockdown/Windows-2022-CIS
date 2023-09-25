@@ -24,7 +24,7 @@
       action: set
   when:
       - win22cis_rule_2_2_2
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -41,7 +41,8 @@
       action: set
   when:
       - win22cis_rule_2_2_3
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -70,7 +71,8 @@
       action: set
   when:
       - win22cis_rule_2_2_5
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.5
@@ -269,7 +271,8 @@
         when: win22cis_hyperv_installed
   when:
       - win22cis_rule_2_2_18
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.18
@@ -316,7 +319,8 @@
       action: add
   when:
       - win22cis_rule_2_2_21
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.21
@@ -377,7 +381,8 @@
       action: add
   when:
       - win22cis_rule_2_2_25
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.25
@@ -393,7 +398,8 @@
       action: set
   when:
       - win22cis_rule_2_2_26
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.26
@@ -407,8 +413,8 @@
       action: set
   when:
       - win22cis_rule_2_2_27
-      - ansible_windows_domain_role == "Primary domain controller"
-      - win2022cis_is_standalone
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.27
@@ -423,7 +429,8 @@
       action: set
   when:
       - win22cis_rule_2_2_28
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.28
@@ -474,7 +481,8 @@
       action: set
   when:
       - win22cis_rule_2_2_31
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.31
@@ -495,7 +503,8 @@
       action: set
   when:
       - win22cis_rule_2_2_32
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.32
@@ -554,7 +563,8 @@
       action: set
   when:
       - win22cis_rule_2_2_36
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level2-domaincontroller
       - rule_2.2.36
@@ -564,7 +574,7 @@
 
 - name: "2.2.37 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only | Domain Controller"
   block:
-      - name: "2.2.37 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only | Domain Controller | Set Non-Exchange Server Groups."
+      - name: "2.2.37 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only | Set Non-Exchange Server Groups | Domain Controller"
         ansible.windows.win_user_right:
             name: SeSecurityPrivilege
             users:
@@ -572,7 +582,7 @@
             action: set
         when: not win22cis_exchange_server_running
 
-      - name: "2.2.37 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only | Domain Controller | Set Exchange Server Groups."
+      - name: "2.2.37 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only | Set Exchange Server Groups | Domain Controller"
         ansible.windows.win_user_right:
             name: SeSecurityPrivilege
             users:
@@ -582,7 +592,8 @@
         when: win22cis_exchange_server_running
   when:
       - win22cis_rule_2_2_37
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.37
@@ -590,7 +601,7 @@
       - userrights
       - administrators
 
-- name: "2.2.38 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only"
+- name: "2.2.38 | PATCH | Ensure Manage auditing and security log is set to Administrators and when Exchange is running in the environment Exchange Servers DC only | Domain Controller"
   ansible.windows.win_user_right:
       name: SeSecurityPrivilege
       users:
@@ -598,7 +609,8 @@
       action: set
   when:
       - win22cis_rule_2_2_38
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.38
@@ -742,7 +754,8 @@
       action: set
   when:
       - win22cis_rule_2_2_47
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.47
@@ -787,7 +800,8 @@
       value: 0
   when:
       - win22cis_rule_2_3_1_2
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.1.2
@@ -940,7 +954,7 @@
       type: dword
   when:
       - win22cis_rule_2_3_5_1
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
       - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
@@ -988,7 +1002,8 @@
       type: dword
   when:
       - win22cis_rule_2_3_5_4
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.5.4
@@ -1003,7 +1018,7 @@
       type: dword
   when:
       - win22cis_rule_2_3_5_5
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
       - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
@@ -1255,7 +1270,8 @@
         when: win22cis_cached_logons_count <= 4
   when:
       - win22cis_rule_2_3_7_6
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level2-memberserver
       - rule_2.3.7.6
@@ -1308,7 +1324,8 @@
       type: dword
   when:
       - win22cis_rule_2_3_7_8
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.7.8
@@ -1490,7 +1507,8 @@
       type: dword
   when:
       - win22cis_rule_2_3_10_2
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.10.2
@@ -1505,7 +1523,8 @@
       type: dword
   when:
       - win22cis_rule_2_3_10_3
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.10.3
@@ -1550,7 +1569,8 @@
       type: multistring
   when:
       - win22cis_rule_2_3_10_6
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.10.6
@@ -1565,7 +1585,8 @@
       type: multistring
   when:
       - win22cis_rule_2_3_10_7
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.10.7
@@ -1623,7 +1644,8 @@
       type: string
   when:
       - win22cis_rule_2_3_10_11
-      - ansible_windows_domain_role not "Primary domain controller"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.10.11

@@ -26,23 +26,24 @@
 
 - name: "17.1.2 | PATCH | Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure' DC Only | Domain Controller"
   block:
-      - name: "17.1.2 | AUDIT | Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure' DC Only | Get current audit events."
+      - name: "17.1.2 | AUDIT | Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure' DC Only | Get current audit events | Domain Controller"
         ansible.windows.win_shell: AuditPol /get /subcategory:"Kerberos Authentication Service" -r | ConvertFrom-Csv | Select-Object -expand "Inclusion Setting"
         changed_when: false
         failed_when: false
         check_mode: false
         register: rule_17_1_2_audit
 
-      - name: "17.1.2 | PATCH | Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure' DC Only | Success"
+      - name: "17.1.2 | PATCH | Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure' DC Only | Success | Domain Controller"
         ansible.windows.win_shell: AuditPol /set /subcategory:"Kerberos Authentication Service" /success:enable
         when: "'Success' not in rule_17_1_2_audit.stdout"
 
-      - name: "17.1.2 | PATCH | Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure' DC Only | Failure"
+      - name: "17.1.2 | PATCH | Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure' DC Only | Failure | Domain Controller"
         ansible.windows.win_shell: AuditPol /set /subcategory:"Kerberos Authentication Service" /failure:enable
         when: "'Failure' not in rule_17_1_2_audit.stdout"
   when:
       - win22cis_rule_17_1_2
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.1.2
@@ -111,7 +112,8 @@
         when: "'Success' not in rule_17_2_2_audit.stdout"
   when:
       - win22cis_rule_17_2_2
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.2.2
@@ -131,7 +133,8 @@
         when: "'Success' not in rule_17_2_3_audit.stdout"
   when:
       - win22cis_rule_17_2_3
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.2.3
@@ -151,7 +154,8 @@
         when: "'Success' not in rule_17_2_4_audit.stdout"
   when:
       - win22cis_rule_17_2_4
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.2.4
@@ -255,7 +259,8 @@
         when: "'Failure' not in rule_17_4_1_audit.stdout"
   when:
       - win22cis_rule_17_4_1
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.4.1
@@ -275,7 +280,8 @@
         when: "'Success' not in rule_17_4_2_audit.stdout"
   when:
       - win22cis_rule_17_4_2
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
+      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.4.2
