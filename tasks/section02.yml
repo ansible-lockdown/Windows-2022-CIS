@@ -1477,8 +1477,8 @@
       type: dword
   when:
       - win22cis_rule_2_3_9_5
-      - ansible_windows_domain_role not "Primary domain controller" or
-        ansible_windows_domain_role == "Stand-alone server"
+      - win2022cis_is_domain_member
+      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.9.5
