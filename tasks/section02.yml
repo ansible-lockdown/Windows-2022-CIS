@@ -42,7 +42,6 @@
   when:
       - win22cis_rule_2_2_3
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -72,7 +71,6 @@
   when:
       - win22cis_rule_2_2_5
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.5
@@ -244,7 +242,7 @@
       action: set
   when:
       - win22cis_rule_2_2_17
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
   tags:
       - level1-domaincontroller
       - rule_2.2.17
@@ -272,7 +270,6 @@
   when:
       - win22cis_rule_2_2_18
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.18
@@ -302,7 +299,7 @@
       action: add
   when:
       - win22cis_rule_2_2_20
-      - ansible_windows_domain_role == "Primary domain controller"
+      - win2022cis_is_domain_controller
   tags:
       - level1-domaincontroller
       - rule_2.2.20
@@ -320,7 +317,6 @@
   when:
       - win22cis_rule_2_2_21
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.21
@@ -382,7 +378,6 @@
   when:
       - win22cis_rule_2_2_25
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.25
@@ -399,7 +394,6 @@
   when:
       - win22cis_rule_2_2_26
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.26
@@ -414,7 +408,6 @@
   when:
       - win22cis_rule_2_2_27
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.27
@@ -430,7 +423,6 @@
   when:
       - win22cis_rule_2_2_28
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.28
@@ -482,7 +474,6 @@
   when:
       - win22cis_rule_2_2_31
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.31
@@ -504,7 +495,6 @@
   when:
       - win22cis_rule_2_2_32
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.32
@@ -564,7 +554,6 @@
   when:
       - win22cis_rule_2_2_36
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level2-domaincontroller
       - rule_2.2.36
@@ -593,7 +582,6 @@
   when:
       - win22cis_rule_2_2_37
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.37
@@ -610,7 +598,6 @@
   when:
       - win22cis_rule_2_2_38
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.2.38
@@ -755,7 +742,6 @@
   when:
       - win22cis_rule_2_2_47
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.2.47
@@ -801,7 +787,6 @@
   when:
       - win22cis_rule_2_3_1_2
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.1.2
@@ -955,7 +940,6 @@
   when:
       - win22cis_rule_2_3_5_1
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.5.1
@@ -970,8 +954,7 @@
       type: dword
   when:
       - win22cis_rule_2_3_5_2
-      - ansible_windows_domain_role == "Primary domain controller"
-      - not win2022cis_is_standalone
+      - win2022cis_is_domain_controller
   tags:
       - level1-domaincontroller
       - rule_2.3.5.2
@@ -986,8 +969,7 @@
       type: dword
   when:
       - win22cis_rule_2_3_5_3
-      - ansible_windows_domain_role == "Primary domain controller"
-      - not win2022cis_is_standalone
+      - win2022cis_is_domain_controller
   tags:
       - level1-domaincontroller
       - rule_2.3.5.3
@@ -1003,7 +985,6 @@
   when:
       - win22cis_rule_2_3_5_4
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.5.4
@@ -1019,7 +1000,6 @@
   when:
       - win22cis_rule_2_3_5_5
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.5.5
@@ -1271,7 +1251,6 @@
   when:
       - win22cis_rule_2_3_7_6
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level2-memberserver
       - rule_2.3.7.6
@@ -1325,7 +1304,6 @@
   when:
       - win22cis_rule_2_3_7_8
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.7.8
@@ -1508,7 +1486,6 @@
   when:
       - win22cis_rule_2_3_10_2
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.10.2
@@ -1524,7 +1501,6 @@
   when:
       - win22cis_rule_2_3_10_3
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.10.3
@@ -1570,7 +1546,6 @@
   when:
       - win22cis_rule_2_3_10_6
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_2.3.10.6
@@ -1586,7 +1561,6 @@
   when:
       - win22cis_rule_2_3_10_7
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.10.7
@@ -1645,7 +1619,6 @@
   when:
       - win22cis_rule_2_3_10_11
       - win2022cis_is_domain_member
-      - not win2022cis_is_standalone
   tags:
       - level1-memberserver
       - rule_2.3.10.11

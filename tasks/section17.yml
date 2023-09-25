@@ -43,7 +43,6 @@
   when:
       - win22cis_rule_17_1_2
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.1.2
@@ -113,7 +112,6 @@
   when:
       - win22cis_rule_17_2_2
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.2.2
@@ -134,7 +132,6 @@
   when:
       - win22cis_rule_17_2_3
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.2.3
@@ -155,7 +152,6 @@
   when:
       - win22cis_rule_17_2_4
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.2.4
@@ -260,7 +256,6 @@
   when:
       - win22cis_rule_17_4_1
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.4.1
@@ -281,7 +276,6 @@
   when:
       - win22cis_rule_17_4_2
       - win2022cis_is_domain_controller
-      - not win2022cis_is_standalone
   tags:
       - level1-domaincontroller
       - rule_17.4.2
