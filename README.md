@@ -75,7 +75,7 @@ Further details can be seen in the [Changelog](./ChangeLog.md)
 
 ## Auditing (new)
 
-Currently, this release does not have a auditing tool that is up to date.
+Currently, this release does not have an auditing tool that is up to date.
 
 ## Documentation
 
@@ -134,9 +134,9 @@ Below is an example of the tag section from a control within this role. Using th
 
 We encourage you (the community) to contribute to this role. Please read the rules below.
 
-- Your work is done in your own individual branch. Make sure to Signed-off and GPG sign all commits you intend to merge.
+- Your work is done in your own individual branch. Make sure to Signed-off-by and GPG sign all commits you intend to merge.
 - All community Pull Requests are pulled into the devel branch
-- Pull Requests into devel will confirm your commits have a GPG signature, Signed-off, and a functional test before being approved
+- Pull Requests into devel will confirm your commits have a GPG signature, Signed-off-by, and a functional test before being approved
 - Once your changes are merged and a more detailed review is complete, an authorized member will merge your changes into the main branch for a new release
 
 ## Pipeline Testing
