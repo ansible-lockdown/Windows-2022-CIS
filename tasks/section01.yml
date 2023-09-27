@@ -191,6 +191,8 @@
       file: section01_cloud_lockout_order.yml
   when:
       - win22cis_cloud_based_system
+      - win2022cis_is_domain_controller
+      - win2022cis_is_domain_member
   tags:
       - section01_cloud_lockout_order
 
@@ -227,6 +229,8 @@
   when:
       - win22cis_rule_1_2_2
       - not win22cis_cloud_based_system
+      - not win2022cis_is_domain_controller
+      - not win2022cis_is_domain_member
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -242,6 +246,8 @@
   when:
       - win22cis_rule_1_2_3
       - not win22cis_cloud_based_system
+      - not win2022cis_is_domain_controller
+      - not win2022cis_is_domain_member
   tags:
       - level1-memberserver
       - rule_1.2.3
@@ -279,6 +285,8 @@
   when:
       - win22cis_rule_1_2_4
       - not win22cis_cloud_based_system
+      - not win2022cis_is_domain_controller
+      - not win2022cis_is_domain_member
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -311,6 +319,8 @@
   when:
       - win22cis_rule_1_2_1
       - not win22cis_cloud_based_system
+      - not win2022cis_is_domain_controller
+      - not win2022cis_is_domain_member
   tags:
       - level1-domaincontroller
       - level1-memberserver
