@@ -946,7 +946,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\RPC
       name: RpcUseNamedPipeProtocol
-      data: 1
+      data: 0
       type: dword
   when:
       - win22cis_rule_18_7_3
@@ -961,7 +961,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\RPC
       name: RpcAuthentication
-      data: 1
+      data: 0
       type: dword
   when:
       - win22cis_rule_18_7_4
@@ -976,7 +976,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\RPC
       name: RpcProtocols
-      data: 1
+      data: 5
       type: dword
   when:
       - win22cis_rule_18_7_5
@@ -988,11 +988,33 @@
       - printers
 
 - name: "18.7.6 | PATCH | Ensure Configure RPC listener settings Authentication protocol to use for incoming RPC connections is set to Enabled Negotiate or higher"
-  ansible.windows.win_regedit:
-      path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\RPC
-      name: ForceKerberosForRpc
-      data: 1
-      type: dword
+  block:
+      - name: "18.7.6 | AUDIT | Ensure 'Configure RPC listener settings: Authentication protocol to use for incoming RPC connections:' is set to 'Enabled: Negotiate' or higher. | Warning Check For Variable Standards."
+        ansible.builtin.debug:
+            msg:
+                - "Warning!! You have an invalid setting for win22cis_force_kerberos_for_rpc. Please read"
+                - "the notes for the variable and make the necessary change to the variable to be in compliance."
+        when:
+            - win22cis_force_kerberos_for_rpc != 0
+            - win22cis_force_kerberos_for_rpc != 1
+
+      - name: "18.7.6 | AUDIT | Ensure 'Configure RPC listener settings: Authentication protocol to use for incoming RPC connections:' is set to 'Enabled: Negotiate' or higher. | Warn Count."
+        ansible.builtin.import_tasks:
+            file: warning_facts.yml
+        vars:
+            warn_control_id: '18.7.6'
+        when:
+            - win22cis_force_kerberos_for_rpc != 0
+            - win22cis_force_kerberos_for_rpc != 1
+
+      - name: "18.7.6 | PATCH | Ensure 'Configure RPC listener settings: Authentication protocol to use for incoming RPC connections:' is set to 'Enabled: Negotiate' or higher. | Set Variable."
+        ansible.windows.win_regedit:
+            path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\RPC
+            name: ForceKerberosForRpc
+            data: "{{ win22cis_force_kerberos_for_rpc }}"
+            type: dword
+        when:
+            - win22cis_force_kerberos_for_rpc == 0 or win22cis_force_kerberos_for_rpc == 1
   when:
       - win22cis_rule_18_7_6
   tags:
@@ -1006,7 +1028,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\RPC
       name: RpcTcpPort
-      data: 1
+      data: 0
       type: dword
   when:
       - win22cis_rule_18_7_7

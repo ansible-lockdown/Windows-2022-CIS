@@ -746,6 +746,15 @@ win22cis_doh_policy: 2
 # Default: 2
 win22cis_enable_netbios_policy: 2
 
+# 18.7.6
+# win22cis_force_kerberos_for_rpc is the policy setting controls which protocols incoming Remote Procedure Call (RPC) connections to the
+# print spooler are allowed to use.
+# The recommended state for this setting is: Enabled: Negotiate or higher.
+# 0 - Negotiate
+# 1 - Kerberos
+# Default: 0
+win22cis_force_kerberos_for_rpc: 0
+
 # 18.10.13.1
 # win22cis_require_pin_for_pairing is the policy setting that controls whether or not a PIN is required for pairing to a wireless display device.
 # The recommended state for this setting is: Enabled: First Time OR Enabled: Always.
