@@ -11,14 +11,13 @@
 ![followers](https://img.shields.io/github/followers/ansible-lockdown?style=social)
 [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/AnsibleLockdown.svg?style=social&label=Follow%20%40AnsibleLockdown)](https://twitter.com/AnsibleLockdown)
 
-![Ansible Galaxy Quality](https://img.shields.io/ansible/quality/56324?label=Quality&&logo=ansible)
 ![Discord Badge](https://img.shields.io/discord/925818806838919229?logo=discord)
 
-![Devel Build Status](https://img.shields.io/github/actions/workflow/status/ansible-lockdown/Windows-2022-CIS/testing_pipeline.yml?label=Devel%20Build%20Status)
-![Devel Commits](https://img.shields.io/github/commit-activity/m/ansible-lockdown/Windows-2022-CIS/devel?color=dark%20green&label=Devel%20Branch%20commits)
+[![Devel Pipeline Status](https://github.com/ansible-lockdown/Windows-2022-CIS/actions/workflows/devel_pipeline_validation.yml/badge.svg?)](https://github.com/ansible-lockdown/Windows-2022-CIS/actions/workflows/devel_pipeline_validation.yml)
+![Devel Commits](https://img.shields.io/github/commit-activity/m/ansible-lockdown/Windows-2022-CIS/devel?color=dark%20green&label=Devel%20Branch%20Commits)
 
 ![Release Branch](https://img.shields.io/badge/Release%20Branch-Main-brightgreen)
-![Main Build Status](https://img.shields.io/github/actions/workflow/status/ansible-lockdown/Windows-2022-CIS/testing_pipeline.yml?label=Build%20Status)
+[![Main Pipeline Status](https://github.com/ansible-lockdown/Windows-2022-CIS/actions/workflows/main_pipeline_validation.yml/badge.svg?)](https://github.com/ansible-lockdown/Windows-2022-CIS/actions/workflows/main_pipeline_validation.yml)
 ![Main Release Date](https://img.shields.io/github/release-date/ansible-lockdown/Windows-2022-CIS?label=Release%20Date)
 ![Release Tag](https://img.shields.io/github/v/tag/ansible-lockdown/Windows-2022-CIS?label=Release%20Tag&&color=success)
 
