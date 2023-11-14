@@ -1,5 +1,11 @@
 ---
 
+- name: Display Banner
+  ansible.builtin.debug:
+      msg: "{{ lockdown_banner.split('\n') }}"
+  tags:
+      - always
+
 - name: Gather distribution info
   ansible.builtin.setup:
       gather_subset: distribution,!all,!min
@@ -30,61 +36,80 @@
       path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion
       name: InstallationType
   register: get_windows_installation_type
+  tags:
+      - always
 
 - name: Set Windows installation type
   ansible.builtin.set_fact:
       windows_installation_type: "{{ get_windows_installation_type.value | default('') }}"
+  tags:
+      - always
 
 - name: Include the preliminary tasks
-  ansible.builtin.import_tasks: prelim.yml
+  ansible.builtin.import_tasks:
+      file: prelim.yml
   tags:
       - prelim_tasks
 
 - name: Execute the section 1 tasks
-  ansible.builtin.import_tasks: section01.yml
+  ansible.builtin.import_tasks:
+      file: section01.yml
   when:
-      - section01_patch
+      - win22cis_section01
   tags:
       - section01
 
 - name: Execute the section 2 tasks
-  ansible.builtin.import_tasks: section02.yml
+  ansible.builtin.import_tasks:
+      file: section02.yml
   when:
-      - section02_patch
+      - win22cis_section02
   tags:
       - section02
 
 - name: Execute the section 5 tasks
-  ansible.builtin.import_tasks: section05.yml
+  ansible.builtin.import_tasks:
+      file: section05.yml
   when:
-      - section05_patch
+      - win22cis_section05
   tags:
       - section05
 
 - name: Execute the section 9 tasks
-  ansible.builtin.import_tasks: section09.yml
+  ansible.builtin.import_tasks:
+      file: section09.yml
   when:
-      - section09_patch
+      - win22cis_section09
   tags:
       - section09
 
 - name: Execute the section 17 tasks
-  ansible.builtin.import_tasks: section17.yml
+  ansible.builtin.import_tasks:
+      file: section17.yml
   when:
-      - section17_patch
+      - win22cis_section17
   tags:
       - section17
 
 - name: Execute the section 18 tasks
-  ansible.builtin.import_tasks: section18.yml
+  ansible.builtin.import_tasks:
+      file: section18.yml
   when:
-      - section18_patch
+      - win22cis_section17
   tags:
       - section18
 
 - name: Execute the section 19 tasks
-  ansible.builtin.import_tasks: section19.yml
+  ansible.builtin.import_tasks:
+      file: section19.yml
   when:
-      - section19_patch
+      - win22cis_section19
   tags:
       - section19
+
+- name: If Warnings found Output count and control IDs affected
+  ansible.builtin.debug:
+      msg:
+          - "You have {{ warn_count }} Warning(s) that require investigation(s). Their IDs are listed below:"
+          - "{{ warn_control_list }}"
+  when: warn_count != 0

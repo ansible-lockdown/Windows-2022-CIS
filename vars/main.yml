@@ -1,35 +1,19 @@
 ---
 
-# These are variables that shouldn't be edited by the end user
+# vars file for Windows-2022-CIS
 
-# 2.3.7.4
-# win22cis_legalnoticetext is the text that makes the logon legal notice
-# This value should stay as the default becuase scanners look for this exact text
-win22cis_legalnoticetext: |
-    You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
+# Used to control warning summary
+warn_control_list: ""
+warn_count: 0
 
-    By using this IS (which includes any device attached to this IS), you consent to the following conditions:
+# lockdown_banner sets the variable that is created for the banner.
+lockdown_banner: "{{lookup('file', './templates/banner.txt')}}"
 
-    -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
+# win22cis_cloud_based_system will be changed to true if discovered.
+win22cis_cloud_based_system: false
 
-    -At any time, the USG may inspect and seize data stored on this IS.
-
-    -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose.
-
-    -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
-
-    -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
-
-# 2.3.7.6
-# win22cis_legalnoticecaption is the caption for the logon legal notice
-# This value should stay as the default because scanners look for htis exact text
-win22cis_legalnoticecaption: "DoD Notice and Consent Banner"
-
-# This SID is the same for standalone, member, domain controller for 'Administrators' group
-sedebugprivilege: "*S-1-5-32-544"
-
-# 2.2.33
-# Window Manager\Window Manager Group only exists on non Core installations
-# windows_installation_type should be 'Server Core' for Core installations
-# This is a variable to determine if Windows Manager should be included in this step
-win22cis_increase_scheduling_priority_users: '{{ ["Administrators"] if (windows_installation_type=="Server Core") else (["Administrators","Window Manager\Window Manager Group"]) }}'
+# These are default values that will be changed when the prelim
+# runs and finds the correct setting.
+win2022cis_is_standalone: false
+win2022cis_is_domain_controller: false
+win2022cis_is_domain_member: false
