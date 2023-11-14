@@ -51,10 +51,10 @@ disruption_high: false
 # setting to make them stand out.
 audit_disruptive: false
 
-# tweak role to run in a non-privileged container
+# Tweak role to run in a non-privileged container
 system_is_container: false
 
-# set to false to skip long_running tasks
+# Set to false to skip long_running tasks
 long_running: false
 
 # win_skip_for_test is used in the playbook to skip over WINRM-based controls that
