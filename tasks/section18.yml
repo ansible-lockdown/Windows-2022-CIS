@@ -1075,7 +1075,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint
       name: NoWarningNoElevationOnInstall
-      data: 1
+      data: 0
       type: dword
   when:
       - win22cis_rule_18_7_10
@@ -1090,7 +1090,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\Printers\PointAndPrint
       name: UpdatePromptSettings
-      data: 1
+      data: 0
       type: dword
   when:
       - win22cis_rule_18_7_11
