@@ -1,6 +1,12 @@
 # ChangeLog
 
-## Release 1.0.0
+## Release 2.0.1
+
+February 2024 Update
+- Issues Addressed:
+
+
+## Release 2.0.0
 
 September 2023
 - This Release is based on CIS Benchmark v2.0.0
