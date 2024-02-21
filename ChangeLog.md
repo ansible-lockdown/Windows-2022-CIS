@@ -4,7 +4,8 @@
 
 February 2024 Update
 - Issues Addressed:
-
+    - [#27](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/27) - Thank you @SwaffelSmurf
+    - Typo and bug fixes
 
 ## Release 2.0.0
 
