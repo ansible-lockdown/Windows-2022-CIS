@@ -937,7 +937,7 @@
       - win22cis_rule_18_7_2
   tags:
       - level1-domaincontroller
-      - level2-memberserver
+      - level1-memberserver
       - rule_18.7.2
       - patch
       - printers
@@ -952,7 +952,7 @@
       - win22cis_rule_18_7_3
   tags:
       - level1-domaincontroller
-      - level2-memberserver
+      - level1-memberserver
       - rule_18.7.3
       - patch
       - printers
@@ -967,7 +967,7 @@
       - win22cis_rule_18_7_4
   tags:
       - level1-domaincontroller
-      - level2-memberserver
+      - level1-memberserver
       - rule_18.7.4
       - patch
       - printers
@@ -982,7 +982,7 @@
       - win22cis_rule_18_7_5
   tags:
       - level1-domaincontroller
-      - level2-memberserver
+      - level1-memberserver
       - rule_18.7.5
       - patch
       - printers
@@ -1019,7 +1019,7 @@
       - win22cis_rule_18_7_6
   tags:
       - level1-domaincontroller
-      - level2-memberserver
+      - level1-memberserver
       - rule_18.7.6
       - patch
       - printers
@@ -1034,7 +1034,7 @@
       - win22cis_rule_18_7_7
   tags:
       - level1-domaincontroller
-      - level2-memberserver
+      - level1-memberserver
       - rule_18.7.7
       - patch
       - printers
