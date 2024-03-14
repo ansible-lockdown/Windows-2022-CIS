@@ -207,7 +207,7 @@
       name: RpcAuthnLevelPrivacyEnabled
       data: 1
       type: dword
-  notify: reboot_windows
+  notify: change_requires_reboot
   when:
       - win22cis_rule_18_4_2
   tags:
@@ -239,7 +239,7 @@
       data: 0
       type: dword
       state: present
-  notify: reboot_windows
+  notify: change_requires_reboot
   when:
       - win22cis_rule_18_4_4
   tags:
