@@ -300,6 +300,7 @@
   when:
       - win22cis_rule_2_2_20
       - win2022cis_is_domain_controller
+      - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - rule_2.2.20
@@ -378,6 +379,7 @@
   when:
       - win22cis_rule_2_2_25
       - win2022cis_is_domain_controller
+      - not win_skip_for_test
   tags:
       - level1-domaincontroller
       - rule_2.2.25
@@ -394,6 +396,7 @@
   when:
       - win22cis_rule_2_2_26
       - win2022cis_is_domain_member
+      - not win_skip_for_test
   tags:
       - level1-memberserver
       - rule_2.2.26
