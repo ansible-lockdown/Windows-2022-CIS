@@ -37,19 +37,10 @@ min_ansible_version: "2.10"
 # may fail in some cases.
 complexity_high: true
 
-# Show "changed" for complex items not remediated per complexity-high setting
-# to make them stand out.  "changed" items on a second run of the role would
-# indicate items requiring manual review.
-audit_complex: true
-
 # We've defined disruption-high to indicate items that are likely to cause
 # disruption in a normal workflow. These items can be remediated automatically
 # but are disabled by default to avoid disruption.
 disruption_high: false
-
-# Show "changed" for disruptive items not remediated per disruption-high
-# setting to make them stand out.
-audit_disruptive: false
 
 # Tweak role to run in a non-privileged container
 system_is_container: false
