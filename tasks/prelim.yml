@@ -51,7 +51,7 @@
       - always
 
 
-- name: PRELIM | Obtatin And Load Default And User Hives
+- name: PRELIM | Retrieve Default NTUSER and All Local User Hive Data
   block:
       - name: PRELIM | Load Default User Hive (Account That All New Users Get Created From Profile)
         ansible.windows.win_shell: REG LOAD HKU\DEFAULT C:\Users\Default\NTUSER.DAT
