@@ -37,19 +37,10 @@ min_ansible_version: "2.10"
 # may fail in some cases.
 complexity_high: true
 
-# Show "changed" for complex items not remediated per complexity-high setting
-# to make them stand out.  "changed" items on a second run of the role would
-# indicate items requiring manual review.
-audit_complex: true
-
 # We've defined disruption-high to indicate items that are likely to cause
 # disruption in a normal workflow. These items can be remediated automatically
 # but are disabled by default to avoid disruption.
 disruption_high: false
-
-# Show "changed" for disruptive items not remediated per disruption-high
-# setting to make them stand out.
-audit_disruptive: false
 
 # Tweak role to run in a non-privileged container
 system_is_container: false
@@ -60,15 +51,22 @@ long_running: false
 # win_skip_for_test is used in the playbook to skip over WINRM-based controls that
 # may cause WINRM Basic Connection Type to be disabled.
 # Setting win_skip_for_test to 'false' will enable Secure Connection types only.
-# win22cis_rule_2_3_1_4
-# win22cis_rule_9_3_5
-# win22cis_rule_18_10_89_1_1
-# win22cis_rule_18_10_89_1_2
-# win22cis_rule_18_10_89_2_1
-# win22cis_rule_18_10_89_2_2
-# win22cis_rule_18_10_89_2_3
-# win22cis_rule_18_10_90_1
+# win22cis_rule_2_2_25 - Breaks Local Admin Connection
+# win22cis_rule_2_2_26 - Breaks Local Admin Connection
+# win22cis_rule_2_3_1_4 - Rename default administrator account
+# win22cis_rule_9_3_5 - Enables Firewall Public Rules *Breaks Reboot*
+# win22cis_rule_18_10_89_1_1 - Disables WinRM Allow Client Basic Auth
+# win22cis_rule_18_10_89_1_2 - Disables Client Ensure Allow unencrypted traffic is set to Disabled Control.
+# win22cis_rule_18_10_89_2_1 - Disables WinRM Allow Service Basic Auth
+# win22cis_rule_18_10_89_2_2 - Disables Remote Server Management through WinRM
+# win22cis_rule_18_10_89_2_3 - Disables Service Ensure Allow unencrypted traffic is set to Disabled Control.
+# win22cis_rule_18_10_90_1 - Disables Remote Shell Access
 win_skip_for_test: true
+
+# Changes will be made that will require a system reboot.
+# The following option will allow whether or not to skip the reboot.
+# Default: true
+skip_reboot: true
 
 # These variables correspond with the CIS Rule IDs defined in the CIS and allow you to enable/disable specific rules.
 # PLEASE NOTE: These work in coordination with the level1 and level2 group variables. You must enable an entire group
@@ -118,6 +116,8 @@ win22cis_rule_2_2_21: true
 win22cis_rule_2_2_22: true
 win22cis_rule_2_2_23: true
 win22cis_rule_2_2_24: true
+# Setting win22cis_rule_2_2_25 and win22cis_rule_2_2_26 Control To True Will Break Ansible Connection
+# Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
 win22cis_rule_2_2_25: true
 win22cis_rule_2_2_26: true
 win22cis_rule_2_2_27: true
@@ -355,7 +355,7 @@ win22cis_rule_18_9_5_4: true
 win22cis_rule_18_9_5_5: true
 win22cis_rule_18_9_5_6: true
 win22cis_rule_18_9_5_7: true
-win22cis_rule_18_8_7_2: true
+win22cis_rule_18_9_7_2: true
 win22cis_rule_18_9_13_1: true
 win22cis_rule_18_9_19_2: true
 win22cis_rule_18_9_19_3: true

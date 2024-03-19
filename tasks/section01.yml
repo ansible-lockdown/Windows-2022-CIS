@@ -190,9 +190,7 @@
   ansible.builtin.import_tasks:
       file: section01_cloud_lockout_order.yml
   when:
-      - win22cis_cloud_based_system or
-        win2022cis_is_domain_controller or
-        win2022cis_is_domain_member
+      - win22cis_cloud_based_system
   tags:
       - section01_cloud_lockout_order
 
@@ -228,9 +226,7 @@
             - win22cis_bad_login_lockout_count > 0
   when:
       - win22cis_rule_1_2_2
-      - not win22cis_cloud_based_system or
-        win2022cis_is_domain_controller or
-        win2022cis_is_domain_member
+      - not win22cis_cloud_based_system
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -245,9 +241,8 @@
       value: "{{ win22cis_allow_admin_account_lockout }}"
   when:
       - win22cis_rule_1_2_3
-      - not win22cis_cloud_based_system or
-        win2022cis_is_domain_controller or
-        win2022cis_is_domain_member
+      - win2022cis_is_domain_member
+      - not win22cis_cloud_based_system
   tags:
       - level1-memberserver
       - rule_1.2.3
@@ -284,9 +279,7 @@
             - win22cis_account_lockout_counter_reset <= win22cis_account_lockout_duration
   when:
       - win22cis_rule_1_2_4
-      - not win22cis_cloud_based_system or
-        win2022cis_is_domain_controller or
-        win2022cis_is_domain_member
+      - not win22cis_cloud_based_system
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -318,9 +311,7 @@
         when: win22cis_account_lockout_duration >= 15
   when:
       - win22cis_rule_1_2_1
-      - not win22cis_cloud_based_system or
-        win2022cis_is_domain_controller or
-        win2022cis_is_domain_member
+      - not win22cis_cloud_based_system
   tags:
       - level1-domaincontroller
       - level1-memberserver

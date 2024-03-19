@@ -207,7 +207,7 @@
       name: RpcAuthnLevelPrivacyEnabled
       data: 1
       type: dword
-  notify: reboot_windows
+  notify: change_requires_reboot
   when:
       - win22cis_rule_18_4_2
   tags:
@@ -239,7 +239,7 @@
       data: 0
       type: dword
       state: present
-  notify: reboot_windows
+  notify: change_requires_reboot
   when:
       - win22cis_rule_18_4_4
   tags:
@@ -1265,18 +1265,18 @@
       - patch
       - vbs
 
-- name: "18.8.7.2 | PATCH | Ensure Prevent device metadata retrieval from the Internet is set to Enabled"
+- name: "18.9.7.2 | PATCH | Ensure Prevent device metadata retrieval from the Internet is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata
       name: PreventDeviceMetadataFromNetwork
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_8_7_2
+      - win22cis_rule_18_9_7_2
   tags:
       - level1-domaincontroller
       - level1-memberserver
-      - rule_18.8.7.2
+      - rule_18.9.7.2
       - patch
       - metadata
 
@@ -3578,7 +3578,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\Winrm\Service
       name: AllowAutoConfig
-      data: 1
+      data: 0
       type: dword
   when:
       - win22cis_rule_18_10_89_2_2
