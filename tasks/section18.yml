@@ -299,7 +299,7 @@
 
 - name: "18.5.1 | PATCH | Ensure MSS AutoAdminLogon Enable Automatic Logon not recommended is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon
+      path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
       state: present
       name: AutoAdminLogon
       data: 0
