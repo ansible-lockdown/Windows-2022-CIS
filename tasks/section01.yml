@@ -155,10 +155,11 @@
       - password
 
 - name: "1.1.6 | PATCH | Ensure Relax minimum password length limits is set to Enabled."
-  community.windows.win_security_policy:
-      section: System Access
-      key: RelaxMinimumPasswordLengthLimits
-      value: 1
+  ansible.windows.win_regedit:
+      path: HKLM:\System\CurrentControlSet\Control\SAM
+      name: RelaxMinimumPasswordLengthLimits
+      data: 1
+      type: dword
   when:
       - win22cis_rule_1_1_6
   tags:
