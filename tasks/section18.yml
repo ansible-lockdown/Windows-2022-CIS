@@ -602,7 +602,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
       name: EnableMulticast
-      data: 0
+      data: 1
       type: dword
   when:
       - win22cis_rule_18_6_4_3
