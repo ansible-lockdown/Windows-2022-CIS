@@ -3454,7 +3454,7 @@
   ansible.windows.win_regedit:
       path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
       name: EnableMPR
-      data: 1
+      data: 0
       type: dword
   when:
       - win22cis_rule_18_10_82_1
