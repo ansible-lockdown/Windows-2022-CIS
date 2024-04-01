@@ -95,7 +95,7 @@
   ansible.builtin.import_tasks:
       file: section18.yml
   when:
-      - win22cis_section17
+      - win22cis_section18
   tags:
       - section18
 
