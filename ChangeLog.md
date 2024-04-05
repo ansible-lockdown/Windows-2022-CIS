@@ -2,6 +2,10 @@
 
 ## Release 2.0.1
 
+April 2024 Update
+Thank you @RomainPisters
+    - Fix from Issue #32
+
 March 2024 Update
 Thank you @MrSteve81 for the enhancements to this release!
     - Improved 19.x section logic for Windows local user SIDs and HKU support.
