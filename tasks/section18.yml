@@ -299,11 +299,11 @@
 
 - name: "18.5.1 | PATCH | Ensure MSS AutoAdminLogon Enable Automatic Logon not recommended is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon
+      path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
       state: present
-      value: AutoAdminLogon
+      name: AutoAdminLogon
       data: 0
-      datatype: string
+      type: string
   when:
       - win22cis_rule_18_5_1
   tags:
@@ -598,7 +598,7 @@
       - patch
       - netbios
 
-- name: "18.6.4.3 | PATCH | Ensure Turn off multicast name resolution is set to Enabled MS Only | Member Server"
+- name: "18.6.4.3 | PATCH | Ensure Turn off multicast name resolution is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient
       name: EnableMulticast
@@ -606,7 +606,6 @@
       type: dword
   when:
       - win22cis_rule_18_6_4_3
-      - win2022cis_is_domain_member
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -3385,20 +3384,6 @@
       - patch
       - wik
 
-- name: "18.10.81.1 | PATCH | Ensure Allow user control over installs is set to Disabled"
-  ansible.windows.win_regedit:
-      path: HKLM:\Software\Policies\Microsoft\Windows\Installer
-      name: EnableUserControl
-      data: 0
-      type: dword
-  when:
-      - win22cis_rule_18_10_81_1
-  tags:
-      - level1-domaincontroller
-      - level1-memberserver
-      - rule_18.10.81.1
-      - patch
-
 - name: "18.10.80.2 | PATCH | Ensure 'Allow suggested apps in Windows Ink Workspace' is set to 'Disabled'"
   block:
       - name: "18.10.80.2 | AUDIT | Ensure 'Allow suggested apps in Windows Ink Workspace' is set to 'Disabled' | Warning Check For Variable Standards."
@@ -3433,6 +3418,34 @@
       - level1-corporate-enterprise-environment
       - rule_18.10.80.2
       - automated
+      - patch
+
+- name: "18.10.81.1 | PATCH | Ensure Allow user control over installs is set to Disabled"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows\Installer
+      name: EnableUserControl
+      data: 0
+      type: dword
+  when:
+      - win22cis_rule_18_10_81_1
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.81.1
+      - patch
+
+- name: "18.10.81.2 | PATCH | Ensure 'Always install with elevated privileges' is set to 'Disabled'"
+  ansible.windows.win_regedit:
+      path: HKLM:\Software\Policies\Microsoft\Windows\Installer
+      name: AlwaysInstallElevated
+      data: 0
+      type: dword
+  when:
+      - win22cis_rule_18_10_81_2
+  tags:
+      - level1-domaincontroller
+      - level1-memberserver
+      - rule_18.10.81.2
       - patch
 
 - name: "18.10.81.3 | PATCH | Ensure Prevent Internet Explorer security prompt for Windows Installer scripts is set to Disabled"
@@ -3698,7 +3711,7 @@
       - patch
       - winupdate
 
-- name: "18.10.93.4.1 | PATCH | Ensure Manage preview builds is set to Enabled Disable preview builds"
+- name: "18.10.93.4.1 | PATCH | Ensure 'Manage preview builds' is set to 'Disabled'"
   block:
       - name: "18.10.93.4.1 | PATCH | Ensure Manage preview builds is set to Enabled Disable preview builds | ManagePreviewBuilds"
         ansible.windows.win_regedit:
@@ -3711,7 +3724,7 @@
         ansible.windows.win_regedit:
             path: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
             name: ManagePreviewBuildsPolicyValue
-            data: 0
+            data: 1
             type: dword
   when:
       - win22cis_rule_18_10_93_4_1
