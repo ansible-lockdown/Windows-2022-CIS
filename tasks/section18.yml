@@ -607,9 +607,9 @@
   when:
       - win22cis_rule_18_6_4_3
   tags:
-      - level1-corporate-enterprise-environment
+      - level1-domaincontroller
+      - level1-memberserver
       - rule_18.6.4.3
-      - automated
       - patch
       - dns
 
