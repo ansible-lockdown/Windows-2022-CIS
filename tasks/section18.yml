@@ -758,7 +758,7 @@
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_5_11_3
+      - win22cis_rule_18_6_11_3
   tags:
       - level1-domaincontroller
       - level1-memberserver
@@ -1644,7 +1644,7 @@
       - rule_18.9.26.1
       - patch
 
-- name: "18.9.17.1 | PATCH | Ensure Block user from showing account details on sign-in is set to Enabled"
+- name: "18.9.27.1 | PATCH | Ensure Block user from showing account details on sign-in is set to Enabled"
   ansible.windows.win_regedit:
       path: HKLM:\Software\Policies\Microsoft\Windows\System
       name: BlockUserFromShowingAccountDetailsOnSignin
@@ -1799,7 +1799,7 @@
       data: 0
       type: dword
   when:
-      - win22cis_rule_18_3_32_6_2
+      - win22cis_rule_18_9_32_6_2
   tags:
       - level2-domaincontroller
       - level2-memberserver
