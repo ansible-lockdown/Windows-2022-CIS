@@ -3085,7 +3085,7 @@
       data: 1
       type: dword
   when:
-      - win22cis_rule_18_10_57_3_3_6
+      - win22cis_rule_18_10_57_3_3_7
   tags:
       - level2-domaincontroller
       - level2-memberserver
