@@ -2,7 +2,7 @@
 
 - name: "19.1.3.1 | PATCH | Ensure Enable screen saver is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Windows\Control Panel\Desktop
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\Control Panel\Desktop
       name: ScreenSaveActive
       data: 1
       type: string
@@ -19,7 +19,7 @@
 
 - name: "19.1.3.2 | PATCH | Ensure Password protect the screen saver is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Windows\Control Panel\Desktop
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\Control Panel\Desktop
       name: ScreenSaverIsSecure
       data: 1
       type: string
@@ -56,7 +56,7 @@
 
       - name: "19.1.3.3 | PATCH | Ensure Screen saver timeout is set to Enabled 900 seconds or fewer but not 0"
         ansible.windows.win_regedit:
-            path: HKU:\{{ item }}\Software\Policies\Microsoft\Windows\Control Panel\Desktop
+            path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\Control Panel\Desktop
             name: ScreenSaveTimeOut
             data: "{{ win22cis_screen_saver_timeout }}"
             type: string
@@ -73,7 +73,7 @@
 
 - name: "19.5.1.1 | PATCH | Ensure Turn off toast notifications on the lock screen is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Windows\Currentversion\Pushnotifications
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\Currentversion\Pushnotifications
       name: NoToastApplicationNotificationOnLockScreen
       data: 1
       type: dword
@@ -90,7 +90,7 @@
 
 - name: "19.6.6.1.1 | PATCH | Ensure Turn off Help Experience Improvement Program is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Assistance\Client\1.0
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Assistance\Client\1.0
       name: NoImplicitFeedback
       data: 1
       type: dword
@@ -107,7 +107,7 @@
 
 - name: "19.7.4.1 | PATCH | Ensure Do not preserve zone information in file attachments is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments
+      path: HKU:\{{ item }}\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments
       name: SaveZoneInformation
       data: 2
       type: dword
@@ -124,7 +124,7 @@
 
 - name: "19.7.4.2 | PATCH | Ensure Notify antivirus programs when opening attachments is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Microsoft\Windows\Currentversion\Policies\Attachments
+      path: HKU:\{{ item }}\SOFTWARE\Microsoft\Windows\Currentversion\Policies\Attachments
       name: ScanWithAntiVirus
       data: 3
       type: dword
@@ -141,7 +141,7 @@
 
 - name: "19.7.7.1 | PATCH | Ensure Configure Windows spotlight on lock screen is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Windows\CloudContent
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\CloudContent
       name: ConfigureWindowsSpotlight
       data: 2
       type: dword
@@ -158,7 +158,7 @@
 
 - name: "19.7.7.2 | PATCH | Ensure Do not suggest third-party content in Windows spotlight is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Windows\CloudContent
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\CloudContent
       name: DisableThirdPartySuggestions
       data: 1
       type: dword
@@ -175,7 +175,7 @@
 
 - name: "19.7.7.3 | PATCH | Ensure Do not use diagnostic data for tailored experiences is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Windows\CloudContent
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\CloudContent
       name: DisableTailoredExperiencesWithDiagnosticData
       data: 1
       type: dword
@@ -192,7 +192,7 @@
 
 - name: "19.7.7.4 | PATCH | Ensure Turn off all Windows spotlight features is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Windows\CloudContent
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\CloudContent
       name: DisableWindowsSpotlightFeatures
       data: 1
       type: dword
@@ -226,7 +226,7 @@
 
 - name: "19.7.25.1 | PATCH | Ensure Prevent users from sharing files within their profile. is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Microsoft\Windows\Currentversion\Policies\Explorer
+      path: HKU:\{{ item }}\SOFTWARE\Microsoft\Windows\Currentversion\Policies\Explorer
       name: NoInplaceSharing
       data: 1
       type: dword
@@ -244,7 +244,7 @@
 
 - name: "19.7.40.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Windows\Installer
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\Installer
       name: AlwaysInstallElevated
       data: 0
       type: dword
@@ -261,7 +261,7 @@
 
 - name: "19.7.42.2.1 | PATCH | Ensure Prevent Codec Download is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKU:\{{ item }}\Software\Policies\Microsoft\Windowsmediaplayer
+      path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windowsmediaplayer
       name: PreventCodecDownload
       data: 1
       type: dword
