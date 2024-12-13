@@ -769,7 +769,7 @@
 
 - name: "2.3.1.1 | PATCH | Ensure Accounts Block Microsoft accounts is set to Users can not add or log on with Microsoft accounts"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: NoConnectedUser
       data: 3
       type: dword
@@ -798,7 +798,7 @@
 
 - name: "2.3.1.3 | PATCH | Ensure Accounts Limit local account use of blank passwords to console logon only is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa
       name: LimitBlankPasswordUse
       data: 1
       type: dword
@@ -876,7 +876,7 @@
 
 - name: "2.3.2.1 | PATCH | Ensure Audit Force audit policy subcategory settings Windows Vista or later to override audit policy category settings is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Control\Lsa
+      path: HKLM:\SYSTEM\CurrentControlSet\Control\Lsa
       name: SCENoApplyLegacyAuditPolicy
       data: 1
       type: dword
@@ -891,7 +891,7 @@
 
 - name: "2.3.2.2 | PATCH | Ensure Audit Shut down system immediately if unable to log security audits is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Control\Lsa
+      path: HKLM:\SYSTEM\CurrentControlSet\Control\Lsa
       name: CrashOnAuditFail
       data: 0
       type: dword
@@ -906,7 +906,7 @@
 
 - name: "2.3.4.1 | PATCH | Ensure Devices Allowed to format and eject removable media is set to Administrators"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
+      path: HKLM:\SOFTWARE\Microsoft\Windows Nt\Currentversion\Winlogon
       name: AllocateDASD
       data: 0
       type: string
@@ -921,7 +921,7 @@
 
 - name: "2.3.4.2 | PATCH | Ensure Devices Prevent users from installing printer drivers is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Print\Providers\Lanman Print Services\Servers
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Print\Providers\Lanman Print Services\Servers
       name: AddPrinterDrivers
       data: 1
       type: dword
@@ -936,7 +936,7 @@
 
 - name: "2.3.5.1 | PATCH | Ensure Domain controller Allow server operators to schedule tasks is set to Disabled DC only | Domain Controller"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Control\Lsa
+      path: HKLM:\SYSTEM\CurrentControlSet\Control\Lsa
       name: SubmitControl
       data: 0
       type: dword
@@ -951,7 +951,7 @@
 
 - name: "2.3.5.2 | PATCH | Ensure Domain controller Allow vulnerable Netlogon secure channel connections is set to Not Configured DC only | Domain Controller"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+      path: HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters
       name: VulnerableChannelAllowList
       data: 0
       type: dword
@@ -966,7 +966,7 @@
 
 - name: "2.3.5.3 | PATCH | Ensure Domain controller LDAP server channel binding token requirements' is set to Always DC only | Domain Controller"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Services\NTDS\Parameters
+      path: HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters
       name: LdapEnforceChannelBinding
       data: 2
       type: dword
@@ -981,7 +981,7 @@
 
 - name: "2.3.5.4 | PATCH | Ensure Domain controller LDAP server signing requirements is set to Require signing DC only | Domain Controller"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Services\NTDS\Parameters
+      path: HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters
       name: LDAPServerIntegrity
       data: 2
       type: dword
@@ -996,7 +996,7 @@
 
 - name: "2.3.5.5 | PATCH | Ensure Domain controller Refuse machine account password changes is set to Disabled DC only | Domain Controller"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters
+      path: HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters
       name: RefusePasswordChange
       data: 0
       type: dword
@@ -1011,7 +1011,7 @@
 
 - name: "2.3.6.1 | PATCH | Ensure Domain member Digitally encrypt or sign secure channel data always is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters
       name: RequireSignOrSeal
       data: 1
       type: dword
@@ -1028,7 +1028,7 @@
 
 - name: "2.3.6.2 | PATCH | Ensure Domain member Digitally encrypt secure channel data when possible is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters
       name: SealSecureChannel
       data: 1
       type: dword
@@ -1045,7 +1045,7 @@
 
 - name: "2.3.6.3 | PATCH | Ensure Domain member Digitally sign secure channel data when possible is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters
       name: SignSecureChannel
       data: 1
       type: dword
@@ -1061,7 +1061,7 @@
 
 - name: "2.3.6.4 | PATCH | Ensure Domain member Disable machine account password changes is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters
       name: DisablePasswordChange
       data: 0
       type: dword
@@ -1097,7 +1097,7 @@
 
       - name: "2.3.6.5 | PATCH | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0. | Apply Settings To Registry."
         ansible.windows.win_regedit:
-            path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
+            path: HKLM:\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters
             name: MaximumPasswordAge
             data: "{{ win22cis_domain_member_maximum_password_age }}"
             type: dword
@@ -1116,7 +1116,7 @@
 
 - name: "2.3.6.6 | PATCH | Ensure Domain member Require strong Windows 2000 or later session key is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Netlogon\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters
       name: RequireStrongKey
       data: 1
       type: dword
@@ -1132,7 +1132,7 @@
 
 - name: "2.3.7.1 | PATCH | Ensure Interactive logon Do not require CTRL+ALT+DEL is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: DisableCAD
       data: 0
       type: dword
@@ -1147,7 +1147,7 @@
 
 - name: "2.3.7.2 | PATCH | Ensure Interactive logon Do not display last signed-in is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: DontDisplayLastUserName
       data: 1
       type: dword
@@ -1182,7 +1182,7 @@
 
       - name: "2.3.7.3 | PATCH | Ensure Interactive logon Machine inactivity limit is set to 900 or fewer seconds but not 0. | Apply Settings To Registry."
         ansible.windows.win_regedit:
-            path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+            path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
             name: InactivityTimeoutSecs
             data: "{{ win22cis_inactivity_timeout_seconds }}"
             type: dword
@@ -1200,7 +1200,7 @@
 
 - name: "2.3.7.4 | PATCH | Configure Interactive logon Message text for users attempting to log on"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: LegalNoticeText
       data: "{{ win22cis_legal_notice }}"
       type: string
@@ -1215,7 +1215,7 @@
 
 - name: "2.3.7.5 | PATCH | Configure Interactive logon Message title for users attempting to log on"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: LegalNoticeCaption
       data: "{{ win22cis_legal_notice_caption }}"
       type: string
@@ -1246,7 +1246,7 @@
 
       - name: "2.3.7.6 | PATCH | Ensure Interactive logon Number of previous logons to cache in case domain controller is not available is set to 4 or fewer logons MS only. | Apply Settings To Registry | Member Server"
         ansible.windows.win_regedit:
-            path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
+            path: HKLM:\SOFTWARE\Microsoft\Windows Nt\Currentversion\Winlogon
             name: CachedLogonsCount
             data: "{{ win22cis_cached_logons_count }}"
             type: string
@@ -1282,7 +1282,7 @@
 
       - name: "2.3.7.7 | PATCH | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days. | Apply Settings To Registry."
         ansible.windows.win_regedit:
-            path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
+            path: HKLM:\SOFTWARE\Microsoft\Windows Nt\Currentversion\Winlogon
             name: PasswordExpiryWarning
             data: "{{ win22cis_password_expiry_warning_days }}"
             type: dword
@@ -1300,7 +1300,7 @@
 
 - name: "2.3.7.8 | PATCH | Ensure Interactive logon Require Domain Controller Authentication to unlock workstation is set to Enabled MS only | Member Server"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
+      path: HKLM:\SOFTWARE\Microsoft\Windows Nt\Currentversion\Winlogon
       name: ForceUnlockLogon
       data: 1
       type: dword
@@ -1315,7 +1315,7 @@
 
 - name: "2.3.7.9 | PATCH | Ensure Interactive logon Smart card removal behavior is set to Lock Workstation or higher"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows Nt\Currentversion\Winlogon
+      path: HKLM:\SOFTWARE\Microsoft\Windows Nt\Currentversion\Winlogon
       name: ScRemoveOption
       data: 1
       type: string
@@ -1330,7 +1330,7 @@
 
 - name: "2.3.8.1 | PATCH | Ensure Microsoft network client Digitally sign communications always is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanworkstation\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanworkstation\Parameters
       name: RequireSecuritySignature
       data: 1
       type: dword
@@ -1345,7 +1345,7 @@
 
 - name: "2.3.8.2 | PATCH | Ensure Microsoft network client Digitally sign communications if server agrees is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanworkstation\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanworkstation\Parameters
       name: EnableSecuritySignature
       data: 1
       type: dword
@@ -1360,7 +1360,7 @@
 
 - name: "2.3.8.3 | PATCH | Ensure Microsoft network client Send unencrypted password to third-party SMB servers is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanworkstation\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanworkstation\Parameters
       name: EnablePlainTextPassword
       data: 0
       type: dword
@@ -1391,7 +1391,7 @@
 
       - name: "2.3.9.1 | PATCH | Ensure Microsoft network server Amount of idle time required before suspending session is set to 15 or fewer minutes. | Apply Settings To Registry."
         ansible.windows.win_regedit:
-            path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+            path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanserver\Parameters
             name: AutoDisconnect
             data: "{{ win22cis_smb_auto_disconnect_time }}"
             type: dword
@@ -1407,7 +1407,7 @@
 
 - name: "2.3.9.2 | PATCH | Ensure Microsoft network server Digitally sign communications always is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanserver\Parameters
       name: RequireSecuritySignature
       data: 1
       type: dword
@@ -1422,7 +1422,7 @@
 
 - name: "2.3.9.3 | PATCH | Ensure Microsoft network server Digitally sign communications if client agrees is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanserver\Parameters
       name: EnableSecuritySignature
       data: 1
       type: dword
@@ -1437,7 +1437,7 @@
 
 - name: "2.3.9.4 | PATCH | Ensure Microsoft network server Disconnect clients when logon hours expire is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanserver\Parameters
       name: EnableForcedLogoff
       data: 1
       type: dword
@@ -1452,7 +1452,7 @@
 
 - name: "2.3.9.5 | PATCH | Ensure Microsoft network server Server SPN target name validation level is set to Accept if provided by client or higher  | Member Server"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanserver\Parameters
       name: SMBServerNameHardeningLevel
       data: 1
       type: dword
@@ -1482,7 +1482,7 @@
 
 - name: "2.3.10.2 | PATCH | Ensure Network access Do not allow anonymous enumeration of SAM accounts is set to Enabled MS only | Member Server"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa
       name: RestrictAnonymousSAM
       data: 1
       type: dword
@@ -1497,7 +1497,7 @@
 
 - name: "2.3.10.3 | PATCH | Ensure Network access Do not allow anonymous enumeration of SAM accounts and shares is set to Enabled MS only | Member Server"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa
       name: RestrictAnonymous
       data: 1
       type: dword
@@ -1512,7 +1512,7 @@
 
 - name: "2.3.10.4 | PATCH | Ensure Network access Do not allow storage of passwords and credentials for network authentication is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa
       name: DisableDomainCreds
       data: 1
       type: dword
@@ -1527,7 +1527,7 @@
 
 - name: "2.3.10.5 | PATCH | Ensure Network access Let Everyone permissions apply to anonymous users is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa
       name: EveryoneIncludesAnonymous
       data: 0
       type: dword
@@ -1542,7 +1542,7 @@
 
 - name: "2.3.10.6 | PATCH | Configure Network access Named Pipes that can be accessed anonymously DC only | Domain Controller"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanserver\Parameters
       name: NullSessionPipes
       data: ""
       type: multistring
@@ -1557,7 +1557,7 @@
 
 - name: "2.3.10.7 | PATCH | Configure Network access Named Pipes that can be accessed anonymously MS only | Member Server"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanserver\Parameters
       name: NullSessionPipes
       data: ""
       type: multistring
@@ -1572,9 +1572,9 @@
 
 - name: "2.3.10.8 | PATCH | Configure Network access Remotely accessible registry paths"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Securepipeservers\Winreg\AllowedExactpaths
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Securepipeservers\Winreg\AllowedExactpaths
       name: "Machine"
-      data: ['System\CurrentControlSet\Control\ProductOptions', 'System\CurrentControlSet\Control\Server Applications', 'Software\Microsoft\Windows NT\CurrentVersion']
+      data: ['SYSTEM\CurrentControlSet\Control\ProductOptions', 'SYSTEM\CurrentControlSet\Control\Server Applications', 'SOFTWARE\Microsoft\Windows NT\CurrentVersion']
       type: multistring
   when:
       - win22cis_rule_2_3_10_8
@@ -1585,11 +1585,49 @@
       - patch
 
 - name: "2.3.10.9 | PATCH | Configure Network access Remotely accessible registry paths and sub-paths"
-  ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Securepipeservers\Winreg\Allowedpaths
-      name: "Machine"
-      data: ['System\CurrentControlSet\Control\Print\Printers', 'System\CurrentControlSet\Services\Eventlog', 'Software\Microsoft\OLAP Server', 'Software\Microsoft\Windows NT\CurrentVersion\Print', 'Software\Microsoft\Windows NT\CurrentVersion\Windows', 'System\CurrentControlSet\Control\ContentIndex', 'System\CurrentControlSet\Control\Terminal Server', 'System\CurrentControlSet\Control\Terminal Server\UserConfig', 'System\CurrentControlSet\Control\Terminal Server\DefaultUserConfiguration', 'Software\Microsoft\Windows NT\CurrentVersion\Perflib', 'System\CurrentControlSet\Services\WINS', 'System\CurrentControlSet\Services\CertSvc', 'System\CurrentControlSet\Services\SysmonLog']
-      type: multistring
+  block:
+      - name: "2.3.10.9 | PATCH | Configure Network access Remotely accessible registry paths and sub-paths | Set Fact"
+        ansible.builtin.set_fact:
+            rule_2_3_10_9_remote_registry_paths: [
+                'SYSTEM\CurrentControlSet\Control\Print\Printers',
+                'SYSTEM\CurrentControlSet\Services\Eventlog',
+                'SOFTWARE\Microsoft\OLAP Server',
+                'SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print',
+                'SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows',
+                'SYSTEM\CurrentControlSet\Control\ContentIndex',
+                'SYSTEM\CurrentControlSet\Control\Terminal Server',
+                'SYSTEM\CurrentControlSet\Control\Terminal Server\UserConfig',
+                'SYSTEM\CurrentControlSet\Control\Terminal Server\DefaultUserConfiguration',
+                'SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib',
+                'SYSTEM\CurrentControlSet\Services\SysmonLog'
+            ]
+
+      - name: "2.3.10.9 | AUDIT | Configure Network access Remotely accessible registry paths and sub-paths | Check if AD Certificate Services feature is installed."
+        community.windows.win_feature_info:
+            name: AD-Certificate
+        register: rule_2_3_10_9_adcs_feature
+
+      - name: 2.3.10.9 | PATCH | Configure Network access Remotely accessible registry paths and sub-paths | Add CertSvc to paths."
+        ansible.builtin.set_fact:
+            rule_2_3_10_9_remote_registry_paths: "{{ remote_registry_paths + ['SYSTEM\\CurrentControlSet\\Services\\CertSvc'] }}"
+        when: rule_2_3_10_9_adcs_feature.features[0].installed
+
+      - name: 2.3.10.9 | AUDIT | Configure Network access Remotely accessible registry paths and sub-paths | Check if WINS feature is installed."
+        community.windows.win_feature_info:
+            name: WINS
+        register: rule_2_3_10_9_wins_feature
+
+      - name: 2.3.10.9 | PATCH | Configure Network access Remotely accessible registry paths and sub-paths | Add WINS to paths."
+        ansible.builtin.set_fact:
+            rule_2_3_10_9_remote_registry_paths: "{{ remote_registry_paths + ['SYSTEM\\CurrentControlSet\\Services\\WINS'] }}"
+        when: rule_2_3_10_9_wins_feature.features[0].installed
+
+      - name: "2.3.10.9 | PATCH | Configure Network access Remotely accessible registry paths and sub-paths | Apply "
+        ansible.windows.win_regedit:
+            path: HKLM:\SYSTEM\Currentcontrolset\Control\Securepipeservers\Winreg\Allowedpaths
+            name: "Machine"
+            data: '{{ rule_2_3_10_9_remote_registry_paths }}'
+            type: multistring
   when:
       - win22cis_rule_2_3_10_9
   tags:
@@ -1600,7 +1638,7 @@
 
 - name: "2.3.10.10 | PATCH | Ensure Network access Restrict anonymous access to Named Pipes and Shares is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanserver\Parameters
       name: RestrictNullSessAccess
       data: 1
       type: dword
@@ -1615,7 +1653,7 @@
 
 - name: "2.3.10.11 | PATCH | Ensure Network access Restrict clients allowed to make remote calls to SAM is set to Administrators Remote Access Allow MS only | Member Server"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Control\Lsa
+      path: HKLM:\SYSTEM\CurrentControlSet\Control\Lsa
       name: RestrictRemoteSAM
       data: "O:BAG:BAD:(A;;RC;;;BA)"
       type: string
@@ -1630,7 +1668,7 @@
 
 - name: "2.3.10.12 | PATCH | Ensure Network access Shares that can be accessed anonymously is set to None"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Lanmanserver\Parameters
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Lanmanserver\Parameters
       name: NullSessionShares
       data: ""
       type: multistring
@@ -1645,7 +1683,7 @@
 
 - name: "2.3.10.13 | PATCH | Ensure Network access Sharing and security model for local accounts is set to Classic - local users authenticate as themselves"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa
       name: ForceGuest
       data: 0
       type: dword
@@ -1660,7 +1698,7 @@
 
 - name: "2.3.11.1 | PATCH | Ensure Network security Allow Local System to use computer identity for NTLM is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa
       name: UseMachineId
       data: 1
       type: dword
@@ -1675,7 +1713,7 @@
 
 - name: "2.3.11.2 | PATCH | Ensure Network security Allow LocalSystem NULL session fallback is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa\Msv1_0
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa\Msv1_0
       name: AllowNullSessionFallback
       data: 0
       type: dword
@@ -1690,7 +1728,7 @@
 
 - name: "2.3.11.3 | PATCH | Ensure Network Security Allow PKU2U authentication requests to this computer to use online identities is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa\Pku2U
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa\Pku2U
       name: AllowOnlineID
       data: 0
       type: dword
@@ -1705,7 +1743,7 @@
 
 - name: "2.3.11.4 | PATCH | Ensure Network security Configure encryption types allowed for Kerberos is set to AES128 HMAC SHA1 AES256 HMAC SHA1 Future encryption types"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System\Kerberos\Parameters
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System\Kerberos\Parameters
       name: SupportedEncryptionTypes
       data: 2147483640
       type: dword
@@ -1720,7 +1758,7 @@
 
 - name: "2.3.11.5 | PATCH | Ensure Network security Do not store LAN Manager hash value on next password change is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa
       name: NoLMHash
       data: 1
       type: dword
@@ -1735,7 +1773,7 @@
 
 - name: "2.3.11.6 | PATCH | Ensure Network security Force logoff when logon hours expire is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters
+      path: HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters
       name: EnableForcedLogOff
       data: 1
       type: dword
@@ -1750,7 +1788,7 @@
 
 - name: "2.3.11.7 | PATCH | Ensure Network security LAN Manager authentication level is set to Send NTLMv2 response only. Refuse LM  NTLM"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa
       name: LMCompatibilityLevel
       data: 5
       type: dword
@@ -1765,7 +1803,7 @@
 
 - name: "2.3.11.8 | PATCH | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Services\Ldap
+      path: HKLM:\SYSTEM\Currentcontrolset\Services\Ldap
       name: LDAPClientIntegrity
       data: 1
       type: dword
@@ -1780,7 +1818,7 @@
 
 - name: "2.3.11.9 | PATCH | Ensure Network security Minimum session security for NTLM SSP based including secure RPC clients is set to Require NTLMv2 session security Require 128-bit encryption"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa\Msv1_0
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa\Msv1_0
       name: NTLMMinClientSec
       data: 537395200
       type: dword
@@ -1795,7 +1833,7 @@
 
 - name: "2.3.11.10 | PATCH | Ensure Network security Minimum session security for NTLM SSP based including secure RPC servers is set to Require NTLMv2 session security Require 128-bit encryption"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Lsa\Msv1_0
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Lsa\Msv1_0
       name: NTLMMinServerSec
       data: 537395200
       type: dword
@@ -1810,7 +1848,7 @@
 
 - name: "2.3.13.1 | PATCH | Ensure Shutdown Allow system to be shut down without having to log on is set to Disabled"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: ShutdownWithoutLogon
       data: 0
       type: dword
@@ -1826,7 +1864,7 @@
 
 - name: "2.3.15.1 | PATCH | Ensure System objects Require case insensitivity for non-Windows subsystems is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Session Manager\Kernel
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Session Manager\Kernel
       name: ObCaseInsensitive
       data: 1
       type: dword
@@ -1840,7 +1878,7 @@
 
 - name: "2.3.15.2 | PATCH | Ensure System objects Strengthen default permissions of internal system objects e.g. Symbolic Links is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\System\Currentcontrolset\Control\Session Manager
+      path: HKLM:\SYSTEM\Currentcontrolset\Control\Session Manager
       name: ProtectionMode
       data: 1
       type: dword
@@ -1854,7 +1892,7 @@
 
 - name: "2.3.17.1 | PATCH | Ensure User Account Control Admin Approval Mode for the Built-in Administrator account is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: FilterAdministratorToken
       data: 1
       type: dword
@@ -1869,7 +1907,7 @@
 
 - name: "2.3.17.2 | PATCH | Ensure User Account Control Behavior of the elevation prompt for administrators in Admin Approval Mode is set to Prompt for consent on the secure desktop"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: ConsentPromptBehaviorAdmin
       data: 2
       type: dword
@@ -1884,7 +1922,7 @@
 
 - name: "2.3.17.3 | PATCH | Ensure User Account Control Behavior of the elevation prompt for standard users is set to Automatically deny elevation requests"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: ConsentPromptBehaviorUser
       data: 0
       type: dword
@@ -1899,7 +1937,7 @@
 
 - name: "2.3.17.4 | PATCH | Ensure User Account Control Detect application installations and prompt for elevation is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: EnableInstallerDetection
       data: 1
       type: dword
@@ -1914,7 +1952,7 @@
 
 - name: "2.3.17.5 | PATCH | Ensure User Account Control Only elevate UIAccess applications that are installed in secure locations is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: EnableSecureUIAPaths
       data: 1
       type: dword
@@ -1929,7 +1967,7 @@
 
 - name: "2.3.17.6 | PATCH | Ensure User Account Control Run all administrators in Admin Approval Mode is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: EnableLUA
       data: 1
       type: dword
@@ -1944,7 +1982,7 @@
 
 - name: "2.3.17.7 | PATCH | Ensure User Account Control Switch to the secure desktop when prompting for elevation is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: PromptOnSecureDesktop
       data: 1
       type: dword
@@ -1959,7 +1997,7 @@
 
 - name: "2.3.17.8 | PATCH | Ensure User Account Control Virtualize file and registry write failures to per-user locations is set to Enabled"
   ansible.windows.win_regedit:
-      path: HKLM:\Software\Microsoft\Windows\Currentversion\Policies\System
+      path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
       name: EnableVirtualization
       data: 1
       type: dword
