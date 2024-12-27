@@ -7,6 +7,7 @@ December 2024 Updates
 - Issues Addressed:
   - [#51](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/51) - Thank you @msachikanta
   - [#50](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/50) - Thank you @msachikanta
+  - [#49](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/49) - Thanks @animatco
   - [#48](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/48) - Thanks @animatco
   - [#45](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/45) - Thanks @Crombell95
   - [#32](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/32) - Thanks @RomainPisters (Verified It has been addressed.)
