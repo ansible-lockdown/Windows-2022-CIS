@@ -1,31 +1,66 @@
 ---
 
 galaxy_info:
-    author: "Stephen Williams, Frederick Witty Jr."
-    description: "Ansible role to apply Windows Server 2022 CIS Benchmark"
-    company: "MindPoint Group"
-    license: MIT
-    namespace: mindpointgroup
-    role_name: windows_2022_cis
-    min_ansible_version: 2.10.0
-    platforms:
-        - name: Windows
-          versions:
-              - "2022"
-    galaxy_tags:
-        - system
-        - security
-        - cis
-        - hardening
-        - benchmark
-        - microsoft
-        - windows
-        - complianceascode
-        - compliance
-
-    collections:
-        - ansible.windows
-        - community.windows
-        - community.general
-
-    dependencies: []
+  author: "MindPoint Group"
+  description: "Ansible Role to Apply The Windows Server 2022 CIS Benchmark"
+  company: "MindPoint Group"
+  license: MIT
+  role_name: windows_2019_cis
+  namespace: mindpointgroup
+  min_ansible_version: "2.14"
+  platforms:
+    - name: Windows
+      versions:
+        - "2022"
+  galaxy_tags:
+    - accesscontrol
+    - activedirectory
+    - auditpolicy
+    - automation
+    - azure
+    - benchmark
+    - cis
+    - cisbenchmark
+    - ciscompliance
+    - cloudhardening
+    - compliance
+    - compliancehardening
+    - complianceascode
+    - configurationmanagement
+    - dc
+    - domaincontroller
+    - domainmember
+    - encryption
+    - eventlogging
+    - gpo
+    - grouppolicy
+    - hardening
+    - infrastructureascode
+    - logging
+    - microsoft
+    - monitoring
+    - memberserver
+    - ms
+    - oshardening
+    - patchmanagement
+    - patching
+    - policymanagement
+    - privilegedaccess
+    - remediation
+    - rolebasedaccess
+    - security
+    - system
+    - systemintegrity
+    - vulnerabilitymanagement
+    - windows
+    - windows2022
+    - win2022
+    - windows2022
+    - windowssecurity
+    - windowsserver
+    - windowsserver2022
+collections:
+  - ansible.windows
+  - community.windows
+  - community.general
+dependencies: []
