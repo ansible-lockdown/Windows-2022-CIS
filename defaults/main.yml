@@ -9,7 +9,7 @@
 # and want to run the remediation directly on a Windows machine.
 win22cis_ansible_remediation: true
 
-# win2k19cis_create_gpo is the setting that will run the CIS GPO creation on a Windows Domain Controller. Please review
+# win22cis_create_gpos is the setting that will run the CIS GPO creation on a Windows Domain Controller. Please review
 # all options in the GPO section to understand what is being done.
 win22cis_create_gpos: false
 
@@ -169,7 +169,7 @@ win22cis_rule_2_2_22: true
 win22cis_rule_2_2_23: true
 win22cis_rule_2_2_24: true
 win22cis_rule_2_2_25: true
-# Setting win19is_rule_2_2_26 and win22cis_rule_2_2_27 Control To True Will Break Ansible Connection
+# Setting win22cis_rule_2_2_26 and win22cis_rule_2_2_27 Control To True Will Break Ansible Connection
 # Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
 win22cis_rule_2_2_26: true
 win22cis_rule_2_2_27: true
