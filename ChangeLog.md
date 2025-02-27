@@ -1,5 +1,11 @@
 # ChangeLog
 
+February 2025 Update
+  - Added new Readme Badges
+  - General Typos and Fixes
+  - All Workflows Updated
+  - Fixed Control Tag for rule_2.3.10.9
+
 ## Release 3.0.0
 
 December 2024 Update
