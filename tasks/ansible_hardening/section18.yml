@@ -2745,7 +2745,7 @@
   ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Policies\Microsoft\Windows Nt\Rpc
     name: EnableAuthEpResolution
-    data: 1
+    data: "{{ win22cis_rpc_enable_auth_ep_resolution }}"
     type: dword
 
 - name: "18.9.36.2 | PATCH | Ensure Restrict Unauthenticated RPC clients is set to Enabled Authenticated MS only | Member Server"
@@ -4469,7 +4469,7 @@
   ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Policies\Microsoft\Windows Nt\Terminal Services
     name: MaxDisconnectionTime
-    data: 6000
+    data: "{{ win22cis_terminal_service_max_disconnection_time }}"
     type: dword
 
 - name: "18.10.56.3.11.1 | PATCH | Ensure Do not delete temp folders upon exit is set to Disabled"
@@ -4817,7 +4817,7 @@
   ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\Powershell\Transcription
     name: EnableTranscripting
-    data: 1
+    data: "{{ win22cis_powershell_enable_transcripting }}"
     type: dword
 
 - name: "18.10.88.1.1 | PATCH | Ensure Allow Basic authentication is set to Disabled"
@@ -5028,7 +5028,7 @@
   ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\Winrm\Service\Winrs
     name: AllowRemoteShellAccess
-    data: 0
+    data: "{{ win22cis_winrs_allow_remote_shell_access }}"
     type: dword
 
 - name: "18.10.91.2.1 | PATCH | Ensure Prevent users from modifying settings is set to Enabled"
@@ -5090,7 +5090,7 @@
   ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windowsupdate\Au
     name: NoAutoUpdate
-    data: 0
+    data: "{{ win22cis_windows_update_no_auto_update }}"
     type: dword
 
 - name: "18.10.92.2.2 | PATCH | Ensure Configure Automatic Updates Scheduled install day is set to 0 - Every day"

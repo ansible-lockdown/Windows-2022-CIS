@@ -777,6 +777,12 @@ win22cis_smb_auto_disconnect_time: 15
 # Default: 1
 win22cis_smb_server_name_hardening_level: 1
 
+# 2.3.10.6
+# win22cis_lanmanserver_null_session_pipes determines which communication sessions, or pipes, will have
+# attributes and permissions that allow anonymous access.
+# The recommended state for this setting is: LSARPC, NETLOGON, SAMR and (when the legacy Computer Browser service is enabled) BROWSER.
+win22cis_lanmanserver_null_session_pipes: ['LSARPC', 'NETLOGON', 'SAMR']
+
 # 2.3.11.4
 # win22cis_legacy_rc4_hmac_md5_support is the setting to configure the machine to support older kerberos.
 # Note: Some legacy applications and OSes may still require RC4_HMAC_MD5 - we recommend you test in your environment
@@ -943,6 +949,12 @@ win22cis_laps_postauthenticationresetdelay_value: 8
 # Default: 3
 win22cis_laps_postauthenticationactions_value: 3
 
+# 18.9.36.1
+# win22cis_rpc_enable_auth_ep_resolution controls whether RPC clients authenticate with the Endpoint Mapper
+# Service when the call they are making contains authentication information.
+# The recommended state for this setting is: Enabled.
+win22cis_rpc_enable_auth_ep_resolution: 1
+
 # 18.9.39.1
 # win22cis_roca_configuration is the This policy setting allows you to configure how Domain Controllers handle Windows
 # Hello for Business (WHfB) keys that are vulnerable to the "Return of Coppersmith´s attack" (ROCA) vulnerability.
@@ -1004,6 +1016,11 @@ win22cis_system_max_log_file_size: 32768
 # Default: 900000
 win22cis_idle_rdp_session_disconnect_time: 900000
 
+# 18.10.56.3.10.2
+# win22cis_terminal_service_max_disconnection_time allows you to configure a time limit for disconnected Remote Desktop
+# Services sessions. The recommended state for this setting is: Enabled: 1 minute.
+win22cis_terminal_service_max_disconnection_time: 6000
+
 # 18.10.79.2
 # win22cis_allow_windows_ink_workspace is the policy setting that determines whether Windows Ink items are allowed above the lock screen.
 # The recommended state for this setting is: Enabled: On, but disallow access above lock OR Enabled: Disabled.
@@ -1011,6 +1028,27 @@ win22cis_idle_rdp_session_disconnect_time: 900000
 # 1 - Enabled: On, but disallow access above lock
 # Default: 1
 win22cis_allow_windows_ink_workspace: 1
+
+# 18.10.86.2
+# win22cis_powershell_enable_transcripting lets you capture the input and output of Windows PowerShell
+# commands into text-based transcripts. The recommended state for this setting is: Enabled.
+win22cis_powershell_enable_transcripting: 1
+
+# 18.10.89.1
+# win22cis_winrs_allow_remote_shell_access allows you to manage configuration of remote access to all supported
+# shells to execute scripts and commands. The recommended state for this setting is: Disabled.
+# Default: 0
+win22cis_winrs_allow_remote_shell_access: 0
+
+# 18.10.92.2.1
+# win22cis_windows_update_no_auto_update specifies whether computers in your environment will receive security
+# updates from Windows Update or WSUS. If you configure this policy setting to Enabled,
+# the operating system will recognize when a network connection is available and then
+# use the network connection to search Windows Update or your designated intranet site
+# for updates that apply to them.
+# Default: 0
+win22cis_windows_update_no_auto_update: 0
+
 
 # 18.10.92.4.2
 # win22cis_defer_feature_updates_period_in_days is the policy setting that determines when Preview Build or Feature Updates are received.
