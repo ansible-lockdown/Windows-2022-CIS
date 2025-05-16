@@ -8,7 +8,6 @@ May 2025 Update
   - Verified 18.10.79.2 Path In Remediate - Thanks @mfortin
   - Updated 18.10.92.4.1 ManagePreviewBuildsPolicyValue to 1. - Thanks @mfortin
 
-
 ## Release 3.0.2
 
 February 2025 Update
