@@ -128,7 +128,7 @@
 - name: "1.1.6 | PATCH | Ensure Relax minimum password length limits is set to Enabled."
   when:
     - win22cis_rule_1_1_6
-    - prelim_win22cis_is_domain_member
+    - not prelim_win22cis_is_domain_controller
   tags:
     - level1-memberserver
     - rule_1.1.6
