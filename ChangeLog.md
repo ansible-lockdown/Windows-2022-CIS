@@ -6,6 +6,7 @@ May 2025 Update #2
   - Issues Addressed:
     - Fixed 1.1.6 to apply to all systems except for Domain Controllers. This is present in standalone version. - Thanks @mfortin
     - Re-Verified 18.10.79.2 Paths
+    - Fixed 18.9.26.2 GPO Registry Entry
 
 ## Release 3.0.3
 
