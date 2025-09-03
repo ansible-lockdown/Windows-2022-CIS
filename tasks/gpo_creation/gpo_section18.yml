@@ -199,7 +199,7 @@
     - NIST800-53R5_AC-2_9
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "LocalAccountTokenFilterPolicy"
     $type = "DWORD"
     $desiredValue = 0
@@ -222,7 +222,7 @@
   changed_when: '"Patched" in rule_18_4_1_results.stdout'
   register: rule_18_4_1_results
 
-- name: "18.4.2 | GPO | Ensure Configure RPC packet level privacy setting for incoming connections is set to Enabled"
+- name: "18.4.2 | GPO | Ensure Configure SMB v1 client driver is set to Enabled Disable driver recommended"
   when:
     - win22cis_rule_18_4_2
     - "'(Skipped)' not in item"
@@ -230,46 +230,6 @@
     - level1-domaincontroller
     - level1-memberserver
     - rule_18.4.2
-    - patch
-    - rpc
-    - gpo
-    - NIST800-171_3.4.2
-    - NIST800-53_CM-6b.
-    - NIST800-53R5_CM-6b.
-  ansible.windows.win_shell: |
-    $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Print"
-    $registryValueName = "RpcAuthnLevelPrivacyEnabled"
-    $type = "DWORD"
-    $desiredValue = 1
-
-    # Get the current value of the registry key in the GPO
-    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
-
-    # Check if the current value is equal to the desired value
-    if ($currentValue -ne $desiredValue) {
-        # If not, set the registry value to the desired value
-        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
-        Write-Output "Patched"
-    } else {
-        Write-Output "No Change Needed"
-    }
-  loop:
-    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
-    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
-  loop_control:
-    label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_4_2_results.stdout'
-  register: rule_18_4_2_results
-
-- name: "18.4.3 | GPO | Ensure Configure SMB v1 client driver is set to Enabled Disable driver recommended"
-  when:
-    - win22cis_rule_18_4_3
-    - "'(Skipped)' not in item"
-  tags:
-    - level1-domaincontroller
-    - level1-memberserver
-    - rule_18.4.3
     - patch
     - smb
     - gpo
@@ -303,17 +263,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_4_3_results.stdout'
-  register: rule_18_4_3_results
+  changed_when: '"Patched" in rule_18_4_2_results.stdout'
+  register: rule_18_4_2_results
 
-- name: "18.4.4 | GPO | Ensure Configure SMB v1 server is set to Disabled"
+- name: "18.4.3 | GPO | Ensure Configure SMB v1 server is set to Disabled"
   when:
-    - win22cis_rule_18_4_4
+    - win22cis_rule_18_4_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.4.4
+    - rule_18.4.3
     - patch
     - smb
     - gpo
@@ -347,17 +307,18 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_4_4_results.stdout'
-  register: rule_18_4_4_results
+  changed_when: '"Patched" in rule_18_4_3_results.stdout'
+  register: rule_18_4_3_results
 
-- name: "18.4.5 | GPO | Ensure Enable Certificate Padding is set to Enabled"
+# This group policy setting is backed by the following registry location with a REG_DWORD or REG_SZ value of 1.
+- name: "18.4.4 | GPO | Ensure Enable Certificate Padding is set to Enabled"
   when:
-    - win22cis_rule_18_4_5
+    - win22cis_rule_18_4_4
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.4.5
+    - rule_18.4.4
     - patch
     - wintrust
     - gpo
@@ -387,17 +348,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_4_5_results.stdout'
-  register: rule_18_4_5_results
+  changed_when: '"Patched" in rule_18_4_4_results.stdout'
+  register: rule_18_4_4_results
 
-- name: "18.4.6 | GPO | Ensure Enable Structured Exception Handling Overwrite Protection SEHOP is set to Enabled"
+- name: "18.4.5 | GPO | Ensure Enable Structured Exception Handling Overwrite Protection SEHOP is set to Enabled"
   when:
-    - win22cis_rule_18_4_6
+    - win22cis_rule_18_4_5
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.4.6
+    - rule_18.4.5
     - patch
     - sehop
     - gpo
@@ -426,17 +387,15 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_4_6_results.stdout'
-  register: rule_18_4_6_results
+  changed_when: '"Patched" in rule_18_4_5_results.stdout'
+  register: rule_18_4_5_results
 
-- name: "18.4.7 | GPO | Ensure 'NetBT NodeType configuration' is set to 'Enabled: P-node recommended'"
-  when:
-    - win22cis_rule_18_4_7
-    - "'(Skipped)' not in item"
+- name: "18.4.6 | GPO | Ensure 'NetBT NodeType configuration' is set to 'Enabled: P-node recommended'"
+  when: win22cis_rule_18_4_6
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.4.7
+    - rule_18.4.6
     - patch
     - netbt
     - gpo
@@ -466,40 +425,59 @@
     - NIST800-53R5_SA-3
     - NIST800-53R5_SA-8
     - NIST800-53R5_SA-10
-  ansible.windows.win_shell: |
-    $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\NetBT\Parameters"
-    $registryValueName = "NodeType"
-    $type = "DWORD"
-    $desiredValue = {{ win22cis_netbt_nodetype }}
+  block:
+    - name: "18.4.6 | PATCH | Ensure 'NetBT NodeType configuration' is set to 'Enabled: P-node recommended' | Set Registry Value"
+      when:
+        - win22cis_max_passwords_saved in [1, 2, 4, 8]
+        - "'(Skipped)' not in item"
+      ansible.windows.win_shell: |
+        $gpoName = "{{ item }}"
+        $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\NetBT\Parameters"
+        $registryValueName = "NodeType"
+        $type = "DWORD"
+        $desiredValue = {{ win22cis_netbt_nodetype }}
 
-    # Get the current value of the registry key in the GPO
-    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+        # Get the current value of the registry key in the GPO
+        $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
 
-    # Check if the current value is equal to the desired value
-    if ($currentValue -ne $desiredValue) {
-        # If not, set the registry value to the desired value
-        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
-        Write-Output "Patched"
-    } else {
-        Write-Output "No Change Needed"
-    }
-  loop:
-    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
-    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
-  loop_control:
-    label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_4_7_results.stdout'
-  register: rule_18_4_7_results
+        # Check if the current value is equal to the desired value
+        if ($currentValue -ne $desiredValue) {
+            # If not, set the registry value to the desired value
+            Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+            Write-Output "Patched"
+        } else {
+            Write-Output "No Change Needed"
+        }
+      loop:
+        - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+        - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+      loop_control:
+        label: "{{ item }}"
+      changed_when: '"Patched" in rule_18_4_6_results.stdout'
+      register: rule_18_4_6_results
 
-- name: "18.4.8 | GPO | Ensure WDigest Authentication is set to Disabled"
+    - name: "18.4.6 | AUDIT | Ensure 'NetBT NodeType configuration' is set to 'Enabled P-node recommended' | Warning Check For Variable Standards."
+      when: win22cis_netbt_nodetype not in [1, 2, 4, 8]
+      ansible.builtin.debug:
+        msg:
+          - "Warning!! You have an variable set in win22cis_netbt_nodetype please read"
+          - "the notes for the variable and make the necessary change to the variable to be in compliance."
+
+    - name: "18.4.6 | AUDIT | Ensure 'NetBT NodeType configuration' is set to 'Enabled P-node recommended' | Set Warn Count."
+      when: win22cis_netbt_nodetype not in [1, 2, 4, 8]
+      vars:
+        warn_control_id: '18.4.6'
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
+
+- name: "18.4.7 | GPO | Ensure WDigest Authentication is set to Disabled"
   when:
-    - win22cis_rule_18_4_8
+    - win22cis_rule_18_4_7
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.4.8
+    - rule_18.4.7
     - patch
     - wdigest
     - gpo
@@ -534,8 +512,8 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_4_8_results.stdout'
-  register: rule_18_4_8_results
+  changed_when: '"Patched" in rule_18_4_7_results.stdout'
+  register: rule_18_4_7_results
 
 - name: "18.5.1 | GPO | Ensure MSS: (AutoAdminLogon) Enable Automatic Logon is set to Disabled"
   when:
@@ -600,7 +578,7 @@
     - NIST800-53R5_CM-6
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\TCPIP6\Parameters"
     $registryValueName = "DisableIPSourceRouting"
     $type = "DWORD"
     $desiredValue = 2
@@ -810,7 +788,7 @@
     - NIST800-53R5_CM-6
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Netbt\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Netbt\Parameters"
     $registryValueName = "NoNameReleaseOnDemand"
     $type = "DWORD"
     $desiredValue = 1
@@ -854,7 +832,7 @@
     - NIST800-53R5_CM-7
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Tcpip\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters"
     $registryValueName = "PerformRouterDiscovery"
     $type = "DWORD"
     $desiredValue = 0
@@ -893,7 +871,7 @@
     - NIST800-53R5_SI-16
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Session Manager"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager"
     $registryValueName = "SafeDllSearchMode"
     $type = "DWORD"
     $desiredValue = 1
@@ -944,7 +922,7 @@
         - win22cis_screen_saver_grace_period <= 5
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows Nt\Currentversion\Winlogon"
+        $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows Nt\CurrentVersion\Winlogon"
         $registryValueName = "ScreenSaverGracePeriod"
         $type = "string"
         $desiredValue = {{ win22cis_screen_saver_grace_period }}
@@ -1017,7 +995,7 @@
     - NIST800-53R5_CM-9
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\TCPIP6\Parameters"
     $registryValueName = "TcpMaxDataRetransmissions"
     $type = "DWORD"
     $desiredValue = 3
@@ -1076,7 +1054,7 @@
     - NIST800-53R5_CM-9
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Tcpip\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters"
     $registryValueName = "TcpMaxDataRetransmissions"
     $type = "DWORD"
     $desiredValue = 3
@@ -1118,7 +1096,7 @@
         - win22cis_log_threshold_audit_event <= 90
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Eventlog\Security"
+        $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Eventlog\Security"
         $registryValueName = "WarningLevel"
         $type = "DWORD"
         $desiredValue = {{ win22cis_log_threshold_audit_event }}
@@ -1156,8 +1134,10 @@
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.6.4.1 | GPO | Ensure 'Configure DNS over HTTPS (DoH) name resolution' is set to 'Enabled: Allow DoH' or higher.'"
-  when: win22cis_rule_18_6_4_1
+- name: "18.6.4.1 | GPO | Ensure Configure multicast DNS (mDNS) protocol is set to Disabled"
+  when:
+    - win22cis_rule_18_6_4_1
+    - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
@@ -1179,54 +1159,31 @@
     - NIST800-53R5_IA-5_1
     - NIST800-53R5_SC-8
     - NIST800-53R5_SC-8_1
-  block:
-    - name: "18.6.4.1 | GPO | Ensure 'Configure DNS over HTTPS (DoH) name resolution' is set to 'Enabled: Allow DoH' or higher. | Set Variable."
-      when:
-        - "'(Skipped)' not in item"
-        - win22cis_doh_policy == 2 or win22cis_doh_policy == 3
-      ansible.windows.win_shell: |
-        $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient"
-        $registryValueName = "DoHPolicy"
-        $type = "DWORD"
-        $desiredValue = {{ win22cis_doh_policy }}
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient"
+    $registryValueName = "EnableMDNS"
+    $type = "DWORD"
+    $desiredValue = 0
 
-        # Get the current value of the registry key in the GPO
-        $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
 
-        # Check if the current value is equal to the desired value
-        if ($currentValue -ne $desiredValue) {
-            # If not, set the registry value to the desired value
-            Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
-            Write-Output "Patched"
-        } else {
-            Write-Output "No Change Needed"
-        }
-      loop:
-        - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
-        - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
-      loop_control:
-        label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_6_4_1_results.stdout'
-      register: rule_18_6_4_1_results
-
-    - name: "18.6.4.1 | AUDIT | Ensure Configure DNS over HTTPS (DoH) name resolution is set to Enabled: Allow DoH or higher. | Warning Check For Variable Standards."
-      when:
-        - win22cis_doh_policy != 2
-        - win22cis_doh_policy != 3
-      ansible.builtin.debug:
-        msg:
-          - "Warning!! You have an invalid setting for win22cis_doh_policy. Please read"
-          - "the notes for the variable and make the necessary change to the variable to be in compliance."
-
-    - name: "18.6.4.1 | AUDIT | Ensure Configure DNS over HTTPS (DoH) name resolution is set to Enabled: Allow DoH or higher. | Warn Count."
-      when:
-        - win22cis_doh_policy != 2
-        - win22cis_doh_policy != 3
-      vars:
-        warn_control_id: '18.6.4.1'
-      ansible.builtin.import_tasks:
-        file: warning_facts.yml
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_6_4_1_results.stdout'
+  register: rule_18_6_4_1_results
 
 - name: "18.6.4.2 | GPO | Ensure 'Configure NetBIOS settings' is set to 'Enabled: Disable NetBIOS name resolution on public networks'"
   when: win22cis_rule_18_6_4_2
@@ -1294,14 +1251,58 @@
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.6.4.3 | GPO | Ensure Turn off multicast name resolution is set to Enabled"
+- name: "18.6.4.3 | GPO | Ensure 'Turn off default IPv6 DNS Servers' is set to 'Enabled'"
   when:
     - win22cis_rule_18_6_4_3
     - "'(Skipped)' not in item"
   tags:
+    - level2-domaincontroller
+    - level2-memberserver
+    - rule_18.6.4.3
+    - automated
+    - patch
+    - dns
+    - NIST800-171_3.4.2
+    - NIST800-171_3.4.6
+    - NIST800-171_3.4.7
+    - NIST800-53_CM-6
+    - NIST800-53_CM-7
+    - NIST800-53R5_CM-6
+    - NIST800-53R5_CM-7
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient"
+    $registryValueName = "DisableIPv6DefaultDnsServers"
+    $type = "DWORD"
+    $desiredValue = 1
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_6_4_3_results.stdout'
+  register: rule_18_6_4_3_results
+
+- name: "18.6.4.4 | GPO | Ensure Turn off multicast name resolution is set to Enabled"
+  when:
+    - win22cis_rule_18_6_4_4
+    - "'(Skipped)' not in item"
+  tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.6.4.3
+    - rule_18.6.4.4
     - patch
     - dns
     - gpo
@@ -1335,8 +1336,8 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_6_4_3_results.stdout'
-  register: rule_18_6_4_3_results
+  changed_when: '"Patched" in rule_18_6_4_4_results.stdout'
+  register: rule_18_6_4_4_results
 
 - name: "18.6.5.1 | GPO | Ensure Enable Font Providers is set to Disabled"
   when:
@@ -1379,6 +1380,60 @@
   changed_when: '"Patched" in rule_18_6_5_1_results.stdout'
   register: rule_18_6_5_1_results
 
+- name: "18.6.7.1 | GPO | Ensure 'Mandate the minimum version of SMB' is set to 'Enabled: 3.1.1'"
+  when:
+    - win22cis_rule_18_6_7_1
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.6.7.1
+    - patch
+    - smb
+    - gpo
+    - NIST800-171_3.13.8
+    - NIST800-171_3.13.2
+    - NIST800-171_3.4.1
+    - NIST800-53_SC-7_10
+    - NIST800-53_SC-12
+    - NIST800-53_SC-13
+    - NIST800-53_SC-28
+    - NIST800-53_CM-6
+    - NIST800-53_CM-7
+    - NIST800-53_SI-7_1
+    - NIST800-53R5_SC-7_10
+    - NIST800-53R5_SC-12
+    - NIST800-53R5_SC-13
+    - NIST800-53R5_SC-28
+    - NIST800-53R5_CM-6
+    - NIST800-53R5_CM-7
+    - NIST800-53R5_SI-7_1
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LanmanServer"
+    $registryValueName = "MinSmb2Dialect"
+    $type = "DWORD"
+    $desiredValue = 785
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_6_7_1_results.stdout'
+  register: rule_18_6_7_1_results
+
 - name: "18.6.8.1 | GPO | Ensure Enable insecure guest logons is set to Disabled"
   when:
     - win22cis_rule_18_6_8_1
@@ -1420,6 +1475,47 @@
   changed_when: '"Patched" in rule_18_6_8_1_results.stdout'
   register: rule_18_6_8_1_results
 
+- name: "18.6.8.2 | GPO | Ensure 'Require Encryption' is set to 'Enabled'"
+  when:
+    - win22cis_rule_18_6_8_2
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.6.8.2
+    - patch
+    - fonts
+    - gpo
+    - NIST800-171_3.4.6
+    - NIST800-171_3.4.7
+    - NIST800-53_SI-4
+    - NIST800-53R5_SI-4
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LanmanWorkstation"
+    $registryValueName = "RequireEncryption"
+    $type = "DWORD"
+    $desiredValue = 1
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_6_8_2_results.stdout'
+  register: rule_18_6_8_2_results
+
 - name: "18.6.9.1 | GPO | Ensure Turn on Mapper I/O LLTDIO driver is set to Disabled"
   when: win22cis_rule_18_6_9_1
   tags:
@@ -1434,12 +1530,12 @@
     - NIST800-53_CM-6
     - NIST800-53R5_CM-6
   block:
-    - name: "18.6.9.1 | GPO | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | AllowLLTDIOOndomain"
+    - name: "18.6.9.1 | GPO | Ensure Turn on Mapper IO LLTD IO driver is set to Disabled"
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\Lltd"
-        $registryValueName = "AllowLLTDIOOndomain"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LLTD"
+        $registryValueName = "AllowLLTDIOOnDomain"
         $type = "DWORD"
         $desiredValue = 0
 
@@ -1459,14 +1555,14 @@
         - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_6_9_1_results_allowlltdioondomain.stdout'
-      register: rule_18_6_9_1_results_allowlltdioondomain
+      changed_when: '"Patched" in rule_18_6_9_1_results_allow_lltdio_ondomain.stdout'
+      register: rule_18_6_9_1_results_allow_lltdio_ondomain
 
-    - name: "18.6.9.1 | GPO | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | AllowLLTDIOOnPublicNet"
+    - name: "18.6.9.1 | GPO | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | Allow LLTDIO On PublicNet"
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\Lltd"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LLTD"
         $registryValueName = "AllowLLTDIOOnPublicNet"
         $type = "DWORD"
         $desiredValue = 0
@@ -1487,14 +1583,14 @@
         - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_6_9_1_results_allowlltdioonpublicnet.stdout'
-      register: rule_18_6_9_1_results_allowlltdioonpublicnet
+      changed_when: '"Patched" in rule_18_6_9_1_results_allow_lltdio_on_publicnet.stdout'
+      register: rule_18_6_9_1_results_allow_lltdio_on_publicnet
 
-    - name: "18.6.9.1 | GPO | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | EnableLLTDIO"
+    - name: "18.6.9.1 | GPO | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | Enable LLTDIO"
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\Lltd"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LLTD"
         $registryValueName = "EnableLLTDIO"
         $type = "DWORD"
         $desiredValue = 0
@@ -1515,14 +1611,14 @@
         - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_6_9_1_results_enablelltdio.stdout'
-      register: rule_18_6_9_1_results_enablelltdio
+      changed_when: '"Patched" in rule_18_6_9_1_results_enable_lltdio.stdout'
+      register: rule_18_6_9_1_results_enable_lltdio
 
-    - name: "18.6.9.1 | GPO | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | ProhibitLLTDIOOnPrivateNet"
+    - name: "18.6.9.1 | GPO | Ensure Turn on Mapper IO LLTDIO driver is set to Disabled | Prohibit LLTDIO On PrivateNet"
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\Lltd"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LLTD"
         $registryValueName = "ProhibitLLTDIOOnPrivateNet"
         $type = "DWORD"
         $desiredValue = 0
@@ -1543,8 +1639,8 @@
         - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_6_9_1_results_prohibitlltdioonprivatenet.stdout'
-      register: rule_18_6_9_1_results_prohibitlltdioonprivatenet
+      changed_when: '"Patched" in rule_18_6_9_1_results_prohibit_lltdio_on_privatenet.stdout'
+      register: rule_18_6_9_1_results_prohibit_lltdio_on_privatenet
 
 - name: "18.6.9.2 | GPO | Ensure Turn on Responder RSPNDR driver is set to Disabled"
   when: win22cis_rule_18_6_9_2
@@ -1564,7 +1660,7 @@
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\Lltd"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LLTD"
         $registryValueName = "AllowRspndrOnDomain"
         $type = "DWORD"
         $desiredValue = 0
@@ -1592,7 +1688,7 @@
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\Lltd"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LLTD"
         $registryValueName = "AllowRspndrOnPublicNet"
         $type = "DWORD"
         $desiredValue = 0
@@ -1620,7 +1716,7 @@
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\Lltd"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LLTD"
         $registryValueName = "EnableRspndr"
         $type = "DWORD"
         $desiredValue = 0
@@ -1648,7 +1744,7 @@
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\Lltd"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\LLTD"
         $registryValueName = "ProhibitRspndrOnPrivateNet"
         $type = "DWORD"
         $desiredValue = 0
@@ -2063,7 +2159,7 @@
   changed_when: '"Patched" in rule_18_6_20_2_results.stdout'
   register: rule_18_6_20_2_results
 
-- name: "18.6.21.1 | GPO | Ensure Minimize the number of simultaneous connections to the Internet or a Windows Domain is set to Enabled"
+- name: "18.6.21.1 | GPO | Ensure 'Minimize the number of simultaneous connections to the Internet or a Windows Domain' is set to 'Enabled: 3 = Prevent Wi-Fi when on Ethernet'"
   when:
     - win22cis_rule_18_6_21_1
     - "'(Skipped)' not in item"
@@ -2227,7 +2323,7 @@
   changed_when: '"Patched" in rule_18_7_1_results.stdout'
   register: rule_18_7_1_results
 
-- name: "18.7.2 | GPO | Ensure Configure Redirection Guard is set to Enabled Redirection Guard Enabled"
+- name: "18.7.2 | GPO | Ensure 'Configure Redirection Guard' is set to 'Enabled: Redirection Guard Enabled'"
   when:
     - win22cis_rule_18_7_2
     - "'(Skipped)' not in item"
@@ -2266,7 +2362,7 @@
   changed_when: '"Patched" in rule_18_7_2_results.stdout'
   register: rule_18_7_2_results
 
-- name: "18.7.3 | GPO | Ensure Configure RPC connection settings Protocol to use for outgoing RPC connections is set to Enabled RPC over TCP"
+- name: "18.7.3 | GPO | Ensure 'Configure RPC connection settings: Protocol to use for outgoing RPC connections' is set to 'Enabled: RPC over TCP'"
   when:
     - win22cis_rule_18_7_3
     - "'(Skipped)' not in item"
@@ -2346,7 +2442,7 @@
   changed_when: '"Patched" in rule_18_7_4_results.stdout'
   register: rule_18_7_4_results
 
-- name: "18.7.5 | GPO | Ensure Configure RPC connection settings Use authentication for outgoing RPC connections is set to Enabled: Default"
+- name: "18.7.5 | GPO | Ensure 'Configure RPC listener settings: Protocols to allow for incoming RPC connections' is set to 'Enabled: RPC over TCP'"
   when:
     - win22cis_rule_18_7_5
     - "'(Skipped)' not in item"
@@ -2486,7 +2582,7 @@
   changed_when: '"Patched" in rule_18_7_7_results.stdout'
   register: rule_18_7_7_results
 
-- name: "18.7.8 | GPO | Ensure Limits print driver installation to Administrators is set to Enabled"
+- name: "18.7.8 | GPO | Ensure 'Configure RPC packet level privacy setting for incoming connections' is set to 'Enabled'"
   when:
     - win22cis_rule_18_7_8
     - "'(Skipped)' not in item"
@@ -2494,6 +2590,48 @@
     - level1-domaincontroller
     - level1-memberserver
     - rule_18.7.8
+    - patch
+    - printers
+    - drivers
+    - gpo
+    - NIST800-171_3.14.6
+    - NIST800-171_3.14.7
+    - NIST800-53_SI-4
+    - NIST800-53R5_SI-4
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Print"
+    $registryValueName = "RpcAuthnLevelPrivacyEnabled"
+    $type = "DWORD"
+    $desiredValue = 1
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_7_8_results.stdout'
+  register: rule_18_7_8_results
+
+- name: "18.7.9 | GPO | Ensure Limits print driver installation to Administrators is set to Enabled"
+  when:
+    - win22cis_rule_18_7_9
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.7.9
     - patch
     - printers
     - drivers
@@ -2522,17 +2660,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_7_8_results.stdout'
-  register: rule_18_7_8_results
+  changed_when: '"Patched" in rule_18_7_9_results.stdout'
+  register: rule_18_7_9_results
 
-- name: "18.7.9 | GPO | Ensure Manage processing of Queue-specific files is set to Enabled: Limit Queue-specific files to Color profiles"
+- name: "18.7.10 | GPO | Ensure Manage processing of Queue-specific files is set to Enabled: Limit Queue-specific files to Color profiles"
   when:
-    - win22cis_rule_18_7_9
+    - win22cis_rule_18_7_10
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.7.9
+    - rule_18.7.10
     - patch
     - printers
     - drivers
@@ -2559,17 +2697,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_7_9_results.stdout'
-  register: rule_18_7_9_results
+  changed_when: '"Patched" in rule_18_7_10_results.stdout'
+  register: rule_18_7_10_results
 
-- name: "18.7.10 | GPO | Ensure Point and Print Restrictions When installing drivers for a new connection is set to Enabled Show warning and elevation prompt"
+- name: "18.7.11 | GPO | Ensure Point and Print Restrictions When installing drivers for a new connection is set to Enabled Show warning and elevation prompt"
   when:
-    - win22cis_rule_18_7_10
+    - win22cis_rule_18_7_11
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.7.10
+    - rule_18.7.11
     - patch
     - printers
     - gpo
@@ -2596,17 +2734,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_7_10_results.stdout'
-  register: rule_18_7_10_results
+  changed_when: '"Patched" in rule_18_7_11_results.stdout'
+  register: rule_18_7_11_results
 
-- name: "18.7.11 | GPO | Ensure Point and Print Restrictions: When updating drivers for an existing connection is set to Enabled: Show warning and elevation prompt"
+- name: "18.7.12 | GPO | Ensure Point and Print Restrictions: When updating drivers for an existing connection is set to Enabled: Show warning and elevation prompt"
   when:
-    - win22cis_rule_18_7_11
+    - win22cis_rule_18_7_12
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.7.11
+    - rule_18.7.12
     - patch
     - printers
     - gpo
@@ -2633,8 +2771,8 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_7_11_results.stdout'
-  register: rule_18_7_11_results
+  changed_when: '"Patched" in rule_18_7_12_results.stdout'
+  register: rule_18_7_12_results
 
 - name: "18.8.1.1 | GPO | Ensure Turn off notifications network usage is set to Enabled"
   when:
@@ -2690,7 +2828,7 @@
     - NIST800-53R5_AU-2
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System\Audit"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit"
     $registryValueName = "ProcessCreationIncludeCmdLine_Enabled"
     $type = "DWORD"
     $desiredValue = 1
@@ -3115,7 +3253,7 @@
   changed_when: '"Patched" in rule_18_9_7_2_results.stdout'
   register: rule_18_9_7_2_results
 
-- name: "18.9.13.1 | GPO | Ensure Boot-Start Driver Initialization Policy is set to Enabled Good unknown and bad but critical"
+- name: "18.9.13.1 | GPO | Ensure 'Boot-Start Driver Initialization Policy' is set to 'Enabled: Good, unknown and bad but critical'"
   when:
     - win22cis_rule_18_9_13_1
     - "'(Skipped)' not in item"
@@ -3484,7 +3622,7 @@
     - NIST800-53R5_SA-10
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "DisableBkGndGroupPolicy"
     $type = "DWORD"
     $desiredValue = 0
@@ -3599,7 +3737,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18_9_20_1_3
+    - rule_18.9.20.1.3
     - patch
     - handwriting
     - gpo
@@ -5475,7 +5613,7 @@
   when: win22cis_rule_18_9_39_1
   tags:
     - level1-domaincontroller
-    - rule_18_9_39_1
+    - rule_18.9.39.1
     - patch
     - sam
     - gpo
@@ -5741,14 +5879,14 @@
   changed_when: '"Patched" in rule_18_9_51_1_2_results.stdout'
   register: rule_18_9_51_1_2_results
 
-- name: "18.10.3.1 | GPO | Ensure Allow a Windows app to share application data between users is set to Disabled"
+- name: "18.10.4.1 | GPO | Ensure Allow a Windows app to share application data between users is set to Disabled"
   when:
-    - win22cis_rule_18_10_3_1
+    - win22cis_rule_18_10_4_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.3.1
+    - rule_18.10.4.1
     - patch
     - data
     - gpo
@@ -5778,17 +5916,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_3_1_results.stdout'
-  register: rule_18_10_3_1_results
+  changed_when: '"Patched" in rule_18_10_4_1_results.stdout'
+  register: rule_18_10_4_1_results
 
-- name: "18.10.5.1 | GPO | Ensure Allow Microsoft accounts to be optional is set to Enabled"
+- name: "18.10.6.1 | GPO | Ensure Allow Microsoft accounts to be optional is set to Enabled"
   when:
-    - win22cis_rule_18_10_5_1
+    - win22cis_rule_18_10_6_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.5.1
+    - rule_18.10.6.1
     - patch
     - accounts
     - gpo
@@ -5818,17 +5956,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_5_1_results.stdout'
-  register: rule_18_10_5_1_results
+  changed_when: '"Patched" in rule_18_10_6_1_results.stdout'
+  register: rule_18_10_6_1_results
 
-- name: "18.10.7.1 | GPO | Ensure Disallow Autoplay for non-volume devices is set to Enabled"
+- name: "18.10.8.1 | GPO | Ensure Disallow Autoplay for non-volume devices is set to Enabled"
   when:
-    - win22cis_rule_18_10_7_1
+    - win22cis_rule_18_10_8_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.7.1
+    - rule_18.10.8.1
     - patch
     - autoplay
     - gpo
@@ -5858,17 +5996,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_7_1_results.stdout'
-  register: rule_18_10_7_1_results
+  changed_when: '"Patched" in rule_18_10_8_1_results.stdout'
+  register: rule_18_10_8_1_results
 
-- name: "18.10.7.2 | GPO | Ensure Set the default behavior for AutoRun is set to Enabled Do not execute any autorun commands"
+- name: "18.10.8.2 | GPO | Ensure Set the default behavior for AutoRun is set to Enabled Do not execute any autorun commands"
   when:
-    - win22cis_rule_18_10_7_2
+    - win22cis_rule_18_10_8_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.7.2
+    - rule_18.10.8.2
     - patch
     - autorun
     - gpo
@@ -5898,17 +6036,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_7_2_results.stdout'
-  register: rule_18_10_7_2_results
+  changed_when: '"Patched" in rule_18_10_8_2_results.stdout'
+  register: rule_18_10_8_2_results
 
-- name: "18.10.7.3 | GPO | Ensure Turn off Autoplay is set to Enabled All drives"
+- name: "18.10.8.3 | GPO | Ensure Turn off Autoplay is set to Enabled All drives"
   when:
-    - win22cis_rule_18_10_7_3
+    - win22cis_rule_18_10_8_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.7.3
+    - rule_18.10.8.3
     - patch
     - autoplay
     - gpo
@@ -5938,17 +6076,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_7_3_results.stdout'
-  register: rule_18_10_7_3_results
+  changed_when: '"Patched" in rule_18_10_8_3_results.stdout'
+  register: rule_18_10_8_3_results
 
-- name: "18.10.8.1.1 | GPO | Ensure Configure enhanced anti-spoofing is set to Enabled"
+- name: "18.10.9.1.1 | GPO | Ensure Configure enhanced anti-spoofing is set to Enabled"
   when:
-    - win22cis_rule_18_10_8_1_1
+    - win22cis_rule_18_10_9_1_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.8.1.1
+    - rule_18.10.9.1.1
     - patch
     - antispoofing
     - gpo
@@ -5978,17 +6116,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_8_1_1_results.stdout'
-  register: rule_18_10_8_1_1_results
+  changed_when: '"Patched" in rule_18_10_9_1_1_results.stdout'
+  register: rule_18_10_9_1_1_results
 
-- name: "18.10.10.1 | GPO | Ensure Allow Use of Camera is set to Disabled"
+- name: "18.10.11.1 | GPO | Ensure Allow Use of Camera is set to Disabled"
   when:
-    - win22cis_rule_18_10_10_1
+    - win22cis_rule_18_10_11_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.10.1
+    - rule_18.10.11.1
     - patch
     - camera
     - gpo
@@ -6022,17 +6160,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_10_1_results.stdout'
-  register: rule_18_10_10_1_results
+  changed_when: '"Patched" in rule_18_10_11_1_results.stdout'
+  register: rule_18_10_11_1_results
 
-- name: "18.10.12.1 | GPO | Ensure Turn off cloud consumer account state content is set to Enabled"
+- name: "18.10.13.1 | GPO | Ensure Turn off cloud consumer account state content is set to Enabled"
   when:
-    - win22cis_rule_18_10_12_1
+    - win22cis_rule_18_10_13_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.12.1
+    - rule_18.10.13.1
     - patch
     - cloud
     - gpo
@@ -6062,17 +6200,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_12_1_results.stdout'
-  register: rule_18_10_12_1_results
+  changed_when: '"Patched" in rule_18_10_13_1_results.stdout'
+  register: rule_18_10_13_1_results
 
-- name: "18.10.12.2 | GPO | Ensure Turn off cloud optimized content is set to Enabled"
+- name: "18.10.13.2 | GPO | Ensure Turn off cloud optimized content is set to Enabled"
   when:
-    - win22cis_rule_18_10_12_2
+    - win22cis_rule_18_10_13_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.12.2
+    - rule_18.10.13.2
     - patch
     - cloud
     - gpo
@@ -6106,17 +6244,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_12_2_results.stdout'
-  register: rule_18_10_12_2_results
+  changed_when: '"Patched" in rule_18_10_13_2_results.stdout'
+  register: rule_18_10_13_2_results
 
-- name: "18.10.12.3 | GPO | Ensure Turn off Microsoft consumer experiences is set to Enabled"
+- name: "18.10.13.3 | GPO | Ensure Turn off Microsoft consumer experiences is set to Enabled"
   when:
-    - win22cis_rule_18_10_12_3
+    - win22cis_rule_18_10_13_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.12.3
+    - rule_18.10.13.3
     - patch
     - cloud
     - gpo
@@ -6150,15 +6288,15 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_12_3_results.stdout'
-  register: rule_18_10_12_3_results
+  changed_when: '"Patched" in rule_18_10_13_3_results.stdout'
+  register: rule_18_10_13_3_results
 
-- name: "18.10.13.1 | GPO | Ensure Require pin for pairing is set to Enabled First Time OR Enabled Always"
-  when: win22cis_rule_18_10_13_1
+- name: "18.10.14.1 | GPO | Ensure Require pin for pairing is set to Enabled First Time OR Enabled Always"
+  when: win22cis_rule_18_10_14_1
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.13.1
+    - rule_18.10.14.1
     - automated
     - patch
     - pin
@@ -6167,7 +6305,7 @@
     - NIST800-53_IA-5c.
     - NIST800-53R5_IA-5c.
   block:
-    - name: "18.10.13.1 | GPO | Ensure 'Require pin for pairing' is set to 'Enabled: First Time' or 'Enabled: Always'. | Set Variable."
+    - name: "18.10.14.1 | GPO | Ensure 'Require pin for pairing' is set to 'Enabled: First Time' or 'Enabled: Always'. | Set Variable."
       when:
         - "'(Skipped)' not in item"
         - win22cis_require_pin_for_pairing == 1 or win22cis_require_pin_for_pairing == 2
@@ -6194,10 +6332,10 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_13_1_results.stdout'
-      register: rule_18_10_13_1_results
+      changed_when: '"Patched" in rule_18_10_14_1_results.stdout'
+      register: rule_18_10_14_1_results
 
-    - name: "18.10.13.1 | AUDIT | Ensure 'Require pin for pairing' is set to 'Enabled: First Time' or 'Enabled: Always'. | Warning Check For Variable Standards."
+    - name: "18.10.14.1 | AUDIT | Ensure 'Require pin for pairing' is set to 'Enabled: First Time' or 'Enabled: Always'. | Warning Check For Variable Standards."
       when:
         - win22cis_require_pin_for_pairing != 1
         - win22cis_require_pin_for_pairing != 2
@@ -6206,23 +6344,23 @@
           - "Warning! The setting for win22cis_require_pin_for_pairing is invalid. Please review"
           - "the configuration notes for this variable to ensure compliance with the required settings."
 
-    - name: "18.10.13.1 | AUDIT | Ensure Require pin for pairing is set to Enabled First Time OR Enabled Always | Warn Count."
+    - name: "18.10.14.1 | AUDIT | Ensure Require pin for pairing is set to Enabled First Time OR Enabled Always | Warn Count."
       vars:
-        warn_control_id: '18.10.13.1'
+        warn_control_id: '18.10.14.1'
       when:
         - win22cis_require_pin_for_pairing != 1
         - win22cis_require_pin_for_pairing != 2
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.10.14.1 | GPO | Ensure Do not display the password reveal button is set to Enabled"
+- name: "18.10.15.1 | GPO | Ensure Do not display the password reveal button is set to Enabled"
   when:
-    - win22cis_rule_18_10_14_1
+    - win22cis_rule_18_10_15_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.14.1
+    - rule_18.10.15.1
     - patch
     - gui
     - gpo
@@ -6252,17 +6390,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_14_1_results.stdout'
-  register: rule_18_10_14_1_results
+  changed_when: '"Patched" in rule_18_10_15_1_results.stdout'
+  register: rule_18_10_15_1_results
 
-- name: "18.10.14.2 | GPO | Ensure Enumerate administrator accounts on elevation is set to Disabled"
+- name: "18.10.15.2 | GPO | Ensure Enumerate administrator accounts on elevation is set to Disabled"
   when:
-    - win22cis_rule_18_10_14_2
+    - win22cis_rule_18_10_15_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.14.2
+    - rule_18.10.15.2
     - patch
     - accounts
     - gpo
@@ -6292,15 +6430,15 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_14_2_results.stdout'
-  register: rule_18_10_14_2_results
+  changed_when: '"Patched" in rule_18_10_15_2_results.stdout'
+  register: rule_18_10_15_2_results
 
-- name: "18.10.15.1 | GPO | Ensure Allow Diagnostic Data is set to Enabled: Diagnostic data off (not recommended) or Enabled: Send required diagnostic data"
-  when: win22cis_rule_18_10_15_1
+- name: "18.10.16.1 | GPO | Ensure Allow Diagnostic Data is set to Enabled: Diagnostic data off (not recommended) or Enabled: Send required diagnostic data"
+  when: win22cis_rule_18_10_16_1
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.15.1
+    - rule_18.10.16.1
     - automated
     - patch
     - diagnostics
@@ -6310,7 +6448,7 @@
     - NIST800-53_SI-4
     - NIST800-53R5_SI-4
   block:
-    - name: "18.10.15.1 | GPO | Ensure 'Allow Diagnostic Data' is set to 'Enabled: Diagnostic data off (not recommended)' or 'Enabled: Send required diagnostic data'. | Set Variable."
+    - name: "18.10.16.1 | GPO | Ensure 'Allow Diagnostic Data' is set to 'Enabled: Diagnostic data off (not recommended)' or 'Enabled: Send required diagnostic data'. | Set Variable."
       when:
         - "'(Skipped)' not in item"
         - win22cis_allow_telemetry == 0 or win22cis_allow_telemetry == 1
@@ -6337,10 +6475,10 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_15_1_results.stdout'
-      register: rule_18_10_15_1_results
+      changed_when: '"Patched" in rule_18_10_16_1_results.stdout'
+      register: rule_18_10_16_1_results
 
-    - name: "18.10.15.1 | AUDIT | Ensure 'Allow Diagnostic Data' is set to 'Enabled: Diagnostic data off (not recommended)' or 'Enabled: Send required diagnostic data'. | Warning Check For Variable Standards."
+    - name: "18.10.16.1 | AUDIT | Ensure 'Allow Diagnostic Data' is set to 'Enabled: Diagnostic data off (not recommended)' or 'Enabled: Send required diagnostic data'. | Warning Check For Variable Standards."
       when:
         - win22cis_allow_telemetry != 0
         - win22cis_allow_telemetry != 1
@@ -6349,23 +6487,23 @@
           - "Warning! The setting for win22cis_allow_telemetry is invalid. Please review"
           - "the configuration notes for this variable to ensure compliance with the required settings."
 
-    - name: "18.10.15.1 | AUDIT | Ensure Allow Diagnostic Data is set to Enabled: Diagnostic data off (not recommended) or Enabled: Send required diagnostic data | Warn Count."
+    - name: "18.10.16.1 | AUDIT | Ensure Allow Diagnostic Data is set to Enabled: Diagnostic data off (not recommended) or Enabled: Send required diagnostic data | Warn Count."
       vars:
-        warn_control_id: '18.10.15.1'
+        warn_control_id: '18.10.16.1'
       when:
         - win22cis_allow_telemetry != 0
         - win22cis_allow_telemetry != 1
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.10.15.2 | GPO | Ensure Configure Authenticated Proxy usage for the Connected User Experience and Telemetry service is set to Enabled Disable Authenticated Proxy usage"
+- name: "18.10.16.2 | GPO | Ensure Configure Authenticated Proxy usage for the Connected User Experience and Telemetry service is set to Enabled Disable Authenticated Proxy usage"
   when:
-    - win22cis_rule_18_10_15_2
+    - win22cis_rule_18_10_16_2
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.15.2
+    - rule_18.10.16.2
     - patch
     - datacollection
     - gpo
@@ -6396,17 +6534,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_15_2_results.stdout'
-  register: rule_18_10_15_2_results
+  changed_when: '"Patched" in rule_18_10_16_2_results.stdout'
+  register: rule_18_10_16_2_results
 
-- name: "18.10.15.3 | GPO | Ensure Disable OneSettings Downloads is set to Enabled"
+- name: "18.10.16.3 | GPO | Ensure Disable OneSettings Downloads is set to Enabled"
   when:
-    - win22cis_rule_18_10_15_3
+    - win22cis_rule_18_10_16_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.15.3
+    - rule_18.10.16.3
     - patch
     - onesettings
     - gpo
@@ -6437,17 +6575,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_15_3_results.stdout'
-  register: rule_18_10_15_3_results
+  changed_when: '"Patched" in rule_18_10_16_3_results.stdout'
+  register: rule_18_10_16_3_results
 
-- name: "18.10.15.4 | GPO | Ensure Do not show feedback notifications is set to Enabled"
+- name: "18.10.16.4 | GPO | Ensure Do not show feedback notifications is set to Enabled"
   when:
-    - win22cis_rule_18_10_15_4
+    - win22cis_rule_18_10_16_4
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.15.4
+    - rule_18.10.16.4
     - patch
     - datacollection
     - gpo
@@ -6478,17 +6616,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_15_4_results.stdout'
-  register: rule_18_10_15_4_results
+  changed_when: '"Patched" in rule_18_10_16_4_results.stdout'
+  register: rule_18_10_16_4_results
 
-- name: "18.10.15.5 | GPO | Ensure Enable OneSettings Auditing' is set to Enabled"
+- name: "18.10.16.5 | GPO | Ensure Enable OneSettings Auditing' is set to Enabled"
   when:
-    - win22cis_rule_18_10_15_5
+    - win22cis_rule_18_10_16_5
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.15.5
+    - rule_18.10.16.5
     - patch
     - datacollection
     - gpo
@@ -6526,17 +6664,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_15_5_results.stdout'
-  register: rule_18_10_15_5_results
+  changed_when: '"Patched" in rule_18_10_16_5_results.stdout'
+  register: rule_18_10_16_5_results
 
-- name: "18.10.15.6 | GPO | Ensure Limit Diagnostic Log Collection is set to Enabled"
+- name: "18.10.16.6 | GPO | Ensure Limit Diagnostic Log Collection is set to Enabled"
   when:
-    - win22cis_rule_18_10_15_6
+    - win22cis_rule_18_10_16_6
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.15.6
+    - rule_18.10.16.6
     - patch
     - datacollection
     - gpo
@@ -6570,17 +6708,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_15_6_results.stdout'
-  register: rule_18_10_15_6_results
+  changed_when: '"Patched" in rule_18_10_16_6_results.stdout'
+  register: rule_18_10_16_6_results
 
-- name: "18.10.15.7 | GPO | Ensure Limit Dump Collection is set to Enabled"
+- name: "18.10.16.7 | GPO | Ensure Limit Dump Collection is set to Enabled"
   when:
-    - win22cis_rule_18_10_15_7
+    - win22cis_rule_18_10_16_7
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.15.7
+    - rule_18.10.16.7
     - patch
     - datacollection
     - gpo
@@ -6611,65 +6749,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_15_7_results.stdout'
-  register: rule_18_10_15_7_results
+  changed_when: '"Patched" in rule_18_10_16_7_results.stdout'
+  register: rule_18_10_16_7_results
 
-- name: "18.10.15.8 | GPO | Ensure Toggle user control over Insider builds is set to Disabled"
+- name: "18.10.18.1 | GPO | Ensure Enable App Installer is set to Disabled"
   when:
-    - win22cis_rule_18_10_15_8
+    - win22cis_rule_18_10_18_1
     - "'(Skipped)' not in item"
   tags:
-    - level1-domaincontroller
-    - level1-memberserver
-    - rule_18.10.15.8
-    - patch
-    - previewbuilds
-    - gpo
-    - NIST800-171_3.4.1
-    - NIST800-171_3.4.7
-    - NIST800-171_3.4.9
-    - NIST800-53_CM-7_2
-    - NIST800-53_CM-8_3
-    - NIST800-53_CM-10
-    - NIST800-53_CM-11
-    - NIST800-53R5_CM-7_2
-    - NIST800-53R5_CM-8_3
-    - NIST800-53R5_CM-10
-    - NIST800-53R5_CM-11
-  ansible.windows.win_shell: |
-    $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\PreviewBuilds"
-    $registryValueName = "AllowBuildPreview"
-    $type = "DWORD"
-    $desiredValue = 0
-
-    # Get the current value of the registry key in the GPO
-    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
-
-    # Check if the current value is equal to the desired value
-    if ($currentValue -ne $desiredValue) {
-        # If not, set the registry value to the desired value
-        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
-        Write-Output "Patched"
-    } else {
-        Write-Output "No Change Needed"
-    }
-  loop:
-    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
-    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
-  loop_control:
-    label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_15_8_results.stdout'
-  register: rule_18_10_15_8_results
-
-- name: "18.10.17.1 | GPO | Ensure Enable App Installer is set to Disabled"
-  when:
-    - win22cis_rule_18_10_17_1
-    - "'(Skipped)' not in item"
-  tags:
-    - level1-domaincontroller
-    - level1-memberserver
-    - rule_18.10.17.1
+    - level2-domaincontroller
+    - level2-memberserver
+    - rule_18.10.18.1
     - patch
     - appinstaller
     - gpo
@@ -6699,21 +6789,21 @@
         Write-Output "No Change Needed"
     }
   loop:
-    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
-    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+    - "{{ win22cis_l2_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l2_dc_gpo else '' ) }}"
+    - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_17_1_results.stdout'
-  register: rule_18_10_17_1_results
+  changed_when: '"Patched" in rule_18_10_18_1_results.stdout'
+  register: rule_18_10_18_1_results
 
-- name: "18.10.17.2 | GPO | Ensure Enable App Installer Experimental Features is set to Disabled"
+- name: "18.10.18.2 | GPO | Ensure Enable App Installer Experimental Features is set to Disabled"
   when:
-    - win22cis_rule_18_10_17_2
+    - win22cis_rule_18_10_18_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.17.2
+    - rule_18.10.18.2
     - patch
     - appinstaller
     - gpo
@@ -6747,17 +6837,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_17_2_results.stdout'
-  register: rule_18_10_17_2_results
+  changed_when: '"Patched" in rule_18_10_18_2_results.stdout'
+  register: rule_18_10_18_2_results
 
-- name: "18.10.17.3 | GPO | Ensure Enable App Installer Hash Override is set to Disabled"
+- name: "18.10.18.3 | GPO | Ensure Enable App Installer Hash Override is set to Disabled"
   when:
-    - win22cis_rule_18_10_17_3
+    - win22cis_rule_18_10_18_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.17.3
+    - rule_18.10.18.3
     - patch
     - appinstaller
     - gpo
@@ -6791,17 +6881,66 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_17_3_results.stdout'
-  register: rule_18_10_17_3_results
+  changed_when: '"Patched" in rule_18_10_18_3_results.stdout'
+  register: rule_18_10_18_3_results
 
-- name: "18.10.17.4 | GPO | Ensure Enable App Installer ms-appinstaller protocol is set to Disabled"
+- name: "18.10.18.4 | GPO | Ensure Enable App Installer Local Archive Malware Scan Override is set to Disabled"
   when:
-    - win22cis_rule_18_10_17_4
+    - win22cis_rule_18_10_18_4
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.17.4
+    - rule_18.10.18.4
+    - patch
+    - appinstaller
+    - gpo
+    - NIST800-171_3.4.6
+    - NIST800-171_3.4.7
+    - NIST800-171_3.14.4
+    - NIST800-171_3.14.5
+    - NIST800-53_CM-6
+    - NIST800-53_CM-7
+    - NIST800-53_SI-3
+    - NIST800-53_SI-4
+    - NIST800-53R5_CM-6
+    - NIST800-53R5_CM-7
+    - NIST800-53R5_SI-3
+    - NIST800-53R5_SI-4
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppInstaller"
+    $registryValueName = "EnableLocalArchiveMalwareScanOverride"
+    $type = "DWORD"
+    $desiredValue = 0
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_10_18_4_results.stdout'
+  register: rule_18_10_18_4_results
+
+- name: "18.10.18.5 | GPO | Ensure Enable App Installer ms-appinstaller protocol is set to Disabled"
+  when:
+    - win22cis_rule_18_10_18_5
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.10.18.5
     - patch
     - appinstaller
     - gpo
@@ -6835,17 +6974,109 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_17_4_results.stdout'
-  register: rule_18_10_17_4_results
+  changed_when: '"Patched" in rule_18_10_18_5_results.stdout'
+  register: rule_18_10_18_5_results
 
-- name: "18.10.25.1.1 | GPO | Ensure Application Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+- name: "18.10.18.6 | GPO | Ensure Enable App Installer Microsoft Store Source Certificate Validation Bypass is set to Disabled"
   when:
-    - win22cis_rule_18_10_25_1_1
+    - win22cis_rule_18_10_18_6
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.25.1.1
+    - rule_18.10.18.6
+    - patch
+    - appinstaller
+    - gpo
+    - NIST800-171_3.4.2
+    - NIST800-171_3.4.6
+    - NIST800-171_3.4.7
+    - NIST800-53_CM-6
+    - NIST800-53_CM-7
+    - NIST800-53_SI-3
+    - NIST800-53_SI-4
+    - NIST800-53R5_CM-6
+    - NIST800-53R5_CM-7
+    - NIST800-53R5_SI-3
+    - NIST800-53R5_SI-4
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppInstaller"
+    $registryValueName = "EnableBypassCertificatePinningForMicrosoftStore"
+    $type = "DWORD"
+    $desiredValue = 0
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_10_18_6_results.stdout'
+  register: rule_18_10_18_6_results
+
+- name: "18.10.18.7 | GPO | Ensure Enable Windows Package Manager command line interfaces is set to Disabled"
+  when:
+    - win22cis_rule_18_10_18_7
+    - "'(Skipped)' not in item"
+  tags:
+    - level2-domaincontroller
+    - level2-memberserver
+    - rule_18.10.18.7
+    - patch
+    - appinstaller
+    - gpo
+    - NIST800-171_3.4.2
+    - NIST800-171_3.4.6
+    - NIST800-171_3.4.7
+    - NIST800-53_CM-6
+    - NIST800-53_CM-7
+    - NIST800-53R5_CM-6
+    - NIST800-53R5_CM-7
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppInstaller"
+    $registryValueName = "EnableWindowsPackageManagerCommandLineInterfaces"
+    $type = "DWORD"
+    $desiredValue = 0
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l2_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l2_dc_gpo else '' ) }}"
+    - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_10_18_7_results.stdout'
+  register: rule_18_10_18_7_results
+
+- name: "18.10.26.1.1 | GPO | Ensure Application Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+  when:
+    - win22cis_rule_18_10_26_1_1
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.10.26.1.1
     - patch
     - eventlog
     - gpo
@@ -6874,22 +7105,22 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_25_1_1_results.stdout'
-  register: rule_18_10_25_1_1_results
+  changed_when: '"Patched" in rule_18_10_26_1_1_results.stdout'
+  register: rule_18_10_26_1_1_results
 
-- name: "18.10.25.1.2 | GPO | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater"
-  when: win22cis_rule_18_10_25_1_2
+- name: "18.10.26.1.2 | GPO | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater"
+  when: win22cis_rule_18_10_26_1_2
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.25.1.2
+    - rule_18.10.26.1.2
     - patch
     - eventlog
     - gpo
     - NIST800-53_AU-4
     - NIST800-53R5_AU-4
   block:
-    - name: "18.10.25.1.2 | GPO | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Set 'Application Log' Maximum Log File Size to 32768 KB or greater."
+    - name: "18.10.26.1.2 | GPO | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Set 'Application Log' Maximum Log File Size to 32768 KB or greater."
       when:
         - win22cis_application_max_log_file_size >= 32768
         - "'(Skipped)' not in item"
@@ -6916,31 +7147,31 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_25_1_2_results.stdout'
-      register: rule_18_10_25_1_2_results
+      changed_when: '"Patched" in rule_18_10_26_1_2_results.stdout'
+      register: rule_18_10_26_1_2_results
 
-    - name: "18.10.25.1.2 | AUDIT | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check for Application Log File Size Standards."
+    - name: "18.10.26.1.2 | AUDIT | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check for Application Log File Size Standards."
       when: win22cis_application_max_log_file_size < 32768
       ansible.builtin.debug:
         msg:
           - "Warning!! You have an invalid file size set for win22cis_application_max_log_file_size please read"
           - "the notes for the variable and make the necessary change to the variable to be in compliance."
 
-    - name: "18.10.25.1.2 | AUDIT | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Application Log File Size Warn Count."
+    - name: "18.10.26.1.2 | AUDIT | Ensure Application Specify the maximum log file size KB is set to Enabled 32768 or greater | Application Log File Size Warn Count."
       vars:
-        warn_control_id: '18.10.25.1.2'
+        warn_control_id: '18.10.26.1.2'
       when: win22cis_application_max_log_file_size < 32768
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.10.25.2.1 | GPO | Ensure Security Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+- name: "18.10.26.2.1 | GPO | Ensure Security Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
   when:
-    - win22cis_rule_18_10_25_2_1
+    - win22cis_rule_18_10_26_2_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.25.2.1
+    - rule_18.10.26.2.1
     - patch
     - eventlog
     - gpo
@@ -6969,23 +7200,23 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_25_2_1_results.stdout'
-  register: rule_18_10_25_2_1_results
+  changed_when: '"Patched" in rule_18_10_26_2_1_results.stdout'
+  register: rule_18_10_26_2_1_results
 
-- name: "18.10.25.2.2 | GPO | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater"
+- name: "18.10.26.2.2 | GPO | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater"
   when:
-    - win22cis_rule_18_10_25_2_2
+    - win22cis_rule_18_10_26_2_2
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.25.2.2
+    - rule_18.10.26.2.2
     - patch
     - eventlog
     - gpo
     - NIST800-53_AU-4
     - NIST800-53R5_AU-4
   block:
-    - name: "18.10.25.2.2 | GPO | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Set 'Security Log' Maximum Log File Size to 196608 KB or greater."
+    - name: "18.10.26.2.2 | GPO | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Set 'Security Log' Maximum Log File Size to 196608 KB or greater."
       when:
         - win22cis_security_max_log_file_size >= 196608
         - "'(Skipped)' not in item"
@@ -7012,31 +7243,31 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_25_2_2_results.stdout'
-      register: rule_18_10_25_2_2_results
+      changed_when: '"Patched" in rule_18_10_26_2_2_results.stdout'
+      register: rule_18_10_26_2_2_results
 
-    - name: "18.10.25.2.2 | AUDIT | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Warning Check for Security Log File Size Standards."
+    - name: "18.10.26.2.2 | AUDIT | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Warning Check for Security Log File Size Standards."
       when: win22cis_security_max_log_file_size < 196608
       ansible.builtin.debug:
         msg:
           - "Warning!! You have an invalid file size set for win22cis_security_max_log_file_size please read"
           - "the notes for the variable and make the necessary change to the variable to be in compliance."
 
-    - name: "18.10.25.2.2 | AUDIT | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Security Log File Size Warn Count."
+    - name: "18.10.26.2.2 | AUDIT | Ensure Security Specify the maximum log file size KB is set to Enabled 196608 or greater | Security Log File Size Warn Count."
       vars:
-        warn_control_id: '18.10.25.2.2'
+        warn_control_id: '18.10.26.2.2'
       when: win22cis_security_max_log_file_size < 196608
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.10.25.3.1 | GPO | Ensure Setup Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+- name: "18.10.26.3.1 | GPO | Ensure Setup Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
   when:
-    - win22cis_rule_18_10_25_3_1
+    - win22cis_rule_18_10_26_3_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.25.3.1
+    - rule_18.10.26.3.1
     - patch
     - eventlog
     - gpo
@@ -7065,23 +7296,23 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_25_3_1_results.stdout'
-  register: rule_18_10_25_3_1_results
+  changed_when: '"Patched" in rule_18_10_26_3_1_results.stdout'
+  register: rule_18_10_26_3_1_results
 
-- name: "18.10.25.3.2 | GPO | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater"
+- name: "18.10.26.3.2 | GPO | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater"
   when:
-    - win22cis_rule_18_10_25_3_2
+    - win22cis_rule_18_10_26_3_2
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.25.3.2
+    - rule_18.10.26.3.2
     - patch
     - eventlog
     - gpo
     - NIST800-53_AU-4
     - NIST800-53R5_AU-4
   block:
-    - name: "18.10.25.3.2 | GPO | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Set 'Setup Log' Maximum Log File Size to 32768 KB or greater."
+    - name: "18.10.26.3.2 | GPO | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Set 'Setup Log' Maximum Log File Size to 32768 KB or greater."
       when:
         - win22cis_setup_max_log_file_size >= 32768
         - "'(Skipped)' not in item"
@@ -7108,31 +7339,31 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_25_3_2_results.stdout'
-      register: rule_18_10_25_3_2_results
+      changed_when: '"Patched" in rule_18_10_26_3_2_results.stdout'
+      register: rule_18_10_26_3_2_results
 
-    - name: "18.10.25.3.2 | AUDIT | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check for Setup Log File Size Standards."
+    - name: "18.10.26.3.2 | AUDIT | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check for Setup Log File Size Standards."
       when: win22cis_setup_max_log_file_size < 32768
       ansible.builtin.debug:
         msg:
           - "Warning!! You have an invalid file size set for win22cis_setup_max_log_file_size please read"
           - "the notes for the variable and make the necessary change to the variable to be in compliance."
 
-    - name: "18.10.25.3.2 | AUDIT | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Setup Log File Size Warn Count."
+    - name: "18.10.26.3.2 | AUDIT | Ensure Setup Specify the maximum log file size KB is set to Enabled 32768 or greater | Setup Log File Size Warn Count."
       vars:
-        warn_control_id: '18.10.25.3.2'
+        warn_control_id: '18.10.26.3.2'
       when: win22cis_setup_max_log_file_size < 32768
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.10.25.4.1 | GPO | Ensure System Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
+- name: "18.10.26.4.1 | GPO | Ensure System Control Event Log behavior when the log file reaches its maximum size is set to Disabled"
   when:
-    - win22cis_rule_18_10_25_4_1
+    - win22cis_rule_18_10_26_4_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.25.4.1
+    - rule_18.10.26.4.1
     - patch
     - eventlog
     - gpo
@@ -7161,22 +7392,22 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_25_4_1_results.stdout'
-  register: rule_18_10_25_4_1_results
+  changed_when: '"Patched" in rule_18_10_26_4_1_results.stdout'
+  register: rule_18_10_26_4_1_results
 
-- name: "18.10.25.4.2 | GPO | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater"
-  when: win22cis_rule_18_10_25_4_2
+- name: "18.10.26.4.2 | GPO | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater"
+  when: win22cis_rule_18_10_26_4_2
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.25.4.2
+    - rule_18.10.26.4.2
     - patch
     - eventlog
     - gpo
     - NIST800-53_AU-4
     - NIST800-53R5_AU-4
   block:
-    - name: "18.10.25.4.2 | GPO | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Set 'System Log' Maximum Log File Size to 32768 KB or greater."
+    - name: "18.10.26.4.2 | GPO | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Set 'System Log' Maximum Log File Size to 32768 KB or greater."
       when:
         - win22cis_system_max_log_file_size >= 32768
         - "'(Skipped)' not in item"
@@ -7203,31 +7434,75 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_25_4_2_results.stdout'
-      register: rule_18_10_25_4_2_results
+      changed_when: '"Patched" in rule_18_10_26_4_2_results.stdout'
+      register: rule_18_10_26_4_2_results
 
-    - name: "18.10.25.4.2 | AUDIT | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check for System Log File Size Standards."
+    - name: "18.10.26.4.2 | AUDIT | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | Warning Check for System Log File Size Standards."
       when: win22cis_system_max_log_file_size < 32768
       ansible.builtin.debug:
         msg:
           - "Warning!! You have an invalid file size set for win22cis_system_max_log_file_size. Please read"
           - "the notes for the variable and make the necessary change to the variable to be in compliance."
 
-    - name: "18.10.25.4.2 | AUDIT | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | System Log File Size Warn Count."
+    - name: "18.10.26.4.2 | AUDIT | Ensure System Specify the maximum log file size KB is set to Enabled 32768 or greater | System Log File Size Warn Count."
       vars:
-        warn_control_id: '18.10.25.4.2'
+        warn_control_id: '18.10.26.4.2'
       when: win22cis_system_max_log_file_size < 32768
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.10.28.2 | GPO | Ensure Turn off Data Execution Prevention for Explorer is set to Disabled"
+- name: "18.10.29.2 | GPO | Ensure Do not apply the Mark of the Web tag to files copied from insecure sources is set to Disabled"
   when:
-    - win22cis_rule_18_10_28_2
+    - win22cis_rule_18_10_29_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.28.2
+    - rule_18.10.29.2
+    - patch
+    - motw
+    - explorer
+    - gpo
+    - NIST800-171_3.4.2
+    - NIST800-171_3.4.6
+    - NIST800-53_CM-6
+    - NIST800-53_SI-3
+    - NIST800-53R5_CM-6
+    - NIST800-53R5_SI-3
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer"
+    $registryValueName = "DisableMotWOnInsecurePathCopy"
+    $type = "DWORD"
+    $desiredValue = 0
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_10_29_2_results.stdout'
+  register: rule_18_10_29_2_results
+
+- name: "18.10.29.3 | GPO | Ensure Turn off Data Execution Prevention for Explorer is set to Disabled"
+  when:
+    - win22cis_rule_18_10_29_3
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.10.29.3
     - patch
     - dep
     - gpo
@@ -7256,17 +7531,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_28_2_results.stdout'
-  register: rule_18_10_28_2_results
+  changed_when: '"Patched" in rule_18_10_29_3_results.stdout'
+  register: rule_18_10_29_3_results
 
-- name: "18.10.28.3 | GPO | Ensure Turn off heap termination on corruption is set to Disabled"
+- name: "18.10.29.4 | GPO | Ensure Turn off heap termination on corruption is set to Disabled"
   when:
-    - win22cis_rule_18_10_28_3
+    - win22cis_rule_18_10_29_4
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.28.3
+    - rule_18.10.29.4
     - patch
     - heap
     - gpo
@@ -7300,17 +7575,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_28_3_results.stdout'
-  register: rule_18_10_28_3_results
+  changed_when: '"Patched" in rule_18_10_29_4_results.stdout'
+  register: rule_18_10_29_4_results
 
-- name: "18.10.28.4 | GPO | Ensure Turn off shell protocol protected mode is set to Disabled"
+- name: "18.10.29.5 | GPO | Ensure Turn off shell protocol protected mode is set to Disabled"
   when:
-    - win22cis_rule_18_10_28_4
+    - win22cis_rule_18_10_29_5
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.28.4
+    - rule_18.10.29.5
     - patch
     - shell
     - gpo
@@ -7344,17 +7619,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_28_4_results.stdout'
-  register: rule_18_10_28_4_results
+  changed_when: '"Patched" in rule_18_10_29_5_results.stdout'
+  register: rule_18_10_29_5_results
 
-- name: "18.10.36.1 | GPO | Ensure Turn off location is set to Enabled"
+- name: "18.10.37.1 | GPO | Ensure Turn off location is set to Enabled"
   when:
-    - win22cis_rule_18_10_36_1
+    - win22cis_rule_18_10_37_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.36.1
+    - rule_18.10.37.1
     - patch
     - location
     - gpo
@@ -7388,17 +7663,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_36_1_results.stdout'
-  register: rule_18_10_36_1_results
+  changed_when: '"Patched" in rule_18_10_37_1_results.stdout'
+  register: rule_18_10_37_1_results
 
-- name: "18.10.40.1 | GPO | Ensure Allow Message Service Cloud Sync is set to Disabled"
+- name: "18.10.41.1 | GPO | Ensure Allow Message Service Cloud Sync is set to Disabled"
   when:
-    - win22cis_rule_18_10_40_1
+    - win22cis_rule_18_10_41_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.40.1
+    - rule_18.10.41.1
     - patch
     - msc
     - gpo
@@ -7432,17 +7707,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_40_1_results.stdout'
-  register: rule_18_10_40_1_results
+  changed_when: '"Patched" in rule_18_10_41_1_results.stdout'
+  register: rule_18_10_41_1_results
 
-- name: "18.10.41.1 | GPO | Ensure Block all consumer Microsoft account user authentication is set to Enabled"
+- name: "18.10.42.1 | GPO | Ensure Block all consumer Microsoft account user authentication is set to Enabled"
   when:
-    - win22cis_rule_18_10_41_1
+    - win22cis_rule_18_10_42_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.41.1
+    - rule_18.10.42.1
     - patch
     - account
     - gpo
@@ -7472,17 +7747,62 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_41_1_results.stdout'
-  register: rule_18_10_41_1_results
+  changed_when: '"Patched" in rule_18_10_42_1_results.stdout'
+  register: rule_18_10_42_1_results
 
-- name: "18.10.42.5.1 | GPO | Ensure Configure local setting override for reporting to Microsoft MAPS is set to Disabled"
+- name: "18.10.43.4.1 | GPO | Ensure Enable EDR in block mode is set to Enabled"
   when:
-    - win22cis_rule_18_10_42_5_1
+    - win22cis_rule_18_10_43_4_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.5.1
+    - rule_18.10.43.4.1
+    - patch
+    - defender
+    - edr
+    - gpo
+    - NIST800-171_3.14.1
+    - NIST800-171_3.14.5
+    - NIST800-171_3.14.6
+    - NIST800-53_SI-3
+    - NIST800-53_SI-4
+    - NIST800-53R5_SI-3
+    - NIST800-53R5_SI-4
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Features"
+    $registryValueName = "PassiveRemediation"
+    $type = "DWORD"
+    $desiredValue = 1
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_10_43_4_1_results.stdout'
+  register: rule_18_10_43_4_1_results
+
+- name: "18.10.43.5.1 | GPO | Ensure Configure local setting override for reporting to Microsoft MAPS is set to Disabled"
+  when:
+    - win22cis_rule_18_10_43_5_1
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.10.43.5.1
     - patch
     - maps
     - gpo
@@ -7516,17 +7836,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_5_1_results.stdout'
-  register: rule_18_10_42_5_1_results
+  changed_when: '"Patched" in rule_18_10_43_5_1_results.stdout'
+  register: rule_18_10_43_5_1_results
 
-- name: "18.10.42.5.2 | GPO | Ensure Join Microsoft MAPS is set to Disabled"
+- name: "18.10.43.5.2 | GPO | Ensure Join Microsoft MAPS is set to Disabled"
   when:
-    - win22cis_rule_18_10_42_5_2
+    - win22cis_rule_18_10_43_5_2
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.42.5.2
+    - rule_18.10.43.5.2
     - patch
     - maps
     - gpo
@@ -7560,17 +7880,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_5_2_results.stdout'
-  register: rule_18_10_42_5_2_results
+  changed_when: '"Patched" in rule_18_10_43_5_2_results.stdout'
+  register: rule_18_10_43_5_2_results
 
-- name: "18.10.42.6.1.1 | GPO | Ensure Configure Attack Surface Reduction rules is set to Enabled"
+- name: "18.10.43.6.1.1 | GPO | Ensure Configure Attack Surface Reduction rules is set to Enabled"
   when:
-    - win22cis_rule_18_10_42_6_1_1
+    - win22cis_rule_18_10_43_6_1_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.6.1.1
+    - rule_18.10.43.6.1.1
     - patch
     - defender
     - gpo
@@ -7599,17 +7919,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_6_1_1_results.stdout'
-  register: rule_18_10_42_6_1_1_results
+  changed_when: '"Patched" in rule_18_10_43_6_1_1_results.stdout'
+  register: rule_18_10_43_6_1_1_results
 
-- name: "18.10.42.6.1.2 | GPO | Ensure Configure Attack Surface Reduction rules Set the state for each ASR rule is configured"
+- name: "18.10.43.6.1.2 | GPO | Ensure Configure Attack Surface Reduction rules Set the state for each ASR rule is configured"
   when:
-    - win22cis_rule_18_10_42_6_1_2
+    - win22cis_rule_18_10_43_6_1_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.6.1.2
+    - rule_18.10.43.6.1.2
     - patch
     - defender
     - gpo
@@ -7625,7 +7945,6 @@
         "5beb7efe-fd9a-4556-801d-275e5ffc04cc",
         "75668c1f-73b5-4cf0-bb93-3ecf5cb7cc84",
         "7674ba52-37eb-4a4f-a9a1-f0f9a1619a2c",
-        "92e97fa1-2edf-4476-bdd6-9dd0b4dddc7b",
         "9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2",
         "b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4",
         "be9ba2d9-53ea-4cdc-84e5-9b1eeee46550",
@@ -7651,17 +7970,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_6_1_2_results.stdout'
-  register: rule_18_10_42_6_1_2_results
+  changed_when: '"Patched" in rule_18_10_43_6_1_2_results.stdout'
+  register: rule_18_10_43_6_1_2_results
 
-- name: "18.10.42.6.3.1 | GPO | Ensure Prevent users and apps from accessing dangerous websites is set to Enabled Block"
+- name: "18.10.43.6.3.1 | GPO | Ensure Prevent users and apps from accessing dangerous websites is set to Enabled Block"
   when:
-    - win22cis_rule_18_10_42_6_3_1
+    - win22cis_rule_18_10_43_6_3_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.6.3.1
+    - rule_18.10.43.6.3.1
     - patch
     - defender
     - network_protection
@@ -7696,17 +8015,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_6_3_1_results.stdout'
-  register: rule_18_10_42_6_3_1_results
+  changed_when: '"Patched" in rule_18_10_43_6_3_1_results.stdout'
+  register: rule_18_10_43_6_3_1_results
 
-- name: "18.10.42.7.1 | GPO | Ensure Enable file hash computation feature is set to Enabled"
+- name: "18.10.43.7.1 | GPO | Ensure Enable file hash computation feature is set to Enabled"
   when:
-    - win22cis_rule_18_10_42_7_1
+    - win22cis_rule_18_10_43_7_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.7.1
+    - rule_18.10.43.7.1
     - patch
     - defender
     - gpo
@@ -7738,17 +8057,108 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_7_1_results.stdout'
-  register: rule_18_10_42_7_1_results
+  changed_when: '"Patched" in rule_18_10_43_7_1_results.stdout'
+  register: rule_18_10_43_7_1_results
 
-- name: "18.10.42.10.1 | GPO | Ensure Scan all downloaded files and attachments is set to Enabled"
+- name: "18.10.43.8.1 | GPO | Ensure Convert warn verdict to block is set to Enabled"
   when:
-    - win22cis_rule_18_10_42_10_1
+    - win22cis_rule_18_10_43_8_1
+    - "'(Skipped)' not in item"
+  tags:
+    - level2-domaincontroller
+    - level2-memberserver
+    - rule_18.10.43.8.1
+    - patch
+    - defender
+    - nis
+    - networkprotection
+    - gpo
+    - NIST800-171_3.13.8
+    - NIST800-171_3.14.6
+    - NIST800-171_3.14.7
+    - NIST800-53_SI-3
+    - NIST800-53_SI-4
+    - NIST800-53R5_SI-3
+    - NIST800-53R5_SI-4
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\NIS"
+    $registryValueName = "EnableConvertWarnToBlock"
+    $type = "DWORD"
+    $desiredValue = 1
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l2_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l2_dc_gpo else '' ) }}"
+    - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_10_43_8_1_results.stdout'
+  register: rule_18_10_43_8_1_results
+
+- name: "18.10.43.10.1 | GPO | Ensure Configure real-time protection and Security Intelligence Updates during OOBE is set to Enabled"
+  when:
+    - win22cis_rule_18_10_43_10_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.10.1
+    - rule_18.10.43.10.1
+    - patch
+    - defender
+    - oobe
+    - realtime
+    - gpo
+    - NIST800-171_3.14.1
+    - NIST800-171_3.14.5
+    - NIST800-53_SI-3
+    - NIST800-53_SI-4
+    - NIST800-53R5_SI-3
+    - NIST800-53R5_SI-4
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection"
+    $registryValueName = "OobeEnableRtpAndSigUpdate"
+    $type = "DWORD"
+    $desiredValue = 1
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_18_10_43_10_1_results.stdout'
+  register: rule_18_10_43_10_1_results
+
+- name: "18.10.43.10.2 | GPO | Ensure Scan all downloaded files and attachments is set to Enabled"
+  when:
+    - win22cis_rule_18_10_43_10_2
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.10.43.10.2
     - patch
     - defender
     - real_time_protection
@@ -7781,17 +8191,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_10_1_results.stdout'
-  register: rule_18_10_42_10_1_results
+  changed_when: '"Patched" in rule_18_10_43_10_2_results.stdout'
+  register: rule_18_10_43_10_2_results
 
-- name: "18.10.42.10.2 | GPO | Ensure 'Turn off real-time protection' is set to 'Disabled'"
+- name: "18.10.43.10.3 | GPO | Ensure 'Turn off real-time protection' is set to 'Disabled'"
   when:
-    - win22cis_rule_18_10_42_10_2
+    - win22cis_rule_18_10_43_10_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.10.2
+    - rule_18.10.43.10.3
     - patch
     - defender
     - real_time_protection
@@ -7824,17 +8234,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_10_2_results.stdout'
-  register: rule_18_10_42_10_2_results
+  changed_when: '"Patched" in rule_18_10_43_10_3_results.stdout'
+  register: rule_18_10_43_10_3_results
 
-- name: "18.10.42.10.3 | GPO | Ensure Turn on behavior monitoring is set to Enabled"
+- name: "18.10.43.10.4 | GPO | Ensure Turn on behavior monitoring is set to Enabled"
   when:
-    - win22cis_rule_18_10_42_10_3
+    - win22cis_rule_18_10_43_10_4
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.10.3
+    - rule_18.10.43.10.4
     - patch
     - defender
     - real_time_protection
@@ -7866,17 +8276,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_10_3_results.stdout'
-  register: rule_18_10_42_10_3_results
+  changed_when: '"Patched" in rule_18_10_43_10_4_results.stdout'
+  register: rule_18_10_43_10_4_results
 
-- name: "18.10.42.10.4 | GPO | Ensure 'Turn on script scanning' is set to 'Enabled'"
+- name: "18.10.43.10.5 | GPO | Ensure 'Turn on script scanning' is set to 'Enabled'"
   when:
-    - win22cis_rule_18_10_42_10_4
+    - win22cis_rule_18_10_43_10_5
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.10.4
+    - rule_18.10.43.10.5
     - patch
     - defender
     - real_time_protection
@@ -7908,17 +8318,211 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_10_4_results.stdout'
-  register: rule_18_10_42_10_4_results
+  changed_when: '"Patched" in rule_18_10_43_10_5_results.stdout'
+  register: rule_18_10_43_10_5_results
 
-- name: "18.10.42.12.1 | GPO | Ensure Configure Watson events is set to Disabled"
+- name: "18.10.43.11.1.1.1 | GPO | Ensure Configure Brute-Force Protection aggressiveness is set to Enabled: Medium or higher"
+  when: win22cis_rule_18_10_43_11_1_1_1
+  tags:
+    - level2-domaincontroller
+    - level2-memberserver
+    - rule_18.10.43.11.1.1.1
+    - patch
+    - defender
+    - brute-force
+    - remediation
+    - gpo
+    - NIST800-171_3.14.1
+    - NIST800-171_3.14.5
+    - NIST800-171_3.14.6
+    - NIST800-53_AC-7
+    - NIST800-53_SI-4
+    - NIST800-53R5_AC-7
+    - NIST800-53R5_SI-4
+  block:
+    - name: "18.10.43.11.1.1.1 | GPO | Ensure Configure Brute-Force Protection aggressiveness is set to Enabled: Medium or higher | Set GPO"
+      when:
+        - "'(Skipped)' not in item"
+        - win22cis_brute_force_protection_aggressiveness == 1 or win22cis_brute_force_protection_aggressiveness == 2
+      ansible.windows.win_shell: |
+        $gpoName = "{{ item }}"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Brute Force Protection"
+        $registryValueName = "BruteForceProtectionAggressiveness"
+        $type = "DWORD"
+        $desiredValue = {{ win22cis_brute_force_protection_aggressiveness }}
+
+        # Get the current value of the registry key in the GPO
+        $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+        if ($currentValue -ne $desiredValue) {
+            Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+            Write-Output "Patched"
+        } else {
+            Write-Output "No Change Needed"
+        }
+      changed_when: '"Patched" in rule_18_10_43_11_1_1_1_results.stdout'
+      loop:
+        - "{{ win22cis_l2_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l2_dc_gpo else '' ) }}"
+        - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
+      loop_control:
+        label: "{{ item }}"
+      register: rule_18_10_43_11_1_1_1_results
+
+    - name: "18.10.43.11.1.1.1 | AUDIT | Ensure Configure Brute-Force Protection aggressiveness is set to Enabled: Medium or higher | Warn Message"
+      when:
+        - win22cis_brute_force_protection_aggressiveness != 1
+        - win22cis_brute_force_protection_aggressiveness != 2
+      ansible.builtin.debug:
+        msg:
+          - "Warning!! You have an invalid setting for win22cis_brute_force_protection_aggressiveness. Please read"
+          - "the notes for the variable and make the necessary change to the variable to be in compliance."
+
+    - name: "18.10.43.11.1.1.1 | AUDIT | Ensure Configure Brute-Force Protection aggressiveness is set to Enabled: Medium or higher | Log Warning"
+      vars:
+        warn_control_id: '18.10.43.11.1.1.1'
+      when:
+        - win22cis_brute_force_protection_aggressiveness != 1
+        - win22cis_brute_force_protection_aggressiveness != 2
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
+
+- name: "18.10.43.11.1.1.2 | GPO | Ensure Configure Remote Encryption Protection Mode is set to Enabled: Audit or higher"
+  when: win22cis_rule_18_10_43_11_1_1_2
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.10.43.11.1.1.2
+    - patch
+    - defender
+    - brute-force
+    - remediation
+    - gpo
+    - NIST800-171_3.14.1
+    - NIST800-171_3.14.5
+    - NIST800-171_3.14.6
+    - NIST800-53_AC-7
+    - NIST800-53_SI-4
+    - NIST800-53R5_AC-7
+    - NIST800-53R5_SI-4
+  block:
+    - name: "18.10.43.11.1.1.2 | GPO | Set Configure Remote Encryption Protection Mode | Medium or Higher"
+      when:
+        - "'(Skipped)' not in item"
+        - win22cis_remote_encryption_protection_mode == 1 or win22cis_remote_encryption_protection_mode == 2
+      ansible.windows.win_shell: |
+        $gpoName = "{{ item }}"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Brute Force Protection"
+        $registryValueName = "BruteForceProtectionConfiguredState"
+        $type = "DWORD"
+        $desiredValue = {{ win22cis_remote_encryption_protection_mode }}
+
+        $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+        if ($currentValue -ne $desiredValue) {
+            Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+            Write-Output "Patched"
+        } else {
+            Write-Output "No Change Needed"
+        }
+      changed_when: '"Patched" in rule_18_10_43_11_1_1_2_results.stdout'
+      loop:
+        - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+        - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+      loop_control:
+        label: "{{ item }}"
+      register: rule_18_10_43_11_1_1_2_results
+
+    - name: "18.10.43.11.1.1.2 | AUDIT | Warn on invalid setting for Remote Encryption Protection Mode"
+      when:
+        - win22cis_remote_encryption_protection_mode != 1
+        - win22cis_remote_encryption_protection_mode != 2
+      ansible.builtin.debug:
+        msg:
+          - "Warning!! You have an invalid setting for win22cis_remote_encryption_protection_mode. Please read"
+          - "the notes for the variable and make the necessary change to the variable to be in compliance."
+
+    - name: "18.10.43.11.1.1.2 | AUDIT | Log warning for Remote Encryption Protection Mode non-compliance"
+      vars:
+        warn_control_id: '18.10.43.11.1.1.2'
+      when:
+        - win22cis_remote_encryption_protection_mode != 1
+        - win22cis_remote_encryption_protection_mode != 2
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
+
+- name: "18.10.43.11.1.2.1 | GPO | Ensure Configure how aggressively Remote Encryption Protection blocks threats is set to Enabled: Medium or higher"
+  when: win22cis_rule_18_10_43_11_1_2_1
+  tags:
+    - level2-domaincontroller
+    - level2-memberserver
+    - rule_18.10.43.11.1.2.1
+    - patch
+    - defender
+    - remote_encryption
+    - brute_force
+    - remediation
+    - gpo
+    - NIST800-171_3.14.1
+    - NIST800-171_3.14.5
+    - NIST800-171_3.14.6
+    - NIST800-53_AC-7
+    - NIST800-53_SI-4
+    - NIST800-53R5_AC-7
+    - NIST800-53R5_SI-4
+  block:
+    - name: "18.10.43.11.1.2.1 | GPO | Ensure Configure how aggressively Remote Encryption Protection blocks threats is set to Enabled: Medium or higher | Set GPO"
+      when:
+        - "'(Skipped)' not in item"
+        - win22cis_remote_encryption_protection_aggressiveness == 1 or win22cis_remote_encryption_protection_aggressiveness == 2
+      ansible.windows.win_shell: |
+        $gpoName = "{{ item }}"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Remote Encryption Protection"
+        $registryValueName = "RemoteEncryptionProtectionAggressiveness"
+        $type = "DWORD"
+        $desiredValue = {{ win22cis_remote_encryption_protection_aggressiveness }}
+
+        $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+        if ($currentValue -ne $desiredValue) {
+            Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+            Write-Output "Patched"
+        } else {
+            Write-Output "No Change Needed"
+        }
+      changed_when: '"Patched" in rule_18_10_43_11_1_2_1_results.stdout'
+      loop:
+        - "{{ win22cis_l2_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l2_dc_gpo else '' ) }}"
+        - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
+      loop_control:
+        label: "{{ item }}"
+      register: rule_18_10_43_11_1_2_1_results
+
+    - name: "18.10.43.11.1.2.1 | AUDIT | Ensure Configure how aggressively Remote Encryption Protection blocks threats is set to Enabled: Medium or higher | Variable Warning"
+      when:
+        - win22cis_remote_encryption_protection_aggressiveness != 1
+        - win22cis_remote_encryption_protection_aggressiveness != 2
+      ansible.builtin.debug:
+        msg:
+          - "Warning!! Invalid value for win22cis_remote_encryption_protection_aggressiveness."
+          - "Acceptable values are 1 (Medium) or 2 (High) to meet compliance."
+
+    - name: "18.10.43.11.1.2.1 | AUDIT | Ensure Configure how aggressively Remote Encryption Protection blocks threats is set to Enabled: Medium or higher | Warn Count"
+      vars:
+        warn_control_id: '18.10.43.11.1.2.1'
+      when:
+        - win22cis_remote_encryption_protection_aggressiveness != 1
+        - win22cis_remote_encryption_protection_aggressiveness != 2
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
+
+- name: "18.10.43.12.1 | GPO | Ensure Configure Watson events is set to Disabled"
   when:
-    - win22cis_rule_18_10_42_12_1
+    - win22cis_rule_18_10_43_12_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.42.12.1
+    - rule_18.10.43.12.1
     - patch
     - defender
     - gpo
@@ -7948,17 +8552,58 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_12_1_results.stdout'
-  register: rule_18_10_42_12_1_results
+  changed_when: '"Patched" in rule_18_10_43_12_1_results.stdout'
+  register: rule_18_10_43_12_1_results
 
-- name: "18.10.42.13.1 | GPO | Ensure Scan packed executables is set to Enabled"
+- name: "18.10.43.13.1 | GPO | Ensure Scan excluded files and directories during quick scans is set to Enabled: 1"
+  when: win22cis_rule_18_10_43_13_1
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.10.43.13.1
+    - patch
+    - defender
+    - antivirus
+    - scan
+    - gpo
+    - NIST800-171_3.14.4
+    - NIST800-171_3.14.6
+    - NIST800-53_SI-3
+    - NIST800-53R5_SI-3
+  block:
+    - name: "18.10.43.13.1 | GPO | Set Scan excluded files and directories during quick scans to Enabled: 1 in GPO"
+      when: "'(Skipped)' not in item"
+      ansible.windows.win_shell: |
+        $gpoName = "{{ item }}"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan"
+        $registryValueName = "QuickScanIncludeExclusions"
+        $type = "DWORD"
+        $desiredValue = 1
+
+        $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+        if ($currentValue -ne $desiredValue) {
+            Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+            Write-Output "Patched"
+        } else {
+            Write-Output "No Change Needed"
+        }
+      changed_when: '"Patched" in rule_18_10_43_13_1_results.stdout'
+      loop:
+        - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+        - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+      loop_control:
+        label: "{{ item }}"
+      register: rule_18_10_43_13_1_results
+
+- name: "18.10.43.13.2 | GPO | Ensure Scan packed executables is set to Enabled"
   when:
-    - win22cis_rule_18_10_42_13_1
+    - win22cis_rule_18_10_43_13_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.13.1
+    - rule_18.10.43.13.2
     - patch
     - defender
     - scan
@@ -7994,17 +8639,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_13_1_results.stdout'
-  register: rule_18_10_42_13_1_results
+  changed_when: '"Patched" in rule_18_10_43_13_2_results.stdout'
+  register: rule_18_10_43_13_2_results
 
-- name: "18.10.42.13.2 | GPO | Ensure Scan removable drives is set to Enabled"
+- name: "18.10.43.13.3 | GPO | Ensure Scan removable drives is set to Enabled"
   when:
-    - win22cis_rule_18_10_42_13_2
+    - win22cis_rule_18_10_43_13_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.13.2
+    - rule_18.10.43.13.3
     - patch
     - defender
     - scan
@@ -8040,17 +8685,58 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_13_2_results.stdout'
-  register: rule_18_10_42_13_2_results
+  changed_when: '"Patched" in rule_18_10_43_13_3_results.stdout'
+  register: rule_18_10_43_13_3_results
 
-- name: "18.10.42.13.3 | GPO | Ensure Turn on e-mail scanning is set to Enabled"
+- name: "18.10.43.13.4 | GPO | Ensure 'Trigger a quick scan after X days without any scans' is set to Enabled: 7"
   when:
-    - win22cis_rule_18_10_42_13_3
+    - win22cis_rule_18_10_43_13_4
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.13.3
+    - rule_18.10.43.13.4
+    - patch
+    - defender
+    - antivirus
+    - scan
+    - remediation
+    - gpo
+    - NIST800-171_3.14.4
+    - NIST800-171_3.14.6
+    - NIST800-53_SI-3
+    - NIST800-53R5_SI-3
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Scan"
+    $registryValueName = "DaysUntilAggressiveCatchupQuickScan"
+    $type = "DWORD"
+    $desiredValue = 7
+
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    if ($currentValue -ne $desiredValue) {
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  changed_when: '"Patched" in rule_18_10_43_13_4_results.stdout'
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ('(Skipped)' if not win22cis_l1_dc_gpo else '') }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ('(Skipped)' if not win22cis_l1_ms_gpo else '') }}"
+  loop_control:
+    label: "{{ item }}"
+  register: rule_18_10_43_13_4_results
+
+- name: "18.10.43.13.5 | GPO | Ensure Turn on e-mail scanning is set to Enabled"
+  when:
+    - win22cis_rule_18_10_43_13_5
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.10.43.13.5
     - patch
     - defender
     - scan
@@ -8083,17 +8769,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_13_3_results.stdout'
-  register: rule_18_10_42_13_3_results
+  changed_when: '"Patched" in rule_18_10_43_13_5_results.stdout'
+  register: rule_18_10_43_13_5_results
 
-- name: "18.10.42.16 | GPO | Ensure Configure detection for potentially unwanted applications is set to Enabled: Block"
+- name: "18.10.43.16 | GPO | Ensure Configure detection for potentially unwanted applications is set to Enabled: Block"
   when:
-    - win22cis_rule_18_10_42_16
+    - win22cis_rule_18_10_43_16
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.16
+    - rule_18.10.43.16
     - patch
     - defender
     - scan
@@ -8126,60 +8812,59 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_16_results.stdout'
-  register: rule_18_10_42_16_results
+  changed_when: '"Patched" in rule_18_10_43_16_results.stdout'
+  register: rule_18_10_43_16_results
 
-- name: "18.10.42.17 | GPO | Ensure Turn off Microsoft Defender AntiVirus is set to Disabled"
-  when:
-    - win22cis_rule_18_10_42_17
-    - "'(Skipped)' not in item"
+- name: "18.10.43.17 | GPO | Ensure 'Control whether exclusions are visible to local users' is set to 'Enabled'"
+  when: win22cis_rule_18_10_43_17
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.42.17
+    - rule_18.10.43.17
     - patch
     - defender
-    - scan
+    - exclusions
+    - visibility
+    - remediation
     - gpo
-    - NIST800-171_3.14.2
-    - NIST800-171_3.14.4
-    - NIST800-171_3.14.5
-    - NIST800-53_SI-3
-    - NIST800-53R5_SI-3
-  ansible.windows.win_shell: |
-    $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender"
-    $registryValueName = "DisableAntiSpyware"
-    $type = "DWORD"
-    $desiredValue = 0
+    - NIST800-171_3.4.5
+    - NIST800-171_3.4.6
+    - NIST800-53_AC-6
+    - NIST800-53R5_AC-6
+  block:
+    - name: "18.10.43.17 | GPO | Set 'Control whether exclusions are visible to local users' to Enabled"
+      when: "'(Skipped)' not in item"
+      ansible.windows.win_shell: |
+        $gpoName = "{{ item }}"
+        $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender"
+        $registryValueName = "HideExclusionsFromLocalUsers"
+        $type = "DWORD"
+        $desiredValue = 1
 
-    # Get the current value of the registry key in the GPO
-    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+        $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
 
-    # Check if the current value is equal to the desired value
-    if ($currentValue -ne $desiredValue) {
-        # If not, set the registry value to the desired value
-        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
-        Write-Output "Patched"
-    } else {
-        Write-Output "No Change Needed"
-    }
-  loop:
-    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
-    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
-  loop_control:
-    label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_42_17_results.stdout'
-  register: rule_18_10_42_17_results
+        if ($currentValue -ne $desiredValue) {
+            Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+            Write-Output "Patched"
+        } else {
+            Write-Output "No Change Needed"
+        }
+      changed_when: '"Patched" in rule_18_10_43_17_results.stdout'
+      loop:
+        - "{{ win22cis_l1_dc_gpo_name ~ ('(Skipped)' if not win22cis_l1_dc_gpo else '') }}"
+        - "{{ win22cis_l1_ms_gpo_name ~ ('(Skipped)' if not win22cis_l1_ms_gpo else '') }}"
+      loop_control:
+        label: "{{ item }}"
+      register: rule_18_10_43_17_results
 
-- name: "18.10.50.1 | GPO | Ensure Prevent the usage of OneDrive for file storage is set to Enabled"
+- name: "18.10.51.1 | GPO | Ensure Prevent the usage of OneDrive for file storage is set to Enabled"
   when:
-    - win22cis_rule_18_10_50_1
+    - win22cis_rule_18_10_51_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.50.1
+    - rule_18.10.51.1
     - patch
     - onedrive
     - gpo
@@ -8213,17 +8898,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_50_1_results.stdout'
-  register: rule_18_10_50_1_results
+  changed_when: '"Patched" in rule_18_10_51_1_results.stdout'
+  register: rule_18_10_51_1_results
 
-- name: "18.10.55.1 | GPO | Ensure 'Turn off Push To Install service' is set to 'Enabled'"
+- name: "18.10.56.1 | GPO | Ensure 'Turn off Push To Install service' is set to 'Enabled'"
   when:
-    - win22cis_rule_18_10_55_1
+    - win22cis_rule_18_10_56_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.55.1
+    - rule_18.10.56.1
     - patch
     - pushtoinstall
     - gpo
@@ -8255,17 +8940,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_55_1_results.stdout'
-  register: rule_18_10_55_1_results
+  changed_when: '"Patched" in rule_18_10_56_1_results.stdout'
+  register: rule_18_10_56_1_results
 
-- name: "18.10.56.2.2 | GPO | Ensure Do not allow passwords to be saved is set to Enabled"
+- name: "18.10.57.2.2 | GPO | Ensure Do not allow passwords to be saved is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_2_2
+    - win22cis_rule_18_10_57_2_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.56.2.2
+    - rule_18.10.57.2.2
     - patch
     - terminalservices
     - gpo
@@ -8299,17 +8984,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_2_2_results.stdout'
-  register: rule_18_10_56_2_2_results
+  changed_when: '"Patched" in rule_18_10_57_2_2_results.stdout'
+  register: rule_18_10_57_2_2_results
 
-- name: "18.10.56.3.2.1 | GPO | Ensure Restrict Remote Desktop Services users to a single Remote Desktop Services session is set to Enabled"
+- name: "18.10.57.3.2.1 | GPO | Ensure Restrict Remote Desktop Services users to a single Remote Desktop Services session is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_2_1
+    - win22cis_rule_18_10_57_3_2_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.56.3.2.1
+    - rule_18.10.57.3.2.1
     - patch
     - terminalservices
     - gpo
@@ -8343,17 +9028,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_2_1_results.stdout'
-  register: rule_18_10_56_3_2_1_results
+  changed_when: '"Patched" in rule_18_10_57_3_2_1_results.stdout'
+  register: rule_18_10_57_3_2_1_results
 
-- name: "18.10.56.3.3.1 | GPO | Ensure Do not allow COM port redirection is set to Enabled"
+- name: "18.10.57.3.3.1 | GPO | Ensure Do not allow COM port redirection is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_3_1
+    - win22cis_rule_18_10_57_3_3_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.56.3.3.1
+    - rule_18.10.57.3.3.1
     - patch
     - terminalservices
     - gpo
@@ -8387,17 +9072,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_3_1_results.stdout'
-  register: rule_18_10_56_3_3_1_results
+  changed_when: '"Patched" in rule_18_10_57_3_3_1_results.stdout'
+  register: rule_18_10_57_3_3_1_results
 
-- name: "18.10.56.3.3.2 | GPO | Ensure Do not allow COM port redirection is set to Enabled"
+- name: "18.10.57.3.3.2 | GPO | Ensure Do not allow COM port redirection is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_3_2
+    - win22cis_rule_18_10_57_3_3_2
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.56.3.3.2
+    - rule_18.10.57.3.3.2
     - patch
     - terminalservices
     - gpo
@@ -8431,17 +9116,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_3_2_results.stdout'
-  register: rule_18_10_56_3_3_2_results
+  changed_when: '"Patched" in rule_18_10_57_3_3_2_results.stdout'
+  register: rule_18_10_57_3_3_2_results
 
-- name: "18.10.56.3.3.3 | GPO | Ensure Do not allow drive redirection is set to Enabled"
+- name: "18.10.57.3.3.3 | GPO | Ensure Do not allow drive redirection is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_3_3
+    - win22cis_rule_18_10_57_3_3_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.56.3.3.3
+    - rule_18.10.57.3.3.3
     - patch
     - terminalservices
     - gpo
@@ -8475,17 +9160,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_3_3_results.stdout'
-  register: rule_18_10_56_3_3_3_results
+  changed_when: '"Patched" in rule_18_10_57_3_3_3_results.stdout'
+  register: rule_18_10_57_3_3_3_results
 
-- name: "18.10.56.3.3.4 | GPO | Ensure Do not allow drive redirection is set to Enabled"
+- name: "18.10.57.3.3.4 | GPO | Ensure Do not allow drive redirection is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_3_4
+    - win22cis_rule_18_10_57_3_3_4
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.56.3.3.4
+    - rule_18.10.57.3.3.4
     - patch
     - terminalservices
     - gpo
@@ -8519,17 +9204,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_3_4_results.stdout'
-  register: rule_18_10_56_3_3_4_results
+  changed_when: '"Patched" in rule_18_10_57_3_3_4_results.stdout'
+  register: rule_18_10_57_3_3_4_results
 
-- name: "18.10.56.3.3.5 | GPO | Ensure Do not allow LPT port redirection is set to Enabled"
+- name: "18.10.57.3.3.5 | GPO | Ensure Do not allow LPT port redirection is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_3_5
+    - win22cis_rule_18_10_57_3_3_5
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.56.3.3.5
+    - rule_18.10.57.3.3.5
     - patch
     - terminalservices
     - gpo
@@ -8563,17 +9248,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_3_5_results.stdout'
-  register: rule_18_10_56_3_3_5_results
+  changed_when: '"Patched" in rule_18_10_57_3_3_5_results.stdout'
+  register: rule_18_10_57_3_3_5_results
 
-- name: "18.10.56.3.3.6 | GPO | Ensure Do not allow supported Plug and Play device redirection is set to Enabled"
+- name: "18.10.57.3.3.6 | GPO | Ensure Do not allow supported Plug and Play device redirection is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_3_6
+    - win22cis_rule_18_10_57_3_3_6
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.56.3.3.6
+    - rule_18.10.57.3.3.6
     - patch
     - terminalservices
     - gpo
@@ -8604,17 +9289,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_3_6_results.stdout'
-  register: rule_18_10_56_3_3_6_results
+  changed_when: '"Patched" in rule_18_10_57_3_3_6_results.stdout'
+  register: rule_18_10_57_3_3_6_results
 
-- name: "18.10.56.3.3.7 | GPO | Ensure Do not allow supported Plug and Play device redirection is set to Enabled"
+- name: "18.10.57.3.3.7 | GPO | Ensure Do not allow supported Plug and Play device redirection is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_3_7
+    - win22cis_rule_18_10_57_3_3_7
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.56.3.3.7
+    - rule_18.10.57.3.3.7
     - patch
     - terminalservices
     - gpo
@@ -8648,17 +9333,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_3_7_results.stdout'
-  register: rule_18_10_56_3_3_7_results
+  changed_when: '"Patched" in rule_18_10_57_3_3_7_results.stdout'
+  register: rule_18_10_57_3_3_7_results
 
-- name: "18.10.56.3.9.1 | GPO | Ensure Always prompt for password upon connection is set to Enabled"
+- name: "18.10.57.3.9.1 | GPO | Ensure Always prompt for password upon connection is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_9_1
+    - win22cis_rule_18_10_57_3_9_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.56.3.9.1
+    - rule_18.10.57.3.9.1
     - patch
     - terminalservices
     - gpo
@@ -8692,17 +9377,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_9_1_results.stdout'
-  register: rule_18_10_56_3_9_1_results
+  changed_when: '"Patched" in rule_18_10_57_3_9_1_results.stdout'
+  register: rule_18_10_57_3_9_1_results
 
-- name: "18.10.56.3.9.2 | GPO | Ensure Require secure RPC communication is set to Enabled"
+- name: "18.10.57.3.9.2 | GPO | Ensure Require secure RPC communication is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_9_2
+    - win22cis_rule_18_10_57_3_9_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.56.3.9_2
+    - rule_18.10.57.3.9.2
     - patch
     - terminalservices
     - gpo
@@ -8732,17 +9417,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_9_2_results.stdout'
-  register: rule_18_10_56_3_9_2_results
+  changed_when: '"Patched" in rule_18_10_57_3_9_2_results.stdout'
+  register: rule_18_10_57_3_9_2_results
 
-- name: "18.10.56.3.9.3 | GPO | Ensure Require use of specific security layer for remote RDP connections is set to Enabled SSL"
+- name: "18.10.57.3.9.3 | GPO | Ensure Require use of specific security layer for remote RDP connections is set to Enabled SSL"
   when:
-    - win22cis_rule_18_10_56_3_9_3
+    - win22cis_rule_18_10_57_3_9_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.56.3.9.3
+    - rule_18.10.57.3.9.3
     - patch
     - terminalservices
     - gpo
@@ -8782,17 +9467,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_9_3_results.stdout'
-  register: rule_18_10_56_3_9_3_results
+  changed_when: '"Patched" in rule_18_10_57_3_9_3_results.stdout'
+  register: rule_18_10_57_3_9_3_results
 
-- name: "18.10.56.3.9.4 | GPO | Ensure Require user authentication for remote connections by using Network Level Authentication is set to Enabled"
+- name: "18.10.57.3.9.4 | GPO | Ensure Require user authentication for remote connections by using Network Level Authentication is set to Enabled"
   when:
-    - win22cis_rule_18_10_56_3_9_4
+    - win22cis_rule_18_10_57_3_9_4
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.56.3.9_4
+    - rule_18.10.57.3.9.4
     - patch
     - terminalservices
     - gpo
@@ -8832,17 +9517,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_9_4_results.stdout'
-  register: rule_18_10_56_3_9_4_results
+  changed_when: '"Patched" in rule_18_10_57_3_9_4_results.stdout'
+  register: rule_18_10_57_3_9_4_results
 
-- name: "18.10.56.3.9.5 | GPO | Ensure Set client connection encryption level is set to Enabled High Level"
+- name: "18.10.57.3.9.5 | GPO | Ensure Set client connection encryption level is set to Enabled High Level"
   when:
-    - win22cis_rule_18_10_56_3_9_5
+    - win22cis_rule_18_10_57_3_9_5
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.56.3.9.5
+    - rule_18.10.57.3.9.5
     - patch
     - terminalservices
     - gpo
@@ -8882,11 +9567,11 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_9_5_results.stdout'
-  register: rule_18_10_56_3_9_5_results
+  changed_when: '"Patched" in rule_18_10_57_3_9_5_results.stdout'
+  register: rule_18_10_57_3_9_5_results
 
-- name: "18.10.56.3.10.1 | GPO | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less"
-  when: win22cis_rule_18_10_56_3_10_1
+- name: "18.10.57.3.10.1 | GPO | Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to 'Enabled: 15 minutes or less, but not Never (0)"
+  when: win22cis_rule_18_10_57_3_10_1
   tags:
     - level2-domaincontroller
     - level2-memberserver
@@ -8898,7 +9583,7 @@
     - NIST800-53_AC-11
     - NIST800-53R5_AC-11
   block:
-    - name: "18.10.56.3.10.1 | GPO | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | Set 'Time Limit for Active but Idle RDP Sessions' to 15 minutes or less."
+    - name: "18.10.57.3.10.1 | GPO | Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to 'Enabled: 15 minutes or less, but not Never (0) | Set 'Time Limit for Active but Idle RDP Sessions' to 15 minutes or less."
       when:
         - "'(Skipped)' not in item"
         - win22cis_idle_rdp_session_disconnect_time == 60000 or
@@ -8928,10 +9613,10 @@
         - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_56_3_10_1_results.stdout'
-      register: rule_18_10_56_3_10_1_results
+      changed_when: '"Patched" in rule_18_10_57_3_10_1_results.stdout'
+      register: rule_18_10_57_3_10_1_results
 
-    - name: "18.10.56.3.10.1 | AUDIT | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | Warning Check for RDP Idle Session Timeout Standards."
+    - name: "18.10.57.3.10.1 | AUDIT | Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to 'Enabled: 15 minutes or less, but not Never (0) | Warning Check for RDP Idle Session Timeout Standards."
       when:
         - win22cis_idle_rdp_session_disconnect_time == 0 or
           win22cis_idle_rdp_session_disconnect_time > 900000
@@ -8940,23 +9625,23 @@
           - "Warning!! You have an invalid time set for win22cis_idle_rdp_session_disconnect_time. Please read"
           - "the notes for the variable and make the necessary change to the variable to be in compliance."
 
-    - name: "18.10.56.3.10.1 | AUDIT | Ensure Set time limit for active but idle Remote Desktop Services sessions is set to Enabled 15 minutes or less | RDP Idle Session Timeout Warn Count."
+    - name: "18.10.57.3.10.1 | AUDIT | Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to 'Enabled: 15 minutes or less, but not Never (0) | RDP Idle Session Timeout Warn Count."
       vars:
-        warn_control_id: '18.10.56.3.10.1'
+        warn_control_id: '18.10.57.3.10.1'
       when:
         - win22cis_idle_rdp_session_disconnect_time == 0 or
           win22cis_idle_rdp_session_disconnect_time > 900000
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.10.56.3.10.2 | GPO | Ensure Set time limit for disconnected sessions is set to Enabled 1 minute"
+- name: "18.10.57.3.10.2 | GPO | Ensure Set time limit for disconnected sessions is set to Enabled 1 minute"
   when:
-    - win22cis_rule_18_10_56_3_10_2
+    - win22cis_rule_18_10_57_3_10_2
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.56.3.10.2
+    - rule_18.10.57.3.10.2
     - patch
     - terminalservices
     - gpo
@@ -8986,17 +9671,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_10_2_results.stdout'
-  register: rule_18_10_56_3_10_2_results
+  changed_when: '"Patched" in rule_18_10_57_3_10_2_results.stdout'
+  register: rule_18_10_57_3_10_2_results
 
-- name: "18.10.56.3.11.1 | GPO | Ensure Do not delete temp folders upon exit is set to Disabled"
+- name: "18.10.57.3.11.1 | GPO | Ensure Do not delete temp folders upon exit is set to Disabled"
   when:
-    - win22cis_rule_18_10_56_3_11_1
+    - win22cis_rule_18_10_57_3_11_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.56.3.11.1
+    - rule_18.10.57.3.11.1
     - patch
     - terminalservices
     - gpo
@@ -9027,17 +9712,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_11_1_results.stdout'
-  register: rule_18_10_56_3_11_1_results
+  changed_when: '"Patched" in rule_18_10_57_3_11_1_results.stdout'
+  register: rule_18_10_57_3_11_1_results
 
-- name: "18.10.56.3.11.2 | GPO | Ensure Do not use temporary folders per session is set to Disabled"
+- name: "18.10.57.3.11.2 | GPO | Ensure Do not use temporary folders per session is set to Disabled"
   when:
-    - win22cis_rule_18_10_56_3_11_2
+    - win22cis_rule_18_10_57_3_11_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.56.3.11.2
+    - rule_18.10.57.3.11.2
     - patch
     - terminalservices
     - gpo
@@ -9068,17 +9753,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_56_3_11_2_results.stdout'
-  register: rule_18_10_56_3_11_2_results
+  changed_when: '"Patched" in rule_18_10_57_3_11_2_results.stdout'
+  register: rule_18_10_57_3_11_2_results
 
-- name: "18.10.57.1 | GPO | Ensure Prevent downloading of enclosures is set to Enabled"
+- name: "18.10.58.1 | GPO | Ensure Prevent downloading of enclosures is set to Enabled"
   when:
-    - win22cis_rule_18_10_57_1
+    - win22cis_rule_18_10_58_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.57.1
+    - rule_18.10.58.1
     - patch
     - enclosure
     - gpo
@@ -9113,17 +9798,57 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_57_1_results.stdout'
-  register: rule_18_10_57_1_results
+  changed_when: '"Patched" in rule_18_10_58_1_results.stdout'
+  register: rule_18_10_58_1_results
 
-- name: "18.10.58.2 | GPO | Ensure Allow Cloud Search is set to Enabled Disable Cloud Search"
+- name: "18.10.58.2 | GPO | Ensure 'Turn on Basic feed authentication over HTTP' is set to 'Disabled'"
   when:
     - win22cis_rule_18_10_58_2
     - "'(Skipped)' not in item"
   tags:
+    - level1-domaincontroller
+    - level1-memberserver
+    - rule_18.10.58.2
+    - patch
+    - gpo
+    - rss
+    - feeds
+    - internet-explorer
+    - authentication
+    - NIST800-171_3.1.13
+    - NIST800-53_AC-17
+    - NIST800-53R5_AC-17
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\Software\Policies\Microsoft\Internet Explorer\Feeds"
+    $registryValueName = "AllowBasicAuthInClear"
+    $type = "DWORD"
+    $desiredValue = 0
+
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    if ($currentValue -ne $desiredValue) {
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  changed_when: '"Patched" in rule_18_10_58_2_results.stdout'
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  register: rule_18_10_58_2_results
+
+- name: "18.10.59.2 | GPO | Ensure Allow Cloud Search is set to Enabled Disable Cloud Search"
+  when:
+    - win22cis_rule_18_10_59_2
+    - "'(Skipped)' not in item"
+  tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.58.2
+    - rule_18.10.59.2
     - patch
     - search
     - cloud
@@ -9158,17 +9883,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_58_2_results.stdout'
-  register: rule_18_10_58_2_results
+  changed_when: '"Patched" in rule_18_10_59_2_results.stdout'
+  register: rule_18_10_59_2_results
 
-- name: "18.10.58.3 | GPO | Ensure Allow indexing of encrypted files is set to Disabled"
+- name: "18.10.59.3 | GPO | Ensure Allow indexing of encrypted files is set to Disabled"
   when:
-    - win22cis_rule_18_10_58_3
+    - win22cis_rule_18_10_59_3
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.58.3
+    - rule_18.10.59.3
     - patch
     - search
     - encrypted
@@ -9203,17 +9928,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_58_3_results.stdout'
-  register: rule_18_10_58_3_results
+  changed_when: '"Patched" in rule_18_10_59_3_results.stdout'
+  register: rule_18_10_59_3_results
 
-- name: "18.10.58.4 | GPO | Ensure Allow search highlights is set to Disabled"
+- name: "18.10.59.4 | GPO | Ensure Allow search highlights is set to Disabled"
   when:
-    - win22cis_rule_18_10_58_4
+    - win22cis_rule_18_10_59_4
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.58.4
+    - rule_18.10.59.4
     - patch
     - search
     - gpo
@@ -9247,17 +9972,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_58_4_results.stdout'
-  register: rule_18_10_58_4_results
+  changed_when: '"Patched" in rule_18_10_59_4_results.stdout'
+  register: rule_18_10_59_4_results
 
-- name: "18.10.62.1 | GPO | Ensure Turn off KMS Client Online AVS Validation is set to Enabled"
+- name: "18.10.63.1 | GPO | Ensure Turn off KMS Client Online AVS Validation is set to Enabled"
   when:
-    - win22cis_rule_18_10_62_1
+    - win22cis_rule_18_10_63_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.62.1
+    - rule_18.10.63.1
     - patch
     - kms
     - gpo
@@ -9267,7 +9992,7 @@
     - NIST800-53R5_SI-4
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\Currentversion\Software Protection Platform"
+    $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform"
     $registryValueName = "NoGenTicket"
     $type = "DWORD"
     $desiredValue = 1
@@ -9288,17 +10013,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_62_1_results.stdout'
-  register: rule_18_10_62_1_results
+  changed_when: '"Patched" in rule_18_10_63_1_results.stdout'
+  register: rule_18_10_63_1_results
 
-- name: "18.10.75.2.1 | GPO | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass"
+- name: "18.10.76.2.1 | GPO | Ensure Configure Windows Defender SmartScreen is set to Enabled Warn and prevent bypass"
   when:
-    - win22cis_rule_18_10_75_2_1
+    - win22cis_rule_18_10_76_2_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.75.2.1
+    - rule_18.10.76.2.1
     - patch
     - defender
     - gpo
@@ -9335,17 +10060,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_75_2_1_results.stdout'
-  register: rule_18_10_75_2_1_results
+  changed_when: '"Patched" in rule_18_10_76_2_1_results.stdout'
+  register: rule_18_10_76_2_1_results
 
-- name: "18.10.79.1 | GPO | Ensure Allow suggested apps in Windows Ink Workspace is set to Disabled"
+- name: "18.10.80.1 | GPO | Ensure Allow suggested apps in Windows Ink Workspace is set to Disabled"
   when:
-    - win22cis_rule_18_10_79_1
+    - win22cis_rule_18_10_80_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.79.1
+    - rule_18.10.80.1
     - patch
     - wik
     - gpo
@@ -9376,15 +10101,15 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_79_1_results.stdout'
-  register: rule_18_10_79_1_results
+  changed_when: '"Patched" in rule_18_10_80_1_results.stdout'
+  register: rule_18_10_80_1_results
 
-- name: "18.10.79.2 | GPO | Ensure 'Allow suggested apps in Windows Ink Workspace' is set to 'Disabled'"
-  when: win22cis_rule_18_10_79_2
+- name: "18.10.80.2 | GPO | Ensure Allow Windows Ink Workspace is set to Enabled On, but disallow access above lock OR Enabled Disabled"
+  when: win22cis_rule_18_10_80_2
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.79.2
+    - rule_18.10.80.2
     - automated
     - patch
     - gpo
@@ -9393,7 +10118,7 @@
     - NIST800-53_SI-4
     - NIST800-53R5_SI-4
   block:
-    - name: "18.10.79.2 | GPO | Ensure 'Allow suggested apps in Windows Ink Workspace' is set to 'Disabled' | Set Variable."
+    - name: "18.10.80.2 | GPO | Ensure Allow Windows Ink Workspace is set to Enabled On, but disallow access above lock OR Enabled Disabled | Set Variable."
       when:
         - "'(Skipped)' not in item"
         - win22cis_allow_windows_ink_workspace == 0 or win22cis_allow_windows_ink_workspace == 1
@@ -9423,7 +10148,7 @@
       changed_when: '"Patched" in rule_18_10_79_2_results.stdout'
       register: rule_18_10_79_2_results
 
-    - name: "18.10.79.2 | AUDIT | Ensure 'Allow suggested apps in Windows Ink Workspace' is set to 'Disabled' | Warning Check For Variable Standards."
+    - name: "18.10.80.2 | AUDIT | Ensure 'Allow Windows Ink Workspace' is set to 'Enabled On, but disallow access above lock' OR 'Enabled Disabled' | Warning Check For Variable Standards."
       when:
         - win22cis_allow_windows_ink_workspace != 0
         - win22cis_allow_windows_ink_workspace != 1
@@ -9432,23 +10157,23 @@
           - "Warning!! You have an invalid setting for win22cis_allow_windows_ink_workspace. Please read"
           - "the notes for the variable and make the necessary change to the variable to be in compliance."
 
-    - name: "18.10.79.2 | AUDIT | Ensure 'Allow suggested apps in Windows Ink Workspace' is set to 'Disabled' | Warn Count."
+    - name: "18.10.80.2 | AUDIT | Ensure 'Allow Windows Ink Workspace' is set to 'Enabled On, but disallow access above lock' OR 'Enabled Disabled' | Warn Count."
       vars:
-        warn_control_id: '18.10.79.2'
+        warn_control_id: '18.10.80.2'
       when:
         - win22cis_allow_windows_ink_workspace != 0
         - win22cis_allow_windows_ink_workspace != 1
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.10.80.1 | GPO | Ensure Allow user control over installs is set to Disabled"
+- name: "18.10.81.1 | GPO | Ensure Allow user control over installs is set to Disabled"
   when:
-    - win22cis_rule_18_10_80_1
+    - win22cis_rule_18_10_81_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.80.1
+    - rule_18.10.81.1
     - patch
     - gpo
     - NIST800-171_3.1.7
@@ -9477,17 +10202,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_80_1_results.stdout'
-  register: rule_18_10_80_1_results
+  changed_when: '"Patched" in rule_18_10_81_1_results.stdout'
+  register: rule_18_10_81_1_results
 
-- name: "18.10.80.2 | GPO | Ensure 'Always install with elevated privileges' is set to 'Disabled'"
+- name: "18.10.81.2 | GPO | Ensure 'Always install with elevated privileges' is set to 'Disabled'"
   when:
-    - win22cis_rule_18_10_80_2
+    - win22cis_rule_18_10_81_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.80.2
+    - rule_18.10.81.2
     - patch
     - gpo
     - NIST800-171_3.1.1
@@ -9516,17 +10241,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_80_2_results.stdout'
-  register: rule_18_10_80_2_results
+  changed_when: '"Patched" in rule_18_10_81_2_results.stdout'
+  register: rule_18_10_81_2_results
 
-- name: "18.10.80.3 | GPO | Ensure Prevent Internet Explorer security prompt for Windows Installer scripts is set to Disabled"
+- name: "18.10.81.3 | GPO | Ensure Prevent Internet Explorer security prompt for Windows Installer scripts is set to Disabled"
   when:
-    - win22cis_rule_18_10_80_3
+    - win22cis_rule_18_10_81_3
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.80.3
+    - rule_18.10.81.3
     - patch
     - ie
     - gpo
@@ -9558,17 +10283,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_80_3_results.stdout'
-  register: rule_18_10_80_3_results
+  changed_when: '"Patched" in rule_18_10_81_3_results.stdout'
+  register: rule_18_10_81_3_results
 
-- name: "18.10.81.1 | GPO | Ensure 'Sign-in and lock last interactive user automatically after a restart' is set to 'Disabled'"
+- name: "18.10.82.1 | GPO | Ensure Configure the transmission of the user's password in the content of MPR notifications sent by winlogon. is set to Disabled"
   when:
-    - win22cis_rule_18_10_81_1
+    - win22cis_rule_18_10_82_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.81.1
+    - rule_18.10.82.1
     - patch
     - logon
     - gpo
@@ -9581,7 +10306,7 @@
     - NIST800-53R5_CM-7
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "EnableMPR"
     $type = "DWORD"
     $desiredValue = 0
@@ -9602,17 +10327,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_81_1_results.stdout'
-  register: rule_18_10_81_1_results
+  changed_when: '"Patched" in rule_18_10_82_1_results.stdout'
+  register: rule_18_10_82_1_results
 
-- name: "18.10.81.2 | GPO | Ensure 'Sign-in and lock last interactive user automatically after a restart' is set to 'Disabled'"
+- name: "18.10.82.2 | GPO | Ensure 'Sign-in and lock last interactive user automatically after a restart' is set to 'Disabled'"
   when:
-    - win22cis_rule_18_10_81_2
+    - win22cis_rule_18_10_82_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.81.2
+    - rule_18.10.82.2
     - patch
     - logon
     - gpo
@@ -9621,7 +10346,7 @@
     - NIST800-53R5_AC-11
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "DisableAutomaticRestartSignOn"
     $type = "DWORD"
     $desiredValue = 1
@@ -9642,17 +10367,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_81_2_results.stdout'
-  register: rule_18_10_81_2_results
+  changed_when: '"Patched" in rule_18_10_82_2_results.stdout'
+  register: rule_18_10_82_2_results
 
-- name: "18.10.86.1 | GPO | Ensure Turn on PowerShell Script Block Logging is set to Enabled"
+- name: "18.10.87.1 | GPO | Ensure Turn on PowerShell Script Block Logging is set to Enabled"
   when:
-    - win22cis_rule_18_10_86_1
+    - win22cis_rule_18_10_87_1
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.86.1
+    - rule_18.10.87.1
     - patch
     - powershell
     - gpo
@@ -9683,17 +10408,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_86_1_results.stdout'
-  register: rule_18_10_86_1_results
+  changed_when: '"Patched" in rule_18_10_87_1_results.stdout'
+  register: rule_18_10_87_1_results
 
-- name: "18.10.86.2 | GPO | Ensure Turn on PowerShell Transcription is set to Enabled"
+- name: "18.10.87.2 | GPO | Ensure Turn on PowerShell Transcription is set to Enabled"
   when:
-    - win22cis_rule_18_10_86_2
+    - win22cis_rule_18_10_87_2
     - "'(Skipped)' not in item"
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.86.2
+    - rule_18.10.87.2
     - patch
     - powershell
     - gpo
@@ -9724,18 +10449,18 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_86_2_results.stdout'
-  register: rule_18_10_86_2_results
+  changed_when: '"Patched" in rule_18_10_87_2_results.stdout'
+  register: rule_18_10_87_2_results
 
-- name: "18.10.88.1.1 | GPO | Ensure Allow Basic authentication is set to Disabled"
+- name: "18.10.89.1.1 | GPO | Ensure Allow Basic authentication is set to Disabled"
   when:
-    - win22cis_rule_18_10_88_1_1
+    - win22cis_rule_18_10_89_1_1
     - "'(Skipped)' not in item"
     - not win_skip_for_test
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.88.1.1
+    - rule_18.10.89.1.1
     - patch
     - winrm
     - gpo
@@ -9775,18 +10500,18 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_88_1_1_results.stdout'
-  register: rule_18_10_88_1_1_results
+  changed_when: '"Patched" in rule_18_10_89_1_1_results.stdout'
+  register: rule_18_10_89_1_1_results
 
-- name: "18.10.88.1.2 | GPO | Ensure Allow unencrypted traffic is set to Disabled"
+- name: "18.10.89.1.2 | GPO | Ensure Allow unencrypted traffic is set to Disabled"
   when:
-    - win22cis_rule_18_10_88_1_2
+    - win22cis_rule_18_10_89_1_2
     - "'(Skipped)' not in item"
     - not win_skip_for_test
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.88.1.2
+    - rule_18.10.89.1.2
     - patch
     - winrm
     - gpo
@@ -9826,18 +10551,18 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_88_1_2_results.stdout'
-  register: rule_18_10_88_1_2_results
+  changed_when: '"Patched" in rule_18_10_89_1_2_results.stdout'
+  register: rule_18_10_89_1_2_results
 
-- name: "18.10.88.1.3 | GPO | Ensure Disallow Digest authentication is set to Enabled"
+- name: "18.10.89.1.3 | GPO | Ensure Disallow Digest authentication is set to Enabled"
   when:
-    - win22cis_rule_18_10_88_1_3
+    - win22cis_rule_18_10_89_1_3
     - "'(Skipped)' not in item"
     - not win_skip_for_test
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.88.1.3
+    - rule_18.10.89.1.3
     - patch
     - winrm
     - gpo
@@ -9877,18 +10602,18 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_88_1_3_results.stdout'
-  register: rule_18_10_88_1_3_results
+  changed_when: '"Patched" in rule_18_10_89_1_3_results.stdout'
+  register: rule_18_10_89_1_3_results
 
-- name: "18.10.88.2.1 | GPO | Ensure Allow Basic authentication is set to Disabled"
+- name: "18.10.89.2.1 | GPO | Ensure Allow Basic authentication is set to Disabled"
   when:
-    - win22cis_rule_18_10_88_2_1
+    - win22cis_rule_18_10_89_2_1
     - "'(Skipped)' not in item"
     - not win_skip_for_test
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.88.2.1
+    - rule_18.10.89.2.1
     - patch
     - winrm
     - gpo
@@ -9928,18 +10653,18 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_88_2_1_results.stdout'
-  register: rule_18_10_88_2_1_results
+  changed_when: '"Patched" in rule_18_10_89_2_1_results.stdout'
+  register: rule_18_10_89_2_1_results
 
-- name: "18.10.88.2.2 | GPO | Ensure Allow remote server management through WinRM is set to Disabled"
+- name: "18.10.89.2.2 | GPO | Ensure Allow remote server management through WinRM is set to Disabled"
   when:
-    - win22cis_rule_18_10_88_2_2
+    - win22cis_rule_18_10_89_2_2
     - "'(Skipped)' not in item"
     - not win_skip_for_test
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.88.2.2
+    - rule_18.10.89.2.2
     - patch
     - winrm
     - gpo
@@ -9973,18 +10698,18 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_88_2_2_results.stdout'
-  register: rule_18_10_88_2_2_results
+  changed_when: '"Patched" in rule_18_10_89_2_2_results.stdout'
+  register: rule_18_10_89_2_2_results
 
-- name: "18.10.88.2.3 | GPO | Ensure Allow unencrypted traffic is set to Disabled"
+- name: "18.10.89.2.3 | GPO | Ensure Allow unencrypted traffic is set to Disabled"
   when:
-    - win22cis_rule_18_10_88_2_3
+    - win22cis_rule_18_10_89_2_3
     - "'(Skipped)' not in item"
     - not win_skip_for_test
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.88.2.3
+    - rule_18.10.89.2.3
     - patch
     - winrm
     - encryption
@@ -10025,17 +10750,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_88_2_3_results.stdout'
-  register: rule_18_10_88_2_3_results
+  changed_when: '"Patched" in rule_18_10_89_2_3_results.stdout'
+  register: rule_18_10_89_2_3_results
 
-- name: "18.10.88.2.4 | GPO | Ensure Disallow WinRM from storing RunAs credentials is set to Enabled"
+- name: "18.10.89.2.4 | GPO | Ensure Disallow WinRM from storing RunAs credentials is set to Enabled"
   when:
-    - win22cis_rule_18_10_88_2_4
+    - win22cis_rule_18_10_89_2_4
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.88.2.4
+    - rule_18.10.89.2.4
     - patch
     - winrm
     - gpo
@@ -10066,18 +10791,18 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_88_2_4_results.stdout'
-  register: rule_18_10_88_2_4_results
+  changed_when: '"Patched" in rule_18_10_89_2_4_results.stdout'
+  register: rule_18_10_89_2_4_results
 
-- name: "18.10.89.1 | GPO | Ensure Allow Remote Shell Access is set to Disabled"
+- name: "18.10.90.1 | GPO | Ensure Allow Remote Shell Access is set to Disabled"
   when:
-    - win22cis_rule_18_10_89_1
+    - win22cis_rule_18_10_90_1
     - "'(Skipped)' not in item"
     - not win_skip_for_test
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_18.10.89.1
+    - rule_18.10.90.1
     - patch
     - winrm
     - gpo
@@ -10111,17 +10836,17 @@
     - "{{ win22cis_l2_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l2_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_89_1_results.stdout'
-  register: rule_18_10_89_1_results
+  changed_when: '"Patched" in rule_18_10_90_1_results.stdout'
+  register: rule_18_10_90_1_results
 
-- name: "18.10.91.2.1 | GPO | Ensure Prevent users from modifying settings is set to Enabled"
+- name: "18.10.92.2.1 | GPO | Ensure Prevent users from modifying settings is set to Enabled"
   when:
-    - win22cis_rule_18_10_91_2_1
+    - win22cis_rule_18_10_92_2_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.91.2.1
+    - rule_18.10.92.2.1
     - patch
     - accounts
     - gpo
@@ -10150,17 +10875,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_91_2_1_results.stdout'
-  register: rule_18_10_91_2_1_results
+  changed_when: '"Patched" in rule_18_10_92_2_1_results.stdout'
+  register: rule_18_10_92_2_1_results
 
-- name: "18.10.92.1.1 | GPO | Ensure No auto-restart with logged on users for scheduled automatic updates installations is set to Disabled"
+- name: "18.10.93.1.1 | GPO | Ensure No auto-restart with logged on users for scheduled automatic updates installations is set to Disabled"
   when:
-    - win22cis_rule_18_10_92_1_1
+    - win22cis_rule_18_10_93_1_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.92.1.1
+    - rule_18.10.93.1.1
     - patch
     - winupdate
     - gpo
@@ -10196,17 +10921,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_92_1_1_results.stdout'
-  register: rule_18_10_92_1_1_results
+  changed_when: '"Patched" in rule_18_10_93_1_1_results.stdout'
+  register: rule_18_10_93_1_1_results
 
-- name: "18.10.92.2.1 | GPO | Ensure Configure Automatic Updates is set to Enabled"
+- name: "18.10.93.2.1 | GPO | Ensure Configure Automatic Updates is set to Enabled"
   when:
-    - win22cis_rule_18_10_92_2_1
+    - win22cis_rule_18_10_93_2_1
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.92.2.1
+    - rule_18.10.93.2.1
     - patch
     - winupdate
     - gpo
@@ -10242,17 +10967,17 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_92_2_1_results.stdout'
-  register: rule_18_10_92_2_1_results
+  changed_when: '"Patched" in rule_18_10_93_2_1_results.stdout'
+  register: rule_18_10_93_2_1_results
 
-- name: "18.10.92.2.2 | GPO | Ensure Configure Automatic Updates Scheduled install day is set to 0 - Every day"
+- name: "18.10.93.2.2 | GPO | Ensure Configure Automatic Updates Scheduled install day is set to 0 - Every day"
   when:
-    - win22cis_rule_18_10_92_2_2
+    - win22cis_rule_18_10_93_2_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.92.2.2
+    - rule_18.10.93.2.2
     - patch
     - winupdate
     - gpo
@@ -10288,15 +11013,15 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_18_10_92_2_2_results.stdout'
-  register: rule_18_10_92_2_2_results
+  changed_when: '"Patched" in rule_18_10_93_2_2_results.stdout'
+  register: rule_18_10_93_2_2_results
 
-- name: "18.10.92.4.1 | GPO | Ensure Manage preview builds is set to Enabled Disable preview builds"
-  when: win22cis_rule_18_10_92_4_1
+- name: "18.10.93.4.1 | GPO | Ensure Manage preview builds is set to Enabled Disable preview builds"
+  when: win22cis_rule_18_10_93_4_1
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.92.4.1
+    - rule_18.10.93.4.1
     - patch
     - winupdate
     - gpo
@@ -10306,7 +11031,7 @@
     - NIST800-53R5_CM-7_5
     - NIST800-53R5_CM-10
   block:
-    - name: "18.10.92.4.1 | GPO | Ensure Manage preview builds is set to Enabled Disable preview builds | Set 'Manage Preview Builds' to Enabled."
+    - name: "18.10.93.4.1 | GPO | Ensure Manage preview builds is set to Enabled Disable preview builds | Set 'Manage Preview Builds' to Enabled."
       when:
         - "'(Skipped)' not in item"
       ansible.windows.win_shell: |
@@ -10332,10 +11057,10 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_92_4_1_manage_results.stdout'
-      register: rule_18_10_92_4_1_manage_results
+      changed_when: '"Patched" in rule_18_10_93_4_1_manage_results.stdout'
+      register: rule_18_10_93_4_1_manage_results
 
-    - name: "18.10.92.4.1 | GPO | Ensure Manage preview builds is set to Enabled Disable preview builds | Set 'Manage Preview Builds Policy Value' to Disabled."
+    - name: "18.10.93.4.1 | GPO | Ensure Manage preview builds is set to Enabled Disable preview builds | Set 'Manage Preview Builds Policy Value' to Disabled."
       when:
         - "'(Skipped)' not in item"
       ansible.windows.win_shell: |
@@ -10361,15 +11086,15 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_92_4_1_policy_results.stdout'
-      register: rule_18_10_92_4_1_policy_results
+      changed_when: '"Patched" in rule_18_10_93_4_1_policy_results.stdout'
+      register: rule_18_10_93_4_1_policy_results
 
-- name: "18.10.92.4.2 | GPO | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days'"
-  when: win22cis_rule_18_10_92_4_2
+- name: "18.10.93.4.2 | GPO | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days'"
+  when: win22cis_rule_18_10_93_4_2
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.92.4.2
+    - rule_18.10.93.4.2
     - automated
     - patch
     - manage_updates_offered_from_windows_update
@@ -10385,7 +11110,7 @@
     - NIST800-53R5_SI-2
     - NIST800-53R5_SI-2_2
   block:
-    - name: "18.10.92.4.2 | GPO | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days | Set 'Defer Feature Updates' to Enabled."
+    - name: "18.10.93.4.2 | GPO | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days | Set 'Defer Feature Updates' to Enabled."
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
@@ -10410,10 +11135,10 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_92_4_2_defer_results.stdout'
-      register: rule_18_10_92_4_2_defer_results
+      changed_when: '"Patched" in rule_18_10_93_4_2_defer_results.stdout'
+      register: rule_18_10_93_4_2_defer_results
 
-    - name: "18.10.92.4.2 | GPO | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days | Set 'Defer Feature Updates Period In Days' to 180 or more."
+    - name: "18.10.93.4.2 | GPO | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days | Set 'Defer Feature Updates Period In Days' to 180 or more."
       when:
         - win22cis_defer_feature_updates_period_in_days >= 180
         - "'(Skipped)' not in item"
@@ -10440,29 +11165,29 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_92_4_2_days_results.stdout'
-      register: rule_18_10_92_4_2_days_results
+      changed_when: '"Patched" in rule_18_10_93_4_2_days_results.stdout'
+      register: rule_18_10_93_4_2_days_results
 
-    - name: "18.10.92.4.2 | AUDIT | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | Variable Warning."
+    - name: "18.10.93.4.2 | AUDIT | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | Variable Warning."
       when: win22cis_defer_feature_updates_period_in_days < 180
       ansible.builtin.debug:
         msg:
           - "Warning!! You have an invalid number of days for win22cis_defer_feature_updates_period_in_days. Please read"
           - "the notes for the variable and make the necessary change to the variable to be in compliance."
 
-    - name: "18.10.92.4.2 | AUDIT | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days | Warning Count."
+    - name: "18.10.93.4.2 | AUDIT | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days | Warning Count."
       vars:
-        warn_control_id: '18.10.92.4.2'
+        warn_control_id: '18.10.93.4.2'
       when: win22cis_defer_feature_updates_period_in_days < 180
       ansible.builtin.import_tasks:
         file: warning_facts.yml
 
-- name: "18.10.92.4.3 | GPO | Ensure Select when Quality Updates are received is set to Enabled 0 days"
-  when: win22cis_rule_18_10_92_4_3
+- name: "18.10.93.4.3 | GPO | Ensure Select when Quality Updates are received is set to Enabled 0 days"
+  when: win22cis_rule_18_10_93_4_3
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_18.10.92.4.3
+    - rule_18.10.93.4.3
     - patch
     - winupdate
     - gpo
@@ -10476,7 +11201,7 @@
     - NIST800-53R5_SI-2
     - NIST800-53R5_SI-2_2
   block:
-    - name: "18.10.92.4.3 | GPO | Ensure Select when Quality Updates are received is set to Enabled 0 days | Set 'Defer Quality Updates' to Enabled."
+    - name: "18.10.93.4.3 | GPO | Ensure Select when Quality Updates are received is set to Enabled 0 days | Set 'Defer Quality Updates' to Enabled."
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
@@ -10501,10 +11226,10 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_92_4_3_defer_results.stdout'
-      register: rule_18_10_92_4_3_defer_results
+      changed_when: '"Patched" in rule_18_10_93_4_3_defer_results.stdout'
+      register: rule_18_10_93_4_3_defer_results
 
-    - name: "18.10.92.4.3 | GPO | Ensure Select when Quality Updates are received is set to Enabled 0 days | Set 'Defer Quality Updates Period In Days' to 0 days."
+    - name: "18.10.93.4.3 | GPO | Ensure Select when Quality Updates are received is set to Enabled 0 days | Set 'Defer Quality Updates Period In Days' to 0 days."
       when: "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
@@ -10529,5 +11254,5 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_18_10_92_4_3_days_results.stdout'
-      register: rule_18_10_92_4_3_days_results
+      changed_when: '"Patched" in rule_18_10_93_4_3_days_results.stdout'
+      register: rule_18_10_93_4_3_days_results
