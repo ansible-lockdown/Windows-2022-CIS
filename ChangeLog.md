@@ -1,14 +1,28 @@
 # ChangeLog
 
+## Release 3.0.5
+September 2025 Update
+- Issues Addressed:
+    - [#73](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/73) - Thank you @ShawnHardwick
+
+## Release 3.0.4
+
+May 2025 Update #2
+  - Issues Addressed:
+    - Fixed 1.1.6 to apply to all systems except for Domain Controllers. This is present in standalone version. - Thanks @mfortin
+    - Re-Verified 18.10.79.2 Paths
+    - Fixed 18.9.26.2 GPO Registry Entry
+
 ## Release 3.0.3
 
 May 2025 Update
-  - Fixed Control 18.6.14.1 For Missing RequirePrivacy=1 in Ansible Hardening. - Thanks @mfortin
-  - Updated 18.10.56.3.10.2 value to 60000 from 6000 in remediate and GPO - Thanks @mfortin
-  - Verified 18.10.79.2 Path In Remediate - Thanks @mfortin
-  - Updated 18.10.92.4.1 ManagePreviewBuildsPolicyValue to 1. - Thanks @mfortin
-  - Updated Pipelines Branches Trigger
-  - Updated Readme with New Badges
+  - Issues Addressed:
+    - Fixed Control 18.6.14.1 For Missing RequirePrivacy=1 in Ansible Hardening. - Thanks @mfortin
+    - Updated 18.10.56.3.10.2 value to 60000 from 6000 in remediate and GPO - Thanks @mfortin
+    - Verified 18.10.79.2 Path In Remediate - Thanks @mfortin
+    - Updated 18.10.92.4.1 ManagePreviewBuildsPolicyValue to 1. - Thanks @mfortin
+    - Updated Pipelines Branches Trigger
+    - Updated Readme with New Badges
 
 ## Release 3.0.2
 

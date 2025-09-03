@@ -4684,7 +4684,7 @@
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
     $registryKeyPath = "HKLM\SOFTWARE\Policies\Microsoft\Windows\System"
-    $registryValueName = "AllowCustomSSPsAPs"
+    $registryValueName = "RunAsPPL"
     $type = "DWORD"
     $desiredValue = 0
 

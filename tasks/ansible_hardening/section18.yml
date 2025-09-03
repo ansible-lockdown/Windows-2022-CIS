@@ -4672,7 +4672,7 @@
     - name: "18.10.79.2 | PATCH | Ensure 'Allow suggested apps in Windows Ink Workspace' is set to 'Disabled' | Set Variable."
       when: win22cis_allow_windows_ink_workspace == 0 or win22cis_allow_windows_ink_workspace == 1
       ansible.windows.win_regedit:
-        path: HKLM:\SOFTWARE\Microsoft\Policies\Microsoft\WindowsInkWorkspace
+        path: HKLM:\SOFTWARE\Policies\Microsoft\WindowsInkWorkspace
         name: AllowWindowsInkWorkspace
         data: "{{ win22cis_allow_windows_ink_workspace }}"
         type: dword
