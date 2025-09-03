@@ -2,7 +2,7 @@
 
 ## Configure a Microsoft Server 2022 machine to be [CIS](https://www.cisecurity.org/cis-benchmarks/) compliant
 
-### Based on [ CIS Microsoft Windows Server 2022 v3.0.0 - 03-19-2024 ](https://www.cisecurity.org/cis-benchmarks/)
+### Based on [ CIS Microsoft Windows Server 2022 v4.0.0 - 05-23-2025 ](https://www.cisecurity.org/cis-benchmarks/)
 
 ---
 

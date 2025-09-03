@@ -10,7 +10,7 @@
     - patch
     - toast
   ansible.windows.win_regedit:
-    path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\Currentversion\Pushnotifications
+    path: HKU:\{{ item }}\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\Pushnotifications
     name: NoToastApplicationNotificationOnLockScreen
     data: 1
     type: dword
@@ -73,7 +73,7 @@
     - NIST800-53_SI-3
     - NIST800-53R5_SI-3
   ansible.windows.win_regedit:
-    path: HKU:\{{ item }}\SOFTWARE\Microsoft\Windows\Currentversion\Policies\Attachments
+    path: HKU:\{{ item }}\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments
     name: ScanWithAntiVirus
     data: 3
     type: dword
@@ -198,19 +198,19 @@
     - NIST800-53_AC-3
     - NIST800-53R5_AC-3
   ansible.windows.win_regedit:
-    path: HKU:\{{ item }}\SOFTWARE\Microsoft\Windows\Currentversion\Policies\Explorer
+    path: HKU:\{{ item }}\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer
     name: NoInplaceSharing
     data: 1
     type: dword
   loop: "{{ prelim_hku_loaded_list }}"
 
-- name: "19.7.42.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
+- name: "19.7.44.1 | PATCH | Ensure Always install with elevated privileges is set to Disabled"
   notify: Change_Requires_Reboot
-  when: win22cis_rule_19_7_42_1
+  when: win22cis_rule_19_7_44_1
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_19.7.42.1
+    - rule_19.7.44.1
     - patch
     - permissions
     - NIST800-171_3.1.1
@@ -223,13 +223,13 @@
     type: dword
   loop: "{{ prelim_hku_loaded_list }}"
 
-- name: "19.7.44.2.1 | PATCH | Ensure Prevent Codec Download is set to Enabled"
+- name: "19.7.46.2.1 | PATCH | Ensure Prevent Codec Download is set to Enabled"
   notify: Change_Requires_Reboot
-  when: win22cis_rule_19_7_44_2_1
+  when: win22cis_rule_19_7_46_2_1
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_19.7.44.2.1
+    - rule_19.7.46.2.1
     - patch
     - codec
     - NIST800-171_3.4.2
