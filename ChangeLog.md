@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Release 3.0.5
+September 2025 Update
+- Issues Addressed:
+    - [#73](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/73) - Thank you @ShawnHardwick
+
 ## Release 3.0.4
 
 May 2025 Update #2
