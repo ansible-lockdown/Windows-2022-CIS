@@ -2002,10 +2002,11 @@
     - NIST800-53R5_IA-5_1
   block:
     - name: "2.3.6.5 | PATCH | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0. | Apply Settings To Registry."
-      community.windows.win_security_policy:
-        section: System Access
-        key: MaximumPasswordAge
-        value: "{{ win22cis_domain_member_maximum_password_age }}"
+      ansible.windows.win_regedit:
+        path: HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters
+        name: MaximumPasswordAge
+        data: "{{ win22cis_domain_member_maximum_password_age }}"
+        type: dword
       when:
         - win22cis_domain_member_maximum_password_age <= 30
         - win22cis_domain_member_maximum_password_age > 0
