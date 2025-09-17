@@ -2779,7 +2779,7 @@
         data: "{{ rule_2_3_10_9_remote_registry_paths }}"
         type: multistring
 
-- name: "2.3.10.10 | PATCH | Configure Network access Remotely accessible registry paths and sub-paths | Ensure Network access Restrict anonymous access to Named Pipes and Shares is set to Enabled"
+- name: "2.3.10.10 | PATCH | Ensure Network access Restrict anonymous access to Named Pipes and Shares is set to Enabled"
   when: win22cis_rule_2_3_10_10
   tags:
     - level1-domaincontroller

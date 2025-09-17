@@ -1,5 +1,9 @@
 # ChangeLog
 
+September 2025
+  - Updated When For Control 18.4.6
+  - Updated Title 2.3.10.10
+
 ## Release 4.0.0
 June 2025
   - This Release is based on CIS Benchmark v4.0.0

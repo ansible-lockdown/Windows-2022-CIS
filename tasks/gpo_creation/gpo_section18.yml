@@ -428,7 +428,7 @@
   block:
     - name: "18.4.6 | PATCH | Ensure 'NetBT NodeType configuration' is set to 'Enabled: P-node recommended' | Set Registry Value"
       when:
-        - win22cis_max_passwords_saved in [1, 2, 4, 8]
+        - win22cis_netbt_nodetype in [1, 2, 4, 8]
         - "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
