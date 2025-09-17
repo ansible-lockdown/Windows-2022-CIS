@@ -2019,10 +2019,11 @@
     - NIST800-53R5_IA-5_1
   block:
     - name: "2.3.6.5 | PATCH | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0. | Apply Settings To Registry."
-      community.windows.win_security_policy:
-        section: System Access
-        key: MaximumPasswordAge
-        value: "{{ win22cis_domain_member_maximum_password_age }}"
+      ansible.windows.win_regedit:
+        path: HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters
+        name: MaximumPasswordAge
+        data: "{{ win22cis_domain_member_maximum_password_age }}"
+        type: dword
       when:
         - win22cis_domain_member_maximum_password_age <= 30
         - win22cis_domain_member_maximum_password_age > 0
@@ -2795,7 +2796,7 @@
         data: "{{ rule_2_3_10_9_remote_registry_paths }}"
         type: multistring
 
-- name: "2.3.10.10 | PATCH | Configure Network access Remotely accessible registry paths and sub-paths | Ensure Network access Restrict anonymous access to Named Pipes and Shares is set to Enabled"
+- name: "2.3.10.10 | PATCH | Ensure Network access Restrict anonymous access to Named Pipes and Shares is set to Enabled"
   when: win22cis_rule_2_3_10_10
   tags:
     - level1-domaincontroller
