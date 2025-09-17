@@ -1,6 +1,14 @@
 # ChangeLog
 
+September 2025
+  - Updated When For Control 18.4.6
+  - Updated Title 2.3.10.10
+  - Updated 2.3.6.5 Task
+  - PR's Addressed:
+    - [#79](https://github.com/ansible-lockdown/Windows-2022-CIS/pull/79/files) - Thanks @ShawnHardwick
+
 ## Release 4.0.0
+
 June 2025
   - This Release is based on CIS Benchmark v4.0.0
   - Internal 90 Auto Promotion Workflows Added
