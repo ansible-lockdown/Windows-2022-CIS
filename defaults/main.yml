@@ -827,10 +827,10 @@ win22cis_ldap_client_integrity: 1
 # Log\Microsoft\Windows\NTLM). Configuring this setting to Deny All also conforms to the benchmark.
 # The recommended state for this setting is: Audit All.
 # Note: Possible Valid Settings
-# 1 - Deny All
-# 2 - Audit All
-# Default: 2
-win22cis_restrict_sending_ntlm_traffic: 2
+# 1 - Audit All
+# 2 - Deny All
+# Default: 1
+win22cis_restrict_sending_ntlm_traffic: 1
 
 # 2.3.17.2
 # win22cis_consent_prompt_behavior_admin is the policy setting controls the behavior of the elevation prompt for administrators.
