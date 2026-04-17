@@ -1492,7 +1492,7 @@
   loop_control:
     label: "{{ item.gpo_name }} - {{ item.gpo_guid }}"
 
-- name: "2.2.38 | GPO | Ensure Manage auditing and security log is set to Administrators and Exchange Servers if Exchange is running (DC only)."
+- name: "2.2.38 | GPO | Ensure 'Manage auditing and security log' is set to Administrators (DC only)."
   when: win22cis_rule_2_2_38
   tags:
     - level1-domaincontroller
@@ -1518,7 +1518,7 @@
     - NIST800-53R5_AC-6_7
     - NIST800-53R5_AU-9_4
   block:
-    - name: "2.2.38 | GPO | Ensure Manage auditing and security log is set to Administrators and Exchange Servers if Exchange is running (DC only) | Exchange Not Running."
+    - name: "2.2.38 | GPO | Ensure 'Manage auditing and security log' is set to Administrators (DC only) | Exchange Not Running."
       when:
         - not win22cis_exchange_server_running
         - "'Skipped' not in item.gpo_guid"
@@ -1533,7 +1533,7 @@
       loop_control:
         label: "{{ item.gpo_name }} - {{ item.gpo_guid }}"
 
-    - name: "2.2.38 | GPO | Ensure Manage auditing and security log is set to Administrators and Exchange Servers if Exchange is running (DC only) | Exchange Running."
+    - name: "2.2.38 | GPO | Ensure 'Manage auditing and security log' is set to Administrators (DC only) | Exchange Running."
       when:
         - win22cis_exchange_server_running
         - "'Skipped' not in item.gpo_guid"
@@ -1992,52 +1992,11 @@
   loop_control:
     label: "{{ item.gpo_name }} - {{ item.gpo_guid }}"
 
-- name: "2.3.1.1 | GPO | Ensure Accounts Block Microsoft accounts is set to Users cant add or log on with Microsoft accounts."
-  when:
-    - win22cis_rule_2_3_1_1
-    - "'(Skipped)' not in item"
-  tags:
-    - level1-domaincontroller
-    - level1-memberserver
-    - rule_2.3.1.1
-    - patch
-    - securitypolicy
-    - gpo
-    - NIST800-171_3.1.1
-    - NIST800-53_AC-2_1
-    - NIST800-53R5_AC-2_1
-  ansible.windows.win_shell: |
-    $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
-    $registryValueName = "NoConnectedUser"
-    $type = "DWORD"
-    $desiredValue = 3
-
-    # Adding The GPO Registry Entry Commands.
-    # Get the current value of the registry key in the GPO
-    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
-
-    # Check if the current value is equal to the desired value
-    if ($currentValue -ne $desiredValue) {
-        # If not, set the registry value to the desired value
-        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
-        Write-Output "Patched"
-    } else {
-        Write-Output "No Change Needed"
-    }
-  loop:
-    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
-    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
-  loop_control:
-    label: "{{ item }}"
-  changed_when: '"Patched" in rule_2_3_1_1_results.stdout'
-  register: rule_2_3_1_1_results
-
-- name: "2.3.1.2 | GPO | Ensure Accounts Guest account status is set to Disabled MS only"
+- name: "2.3.1.1 | GPO | Ensure Accounts Guest account status is set to Disabled MS only"
   when: win22cis_rule_2_3_1_2
   tags:
     - level1-memberserver
-    - rule_2.3.1.2
+    - rule_2.3.1.1
     - patch
     - securitypolicy
     - gpo
@@ -2045,7 +2004,7 @@
     - NIST800-53_IA-5
     - NIST800-53R55_IA-5
   block:
-    - name: "2.3.1.2 | GPO | Ensure Accounts Guest account status is set to Disabled MS only | Set Variable In GptTmpl.inf"
+    - name: "2.3.1.1 | GPO | Ensure Accounts Guest account status is set to Disabled MS only | Set Variable In GptTmpl.inf"
       when: "'Skipped' not in item.gpo_guid"
       community.windows.win_lineinfile:
         path: "C:\\Windows\\SYSVOL\\sysvol\\{{ prelim_discovered_domain_name }}\\Policies\\{{ item.gpo_guid }}\\Machine\\Microsoft\\Windows NT\\SecEdit\\GptTmpl.inf"
@@ -2058,7 +2017,7 @@
       loop_control:
         label: "{{ item.gpo_name }} - {{ item.gpo_guid }}"
 
-    - name: "2.3.1.2 | GPO | Ensure Accounts Guest account status is set to Disabled MS only | Set Variable In Registry"
+    - name: "2.3.1.1 | GPO | Ensure Accounts Guest account status is set to Disabled MS only | Set Variable In Registry"
       when: "'Skipped' not in item.gpo_guid"
       ansible.windows.win_shell: |
         $gpoName = "{{ item.gpo_name }}"
@@ -2083,17 +2042,17 @@
           gpo_name: "{{ win22cis_l1_ms_gpo_name }}"
       loop_control:
         label: "{{ item.gpo_name }} - {{ item.gpo_guid }}"
-      changed_when: '"Patched" in rule_2_3_1_2_results.stdout'
-      register: rule_2_3_1_2_results
+      changed_when: '"Patched" in rule_2_3_1_1_results.stdout'
+      register: rule_2_3_1_1_results
 
-- name: "2.3.1.3 | GPO | Ensure Accounts Limit local account use of blank passwords to console logon only is set to Enabled"
+- name: "2.3.1.2 | GPO | Ensure Accounts Limit local account use of blank passwords to console logon only is set to Enabled"
   when:
-    - win22cis_rule_2_3_1_3
+    - win22cis_rule_2_3_1_2
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_2.3.1.3
+    - rule_2.3.1.2
     - patch
     - account
     - gpo
@@ -2124,15 +2083,15 @@
     - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_2_3_1_3_results.stdout'
-  register: rule_2_3_1_3_results
+  changed_when: '"Patched" in rule_2_3_1_2_results.stdout'
+  register: rule_2_3_1_2_results
 
-- name: "2.3.1.4 | GPO | Configure Accounts Rename administrator account"
-  when: win22cis_rule_2_3_1_4
+- name: "2.3.1.3 | GPO | Configure Accounts Rename administrator account"
+  when: win22cis_rule_2_3_1_3
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_2.3.1.4
+    - rule_2.3.1.3
     - patch
     - securitypolicy
     - gpo
@@ -2140,7 +2099,7 @@
     - NIST800-53_IA-5
     - NIST800-53R5_IA-5
   block:
-    - name: "2.3.1.4 | GPO | Configure Accounts Rename administrator account. | Make Changes To Admin Name."
+    - name: "2.3.1.3 | GPO | Configure Accounts Rename administrator account. | Make Changes To Admin Name."
       when:
         - "'adminchangethis' not in win22cis_admin_username"
         - "'Skipped' not in item.gpo_guid"
@@ -2157,25 +2116,26 @@
       loop_control:
         label: "{{ item.gpo_name }} - {{ item.gpo_guid }}"
 
-    - name: "2.3.1.4 | AUDIT | Configure Accounts Rename administrator account. | Warning Msg For Default Variable Not Edited."
+    - name: "2.3.1.3 | AUDIT | Configure Accounts Rename administrator account. | Warning Msg For Default Variable Not Edited."
       when: "'adminchangethis' in win22cis_admin_username"
       ansible.builtin.debug:
         msg:
           - "Warning!! You have not changed the default admin username in win22cis_admin_username please"
           - "make the necessary change to the variable to be in compliance."
 
-    - name: "2.3.1.4 | AUDIT | Configure Accounts Rename administrator account. | Add Warn Count."
+    - name: "2.3.1.3 | AUDIT | Configure Accounts Rename administrator account. | Add Warn Count."
       vars:
-        warn_control_id: '2.3.1.4'
+        warn_control_id: '2.3.1.3'
       when: "'adminchangethis' in win22cis_admin_username"
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
-- name: "2.3.1.5 | GPO | Configure Accounts Rename guest account"
-  when: win22cis_rule_2_3_1_5
+- name: "2.3.1.4 | GPO | Configure Accounts Rename guest account"
+  when: win22cis_rule_2_3_1_4
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_2.3.1.5
+    - rule_2.3.1.4
     - patch
     - securitypolicy
     - gpo
@@ -2183,7 +2143,7 @@
     - NIST800-53_IA-5
     - NIST800-53R5_IA-5
   block:
-    - name: "2.3.1.5 | GPO | Configure Accounts Rename guest account. | Make Changes To Guest Name."
+    - name: "2.3.1.4 | GPO | Configure Accounts Rename guest account. | Make Changes To Guest Name."
       when:
         - "'guestchangethis' not in win22cis_guest_username"
         - "'Skipped' not in item.gpo_guid"
@@ -2200,18 +2160,19 @@
       loop_control:
         label: "{{ item.gpo_name }} - {{ item.gpo_guid }}"
 
-    - name: "2.3.1.5 | AUDIT | Configure Accounts Rename guest account. | Warning Msg For Default Variable Not Edited."
+    - name: "2.3.1.4 | AUDIT | Configure Accounts Rename guest account. | Warning Msg For Default Variable Not Edited."
       when: "'guestchangethis' in win22cis_guest_username"
       ansible.builtin.debug:
         msg:
           - "Warning!! You have not changed the default guest name in win22cis_guest_username please"
           - "make the necessary change to the variable to be in compliance."
 
-    - name: "2.3.1.5 | AUDIT | Configure Accounts Rename guest account. | Add Warn Count."
+    - name: "2.3.1.4 | AUDIT | Configure Accounts Rename guest account. | Add Warn Count."
       vars:
-        warn_control_id: '2.3.1.5'
+        warn_control_id: '2.3.1.4'
       when: "'guestchangethis' in win22cis_guest_username"
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "2.3.2.1 | GPO | Ensure Audit Force audit policy subcategory settings Windows Vista or later to override audit policy category settings is set to Enabled"
   when:
@@ -2309,7 +2270,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_2_3_4.1
+    - rule_2.3.4.1
     - patch
     - devices
     - gpo
@@ -2331,7 +2292,7 @@
     - NIST800-53R5_AC-9_4
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Print\Providers\Lanman Print Services\Servers"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Print\Providers\Lanman Print Services\Servers"
     $registryValueName = "AddPrinterDrivers"
     $type = "DWORD"
     $desiredValue = 1
@@ -2362,7 +2323,7 @@
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
-    - rule_2_3_5_1
+    - rule_2.3.5.1
     - patch
     - scheduledtasks
     - gpo
@@ -2533,7 +2494,7 @@
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
-    - rule_2_3_5_5
+    - rule_2.3.5.5
     - patch
     - account
     - gpo
@@ -2615,7 +2576,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters"
     $registryValueName = "RequireSignOrSeal"
     $type = "DWORD"
     $desiredValue = 1
@@ -2665,7 +2626,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters"
     $registryValueName = "SealSecureChannel"
     $type = "DWORD"
     $desiredValue = 1
@@ -2715,7 +2676,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters"
     $registryValueName = "SignSecureChannel"
     $type = "DWORD"
     $desiredValue = 1
@@ -2755,7 +2716,7 @@
     - NIST800-53R5_AC-2_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters"
     $registryValueName = "DisablePasswordChange"
     $type = "DWORD"
     $desiredValue = 0
@@ -2837,7 +2798,8 @@
       when:
         - win22cis_domain_member_maximum_password_age > 30 or
           win22cis_domain_member_maximum_password_age == 0
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "2.3.6.6 | GPO | Ensure Domain member Require strong Windows 2000 or later session key is set to Enabled"
   when:
@@ -2866,7 +2828,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Netlogon\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters"
     $registryValueName = "RequireStrongKey"
     $type = "DWORD"
     $desiredValue = 1
@@ -2908,7 +2870,7 @@
     - NIST800-53R5_AC-19
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "DisableCAD"
     $type = "DWORD"
     $desiredValue = 0
@@ -2951,7 +2913,7 @@
     - NIST800-53R5_AC-19
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "DontDisplayLastUserName"
     $type = "DWORD"
     $desiredValue = 1
@@ -3003,7 +2965,7 @@
         - "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+        $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
         $registryValueName = "InactivityTimeoutSecs"
         $type = "DWORD"
         $desiredValue = {{ win22cis_inactivity_timeout_seconds }}
@@ -3042,7 +3004,8 @@
       when:
         - win22cis_inactivity_timeout_seconds > 900 or
           win22cis_inactivity_timeout_seconds == 0
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "2.3.7.4 | GPO | Configure Interactive logon Message text for users attempting to log on"
   when:
@@ -3060,7 +3023,7 @@
     - NIST800-53R5_AC-8
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "LegalNoticeText"
     $type = "string"
     $desiredValue = "{{ win22cis_legal_notice }}"
@@ -3100,7 +3063,7 @@
     - NIST800-53R5_AC-8
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "LegalNoticeCaption"
     $type = "string"
     $desiredValue = "{{ win22cis_legal_notice_caption }}"
@@ -3128,7 +3091,7 @@
   when: win22cis_rule_2_3_7_6
   tags:
     - level2-memberserver
-    - rule_2_3_7_6
+    - rule_2.3.7.6
     - patch
     - logon
     - gpo
@@ -3142,7 +3105,7 @@
         - "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows Nt\Currentversion\Winlogon"
+        $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows Nt\CurrentVersion\Winlogon"
         $registryValueName = "CachedLogonsCount"
         $type = "string"
         $desiredValue = "{{ win22cis_cached_logons_count }}"
@@ -3176,7 +3139,8 @@
       vars:
         warn_control_id: '2.3.7.6'
       when: win22cis_cached_logons_count > 4
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "2.3.7.7 | GPO | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days"
   when: win22cis_rule_2_3_7_7
@@ -3224,7 +3188,8 @@
       when:
         - win22cis_password_expiry_warning_days < 5 or
           win22cis_password_expiry_warning_days > 14
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "2.3.7.8 | GPO | Ensure Interactive logon Require Domain Controller Authentication to unlock workstation is set to Enabled MS only"
   when:
@@ -3249,7 +3214,7 @@
     - NIST800-53R5_AC-12
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows Nt\Currentversion\Winlogon"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows Nt\CurrentVersion\Winlogon"
     $registryValueName = "ForceUnlockLogon"
     $type = "DWORD"
     $desiredValue = 1
@@ -3300,7 +3265,7 @@
         - "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows Nt\Currentversion\Winlogon"
+        $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows Nt\CurrentVersion\Winlogon"
         $registryValueName = "ScRemoveOption"
         $type = "string"
         $desiredValue = {{ win22cis_sc_remove_option }}
@@ -3368,7 +3333,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanmanWorkstation\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters"
     $registryValueName = "RequireSecuritySignature"
     $type = "DWORD"
     $desiredValue = 1
@@ -3418,7 +3383,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanmanWorkstation\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters"
     $registryValueName = "EnableSecuritySignature"
     $type = "DWORD"
     $desiredValue = 1
@@ -3468,7 +3433,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanmanWorkstation\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters"
     $registryValueName = "EnablePlainTextPassword"
     $type = "DWORD"
     $desiredValue = 0
@@ -3511,7 +3476,7 @@
         - "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanManServer\Parameters"
+        $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters"
         $registryValueName = "AutoDisconnect"
         $type = "DWORD"
         $desiredValue = {{ win22cis_smb_auto_disconnect_time }}
@@ -3575,7 +3540,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanManServer\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters"
     $registryValueName = "RequireSecuritySignature"
     $type = "DWORD"
     $desiredValue = 1
@@ -3605,7 +3570,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_2_3_9_3
+    - rule_2.3.9.3
     - patch
     - account
     - gpo
@@ -3624,7 +3589,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanManServer\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters"
     $registryValueName = "EnableSecuritySignature"
     $type = "DWORD"
     $desiredValue = 1
@@ -3664,7 +3629,7 @@
     - NIST800-53R5_AC-2_12
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanManServer\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters"
     $registryValueName = "EnableForcedLogoff"
     $type = "DWORD"
     $desiredValue = 1
@@ -3730,7 +3695,7 @@
         - "'(Skipped)' not in item"
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanManServer\Parameters"
+        $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters"
         $registryValueName = "SMBServerNameHardeningLevel"
         $type = "DWORD"
         $desiredValue = {{ win22cis_smb_server_name_hardening_level }}
@@ -3816,7 +3781,7 @@
     - NIST800-53R5_AC-6_10
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa"
     $registryValueName = "RestrictAnonymousSAM"
     $type = "DWORD"
     $desiredValue = 1
@@ -3854,7 +3819,7 @@
     - NIST800-53R5_AC-6_10
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa"
     $registryValueName = "RestrictAnonymous"
     $type = "DWORD"
     $desiredValue = 1
@@ -3884,7 +3849,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
-    - rule_2_3_10_4
+    - rule_2.3.10.4
     - patch
     - accounts
     - gpo
@@ -3893,7 +3858,7 @@
     - NIST800-53R5_IA-5_1_c
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa"
     $registryValueName = "DisableDomainCreds"
     $type = "DWORD"
     $desiredValue = 1
@@ -3933,7 +3898,7 @@
     - NIST800-53R5_AC-6_10
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa"
     $registryValueName = "EveryoneIncludesAnonymous"
     $type = "DWORD"
     $desiredValue = 0
@@ -3972,7 +3937,7 @@
     - NIST800-53R5_IA-2_2
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanManServer\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters"
     $registryValueName = "NullSessionPipes"
     $type = "multistring"
     $desiredValue = @(
@@ -4024,7 +3989,7 @@
     - NIST800-53R5_IA-2_2
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanManServer\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters"
     $registryValueName = "NullSessionPipes"
     $type = "multistring"
     $desiredValue = @()
@@ -4062,7 +4027,7 @@
     - NIST800-53R5_AC-6_7_b
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Securepipeservers\Winreg\AllowedExactpaths"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Securepipeservers\Winreg\AllowedExactpaths"
     $registryValueName = "Machine"
     $type = "multistring"
     $desiredValue = @(
@@ -4118,7 +4083,7 @@
     - NIST800-53R5_AC-6_7_b
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Securepipeservers\Winreg\Allowedpaths"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Securepipeservers\Winreg\Allowedpaths"
     $registryValueName = "Machine"
     $type = "multistring"
 
@@ -4197,7 +4162,7 @@
     - NIST800-53R5_AC-6_10
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanManServer\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters"
     $registryValueName = "RestrictNullSessAccess"
     $type = "DWORD"
     $desiredValue = 1
@@ -4275,7 +4240,7 @@
     - NIST800-53R5_AC-3
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\LanManServer\Parameters"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters"
     $registryValueName = "NullSessionShares"
     $type = "multistring"
     $desiredValue = @()
@@ -4315,7 +4280,7 @@
     - NIST800-53R5_CM-6b.
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa"
     $registryValueName = "ForceGuest"
     $type = "DWORD"
     $desiredValue = 0
@@ -4354,7 +4319,7 @@
     - NIST800-53R5_IA-3
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa"
     $registryValueName = "UseMachineId"
     $type = "DWORD"
     $desiredValue = 1
@@ -4457,7 +4422,7 @@
     - NIST800-53R5_SA-10
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa\Pku2U"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Pku2U"
     $registryValueName = "AllowOnlineID"
     $type = "DWORD"
     $desiredValue = 0
@@ -4507,7 +4472,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\SYSTEM\Kerberos\Parameters"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\SYSTEM\Kerberos\Parameters"
     $registryValueName = "SupportedEncryptionTypes"
     $type = "DWORD"
     $desiredValue = 2147483640
@@ -4552,7 +4517,7 @@
     - NIST800-53R5_SC-28_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa"
     $registryValueName = "NoLMHash"
     $type = "DWORD"
     $desiredValue = 1
@@ -4642,7 +4607,7 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa"
     $registryValueName = "LMCompatibilityLevel"
     $type = "DWORD"
     $desiredValue = 5
@@ -4666,7 +4631,7 @@
   changed_when: '"Patched" in rule_2_3_11_7_results.stdout'
   register: rule_2_3_11_7_results
 
-- name: "2.3.11.8 | GPO | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher."
+- name: "2.3.11.8 | GPO | Ensure 'Network security: LDAP client encryption requirements' is set to 'Negotiate sealing' or higher."
   when: win22cis_rule_2_3_11_8
   tags:
     - level1-domaincontroller
@@ -4689,17 +4654,17 @@
     - NIST800-53R5_SC-8
     - NIST800-53R5_SC-8_1
   block:
-    - name: "2.3.11.8 | GPO | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher. | Set GPO Value."
+    - name: "2.3.11.8 | GPO | Ensure 'Network security: LDAP client encryption requirements' is set to 'Negotiate sealing' or higher. | Set GPO Value."
       when:
         - "'(Skipped)' not in item"
-        - win22cis_ldap_client_integrity == 1 or
-          win22cis_ldap_client_integrity == 2
+        - win22cis_ldap_client_confidentiality == 1 or
+          win22cis_ldap_client_confidentiality == 2
       ansible.windows.win_shell: |
         $gpoName = "{{ item }}"
-        $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Services\Ldap"
-        $registryValueName = "LDAPClientIntegrity"
+        $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Ldap"
+        $registryValueName = "LDAPClientConfidentiality"
         $type = "DWORD"
-        $desiredValue = {{ win22cis_ldap_client_integrity }}
+        $desiredValue = {{ win22cis_ldap_client_confidentiality }}
 
         # Get the current value of the registry key in the GPO
         $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
@@ -4720,34 +4685,32 @@
       changed_when: '"Patched" in rule_2_3_11_8_results.stdout'
       register: rule_2_3_11_8_results
 
-    - name: "2.3.11.8 | AUDIT | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher. | Warning Check For Variable."
+    - name: "2.3.11.8 | AUDIT | Ensure 'Network security: LDAP client encryption requirements' is set to 'Negotiate sealing' or higher. | Warning Check For Variable."
       ansible.builtin.debug:
         msg:
-          - "Warning!! You have an invalid variable set for win22cis_ldap_client_integrity. Please read"
+          - "Warning!! You have an invalid variable set for win22cis_ldap_client_confidentiality. Please read"
           - "the notes for the variable and make the necessary change to the variable to be in compliance."
       when:
-        - win22cis_ldap_client_integrity == 0 or
-          win22cis_ldap_client_integrity > 2
+        - win22cis_ldap_client_confidentiality == 0 or
+          win22cis_ldap_client_confidentiality > 2
 
-    - name: "2.3.11.8 | AUDIT | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher. | Warn Count."
+    - name: "2.3.11.8 | AUDIT | Ensure 'Network security: LDAP client encryption requirements' is set to 'Negotiate sealing' or higher. | Warn Count."
       ansible.builtin.import_tasks:
         file: warning_facts.yml
       vars:
         warn_control_id: '2.3.11.8'
       when:
-        - win22cis_ldap_client_integrity == 0 or
-          win22cis_ldap_client_integrity > 2
+        - win22cis_ldap_client_confidentiality == 0 or
+          win22cis_ldap_client_confidentiality > 2
 
-- name: "2.3.11.9 | GPO | Ensure Network security Minimum session security for NTLM SSP based including secure RPC clients is set to Require NTLMv2 session security Require 128-bit encryption"
-  when:
-    - win22cis_rule_2_3_11_9
-    - "'(Skipped)' not in item"
+- name: "2.3.11.9 | GPO | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher."
+  when: win22cis_rule_2_3_11_8
   tags:
     - level1-domaincontroller
     - level1-memberserver
     - rule_2.3.11.9
     - patch
-    - ntlm
+    - ldap
     - gpo
     - NIST800-171_3.1.13
     - NIST800-171_3.5.2
@@ -4762,33 +4725,57 @@
     - NIST800-53R5_AC-IA-5_1
     - NIST800-53R5_SC-8
     - NIST800-53R5_SC-8_1
-  ansible.windows.win_shell: |
-    $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa\Msv1_0"
-    $registryValueName = "NTLMMinClientSec"
-    $type = "DWORD"
-    $desiredValue = 537395200
+  block:
+    - name: "2.3.11.9 | GPO | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher. | Set GPO Value."
+      when:
+        - "'(Skipped)' not in item"
+        - win22cis_ldap_client_integrity == 1 or
+          win22cis_ldap_client_integrity == 2
+      ansible.windows.win_shell: |
+        $gpoName = "{{ item }}"
+        $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Services\Ldap"
+        $registryValueName = "LDAPClientIntegrity"
+        $type = "DWORD"
+        $desiredValue = {{ win22cis_ldap_client_integrity }}
 
-    # Get the current value of the registry key in the GPO
-    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+        # Get the current value of the registry key in the GPO
+        $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
 
-    # Check if the current value is equal to the desired value
-    if ($currentValue -ne $desiredValue) {
-        # If not, set the registry value to the desired value
-        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
-        Write-Output "Patched"
-    } else {
-        Write-Output "No Change Needed"
-    }
-  loop:
-    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
-    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
-  loop_control:
-    label: "{{ item }}"
-  changed_when: '"Patched" in rule_2_3_11_9_results.stdout'
-  register: rule_2_3_11_9_results
+        # Check if the current value is equal to the desired value
+        if ($currentValue -ne $desiredValue) {
+            # If not, set the registry value to the desired value
+            Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+            Write-Output "Patched"
+        } else {
+            Write-Output "No Change Needed"
+        }
+      loop:
+        - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+        - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+      loop_control:
+        label: "{{ item }}"
+      changed_when: '"Patched" in rule_2_3_11_9_results.stdout'
+      register: rule_2_3_11_9_results
 
-- name: "2.3.11.10 | GPO | Ensure Network security Minimum session security for NTLM SSP based including secure RPC servers is set to Require NTLMv2 session security Require 128-bit encryption"
+    - name: "2.3.11.9 | AUDIT | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher. | Warning Check For Variable."
+      ansible.builtin.debug:
+        msg:
+          - "Warning!! You have an invalid variable set for win22cis_ldap_client_integrity. Please read"
+          - "the notes for the variable and make the necessary change to the variable to be in compliance."
+      when:
+        - win22cis_ldap_client_integrity == 0 or
+          win22cis_ldap_client_integrity > 2
+
+    - name: "2.3.11.9 | AUDIT | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher. | Warn Count."
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.11.9'
+      when:
+        - win22cis_ldap_client_integrity == 0 or
+          win22cis_ldap_client_integrity > 2
+
+- name: "2.3.11.10 | GPO | Ensure Network security Minimum session security for NTLM SSP based including secure RPC clients is set to Require NTLMv2 session security Require 128-bit encryption"
   when:
     - win22cis_rule_2_3_11_10
     - "'(Skipped)' not in item"
@@ -4814,8 +4801,8 @@
     - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa\Msv1_0"
-    $registryValueName = "NTLMMinServerSec"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Msv1_0"
+    $registryValueName = "NTLMMinClientSec"
     $type = "DWORD"
     $desiredValue = 537395200
 
@@ -4838,7 +4825,7 @@
   changed_when: '"Patched" in rule_2_3_11_10_results.stdout'
   register: rule_2_3_11_10_results
 
-- name: "2.3.11.11 | GPO | Ensure Network security: Restrict NTLM: Audit Incoming NTLM Traffic is set to Enable auditing for all accounts"
+- name: "2.3.11.11 | GPO | Ensure Network security Minimum session security for NTLM SSP based including secure RPC servers is set to Require NTLMv2 session security Require 128-bit encryption"
   when:
     - win22cis_rule_2_3_11_11
     - "'(Skipped)' not in item"
@@ -4849,23 +4836,25 @@
     - patch
     - ntlm
     - gpo
-    - NIST800-171_3.3.1
-    - NIST800-171_3.3.2
-    - NIST800-171_3.3.6
-    - NIST800-53_AU-3
-    - NIST800-53_AU-3_1
-    - NIST800-53_AU-7
-    - NIST800-53_AU-12
-    - NIST800-53R5_AU-3
-    - NIST800-53R5_AU-3_1
-    - NIST800-53R5_AU-7
-    - NIST800-53R5_AU-12
+    - NIST800-171_3.1.13
+    - NIST800-171_3.5.2
+    - NIST800-171_3.13.8
+    - NIST800-53_AC-17_2
+    - NIST800-53_AC-IA-5
+    - NIST800-53_AC-IA-5_1
+    - NIST800-53_SC-8
+    - NIST800-53_SC-8_1
+    - NIST800-53R5_AC-17_2
+    - NIST800-53R5_AC-IA-5
+    - NIST800-53R5_AC-IA-5_1
+    - NIST800-53R5_SC-8
+    - NIST800-53R5_SC-8_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Lsa\MSV1_0"
-    $registryValueName = "AuditReceivingNTLMTraffic"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Msv1_0"
+    $registryValueName = "NTLMMinServerSec"
     $type = "DWORD"
-    $desiredValue = 2
+    $desiredValue = 537395200
 
     # Get the current value of the registry key in the GPO
     $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
@@ -4886,13 +4875,61 @@
   changed_when: '"Patched" in rule_2_3_11_11_results.stdout'
   register: rule_2_3_11_11_results
 
-- name: "2.3.11.12 | GPO | Ensure Network security: Restrict NTLM: Audit NTLM authentication in this domain is set to Enable all DC Only"
+- name: "2.3.11.12 | GPO | Ensure Network security: Restrict NTLM: Audit Incoming NTLM Traffic is set to Enable auditing for all accounts"
   when:
     - win22cis_rule_2_3_11_12
     - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
+    - level1-memberserver
     - rule_2.3.11.12
+    - patch
+    - ntlm
+    - gpo
+    - NIST800-171_3.3.1
+    - NIST800-171_3.3.2
+    - NIST800-171_3.3.6
+    - NIST800-53_AU-3
+    - NIST800-53_AU-3_1
+    - NIST800-53_AU-7
+    - NIST800-53_AU-12
+    - NIST800-53R5_AU-3
+    - NIST800-53R5_AU-3_1
+    - NIST800-53R5_AU-7
+    - NIST800-53R5_AU-12
+  ansible.windows.win_shell: |
+    $gpoName = "{{ item }}"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0"
+    $registryValueName = "AuditReceivingNTLMTraffic"
+    $type = "DWORD"
+    $desiredValue = 2
+
+    # Get the current value of the registry key in the GPO
+    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+
+    # Check if the current value is equal to the desired value
+    if ($currentValue -ne $desiredValue) {
+        # If not, set the registry value to the desired value
+        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+        Write-Output "Patched"
+    } else {
+        Write-Output "No Change Needed"
+    }
+  loop:
+    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+  loop_control:
+    label: "{{ item }}"
+  changed_when: '"Patched" in rule_2_3_11_12_results.stdout'
+  register: rule_2_3_11_12_results
+
+- name: "2.3.11.13 | GPO | Ensure Network security: Restrict NTLM: Audit NTLM authentication in this domain is set to Enable all DC Only"
+  when:
+    - win22cis_rule_2_3_11_13
+    - "'(Skipped)' not in item"
+  tags:
+    - level1-domaincontroller
+    - rule_2.3.11.13
     - patch
     - ntlm
     - gpo
@@ -4929,15 +4966,16 @@
     - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
   loop_control:
     label: "{{ item }}"
-  changed_when: '"Patched" in rule_2_3_11_12_results.stdout'
-  register: rule_2_3_11_12_results
+  changed_when: '"Patched" in rule_2_3_11_13_results.stdout'
+  register: rule_2_3_11_13_results
 
-- name: "2.3.11.13 | GPO | Ensure Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Audit all or higher"
-  when: win22cis_rule_2_3_11_13
+- name: "2.3.11.14 | GPO | Ensure Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Audit all or higher"
+  when:
+    - win22cis_rule_2_3_11_14
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - rule_2.3.11.13
+    - rule_2.3.11.14
     - patch
     - ntlm
     - gpo
@@ -4953,7 +4991,7 @@
     - NIST800-53R5_AU-7
     - NIST800-53R5_AU-12
   block:
-    - name: "2.3.11.13 | AUDIT | Ensure Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Audit all or higher. | Set GPO Value.."
+    - name: "2.3.11.14 | AUDIT | Ensure Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Audit all or higher. | Set GPO Value.."
       when:
         - "'(Skipped)' not in item"
         - win22cis_restrict_sending_ntlm_traffic == 1 or
@@ -4981,10 +5019,10 @@
         - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
       loop_control:
         label: "{{ item }}"
-      changed_when: '"Patched" in rule_2_3_11_13_results.stdout'
-      register: rule_2_3_11_13_results
+      changed_when: '"Patched" in rule_2_3_11_14_results.stdout'
+      register: rule_2_3_11_14_results
 
-    - name: "2.3.11.13 | AUDIT | Ensure Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Audit all or higher. | Warning Check For Variable."
+    - name: "2.3.11.14 | AUDIT | Ensure Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Audit all or higher. | Warning Check For Variable."
       ansible.builtin.debug:
         msg:
           - "Warning!! You have an invalid variable set for win22cis_restrict_sending_ntlm_traffic. Please read"
@@ -4993,11 +5031,11 @@
         - win22cis_restrict_sending_ntlm_traffic == 0 or
           win22cis_restrict_sending_ntlm_traffic > 2
 
-    - name: "2.3.11.13 | AUDIT | Ensure Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Audit all or higher. | Warn Count."
+    - name: "2.3.11.14 | AUDIT | Ensure Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Audit all or higher. | Warn Count."
       ansible.builtin.import_tasks:
         file: warning_facts.yml
       vars:
-        warn_control_id: '2.3.11.13'
+        warn_control_id: '2.3.11.14'
       when:
         - win22cis_restrict_sending_ntlm_traffic == 0 or
           win22cis_restrict_sending_ntlm_traffic > 2
@@ -5019,7 +5057,7 @@
     - NIST800-53R5_AC-6_10
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "ShutdownWithoutLogon"
     $type = "DWORD"
     $desiredValue = 0
@@ -5058,7 +5096,7 @@
     - NIST800-53R5_CM-6b.
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Session Manager\Kernel"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Kernel"
     $registryValueName = "ObCaseInsensitive"
     $type = "DWORD"
     $desiredValue = 1
@@ -5120,7 +5158,7 @@
     - NIST800-53R5_SA-10
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SYSTEM\Currentcontrolset\Control\Session Manager"
+    $registryKeyPath = "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager"
     $registryValueName = "ProtectionMode"
     $type = "DWORD"
     $desiredValue = 1
@@ -5160,7 +5198,7 @@
     - NIST800-53R5_AC-2_9
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "FilterAdministratorToken"
     $type = "DWORD"
     $desiredValue = 1
@@ -5187,7 +5225,6 @@
 - name: "2.3.17.2 | GPO | Ensure 'User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode' is set to 'Prompt for consent on the secure desktop' or higher."
   when:
     - win22cis_rule_2_3_17_2
-    - "'(Skipped)' not in item"
   tags:
     - level1-domaincontroller
     - level1-memberserver
@@ -5198,31 +5235,55 @@
     - NIST800-171_3.1.5
     - NIST800-53_AC-6_1
     - NIST800-53R5_AC-6_1
-  ansible.windows.win_shell: |
-    $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
-    $registryValueName = "ConsentPromptBehaviorAdmin"
-    $type = "DWORD"
-    $desiredValue = {{ win22cis_consent_prompt_behavior_admin }}
+  block:
+    - name: "2.3.17.2 | GPO | Ensure 'User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode' is set to 'Prompt for consent on the secure desktop' or higher. | Set GPO Value."
+      when:
+        - "'(Skipped)' not in item"
+        - win22cis_consent_prompt_behavior_admin == 1 or
+          win22cis_consent_prompt_behavior_admin == 2
+      ansible.windows.win_shell: |
+        $gpoName = "{{ item }}"
+        $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
+        $registryValueName = "ConsentPromptBehaviorAdmin"
+        $type = "DWORD"
+        $desiredValue = {{ win22cis_consent_prompt_behavior_admin }}
 
-    # Get the current value of the registry key in the GPO
-    $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
+        # Get the current value of the registry key in the GPO
+        $currentValue = (Get-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -ErrorAction SilentlyContinue).Value
 
-    # Check if the current value is equal to the desired value
-    if ($currentValue -ne $desiredValue) {
-        # If not, set the registry value to the desired value
-        Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
-        Write-Output "Patched"
-    } else {
-        Write-Output "No Change Needed"
-    }
-  loop:
-    - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
-    - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
-  loop_control:
-    label: "{{ item }}"
-  changed_when: '"Patched" in rule_2_3_17_2_results.stdout'
-  register: rule_2_3_17_2_results
+        # Check if the current value is equal to the desired value
+        if ($currentValue -ne $desiredValue) {
+            # If not, set the registry value to the desired value
+            Set-GPRegistryValue -Name $gpoName -Key $registryKeyPath -ValueName $registryValueName -Type $type -Value $desiredValue
+            Write-Output "Patched"
+        } else {
+            Write-Output "No Change Needed"
+        }
+      loop:
+        - "{{ win22cis_l1_dc_gpo_name ~ ( '(Skipped)' if not win22cis_l1_dc_gpo else '' ) }}"
+        - "{{ win22cis_l1_ms_gpo_name ~ ( '(Skipped)' if not win22cis_l1_ms_gpo else '' ) }}"
+      loop_control:
+        label: "{{ item }}"
+      changed_when: '"Patched" in rule_2_3_17_2_results.stdout'
+      register: rule_2_3_17_2_results
+
+    - name: "2.3.17.2 | AUDIT | Ensure 'User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode' is set to 'Prompt for consent on the secure desktop' or higher. | Warning Check For Variable."
+      ansible.builtin.debug:
+        msg:
+          - "Warning!! You have an invalid variable set for win22cis_consent_prompt_behavior_admin. Please read"
+          - "the notes for the variable and make the necessary change to the variable to be in compliance."
+      when:
+        - win22cis_consent_prompt_behavior_admin == 0 or
+          win22cis_consent_prompt_behavior_admin > 2
+
+    - name: "2.3.17.2 | AUDIT | Ensure 'User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode' is set to 'Prompt for consent on the secure desktop' or higher. | Warn Count."
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.11.14'
+      when:
+        - win22cis_consent_prompt_behavior_admin == 0 or
+          win22cis_consent_prompt_behavior_admin > 2
 
 - name: "2.3.17.3 | GPO | Ensure User Account Control Behavior of the elevation prompt for standard users is set to Automatically deny elevation requests"
   when:
@@ -5240,7 +5301,7 @@
     - NIST800-53R5_AC-6_10
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "ConsentPromptBehaviorUser"
     $type = "DWORD"
     $desiredValue = 0
@@ -5280,7 +5341,7 @@
     - NIST800-53R5_AC-6_8
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "EnableInstallerDetection"
     $type = "DWORD"
     $desiredValue = 1
@@ -5320,7 +5381,7 @@
     - NIST800-53R5_AC-6_8
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "EnableSecureUIAPaths"
     $type = "DWORD"
     $desiredValue = 1
@@ -5360,7 +5421,7 @@
     - NIST800-53R5_AC-6_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "EnableLUA"
     $type = "DWORD"
     $desiredValue = 1
@@ -5400,7 +5461,7 @@
     - NIST800-53R5_AC-6_1
   ansible.windows.win_shell: |
     $gpoName = "{{ item }}"
-    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System"
+    $registryKeyPath = "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
     $registryValueName = "PromptOnSecureDesktop"
     $type = "DWORD"
     $desiredValue = 1

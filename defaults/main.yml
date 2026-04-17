@@ -102,25 +102,57 @@ win22cis_section19: true
 # errors due to missing features or incompatible syntax in earlier versions of Ansible.
 min_ansible_version: "2.16"
 
-# win_skip_for_test is the setting that will skip tasks that may cause changes that will affect the system.
-# Controls that will be skipped:
-# win22cis_rule_2_2_26 - Breaks Local Admin Connection
-# win22cis_rule_2_2_27 - Breaks Local Admin Connection
-# win22cis_rule_2_3_1_4 - Rename default administrator account
-# win22cis_rule_9_3_4 - Enables Firewall Public Rules *Breaks Reboot*
-# win22cis_rule_18_10_88_1_1 - Disables WinRM Allow Client Basic Auth
-# win22cis_rule_18_10_88_1_2 - Disables Client Ensure Allow unencrypted traffic is set to Disabled Control.
-# win22cis_rule_18_10_88_1_3 - Ensure Disallow Digest authentication is set to Enabled
-# win22cis_rule_18_10_88_2_1 - Disables WinRM Allow Service Basic Auth
-# win22cis_rule_18_10_88_2_2 - Disables Remote Server Management through WinRM
-# win22cis_rule_18_10_88_2_3 - Disables Service Ensure Allow unencrypted traffic is set to Disabled Control.
-# win22cis_rule_18_10_90_1 - Disables Remote Shell Access
-win_skip_for_test: true
-
 # Changes will be made that will require a system reboot.
 # The following option will allow whether or not to skip the reboot.
 # Default: true
 skip_reboot: true
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                          win_skip_for_test                                    ║
+# ║                                                                               ║
+# ║  Skips tasks that may cause disruptive changes to the system during testing.  ║
+# ║                                                                               ║
+# ║  NOTE: When set to true, the corresponding GPO entries for the controls       ║
+# ║  listed below will also not be created. This applies to both the Ansible      ║
+# ║  remediation path and the GPO creation path.                                  ║
+# ║                                                                               ║
+# ║  Controls that will be skipped:                                               ║
+# ║    win22cis_rule_2_2_26       - Breaks Local Admin Connection                 ║
+# ║    win22cis_rule_2_2_27       - Breaks Local Admin Connection                 ║
+# ║    win22cis_rule_2_3_1_3      - Rename default administrator account          ║
+# ║    win22cis_rule_9_3_4        - Enables Firewall Public Rules *Breaks Reboot* ║
+# ║    win22cis_rule_18_10_89_1_1 - Disables WinRM Allow Client Basic Auth        ║
+# ║    win22cis_rule_18_10_89_1_2 - Disables Client Allow Unencrypted Traffic     ║
+# ║    win22cis_rule_18_10_89_1_3 - Disallow Digest Authentication                ║
+# ║    win22cis_rule_18_10_89_2_1 - Disables WinRM Allow Service Basic Auth       ║
+# ║    win22cis_rule_18_10_89_2_2 - Disables Remote Server Management via WinRM   ║
+# ║    win22cis_rule_18_10_89_2_3 - Disables Service Allow Unencrypted Traffic    ║
+# ║    win22cis_rule_18_10_90_1   - Disables Remote Shell Access                  ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+win_skip_for_test: true
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                     Hosted Virtual System Override                            ║
+# ║                                                                               ║
+# ║  By default, the role auto-detects whether the target is a cloud-based        ║
+# ║  hosted virtual system (Azure, AWS, GCE, DigitalOcean, etc.).                 ║
+# ║                                                                               ║
+# ║  The auto-detection when condition covers the most common combinations of     ║
+# ║  ansible_virtualization_type and ansible_system_vendor, however the number    ║
+# ║  of possible hypervisor/cloud combinations makes it impossible to account     ║
+# ║  for every environment. Known cases where auto-detection has produced         ║
+# ║  incorrect results include VMware vSphere on-prem, AWS GovCloud EC2, and      ║
+# ║  standalone (non-domain) VMware instances where virtualization_type           ║
+# ║  returns 'NA'. In these cases the secedit lockout control order (1.2.1-1.2.4) ║
+# ║  will fail with 'The parameter is incorrect' from secedit.                    ║
+# ║                                                                               ║
+# ║  If you encounter this error, set the override below to force the correct     ║
+# ║  order for your environment manually.                                         ║
+# ║                                                                               ║
+# ║    true  = treat as hosted/cloud virtual system                               ║
+# ║    false = treat as bare-metal or local VM                                    ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+# hosted_virtual_system_override: true
 
 # These variables correspond with the CIS rule IDs or paragraph numbers defined in
 # the CIS benchmark documents.
@@ -197,11 +229,10 @@ win22cis_rule_2_2_48: true
 win22cis_rule_2_2_49: true
 win22cis_rule_2_3_1_1: true
 win22cis_rule_2_3_1_2: true
-win22cis_rule_2_3_1_3: true
-# Setting win22cis_rule_2_3_1_4 Control To True Will Break Ansible Connection
+# Setting win22cis_rule_2_3_1_3 Control To True Will Break Ansible Connection
 # Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
+win22cis_rule_2_3_1_3: true
 win22cis_rule_2_3_1_4: true
-win22cis_rule_2_3_1_5: true
 win22cis_rule_2_3_2_1: true
 win22cis_rule_2_3_2_2: true
 win22cis_rule_2_3_4_1: true
@@ -259,6 +290,7 @@ win22cis_rule_2_3_11_10: true
 win22cis_rule_2_3_11_11: true
 win22cis_rule_2_3_11_12: true
 win22cis_rule_2_3_11_13: true
+win22cis_rule_2_3_11_14: true
 win22cis_rule_2_3_13_1: true
 win22cis_rule_2_3_15_1: true
 win22cis_rule_2_3_15_2: true
@@ -353,7 +385,6 @@ win22cis_rule_18_4_4: true
 win22cis_rule_18_4_5: true
 win22cis_rule_18_4_6: true
 win22cis_rule_18_4_7: true
-win22cis_rule_18_4_8: true
 win22cis_rule_18_5_1: true
 win22cis_rule_18_5_2: true
 win22cis_rule_18_5_3: true
@@ -369,8 +400,11 @@ win22cis_rule_18_5_12: true
 win22cis_rule_18_6_4_1: true
 win22cis_rule_18_6_4_2: true
 win22cis_rule_18_6_4_3: true
+win22cis_rule_18_6_4_4: true
 win22cis_rule_18_6_5_1: true
+win22cis_rule_18_6_7_1: true
 win22cis_rule_18_6_8_1: true
+win22cis_rule_18_6_8_2: true
 win22cis_rule_18_6_9_1: true
 win22cis_rule_18_6_9_2: true
 win22cis_rule_18_6_10_2: true
@@ -394,6 +428,7 @@ win22cis_rule_18_7_8: true
 win22cis_rule_18_7_9: true
 win22cis_rule_18_7_10: true
 win22cis_rule_18_7_11: true
+win22cis_rule_18_7_12: true
 win22cis_rule_18_8_1_1: true
 win22cis_rule_18_9_3_1: true
 win22cis_rule_18_9_4_1: true
@@ -462,125 +497,137 @@ win22cis_rule_18_9_47_11_1: true
 win22cis_rule_18_9_49_1: true
 win22cis_rule_18_9_51_1_1: true
 win22cis_rule_18_9_51_1_2: true
-win22cis_rule_18_10_3_1: true
-win22cis_rule_18_10_5_1: true
-win22cis_rule_18_10_7_1: true
-win22cis_rule_18_10_7_2: true
-win22cis_rule_18_10_7_3: true
-win22cis_rule_18_10_8_1_1: true
-win22cis_rule_18_10_10_1: true
-win22cis_rule_18_10_12_1: true
-win22cis_rule_18_10_12_2: true
-win22cis_rule_18_10_12_3: true
+win22cis_rule_18_10_4_1: true
+win22cis_rule_18_10_6_1: true
+win22cis_rule_18_10_8_1: true
+win22cis_rule_18_10_8_2: true
+win22cis_rule_18_10_8_3: true
+win22cis_rule_18_10_9_1_1: true
+win22cis_rule_18_10_11_1: true
 win22cis_rule_18_10_13_1: true
+win22cis_rule_18_10_13_2: true
+win22cis_rule_18_10_13_3: true
 win22cis_rule_18_10_14_1: true
-win22cis_rule_18_10_14_2: true
 win22cis_rule_18_10_15_1: true
 win22cis_rule_18_10_15_2: true
-win22cis_rule_18_10_15_3: true
-win22cis_rule_18_10_15_4: true
-win22cis_rule_18_10_15_5: true
-win22cis_rule_18_10_15_6: true
-win22cis_rule_18_10_15_7: true
-win22cis_rule_18_10_15_8: true
-win22cis_rule_18_10_17_1: true
-win22cis_rule_18_10_17_2: true
-win22cis_rule_18_10_17_3: true
-win22cis_rule_18_10_17_4: true
-win22cis_rule_18_10_25_1_1: true
-win22cis_rule_18_10_25_1_2: true
-win22cis_rule_18_10_25_2_1: true
-win22cis_rule_18_10_25_2_2: true
-win22cis_rule_18_10_25_3_1: true
-win22cis_rule_18_10_25_3_2: true
-win22cis_rule_18_10_25_4_1: true
-win22cis_rule_18_10_25_4_2: true
-win22cis_rule_18_10_28_2: true
-win22cis_rule_18_10_28_3: true
-win22cis_rule_18_10_28_4: true
-win22cis_rule_18_10_36_1: true
-win22cis_rule_18_10_40_1: true
+win22cis_rule_18_10_16_1: true
+win22cis_rule_18_10_16_2: true
+win22cis_rule_18_10_16_3: true
+win22cis_rule_18_10_16_4: true
+win22cis_rule_18_10_16_5: true
+win22cis_rule_18_10_16_6: true
+win22cis_rule_18_10_16_7: true
+win22cis_rule_18_10_18_1: true
+win22cis_rule_18_10_18_2: true
+win22cis_rule_18_10_18_3: true
+win22cis_rule_18_10_18_4: true
+win22cis_rule_18_10_18_5: true
+win22cis_rule_18_10_18_6: true
+win22cis_rule_18_10_18_7: true
+win22cis_rule_18_10_26_1_1: true
+win22cis_rule_18_10_26_1_2: true
+win22cis_rule_18_10_26_2_1: true
+win22cis_rule_18_10_26_2_2: true
+win22cis_rule_18_10_26_3_1: true
+win22cis_rule_18_10_26_3_2: true
+win22cis_rule_18_10_26_4_1: true
+win22cis_rule_18_10_26_4_2: true
+win22cis_rule_18_10_29_2: true
+win22cis_rule_18_10_29_3: true
+win22cis_rule_18_10_29_4: true
+win22cis_rule_18_10_29_5: true
+win22cis_rule_18_10_37_1: true
 win22cis_rule_18_10_41_1: true
-win22cis_rule_18_10_42_5_1: true
-win22cis_rule_18_10_42_5_2: true
-win22cis_rule_18_10_42_6_1_1: true
-win22cis_rule_18_10_42_6_1_2: true
-win22cis_rule_18_10_42_6_3_1: true
-win22cis_rule_18_10_42_7_1: true
-win22cis_rule_18_10_42_10_1: true
-win22cis_rule_18_10_42_10_2: true
-win22cis_rule_18_10_42_10_3: true
-win22cis_rule_18_10_42_10_4: true
-win22cis_rule_18_10_42_12_1: true
-win22cis_rule_18_10_42_13_1: true
-win22cis_rule_18_10_42_13_2: true
-win22cis_rule_18_10_42_13_3: true
-win22cis_rule_18_10_42_16: true
-win22cis_rule_18_10_42_17: true
-win22cis_rule_18_10_50_1: true
-win22cis_rule_18_10_55_1: true
-win22cis_rule_18_10_56_2_2: true
-win22cis_rule_18_10_56_3_2_1: true
-win22cis_rule_18_10_56_3_3_1: true
-win22cis_rule_18_10_56_3_3_2: true
-win22cis_rule_18_10_56_3_3_3: true
-win22cis_rule_18_10_56_3_3_4: true
-win22cis_rule_18_10_56_3_3_5: true
-win22cis_rule_18_10_56_3_3_6: true
-win22cis_rule_18_10_56_3_3_7: true
-win22cis_rule_18_10_56_3_9_1: true
-win22cis_rule_18_10_56_3_9_2: true
-win22cis_rule_18_10_56_3_9_3: true
-win22cis_rule_18_10_56_3_9_4: true
-win22cis_rule_18_10_56_3_9_5: true
-win22cis_rule_18_10_56_3_10_1: true
-win22cis_rule_18_10_56_3_10_2: true
-win22cis_rule_18_10_56_3_11_1: true
-win22cis_rule_18_10_56_3_11_2: true
-win22cis_rule_18_10_57_1: true
+win22cis_rule_18_10_42_1: true
+win22cis_rule_18_10_43_4_1: true
+win22cis_rule_18_10_43_5_1: true
+win22cis_rule_18_10_43_5_2: true
+win22cis_rule_18_10_43_6_1_1: true
+win22cis_rule_18_10_43_6_1_2: true
+win22cis_rule_18_10_43_6_3_1: true
+win22cis_rule_18_10_43_7_1: true
+win22cis_rule_18_10_43_8_1: true
+win22cis_rule_18_10_43_10_1: true
+win22cis_rule_18_10_43_10_2: true
+win22cis_rule_18_10_43_10_3: true
+win22cis_rule_18_10_43_10_4: true
+win22cis_rule_18_10_43_10_5: true
+win22cis_rule_18_10_43_11_1_1_1: true
+win22cis_rule_18_10_43_11_1_1_2: true
+win22cis_rule_18_10_43_11_1_2_1: true
+win22cis_rule_18_10_43_12_1: true
+win22cis_rule_18_10_43_13_1: true
+win22cis_rule_18_10_43_13_2: true
+win22cis_rule_18_10_43_13_3: true
+win22cis_rule_18_10_43_13_4: true
+win22cis_rule_18_10_43_13_5: true
+win22cis_rule_18_10_43_16: true
+win22cis_rule_18_10_43_17: true
+win22cis_rule_18_10_51_1: true
+win22cis_rule_18_10_56_1: true
+win22cis_rule_18_10_57_2_2: true
+win22cis_rule_18_10_57_3_2_1: true
+win22cis_rule_18_10_57_3_3_1: true
+win22cis_rule_18_10_57_3_3_2: true
+win22cis_rule_18_10_57_3_3_3: true
+win22cis_rule_18_10_57_3_3_4: true
+win22cis_rule_18_10_57_3_3_5: true
+win22cis_rule_18_10_57_3_3_6: true
+win22cis_rule_18_10_57_3_3_7: true
+win22cis_rule_18_10_57_3_9_1: true
+win22cis_rule_18_10_57_3_9_2: true
+win22cis_rule_18_10_57_3_9_3: true
+win22cis_rule_18_10_57_3_9_4: true
+win22cis_rule_18_10_57_3_9_5: true
+win22cis_rule_18_10_57_3_10_1: true
+win22cis_rule_18_10_57_3_10_2: true
+win22cis_rule_18_10_57_3_11_1: true
+win22cis_rule_18_10_57_3_11_2: true
+win22cis_rule_18_10_58_1: true
 win22cis_rule_18_10_58_2: true
-win22cis_rule_18_10_58_3: true
-win22cis_rule_18_10_58_4: true
-win22cis_rule_18_10_62_1: true
-win22cis_rule_18_10_75_2_1: true
-win22cis_rule_18_10_79_1: true
-win22cis_rule_18_10_79_2: true
+win22cis_rule_18_10_59_2: true
+win22cis_rule_18_10_59_3: true
+win22cis_rule_18_10_59_4: true
+win22cis_rule_18_10_63_1: true
+win22cis_rule_18_10_76_2_1: true
 win22cis_rule_18_10_80_1: true
 win22cis_rule_18_10_80_2: true
-win22cis_rule_18_10_80_3: true
 win22cis_rule_18_10_81_1: true
 win22cis_rule_18_10_81_2: true
-win22cis_rule_18_10_86_1: true
-win22cis_rule_18_10_86_2: true
+win22cis_rule_18_10_81_3: true
+win22cis_rule_18_10_82_1: true
+win22cis_rule_18_10_82_2: true
+win22cis_rule_18_10_87_1: true
+win22cis_rule_18_10_87_2: true
 # WINRM CONTROLS #
 # Setting The Following Controls To True Will Break the Ansible Connection
 # Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
-# win22cis_rule_18_10_88_1_1
-# win22cis_rule_18_10_88_1_2
-# win22cis_rule_18_10_88_1_3
-# win22cis_rule_18_10_88_2_1
-# win22cis_rule_18_10_88_2_2
-# win22cis_rule_18_10_88_2_3
-win22cis_rule_18_10_88_1_1: true
-win22cis_rule_18_10_88_1_2: true
-win22cis_rule_18_10_88_1_3: true
-win22cis_rule_18_10_88_2_1: true
+# win22cis_rule_18_10_89_1_1
+# win22cis_rule_18_10_89_1_2
+# win22cis_rule_18_10_89_1_3
+# win22cis_rule_18_10_89_2_1
+# win22cis_rule_18_10_89_2_2
+# win22cis_rule_18_10_89_2_3
+win22cis_rule_18_10_89_1_1: true
+win22cis_rule_18_10_89_1_2: true
+win22cis_rule_18_10_89_1_3: true
+win22cis_rule_18_10_89_2_1: true
 # This control will have to be set to Enabled (1) to allow for continued
 # remote management via Ansible following machine restart. We have it set to skip for testing.
-win22cis_rule_18_10_88_2_2: true
-win22cis_rule_18_10_88_2_3: true
-win22cis_rule_18_10_88_2_4: true
-# Setting win22cis_rule_18_10_89_1 To True Will Break the Ansible Connection
+win22cis_rule_18_10_89_2_2: true
+win22cis_rule_18_10_89_2_3: true
+win22cis_rule_18_10_89_2_4: true
+# Setting win22cis_rule_18_10_90_1 To True Will Break the Ansible Connection
 # Setting win_skip_for_test: true -- will skip the controls here even if they are set to true.
-win22cis_rule_18_10_89_1: true
+win22cis_rule_18_10_90_1: true
 # WINRM CONTROLS END #
-win22cis_rule_18_10_91_2_1: true
-win22cis_rule_18_10_92_1_1: true
 win22cis_rule_18_10_92_2_1: true
-win22cis_rule_18_10_92_2_2: true
-win22cis_rule_18_10_92_4_1: true
-win22cis_rule_18_10_92_4_2: true
-win22cis_rule_18_10_92_4_3: true
+win22cis_rule_18_10_93_1_1: true
+win22cis_rule_18_10_93_2_1: true
+win22cis_rule_18_10_93_2_2: true
+win22cis_rule_18_10_93_4_1: true
+win22cis_rule_18_10_93_4_2: true
+win22cis_rule_18_10_93_4_3: true
 
 # Section19
 win22cis_rule_19_5_1_1: true
@@ -593,8 +640,8 @@ win22cis_rule_19_7_8_3: true
 win22cis_rule_19_7_8_4: true
 win22cis_rule_19_7_8_5: true
 win22cis_rule_19_7_26_1: true
-win22cis_rule_19_7_42_1: true
-win22cis_rule_19_7_44_2_1: true
+win22cis_rule_19_7_44_1: true
+win22cis_rule_19_7_46_2_1: true
 
 # Section 1 Variables
 
@@ -690,12 +737,12 @@ win22cis_increase_scheduling_priority_users: '{{ ["Administrators"] if (prelim_w
 # Default: false
 win22cis_exchange_server_running: false
 
-# 2.3.1.4
+# 2.3.1.3
 # win22cis_admin_username is the name the administrator account will be renamed to
 # Default: adminchangethis
 win22cis_admin_username: adminchangethis
 
-# 2.3.1.5
+# 2.3.1.4
 # win22cis_guest_username is the name the guest account will be renamed to
 # Default: guestchangethis
 win22cis_guest_username: guestchangethis
@@ -786,6 +833,16 @@ win22cis_smb_server_name_hardening_level: 1
 win22cis_legacy_rc4_hmac_md5_support: false
 
 # 2.3.11.8
+# win22cis_ldap_client_confidentiality is the policy setting determines the level of data encryption that is requested on behalf of
+# clients that issue LDAP BIND requests. Configuring this setting to Require signing also conforms to the benchmark.
+# The recommended state for this setting is: Negotiate signing.
+# Note: Possible Valid Settings
+# 1 - Negotiate signing
+# 2 - Require signing
+# Default: 1
+win22cis_ldap_client_confidentiality: 1
+
+# 2.3.11.9
 # win22cis_ldap_client_integrity is the policy setting determines the level of data signing that is requested on
 # behalf of clients that issue LDAP BIND requests. Configuring this setting to Require signing also conforms to the benchmark.
 # The recommended state for this setting is: Negotiate signing.
@@ -795,16 +852,16 @@ win22cis_legacy_rc4_hmac_md5_support: false
 # Default: 1
 win22cis_ldap_client_integrity: 1
 
-# 2.3.11.13
+# 2.3.11.14
 # win22cis_restrict_sending_ntlm_traffic is the policy setting allows the auditing of outgoing NTLM traffic.
 # Events for this setting are recorded in the operational event log (e.g. Applications and Services
 # Log\Microsoft\Windows\NTLM). Configuring this setting to Deny All also conforms to the benchmark.
 # The recommended state for this setting is: Audit All.
 # Note: Possible Valid Settings
-# 1 - Deny All
-# 2 - Audit All
-# Default: 2
-win22cis_restrict_sending_ntlm_traffic: 2
+# 1 - Audit All
+# 2 - Deny All
+# Default: 1
+win22cis_restrict_sending_ntlm_traffic: 1
 
 # 2.3.17.2
 # win22cis_consent_prompt_behavior_admin is the policy setting controls the behavior of the elevation prompt for administrators.
@@ -856,9 +913,10 @@ win22cis_public_firewall_log_size: 16384
 
 # Section 18 Variables
 
-# 18.4.7
+# 18.4.6
 # win22cis_netbt_nodetype is the node type value in HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters:NodeType
-# Options are a B-node value of 1, P-node value of 2, M-node value of 4, and H-node value of 8. P-node is the recommended setting from CIS
+# Options are a B-node value of 1, P-node value of 2, M-node value of 4, and H-node value of 8.
+# The recommended state for this setting is: Enabled: P-node (recommended) (point-to-point).
 # Default: 2
 win22cis_netbt_nodetype: 2
 
@@ -875,16 +933,6 @@ win22cis_screen_saver_grace_period: 5
 # The recommended state for this setting is: Enabled: 90% or less.
 # Default: 90
 win22cis_log_threshold_audit_event: 90
-
-# 18.6.4.1
-# win22cis_doh_policy os the setting determines if DNS over HTTPS (DoH) is used by the system. DNS over HTTPS (DoH) is a protocol
-# for performing remote Domain Name System (DNS) resolution over the Hypertext Transfer Protocol Secure (HTTPS).
-# The recommended state for this setting is: Enabled: Allow DoH.
-# Note: Possible Valid Settings
-# 2 - Enabled: Allow DoH
-# 3 - Enabled: Require DoH
-# Default: 2
-win22cis_doh_policy: 2
 
 # 18.6.4.2
 # win22cis_enable_netbios_policy is the policy that setting specifies if the Domain Name System (DNS) client will perform name resolution
@@ -963,7 +1011,7 @@ win22cis_laps_postauthenticationactions_value: 3
 # Default: 1
 win22cis_roca_configuration: 1
 
-# 18.10.13.1
+# 18.10.14.1
 # win22cis_require_pin_for_pairing is the policy setting that controls whether or not a PIN is required for pairing to a wireless display device.
 # The recommended state for this setting is: Enabled: First Time OR Enabled: Always.
 # 1 - First Time
@@ -971,7 +1019,7 @@ win22cis_roca_configuration: 1
 # Default: 1
 win22cis_require_pin_for_pairing: 1
 
-# 18.10.15.1
+# 18.10.16.1
 # win22cis_allow_telemetry is the policy setting that determines the amount of diagnostic and usage data reported to Microsoft
 # Note: If your organization relies on Windows Update, the minimum recommended setting is Required diagnostic data.
 # 0 - Diagnostic data off (not recommended)
@@ -979,43 +1027,67 @@ win22cis_require_pin_for_pairing: 1
 # Default: 1
 win22cis_allow_telemetry: 1
 
-# 18.10.25.1.2
+# 18.10.26.1.2
 # win22cis_application_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size can be
 # configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.
 # The recommended state for this setting is: Enabled: 32,768 or greater
 # Default: 32768
 win22cis_application_max_log_file_size: 32768
 
-# 18.10.25.2.2
+# 18.10.26.2.2
 # win22cis_security_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size can
 # be configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.
 # The recommended state for this setting is: Enabled: 196,608 or greater.
 # Default: 196608
 win22cis_security_max_log_file_size: 196608
 
-# 18.10.25.3.2
+# 18.10.26.3.2
 # win22cis_setup_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size can be
 # configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.#
 # The recommended state for this setting is: Enabled: 32,768 or greater.
 # Default: 32768
 win22cis_setup_max_log_file_size: 32768
 
-# 18.10.25.4.2
+# 18.10.26.4.2
 # win22cis_system_max_log_file_size is the setting that specifies the maximum size of the log file in kilobytes. The maximum log file size
 # can be configured between 1 megabyte (1,024 kilobytes) and 4 terabytes (4,194,240 kilobytes) in kilobyte increments.
 # The recommended state for this setting is: Enabled: 32,768 or greater.
 # Default: 32768
 win22cis_system_max_log_file_size: 32768
 
-# 18.10.56.3.10.1
+# 18.10.43.11.1.1.1
+# win22cis_brute_force_protection_aggressiveness is the policy setting configures whether Brute-Force Protection in Microsoft Defender
+# Antivirus is enabled. Brute-force protection can detect and block attempts to forcibly sign in to a system.
+# The recommended state for this setting is: Enabled: Medium. Configuring this setting to High also conforms to the benchmark.
+# 1 = Medium, 2 = High
+# Default: 1
+win22cis_brute_force_protection_aggressiveness: 1
+
+# 18.10.43.11.1.1.2
+# win22cis_remote_encryption_protection_mode is the policy setting configures the Brute-Force Protection feature in Microsoft Defender
+# Antivirus. Brute-Force Protection can detect and block attempts to forcibly initiate sign-ins and sessions.
+# The recommended state for this setting is: Enabled: Audit. Configuring this setting to Block also conforms to the benchmark.
+# 1 = Audit, 2 = Block
+# Default: 1
+win22cis_remote_encryption_protection_mode: 1
+
+# 18.10.43.11.1.2.1
+# win22cis_remote_encryption_protection_aggressiveness ia the policy setting configures how aggressively Remote Encryption Prevention
+# Protection blocks malicious IP addresses. The recommended state for this setting is: Enabled: Medium or higher. Configuring this
+# setting to High also conforms to the benchmark.
+# 1 = Medium, 2 = High
+# Default: 1
+win22cis_remote_encryption_protection_aggressiveness: 1
+
+# 18.10.57.3.10.1
 # win22cis_idle_rdp_session_disconnect_time is the setting that allows you to specify the maximum amount of time that an active Remote Desktop
 # Services session can be idle (without user input) before it is automatically disconnected.
 # The recommended state for this setting is: Enabled: 15 minutes or less, but not Never (0).
-# 1 min = 60000, 5 min = 300000, 10 min = 600000, 15 min = 900000
+# This now accepts any value between 1 and 900000.
 # Default: 900000
 win22cis_idle_rdp_session_disconnect_time: 900000
 
-# 18.10.79.2
+# 18.10.80.2
 # win22cis_allow_windows_ink_workspace is the policy setting that determines whether Windows Ink items are allowed above the lock screen.
 # The recommended state for this setting is: Enabled: On, but disallow access above lock OR Enabled: Disabled.
 # 0 - Enabled: Disabled
@@ -1023,7 +1095,7 @@ win22cis_idle_rdp_session_disconnect_time: 900000
 # Default: 1
 win22cis_allow_windows_ink_workspace: 1
 
-# 18.10.92.4.2
+# 18.10.93.4.2
 # win22cis_defer_feature_updates_period_in_days is the policy setting that determines when Preview Build or Feature Updates are received.
 # Recommended setting: Enabled: 180 or more days
 # Default: 180

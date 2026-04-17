@@ -74,7 +74,8 @@
       when:
         - win22cis_max_passwords_saved > 24 or
           win22cis_max_passwords_saved <= 23
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "1.1.2 | GPO | Ensure Maximum password age is set to 365 or fewer days but not 0."
   when:
@@ -157,7 +158,8 @@
         - win22cis_maximum_password_age > 365 or
           win22cis_maximum_password_age == 0
         - win22cis_maximum_password_age < win22cis_minimum_password_age
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "1.1.3 | GPO | Ensure Minimum password age is set to 1 or more days"
   when:
@@ -240,7 +242,8 @@
         - win22cis_minimum_password_age > 364 or
           win22cis_minimum_password_age == 0
         - win22cis_minimum_password_age > win22cis_maximum_password_age
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "1.1.4 | GPO | Ensure Minimum password length is set to 14 or more characters."
   when: win22cis_rule_1_1_4
@@ -311,7 +314,8 @@
       vars:
         warn_control_id: '1.1.4'
       when: win22cis_minimum_password_length < 14
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "1.1.5 | GPO | Ensure Password must meet complexity requirements is set to Enabled."
   when: win22cis_rule_1_1_5
@@ -536,7 +540,8 @@
       vars:
         warn_control_id: '1.2.1'
       when: win22cis_account_lockout_duration < 15
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "1.2.2 | GPO | Ensure Account lockout threshold is set to 5 or fewer invalid logon attempt(s), but not 0."
   when: win22cis_rule_1_2_2
@@ -616,7 +621,8 @@
       when:
         - win22cis_bad_login_lockout_count > 5 or
           win22cis_bad_login_lockout_count == 0
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
 
 - name: "1.2.3 | GPO | Ensure Allow Administrator account lockout is set to Enabled."
   when: win22cis_rule_1_2_3
@@ -752,4 +758,5 @@
       when:
         - win22cis_account_lockout_counter_reset > win22cis_account_lockout_duration or
           win22cis_account_lockout_counter_reset < 15
-      ansible.builtin.import_tasks: warning_facts.yml
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml

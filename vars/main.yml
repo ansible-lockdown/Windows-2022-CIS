@@ -23,7 +23,7 @@ prelim_win22cis_is_domain_member: false
 reboot_host: false
 
 # This section will change based on OS and Version of CIS that is being used.
-win22cis_gpo_hardening_version: "v3.0.0"
+win22cis_gpo_hardening_version: "v4.0.0"
 win22cis_gpo_hardening_os: "Win2022"
 
 # This section will configure the names of the GPOs that are created to a variable for easier reading in the when
