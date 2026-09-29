@@ -3,11 +3,11 @@
 galaxy_info:
   author: "MindPoint Group"
   description: "Ansible Role to Apply The Windows Server 2022 CIS Benchmark"
-  company: "MindPoint Group"
+  company: "MindPoint Group - A Quantum Sky Company"
   license: MIT
   role_name: windows_2022_cis
   namespace: mindpointgroup
-  min_ansible_version: "2.16"
+  min_ansible_version: "2.16.1"
   platforms:
     - name: Windows
       versions:
@@ -32,7 +32,6 @@ galaxy_info:
     - domainmember
     - encryption
     - eventlogging
-    - gpo
     - grouppolicy
     - hardening
     - infrastructureascode
@@ -55,7 +54,6 @@ galaxy_info:
     - windows
     - windows2022
     - win2022
-    - windows2022
     - windowssecurity
     - windowsserver
     - windowsserver2022

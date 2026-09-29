@@ -1,0 +1,116 @@
+---
+
+# Notes: Values Output by ansible_windows_domain_role
+# Standalone workstation - The machine is not part of a domain and operates as a standalone workstation.
+# Standalone server - The machine is not part of a domain and operates as a standalone server.
+# Member workstation - The machine is a workstation joined to a domain.
+# Member server - The machine is a server joined to a domain.
+# Backup domain controller - The machine is a backup domain controller in a domain environment (Active Directory).
+# Primary domain controller - The machine is the primary domain controller in a domain environment (Active Directory).
+- name: PRELIM | Set System Facts Based On Gather Facts Module
+  tags: always
+  block:
+    - name: PRELIM | Set System Facts Based On Gather Facts Module | Set Fact If System Is Standalone
+      when: ansible_facts['windows_domain_role'] == 'Stand-alone server'
+      ansible.builtin.set_fact:
+        prelim_win22cis_is_standalone: true
+
+    - name: PRELIM | Set System Facts Based On Gather Facts Module | Set Fact If Domain Controller Role
+      when: "'domain controller' in ansible_facts['windows_domain_role']"
+      ansible.builtin.set_fact:
+        prelim_win22cis_is_domain_controller: true
+
+    - name: PRELIM | Set System Facts Based On Gather Facts Module | Set Fact If Domain Member Server
+      when: ansible_facts['windows_domain_role'] == 'Member server'
+      ansible.builtin.set_fact:
+        prelim_win22cis_is_domain_member: true
+
+- name: "PRELIM | Account Policy Scope"
+  tags: always
+  block:
+    - name: PRELIM | Account Policy Scope | Set fact when account policy is domain scoped
+      when: not prelim_win22cis_is_standalone
+      ansible.builtin.set_fact:
+        prelim_win22cis_account_policy_is_domain_scoped: true
+
+    - name: PRELIM | Account Policy Scope | Warn that section 1 is set at the domain
+      when:
+        - win22cis_section01
+        - prelim_win22cis_account_policy_is_domain_scoped
+      ansible.builtin.debug:
+        msg:
+          - "Warning!! This host is domain joined, so Account Policy (CIS section 1) is set by"
+          - "the domain, not locally. The Default Domain Policy overwrites local [System Access]"
+          - "at every policy refresh, so the ten secedit backed controls in section 1 are skipped"
+          - "on this host. Set them in the Default Domain Policy instead; 1.1.6 is a genuine"
+          - "registry value and still applies."
+
+    - name: PRELIM | Account Policy Scope | Set section 1 warning count
+      vars:
+        warn_control_id: 'Section 1 - domain scoped'
+      when:
+        - win22cis_section01
+        - prelim_win22cis_account_policy_is_domain_scoped
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
+
+    - name: PRELIM | Account Policy Scope | Warn that 2.3.11.6 is set at the domain
+      when:
+        - win22cis_section02
+        - win22cis_rule_2_3_11_6
+        - prelim_win22cis_account_policy_is_domain_scoped
+      ansible.builtin.debug:
+        msg:
+          - "Warning!! This host is domain joined. 2.3.11.6 ForceLogoffWhenHourExpire is a"
+          - "[System Access] value, and the Default Domain Policy sets it to 0 and overwrites the"
+          - "local value at every policy refresh, so a local write reverts and reports changed on"
+          - "every run. 2.3.11.6 is therefore skipped on this host. Set it in the Default Domain Policy."
+
+    - name: PRELIM | Account Policy Scope | Set 2.3.11.6 warning count
+      when:
+        - win22cis_section02
+        - win22cis_rule_2_3_11_6
+        - prelim_win22cis_account_policy_is_domain_scoped
+      vars:
+        warn_control_id: '2.3.11.6 - domain scoped'
+      ansible.builtin.import_tasks:
+        file: warning_facts.yml
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║              PRELIM | Section 19 HKU Scope (Per CIS Specification)            ║
+# ║                                                                               ║
+# ║  Section 19 targets domain-joined interactive users only. The correct         ║
+# ║  source is HKEY_USERS subkeys already loaded in the registry by Windows       ║
+# ║  at logon - no manual NTUSER.DAT loading is required or recommended.          ║
+# ║                                                                               ║
+# ║  Per CIS, include only subkeys where:                                         ║
+# ║    - SID begins with S-1-5-21-*  (domain interactive users)                   ║
+# ║    - Does NOT end with _Classes                                               ║
+# ║    - Is NOT .DEFAULT, S-1-5-18, S-1-5-19, or S-1-5-20                         ║
+# ║    - Is NOT an NT SERVICE SID (S-1-5-80-*)                                    ║
+# ║                                                                               ║
+# ║  If no users are currently logged on, section 19 is not considered out of     ║
+# ║  compliance per CIS. Tasks will simply loop over an empty list.               ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+- name: "PRELIM | Obtain Current Interactive User Hives"
+  when: win22cis_section19
+  tags: always
+  block:
+    - name: PRELIM | Obtain Current Interactive User Hives | Retrieve live domain user SIDs from HKEY_USERS
+      vars:
+        hku_script: |
+          $users = (Get-ChildItem 'REGISTRY::HKEY_USERS').Name
+          $users | Where-Object {
+            $_ -match 'S-1-5-21-' -and
+            $_ -notlike '*_Classes' -and
+            $_ -notmatch 'S-1-5-18|S-1-5-19|S-1-5-20' -and
+            $_ -notmatch 'S-1-5-80-'
+          } | ForEach-Object { $_ -replace 'HKEY_USERS\\', '' }
+      ansible.windows.win_shell: "{{ hku_script }}"
+      changed_when: false
+      check_mode: false
+      register: prelim_current_users_loaded_hku
+
+    - name: PRELIM | Obtain Current Interactive User Hives | Set list fact for live user SIDs
+      ansible.builtin.set_fact:
+        prelim_hku_loaded_list: "{{ prelim_current_users_loaded_hku.stdout_lines }}"

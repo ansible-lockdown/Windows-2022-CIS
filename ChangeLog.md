@@ -1,20 +1,73 @@
 # ChangeLog
 
-## Release 4.1.0
+## CIS Benchmark_v4.0.0
+## September 2026 Updates - host testing fixes
+
+  - refactor: tasks re-filed into section_N/section_N.x.yml, matching Windows 2025
+  - refactor: one main.yml dispatcher per section
+  - fix: NGWS controls gated on win22cis_ngws, default false
+  - fix: win22cis_ngws moved to defaults/main/main.yml
+  - docs: README - NGWS profile section
+  - fix: 17 MS only controls applied on standalone servers
+  - fix: 1.2.3 applied on standalone servers; its gate could never be true
+  - fix: 5.2 Print Spooler applied on standalone servers
+  - docs: README - stand-alone servers section
+  - 18.9.19.7 removes DisableBkGndGroupPolicy from Policies\System
+  - 18.9.25.2 writes PasswordExpirationProtectionEnabled
+  - 18.9.26.2 writes RunAsPPL under SOFTWARE\Policies\Microsoft\Windows\System
+  - 2.3.10.8 registry paths use the benchmark casing
+  - 2.3.5.4 warns on a domain controller instead of writing the registry
+  - 2.2.31 probe register renamed to discovered_2_2_31_audit_holders
+  - section 17 probe registers renamed from rule_ to discovered_
+  - 1.2.1 and 2.2.31 secedit readers no longer use .NET calls blocked in Constrained Language Mode
+  - pre and post remediation audit summaries reverse without [array]::Reverse
+  - trailing full stops removed from 123 task name segments
+  - README gains a Settings Owned By Group Policy section
+  - README audit coverage corrected to 441 of 444
+  - README tag example cites rule_18.4.2
+  - README - GPO added statement Being addressed and will reside in new repo once addressed
+  - fix: removed private workflow
+
+## September 2026 Updates - NIST tags
+
+  - NIST800-53 task tags removed, NIST800-53R5 and NIST800-171 kept
+  - README tagging example shows NIST800-53R5 only
+  - malformed NIST800-53R5 designators corrected: IA_5 and CM_9 to IA-5 and CM-9
+  - AC-IA-5 and AC-IA-5_1 corrected to IA-5 and IA-5_1 in 2.3.11.7 to 2.3.11.11
+
+## September 2026 Updates - remediation only
+
+  - GPO creation split out into its own role, Windows2022-CIS-GPO
+  - Removed tasks/gpo_creation and tasks/domain_creation
+  - Removed the cis_templates and windows_templates directories
+  - Removed win22cis_ansible_remediation and win22cis_create_gpos; remediation now always runs
+  - Removed the 18 GPO creation variables and win22cis_create_domain
+  - Removed the GPO name vars from vars/main.yml
+  - Removed the GPO CI workflows and their README badges
+
+## CIS Benchmark_v4.0.0
+
+July 2026
+  - 2.2.22 has been updated to reflect the correct values in remediation and the GPO creation (Guests and S-1-5-114) Thanks -Evil-
+
+## CIS Benchmark_v4.0.0
 
 April 2026
-  - Updated the cloud based system check for manual overrides. New variable now in the defualt main. Please read the comments for the new variable. 
+  - Updated the cloud based system check for manual overrides. New variable now in the defualt main. Please read the comments for the new variable.
   - Updated 18.10.57.3.10.1 variable accept anything between 1 and 900000 in Hardening & GPO.
   - Updated Section 2 GPO for win_skip_for_test controls. Read comments in default/main.
   - Issues Addressed:
-    - [#2](https://github.com/ansible-lockdown/Windows-2025-CIS/issues/2) - Thanks @davidstanaway
-    - [#7](https://github.com/ansible-lockdown/Windows-2025-CIS/issues/7) - Thanks @R2J2 (Updated When Statement to take into account Bool now)
-    - [#86](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/86) - Thanks @git-cgallagher (Windows 2022 Issue Added Here To Update 2025)
-    - [#84](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/84) - Thanks @Randriy-bulynko (Windows 2022 Issue Added Here To Update 2025)
-    - [#87](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/87) - Thanks @Randriy-bulynko (Windows 2022 Issue Added Here To Update 2025)
-    - [#83](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/83) - Thanks @exu-g (Windows 2022 Issue Added Here To Update 2025)
+    - [#107](https://github.com/ansible-lockdown/Windows-2019-CIS/issues/107) - Thanks @kpi-nourman  
+    - [#122](https://github.com/ansible-lockdown/Windows-2019-CIS/issues/122) - Thanks @kpi-nourman
+    - [#124](https://github.com/ansible-lockdown/Windows-2019-CIS/issues/124) - Thanks @IoannisPant
+    - [#2](https://github.com/ansible-lockdown/Windows-2025-CIS/issues/2) - Thanks @davidstanaway (Windows 2025 Issue Added Here To Update 2019)
+    - [#7](https://github.com/ansible-lockdown/Windows-2025-CIS/issues/7) - Thanks @R2J2 - Updated When Statement to take into account Bool now (Windows 2025 Issue Added Here To Update 2019)
+    - [#86](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/86) - Thanks @git-cgallagher (Windows 2022 Issue Added Here To Update 2019)
+    - [#84](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/84) - Thanks @Randriy-bulynko (Windows 2022 Issue Added Here To Update 2019)
+    - [#87](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/87) - Thanks @Randriy-bulynko (Windows 2022 Issue Added Here To Update 2019)
+    - [#83](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/83) - Thanks @exu-g (Windows 2022 Issue Added Here To Update 2019)
   - PR's Addressed:
-    - [#3](https://github.com/ansible-lockdown/Windows-2025-CIS/pull/3) - Thanks @MatthieuLeboeuf 
+    - [#3](https://github.com/ansible-lockdown/Windows-2025-CIS/pull/3) - Thanks @MatthieuLeboeuf
 
 September 2025
   - Updated When For Control 18.4.6
@@ -23,12 +76,12 @@ September 2025
   - PR's Addressed:
     - [#79](https://github.com/ansible-lockdown/Windows-2022-CIS/pull/79/files) - Thanks @ShawnHardwick
 
-## Release 4.0.0
+## CIS Benchmark_v4.0.0
 
 June 2025
   - This Release is based on CIS Benchmark v4.0.0
   - Internal 90 Auto Promotion Workflows Added
-  - Fixed Tags  from _ to . in he control numbers to align with other controls.
+  - Fixed Tags from _ to . in he control numbers to align with other controls.
   - Issues Addressed:
     - Fixed GPO 18.9.26.2 to enter the correct registry entry.
   - CIS Control Changes Summary (v4.0.0 vs v3.0.0) - Please review them in the CIS documentation and adjust your playbooks.
@@ -101,19 +154,20 @@ June 2025
       - Section 17: Credential Validation auditing now uses the GUID {0CCE923F-69AE-11D9-BED3-505054503030}
         - This makes auditing language-agnostic and more consistent across regional builds.
 
-## Release 3.0.5
+## CIS Benchmark_v3.0.0
+
 September 2025 Update
-- Issues Addressed:
+  - Issues Addressed:
     - [#73](https://github.com/ansible-lockdown/Windows-2022-CIS/issues/73) - Thank you @ShawnHardwick
 
-## Release 3.0.4
+## CIS Benchmark_v3.0.0
 
 May 2025 Update #2
   - Issues Addressed:
     - Fixed 1.1.6 to apply to all systems except for Domain Controllers. This is present in standalone version. - Thanks @mfortin
     - Re-Verified 18.10.79.2 Paths
 
-## Release 3.0.3
+## CIS Benchmark_v3.0.0
 
 May 2025 Update
   - Issues Addressed:
@@ -124,7 +178,7 @@ May 2025 Update
     - Updated Pipelines Branches Trigger
     - Updated Readme with New Badges
 
-## Release 3.0.2
+## CIS Benchmark_v3.0.0
 
 February 2025 Update
   - Added new Readme Badges
@@ -132,7 +186,7 @@ February 2025 Update
   - All Workflows Updated
   - Fixed Control Tag for rule_2.3.10.9
 
-## Release 3.0.0
+## CIS Benchmark_v3.0.0
 
 December 2024 Update
   - Added the ability create tailored Group Policy Objects (GPOs) compliant with CIS benchmarks using Ansible.
@@ -176,7 +230,7 @@ December 2024 Update
       - 18.9.25.8
       - 18.9.39.1
 
-## Release 2.0.1
+## CIS Benchmark_v2.0.0
 
 April 2024 Update
 - Issues Addressed:
@@ -197,7 +251,7 @@ February 2024 Update
     - [PR26](https://github.com/ansible-lockdown/Windows-2022-CIS/pull/26) - Thank you @ai13f
     - Typo and bug fixes
 
-## Release 2.0.0
+## CIS Benchmark_v2.0.0
 
 September 2023
 - This Release is based on CIS Benchmark v2.0.0
