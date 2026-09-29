@@ -26,6 +26,7 @@
   - README audit coverage corrected to 441 of 444
   - README tag example cites rule_18.4.2
   - README - GPO added statement Being addressed and will reside in new repo once addressed
+  - fix: removed private workflow
 
 ## September 2026 Updates - NIST tags
 
