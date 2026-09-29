@@ -46,3 +46,29 @@ benchparse/
 .github/.ansible/.lock
 .ansible/
 .DS_Store
+
+# Secrets and keys
+*.vault
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+*.jks
+*.credentials
+*vault_pass*
+.vault_pass
+
+# QA and working artifacts
+qa_report.md
+*qa_report*
+prompt.md
+plan.md
+history.md
+*history.md
+*plan.md
+test_inv
+*.pdf
+
+# Vagrant
+vagrant

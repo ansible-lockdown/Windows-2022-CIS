@@ -1,0 +1,5 @@
+---
+
+- name: "SECTION | 19.x | Administrative Templates (User)"
+  ansible.builtin.import_tasks:
+    file: section_19.x.yml
