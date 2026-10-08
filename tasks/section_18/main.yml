@@ -1,0 +1,153 @@
+---
+
+- name: "SECTION | 18.1 | Control Panel"
+  ansible.builtin.import_tasks:
+    file: section_18.1.yml
+
+- name: "SECTION | 18.4 | MS Security Guide"
+  ansible.builtin.import_tasks:
+    file: section_18.4.yml
+
+- name: "SECTION | 18.5 | MSS (Legacy)"
+  ansible.builtin.import_tasks:
+    file: section_18.5.yml
+
+- name: "SECTION | 18.6 | Network"
+  ansible.builtin.import_tasks:
+    file: section_18.6.yml
+
+- name: "SECTION | 18.7 | Printers"
+  ansible.builtin.import_tasks:
+    file: section_18.7.yml
+
+- name: "SECTION | 18.8 | Start Menu and Taskbar"
+  ansible.builtin.import_tasks:
+    file: section_18.8.yml
+
+- name: "SECTION | 18.9 | System"
+  ansible.builtin.import_tasks:
+    file: section_18.9.yml
+
+- name: "SECTION | 18.10.4 | App Package Deployment"
+  ansible.builtin.import_tasks:
+    file: section_18.10.4.yml
+
+- name: "SECTION | 18.10.6 | App runtime"
+  ansible.builtin.import_tasks:
+    file: section_18.10.6.yml
+
+- name: "SECTION | 18.10.8 | AutoPlay Policies"
+  ansible.builtin.import_tasks:
+    file: section_18.10.8.yml
+
+- name: "SECTION | 18.10.9 | Biometrics"
+  ansible.builtin.import_tasks:
+    file: section_18.10.9.yml
+
+- name: "SECTION | 18.10.11 | Camera"
+  ansible.builtin.import_tasks:
+    file: section_18.10.11.yml
+
+- name: "SECTION | 18.10.13 | Cloud Content"
+  ansible.builtin.import_tasks:
+    file: section_18.10.13.yml
+
+- name: "SECTION | 18.10.14 | Connect"
+  ansible.builtin.import_tasks:
+    file: section_18.10.14.yml
+
+- name: "SECTION | 18.10.15 | Credential User Interface"
+  ansible.builtin.import_tasks:
+    file: section_18.10.15.yml
+
+- name: "SECTION | 18.10.16 | Data Collection and Preview Builds"
+  ansible.builtin.import_tasks:
+    file: section_18.10.16.yml
+
+- name: "SECTION | 18.10.18 | Desktop App Installer"
+  ansible.builtin.import_tasks:
+    file: section_18.10.18.yml
+
+- name: "SECTION | 18.10.26 | Event Log Service"
+  ansible.builtin.import_tasks:
+    file: section_18.10.26.yml
+
+- name: "SECTION | 18.10.29 | File Explorer (formerly Windows Explorer)"
+  ansible.builtin.import_tasks:
+    file: section_18.10.29.yml
+
+- name: "SECTION | 18.10.37 | Location and Sensors"
+  ansible.builtin.import_tasks:
+    file: section_18.10.37.yml
+
+- name: "SECTION | 18.10.41 | Messaging"
+  ansible.builtin.import_tasks:
+    file: section_18.10.41.yml
+
+- name: "SECTION | 18.10.42 | Microsoft account"
+  ansible.builtin.import_tasks:
+    file: section_18.10.42.yml
+
+- name: "SECTION | 18.10.43 | Microsoft Defender Antivirus (formerly Windows Defender and Windows Defender Antivirus)"
+  ansible.builtin.import_tasks:
+    file: section_18.10.43.yml
+
+- name: "SECTION | 18.10.51 | OneDrive (formerly SkyDrive)"
+  ansible.builtin.import_tasks:
+    file: section_18.10.51.yml
+
+- name: "SECTION | 18.10.56 | Push To Install"
+  ansible.builtin.import_tasks:
+    file: section_18.10.56.yml
+
+- name: "SECTION | 18.10.57 | Remote Desktop Services (formerly Terminal Services)"
+  ansible.builtin.import_tasks:
+    file: section_18.10.57.yml
+
+- name: "SECTION | 18.10.58 | RSS Feeds"
+  ansible.builtin.import_tasks:
+    file: section_18.10.58.yml
+
+- name: "SECTION | 18.10.59 | Search"
+  ansible.builtin.import_tasks:
+    file: section_18.10.59.yml
+
+- name: "SECTION | 18.10.63 | Software Protection Platform"
+  ansible.builtin.import_tasks:
+    file: section_18.10.63.yml
+
+- name: "SECTION | 18.10.76 | Windows Defender SmartScreen"
+  ansible.builtin.import_tasks:
+    file: section_18.10.76.yml
+
+- name: "SECTION | 18.10.80 | Windows Ink Workspace"
+  ansible.builtin.import_tasks:
+    file: section_18.10.80.yml
+
+- name: "SECTION | 18.10.81 | Windows Installer"
+  ansible.builtin.import_tasks:
+    file: section_18.10.81.yml
+
+- name: "SECTION | 18.10.82 | Windows Logon Options"
+  ansible.builtin.import_tasks:
+    file: section_18.10.82.yml
+
+- name: "SECTION | 18.10.87 | Windows PowerShell"
+  ansible.builtin.import_tasks:
+    file: section_18.10.87.yml
+
+- name: "SECTION | 18.10.89 | Windows Remote Management (WinRM)"
+  ansible.builtin.import_tasks:
+    file: section_18.10.89.yml
+
+- name: "SECTION | 18.10.90 | Windows Remote Shell"
+  ansible.builtin.import_tasks:
+    file: section_18.10.90.yml
+
+- name: "SECTION | 18.10.92 | Windows Security (formerly Windows Defender Security Center)"
+  ansible.builtin.import_tasks:
+    file: section_18.10.92.yml
+
+- name: "SECTION | 18.10.93 | Windows Update"
+  ansible.builtin.import_tasks:
+    file: section_18.10.93.yml
