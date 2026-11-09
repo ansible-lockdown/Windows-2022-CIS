@@ -34,16 +34,17 @@
       when:
         - win22cis_allow_telemetry != 0
         - win22cis_allow_telemetry != 1
-      vars:
-        warn_control_id: '18.10.16.1'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.10.16.1'
 
 - name: "18.10.16.2 | PATCH | Ensure Configure Authenticated Proxy usage for the Connected User Experience and Telemetry service is set to Enabled Disable Authenticated Proxy usage"
   when: win22cis_rule_18_10_16_2
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.16.2
     - patch
     - datacollection
@@ -61,6 +62,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.16.3
     - patch
     - onesettings
@@ -78,6 +80,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.16.4
     - patch
     - datacollection
@@ -95,6 +98,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.16.5
     - patch
     - datacollection
@@ -116,6 +120,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.16.6
     - patch
     - datacollection
@@ -135,6 +140,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.16.7
     - patch
     - datacollection

@@ -5,6 +5,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.59.2
     - patch
     - search
@@ -25,6 +26,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.59.3
     - patch
     - search
@@ -45,6 +47,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.59.4
     - patch
     - search

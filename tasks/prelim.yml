@@ -1,12 +1,5 @@
 ---
 
-# Notes: Values Output by ansible_windows_domain_role
-# Standalone workstation - The machine is not part of a domain and operates as a standalone workstation.
-# Standalone server - The machine is not part of a domain and operates as a standalone server.
-# Member workstation - The machine is a workstation joined to a domain.
-# Member server - The machine is a server joined to a domain.
-# Backup domain controller - The machine is a backup domain controller in a domain environment (Active Directory).
-# Primary domain controller - The machine is the primary domain controller in a domain environment (Active Directory).
 - name: PRELIM | Set System Facts Based On Gather Facts Module
   tags: always
   block:
@@ -46,13 +39,13 @@
           - "registry value and still applies."
 
     - name: PRELIM | Account Policy Scope | Set section 1 warning count
-      vars:
-        warn_control_id: 'Section 1 - domain scoped'
       when:
         - win22cis_section01
         - prelim_win22cis_account_policy_is_domain_scoped
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: 'Section 1 - domain scoped'
 
     - name: PRELIM | Account Policy Scope | Warn that 2.3.11.6 is set at the domain
       when:
@@ -71,32 +64,42 @@
         - win22cis_section02
         - win22cis_rule_2_3_11_6
         - prelim_win22cis_account_policy_is_domain_scoped
-      vars:
-        warn_control_id: '2.3.11.6 - domain scoped'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.11.6 - domain scoped'
 
-# ╔═══════════════════════════════════════════════════════════════════════════════╗
-# ║              PRELIM | Section 19 HKU Scope (Per CIS Specification)            ║
-# ║                                                                               ║
-# ║  Section 19 targets domain-joined interactive users only. The correct         ║
-# ║  source is HKEY_USERS subkeys already loaded in the registry by Windows       ║
-# ║  at logon - no manual NTUSER.DAT loading is required or recommended.          ║
-# ║                                                                               ║
-# ║  Per CIS, include only subkeys where:                                         ║
-# ║    - SID begins with S-1-5-21-*  (domain interactive users)                   ║
-# ║    - Does NOT end with _Classes                                               ║
-# ║    - Is NOT .DEFAULT, S-1-5-18, S-1-5-19, or S-1-5-20                         ║
-# ║    - Is NOT an NT SERVICE SID (S-1-5-80-*)                                    ║
-# ║                                                                               ║
-# ║  If no users are currently logged on, section 19 is not considered out of     ║
-# ║  compliance per CIS. Tasks will simply loop over an empty list.               ║
-# ╚═══════════════════════════════════════════════════════════════════════════════╝
+- name: "PRELIM | Advanced Audit Policy Settings By Subcategory GUID"
+  when: win22cis_section17
+  tags: always
+  block:
+    - name: "PRELIM | Advanced Audit Policy Settings By Subcategory GUID | Read the audit policy backup"
+      ansible.windows.win_shell: |
+        $backup = Join-Path $env:TEMP 'lockdown_auditpol.csv'
+        auditpol /backup /file:"$backup" | Out-Null
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        $settings = @{}
+        foreach ($line in Get-Content -LiteralPath $backup) {
+            if ($line -match '(\{[0-9A-Fa-f-]{36}\}).*,(\d+)\s*$') {
+                $settings[$Matches[1].ToUpper()] = [int]$Matches[2]
+            }
+        }
+        Remove-Item -LiteralPath $backup -Force
+        $settings | ConvertTo-Json -Compress
+      changed_when: false
+      check_mode: false
+      register: prelim_auditpol_backup
+
+    - name: "PRELIM | Advanced Audit Policy Settings By Subcategory GUID | Set the settings fact"
+      ansible.builtin.set_fact:
+        discovered_auditpol_settings: "{{ prelim_auditpol_backup.stdout | from_json }}"
+
 - name: "PRELIM | Obtain Current Interactive User Hives"
   when: win22cis_section19
   tags: always
   block:
     - name: PRELIM | Obtain Current Interactive User Hives | Retrieve live domain user SIDs from HKEY_USERS
+      ansible.windows.win_shell: "{{ hku_script }}"
       vars:
         hku_script: |
           $users = (Get-ChildItem 'REGISTRY::HKEY_USERS').Name
@@ -106,7 +109,6 @@
             $_ -notmatch 'S-1-5-18|S-1-5-19|S-1-5-20' -and
             $_ -notmatch 'S-1-5-80-'
           } | ForEach-Object { $_ -replace 'HKEY_USERS\\', '' }
-      ansible.windows.win_shell: "{{ hku_script }}"
       changed_when: false
       check_mode: false
       register: prelim_current_users_loaded_hku
@@ -114,3 +116,41 @@
     - name: PRELIM | Obtain Current Interactive User Hives | Set list fact for live user SIDs
       ansible.builtin.set_fact:
         prelim_hku_loaded_list: "{{ prelim_current_users_loaded_hku.stdout_lines }}"
+
+- name: "PRELIM | Optional Feature Discovery"
+  tags: always
+  block:
+    - name: "PRELIM | Optional Feature Discovery | Is Hyper-V Installed"
+      when: win22cis_rule_2_2_19
+      ansible.windows.win_feature_info:
+        name: Hyper-V
+      check_mode: false
+      register: prelim_win22cis_hyperv_feature
+
+    - name: "PRELIM | Optional Feature Discovery | Is The Web Server IIS Role Installed"
+      when: win22cis_rule_2_2_31 or win22cis_rule_2_2_33
+      ansible.windows.win_feature_info:
+        name: Web-Server
+      check_mode: false
+      register: prelim_win22cis_webserver_feature
+
+    - name: "PRELIM | Optional Feature Discovery | Is ADFS Installed"
+      when: win22cis_rule_2_2_31
+      ansible.windows.win_feature_info:
+        name: ADFS-Federation
+      check_mode: false
+      register: prelim_win22cis_adfs_feature
+
+    - name: "PRELIM | Optional Feature Discovery | Is Exchange Server Installed"
+      when: win22cis_rule_2_2_38
+      ansible.windows.win_service_info:
+        name: MSExchangeServiceHost
+      check_mode: false
+      register: prelim_win22cis_exchange_service
+
+    - name: "PRELIM | Optional Feature Discovery | Set The Feature Facts"
+      ansible.builtin.set_fact:
+        win22cis_hyperv_installed: "{{ prelim_win22cis_hyperv_feature.features | default([]) | selectattr('installed') | list | length > 0 }}"
+        win22cis_iis_and_web_services_installed: "{{ prelim_win22cis_webserver_feature.features | default([]) | selectattr('installed') | list | length > 0 }}"
+        win22cis_adfs_installed: "{{ prelim_win22cis_adfs_feature.features | default([]) | selectattr('installed') | list | length > 0 }}"
+        win22cis_exchange_server_running: "{{ prelim_win22cis_exchange_service.exists | default(false) }}"

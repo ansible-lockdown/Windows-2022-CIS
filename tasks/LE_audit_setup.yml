@@ -32,8 +32,6 @@
         that: audit_pkg_arch_name in ['AMD64', 'ARM64']
         fail_msg: "Unsupported processor architecture '{{ audit_pkg_arch_name }}' - no syver build to select."
 
-    # win_get_url takes a bare hex digest plus a separate algorithm, not the
-    # 'sha256:...' form the Linux roles use.
     - name: "Pre Audit Setup | Download audit binary"
       ansible.windows.win_get_url:
         url: "{{ audit_bin_url }}{{ audit_pkg_arch_name | lower }}.exe"

@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.3.1
     - patch
     - NIST800-171_3.3.1
@@ -21,6 +22,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.4.1
     - patch
     - encryption_oracle
@@ -36,6 +38,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.4.2
     - patch
     - credentialsdelegation
@@ -52,6 +55,7 @@
     - win22cis_rule_18_9_5_1
     - win22cis_ngws
   tags:
+    - automated
     - ngws-domaincontroller
     - ngws-memberserver
     - rule_18.9.5.1
@@ -69,6 +73,7 @@
     - win22cis_rule_18_9_5_2
     - win22cis_ngws
   tags:
+    - automated
     - ngws-domaincontroller
     - ngws-memberserver
     - rule_18.9.5.2
@@ -97,16 +102,17 @@
       when:
         - win22cis_virtualization_based_security_level != 1
         - win22cis_virtualization_based_security_level != 3
-      vars:
-        warn_control_id: '18.9.5.2'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.9.5.2'
 
 - name: "18.9.5.3 | PATCH | NG Ensure Turn On Virtualization Based Security Virtualization Based Protection of Code Integrity is set to Enabled with UEFI lock"
   when:
     - win22cis_rule_18_9_5_3
     - win22cis_ngws
   tags:
+    - automated
     - ngws-domaincontroller
     - ngws-memberserver
     - rule_18.9.5.3
@@ -124,6 +130,7 @@
     - win22cis_rule_18_9_5_4
     - win22cis_ngws
   tags:
+    - automated
     - ngws-domaincontroller
     - ngws-memberserver
     - rule_18.9.5.4
@@ -142,6 +149,7 @@
     - not prelim_win22cis_is_domain_controller
     - win22cis_ngws
   tags:
+    - automated
     - ngws-memberserver
     - rule_18.9.5.5
     - patch
@@ -159,6 +167,7 @@
     - prelim_win22cis_is_domain_controller
     - win22cis_ngws
   tags:
+    - automated
     - ngws-domaincontroller
     - rule_18.9.5.6
     - patch
@@ -175,6 +184,7 @@
     - win22cis_rule_18_9_5_7
     - win22cis_ngws
   tags:
+    - automated
     - ngws-domaincontroller
     - ngws-memberserver
     - rule_18.9.5.7
@@ -192,6 +202,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.7.2
     - patch
     - metadata
@@ -210,6 +221,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.13.1
     - patch
     - drivers
@@ -225,6 +237,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.19.2
     - patch
     - NIST800-171_3.4.1
@@ -254,6 +267,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.19.3
     - patch
     - NIST800-171_3.4.1
@@ -283,6 +297,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.19.4
     - patch
     - NIST800-171_3.4.1
@@ -312,6 +327,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.19.5
     - patch
     - NIST800-171_3.4.1
@@ -341,6 +357,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.19.6
     - patch
     - NIST800-171_3.4.2
@@ -359,6 +376,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.19.7
     - patch
     - NIST800-171_3.4.1
@@ -387,6 +405,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.20.1.1
     - patch
     - drivers
@@ -405,6 +424,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.2
     - patch
     - handwriting
@@ -422,6 +442,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.3
     - patch
     - handwriting
@@ -441,6 +462,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.4
     - patch
     - wizard
@@ -461,6 +483,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.20.1.5
     - patch
     - wizard
@@ -481,6 +504,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.6
     - patch
     - printers
@@ -500,6 +524,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.7
     - patch
     - wizard
@@ -520,6 +545,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.8
     - patch
     - search
@@ -539,6 +565,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.9
     - patch
     - printers
@@ -558,6 +585,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.10
     - patch
     - wizard
@@ -577,6 +605,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.11
     - patch
     - wmcei
@@ -596,6 +625,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.12
     - patch
     - wmcei
@@ -615,6 +645,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.20.1.13
     - patch
     - errorreporting
@@ -643,6 +674,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.23.1
     - patch
     - certificates
@@ -667,6 +699,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.24.1
     - patch
     - dma
@@ -684,6 +717,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.25.1
     - patch
     - laps
@@ -711,10 +745,10 @@
       when:
         - win22cis_laps_backupdirectory_value != 1
         - win22cis_laps_backupdirectory_value != 2
-      vars:
-        warn_control_id: '18.9.25.1'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.9.25.1'
 
 - name: "18.9.25.2 | PATCH | Ensure Do not allow password expiration time longer than required by policy is set to Enabled"
   when:
@@ -722,6 +756,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.25.2
     - patch
     - laps
@@ -739,6 +774,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.25.3
     - patch
     - laps
@@ -762,6 +798,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.25.4
     - patch
     - laps
@@ -779,6 +816,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.25.5
     - patch
     - laps
@@ -802,10 +840,10 @@
 
     - name: "18.9.25.5 | AUDIT | Ensure Password Settings: Password Length is set to Enabled: 15 or more | Warn Count"
       when: win22cis_laps_passwordlength_value < 15
-      vars:
-        warn_control_id: '18.9.25.5'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.9.25.5'
 
 - name: "18.9.25.6 | PATCH | Ensure Password Settings: Password Age (Days) is set to Enabled: 30 or fewer"
   when:
@@ -813,6 +851,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.25.6
     - patch
     - laps
@@ -836,10 +875,10 @@
 
     - name: "18.9.25.6 | AUDIT | Ensure Password Settings: Password Age (Days) is set to Enabled: 30 or fewer | Warn Count"
       when: win22cis_laps_passwordagedays_value > 30
-      vars:
-        warn_control_id: '18.9.25.6'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.9.25.6'
 
 - name: "18.9.25.7 | PATCH | Ensure Post-authentication actions: Grace period (hours) is set to Enabled: 8 or fewer hours, but not 0"
   when:
@@ -847,6 +886,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.25.7
     - patch
     - laps
@@ -874,10 +914,10 @@
     - name: "18.9.25.7 | AUDIT Ensure Post-authentication actions: Grace period (hours) is set to Enabled: 8 or fewer hours, but not 0 | Log a warning"
       when: win22cis_laps_postauthenticationresetdelay_value > 8 or
           win22cis_laps_postauthenticationresetdelay_value == 0
-      vars:
-        warn_control_id: '18.9.25.7'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.9.25.7'
 
 - name: "18.9.25.8 | PATCH | Ensure Post-authentication actions: Actions is set to Enabled: Reset the password and logoff the managed account or higher"
   when:
@@ -885,6 +925,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.25.8
     - patch
     - laps
@@ -912,16 +953,17 @@
       when:
         - win22cis_laps_postauthenticationactions_value != 3
         - win22cis_laps_postauthenticationactions_value != 5
-      vars:
-        warn_control_id: '18.9.25.8'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.9.25.8'
 
 - name: "18.9.26.1 | PATCH | Ensure Allow Custom SSPs and APs to be loaded into LSASS is set to Disabled"
   when: win22cis_rule_18_9_26_1
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.26.1
     - patch
     - lsass
@@ -937,6 +979,7 @@
     - win22cis_rule_18_9_26_2
     - win22cis_ngws
   tags:
+    - automated
     - ngws-domaincontroller
     - ngws-memberserver
     - rule_18.9.26.2
@@ -954,6 +997,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.27.1
     - patch
     - NIST800-171_3.4.2
@@ -969,6 +1013,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.28.1
     - patch
     - accounts
@@ -999,6 +1044,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.28.2
     - patch
     - NIST800-171_3.1.7
@@ -1014,6 +1060,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.28.3
     - patch
     - enumerate
@@ -1031,6 +1078,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.28.4
     - patch
     - enumerate
@@ -1047,6 +1095,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.28.5
     - patch
     - notifications
@@ -1066,6 +1115,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.28.6
     - patch
     - logon
@@ -1085,6 +1135,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.28.7
     - patch
     - pin
@@ -1104,6 +1155,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.31.1
     - patch
     - clipboard
@@ -1123,6 +1175,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.31.2
     - patch
     - NIST800-171_3.14.6
@@ -1139,6 +1192,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.33.6.1
     - patch
     - power
@@ -1156,6 +1210,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.33.6.2
     - patch
     - power
@@ -1173,6 +1228,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.33.6.3
     - patch
     - power
@@ -1190,6 +1246,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.33.6.4
     - patch
     - logon
@@ -1206,6 +1263,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.35.1
     - patch
     - cora
@@ -1225,6 +1283,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.35.2
     - patch
     - csra
@@ -1245,6 +1304,7 @@
     - not prelim_win22cis_is_domain_controller
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.36.1
     - patch
     - rpc
@@ -1263,6 +1323,7 @@
     - not prelim_win22cis_is_domain_controller
   tags:
     - level2-memberserver
+    - automated
     - rule_18.9.36.2
     - patch
     - rpc
@@ -1281,6 +1342,7 @@
     - prelim_win22cis_is_domain_controller
   tags:
     - level1-domaincontroller
+    - automated
     - rule_18.9.39.1
     - patch
     - sam
@@ -1308,16 +1370,17 @@
       when:
         - win22cis_roca_configuration != 1
         - win22cis_roca_configuration != 2
-      vars:
-        warn_control_id: '18.9.39.1'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.9.39.1'
 
 - name: "18.9.47.5.1 | PATCH | Ensure Microsoft Support Diagnostic Tool Turn on MSDT interactive communication with support provider is set to Disabled"
   when: win22cis_rule_18_9_47_5_1
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.47.5.1
     - patch
     - msdt
@@ -1337,6 +1400,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.47.11.1
     - patch
     - pertrack
@@ -1356,6 +1420,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.9.49.1
     - patch
     - advertising
@@ -1373,6 +1438,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.9.51.1.1
     - patch
     - ntp
@@ -1392,6 +1458,7 @@
     - not prelim_win22cis_is_domain_controller
   tags:
     - level1-memberserver
+    - automated
     - rule_18.9.51.1.2
     - patch
     - ntp

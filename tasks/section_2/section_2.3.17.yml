@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.17.1
     - patch
     - uac
@@ -21,6 +22,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.17.2
     - patch
     - uac
@@ -47,16 +49,17 @@
     - name: "2.3.17.2 | AUDIT | Ensure User Account Control Behavior of the elevation prompt for administrators in Admin Approval Mode' is set to 'Prompt for consent on the secure desktop or higher | Warn Count"
       when: win22cis_consent_prompt_behavior_admin == 0 or
           win22cis_consent_prompt_behavior_admin > 2
-      vars:
-        warn_control_id: '2.3.17.2'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.17.2'
 
 - name: "2.3.17.3 | PATCH | Ensure User Account Control Behavior of the elevation prompt for standard users is set to Automatically deny elevation requests"
   when: win22cis_rule_2_3_17_3
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.17.3
     - patch
     - uac
@@ -73,6 +76,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.17.4
     - patch
     - uac
@@ -89,6 +93,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.17.5
     - patch
     - uac
@@ -105,6 +110,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.17.6
     - patch
     - uac
@@ -121,6 +127,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.17.7
     - patch
     - uac
@@ -137,6 +144,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.17.8
     - patch
     - uac

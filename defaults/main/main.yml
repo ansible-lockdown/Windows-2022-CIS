@@ -46,9 +46,8 @@ skip_reboot: true
 # ║                                                                               ║
 # ║  Skips tasks that may cause disruptive changes to the system during testing.  ║
 # ║                                                                               ║
-# ║  NOTE: When set to true, the corresponding GPO entries for the controls       ║
-# ║  listed below will also not be created. This applies to both the Ansible      ║
-# ║  remediation path and the GPO creation path.                                  ║
+# ║  Each control it skips is named in the warning summary at the end of          ║
+# ║  the run as '<control id> - win_skip_for_test'.                               ║
 # ║                                                                               ║
 # ║  Controls that will be skipped:                                               ║
 # ║    win22cis_rule_2_2_26       - Breaks Local Admin Connection                 ║
@@ -78,9 +77,6 @@ win22cis_rule_1_1_4: true
 win22cis_rule_1_1_5: true
 win22cis_rule_1_1_6: true
 win22cis_rule_1_1_7: true
-# We have found the order of these three tasks below varies between cloud-based instances
-# and VM-based instances locally. The task below breaks out to run in a different order
-# for cloud-based systems and local-based systems. Notes are applied in the section01.yml file.
 win22cis_rule_1_2_1: true
 win22cis_rule_1_2_2: true
 win22cis_rule_1_2_3: true
@@ -631,21 +627,33 @@ win22cis_account_lockout_counter_reset: 15
 # Section 2 Variables
 
 # 2.2.19
-# win22cis_hyperv_installed is Hyper-V installed
-# Default: false
-win22cis_hyperv_installed: false
+# win22cis_hyperv_installed is whether the Hyper-V role is installed.
+# Discovered in prelim with win_feature_info; not set here, so a value given in
+# inventory would be overwritten by the discovered one.
+
+# 2.2.31
+# win22cis_iis_and_web_services_installed and win22cis_adfs_installed are whether the Web Server (IIS)
+# and Active Directory Federation Services roles are installed. Discovered in prelim with
+# win_feature_info; not set here.
+# CIS notes 2 and 3 say IIS application pools and the ADFS service accounts (NT SERVICE\ADFSSrv,
+# NT SERVICE\DRS and the ADFS service account) need Generate security audits, so on those hosts
+# 2.2.31 is skipped with a warning and the audit reports it as skipped.
+# Setting win22cis_apply_generate_security_audits_on_iis_adfs to true applies the baseline on those
+# hosts anyway, which removes those accounts from the right.
+win22cis_apply_generate_security_audits_on_iis_adfs: false
 
 # 2.2.33
 # win22cis_iis_and_web_services_installed allows the Ansible to properly configure the member server with
 # IIS_IUSRS' (MS only) (when the Web Server (IIS) Role with Web Services Role Service is installed)'
-# Default: false
-win22cis_iis_and_web_services_installed: false
+# Discovered in prelim with win_feature_info; not set here.
 
 # 2.2.34
 # Window Manager\Window Manager Group only exists on non-Core installations
 # windows_installation_type should be 'Server Core' for Core installations
 # This is a variable to determine if Windows Manager should be included in this step
-win22cis_increase_scheduling_priority_users: '{{ ["Administrators"] if (prelim_windows_installation_type == "Server Core") else (["Administrators", "Window Manager\Window Manager Group"]) }}'
+# Built-in accounts by SID, which every display language resolves. S-1-5-32-544 is Administrators,
+# S-1-5-90-0 is Window Manager\Window Manager Group.
+win22cis_increase_scheduling_priority_users: '{{ ["S-1-5-32-544"] if (prelim_windows_installation_type == "Server Core") else (["S-1-5-32-544", "S-1-5-90-0"]) }}'
 
 # 2.2.38
 # win22cis_exchange_server_running is the policy setting that determines which users can change the auditing options for
@@ -653,8 +661,7 @@ win22cis_increase_scheduling_priority_users: '{{ ["Administrators"] if (prelim_w
 # False will only add Administrators.
 # True will add administrators and (when Exchange is running in the environment) Exchange Servers.
 # The recommended state for this setting is: Administrators and when Exchange is running in the environment) Exchange Servers.
-# Default: false
-win22cis_exchange_server_running: false
+# Discovered in prelim with win_service_info against MSExchangeServiceHost; not set here.
 
 # 2.3.1.3
 # win22cis_admin_username is the name the administrator account will be renamed to

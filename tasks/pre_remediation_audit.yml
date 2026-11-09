@@ -1,7 +1,5 @@
 ---
 
-# now() re-evaluates on every reference, which would give the audit run and the
-# fetch two different filenames. Freeze it once.
 - name: "Pre Audit Setup | Freeze a timestamp for the audit output filenames"
   when: discovered_audit_timestamp is not defined
   ansible.builtin.set_fact:
@@ -82,11 +80,6 @@
         dest: '{{ audit_conf_dest }}\{{ benchmark }}-Audit.staging'
         delete_archive: true
 
-    # A GitHub archive nests everything under <repo>-<branch>/, so unzipping
-    # straight into audit_conf_dest leaves the content one level too deep and
-    # run_audit.ps1 reports it missing. Stage the extract, then promote whichever
-    # directory actually holds goss.yml to audit_conf_dir. A flat zip that already
-    # holds goss.yml at its root is promoted as-is, so both shapes work.
     - name: "Pre Audit Setup | Promote the extracted content to the audit content directory"
       ansible.windows.win_powershell:
         script: |
@@ -142,9 +135,6 @@
           run_audit.ps1 derives the same path from AUDIT_CONTENT_LOCATION
           and will not find it either.
 
-    # Execution policy is set by GPO in exactly the kind of estate that runs a
-    # CIS role, and MachinePolicy outranks the Process scope win_shell sets.
-    # Without this the failure is an opaque UnauthorizedAccess mid-run.
     - name: "Pre Audit Setup | Check the execution policy allows the audit script to run"
       ansible.windows.win_shell: |
         $blocking = Get-ExecutionPolicy -List |
@@ -178,10 +168,6 @@
     }
     & '{{ audit_conf_dir }}\run_audit.ps1' @auditArgs
   changed_when: true
-  # run_audit.ps1 does not propagate syver's exit code, and syver exits non-zero
-  # when it finds failures. Failing the play because the audit found something is
-  # wrong; failing silently when the script aborted is also wrong. The banner is
-  # only printed after a complete run.
   failed_when: "'Audit Completed' not in pre_audit_run.stdout"
   register: pre_audit_run
   environment:
@@ -194,9 +180,6 @@
     - run_audit or audit_only
     - audit_format == 'json'
   block:
-    # syver's JSON carries a summary-line on every result as well as on the run
-    # summary, so the run total has to come from .summary, not a regex over the
-    # file. This is the same string the Linux grep produces.
     - name: "Pre Audit | Capture audit data if json format"
       ansible.windows.win_shell: |
         $ErrorActionPreference = 'Stop'

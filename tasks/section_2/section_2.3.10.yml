@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.10.1
     - patch
     - securitypolicy
@@ -23,6 +24,7 @@
     - not prelim_win22cis_is_domain_controller
   tags:
     - level1-memberserver
+    - automated
     - rule_2.3.10.2
     - patch
     - sam
@@ -40,6 +42,7 @@
     - not prelim_win22cis_is_domain_controller
   tags:
     - level1-memberserver
+    - automated
     - rule_2.3.10.3
     - patch
     - sam
@@ -56,6 +59,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_2.3.10.4
     - patch
     - accounts
@@ -72,6 +76,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.10.5
     - patch
     - accounts
@@ -89,6 +94,7 @@
     - prelim_win22cis_is_domain_controller
   tags:
     - level1-domaincontroller
+    - automated
     - rule_2.3.10.6
     - patch
     - namedpipes
@@ -106,6 +112,7 @@
     - not prelim_win22cis_is_domain_controller
   tags:
     - level1-memberserver
+    - automated
     - rule_2.3.10.7
     - patch
     - namedpipes
@@ -122,6 +129,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.10.8
     - patch
     - NIST800-171_3.1.5
@@ -141,6 +149,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.10.9
     - patch
     - NIST800-171_3.1.5
@@ -166,10 +175,10 @@
       ansible.windows.win_feature_info:
         name: AD-Certificate
       check_mode: false
-      register: rule_2_3_10_9_adcs_feature
+      register: discovered_2_3_10_9_adcs_feature
 
     - name: "2.3.10.9 | AUDIT | Ensure Network access Remotely accessible registry paths and sub-paths is configured | Add CertSvc to paths"
-      when: rule_2_3_10_9_adcs_feature.features[0].installed
+      when: discovered_2_3_10_9_adcs_feature.features[0].installed
       ansible.builtin.set_fact:
         rule_2_3_10_9_remote_registry_paths: "{{ rule_2_3_10_9_remote_registry_paths + ['SYSTEM\\CurrentControlSet\\Services\\CertSvc'] }}"
 
@@ -177,10 +186,10 @@
       ansible.windows.win_feature_info:
         name: WINS
       check_mode: false
-      register: rule_2_3_10_9_wins_feature
+      register: discovered_2_3_10_9_wins_feature
 
     - name: "2.3.10.9 | AUDIT | Ensure Network access Remotely accessible registry paths and sub-paths is configured | Add WINS to paths"
-      when: rule_2_3_10_9_wins_feature.features[0].installed
+      when: discovered_2_3_10_9_wins_feature.features[0].installed
       ansible.builtin.set_fact:
         rule_2_3_10_9_remote_registry_paths: "{{ rule_2_3_10_9_remote_registry_paths + ['SYSTEM\\CurrentControlSet\\Services\\WINS'] }}"
 
@@ -196,6 +205,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.10.10
     - patch
     - namedpipes
@@ -213,6 +223,7 @@
     - not prelim_win22cis_is_domain_controller
   tags:
     - level1-memberserver
+    - automated
     - rule_2.3.10.11
     - patch
     - sam
@@ -229,6 +240,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.10.12
     - patch
     - shares
@@ -245,6 +257,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.10.13
     - patch
     - guest

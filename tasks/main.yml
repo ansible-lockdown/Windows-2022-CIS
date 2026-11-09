@@ -1,47 +1,43 @@
 ---
 
 - name: Main | Display Banner
-  tags:
-    - always
+  tags: always
   ansible.builtin.debug:
     msg: "{{ lockdown_banner.split('\n') }}"
 
 - name: Main | Gather Distribution Info
-  when:
-    - ansible_facts['distribution'] is not defined
-  tags:
-    - always
+  when: ansible_facts['distribution'] is not defined
+  tags: always
   ansible.builtin.setup:
     gather_subset: distribution,!all,!min
 
 - name: Main | Check OS Version And Family
-  tags:
-    - always
+  tags: always
   ansible.builtin.assert:
     that:
       - ansible_facts['os_family'] == 'Windows'
-      - ansible_facts['distribution'] is regex('Microsoft Windows Server 2022')
+      - ansible_facts['os_product_type'] in ['server', 'domain_controller']
+      - ansible_facts['distribution_version'] is version('10.0.20348', '>=')
+      - ansible_facts['distribution_version'] is version('10.0.20349', '<')
     success_msg: "{{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_major_version'] }} is the detected operating system."
     fail_msg: "This role can only be run against Windows Server 2022 Editions. {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_major_version'] }} is not supported."
 
 - name: Main | Check Ansible Version
-  tags:
-    - always
+  tags: always
   ansible.builtin.assert:
     that: ansible_version.full is version(min_ansible_version, '>=')
     msg: You must use Ansible {{ min_ansible_version }} or greater
 
 - name: Main | Get Windows Installation Type
-  tags:
-    - always
+  tags: always
   ansible.windows.win_reg_stat:
     path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion
     name: InstallationType
+  check_mode: false
   register: prelim_get_windows_installation_type
 
 - name: Main | Set Windows Installation Type
-  tags:
-    - always
+  tags: always
   ansible.builtin.set_fact:
     prelim_windows_installation_type: "{{ prelim_get_windows_installation_type.value | default('') }}"
 
@@ -138,8 +134,6 @@
         path: "{{ win22cis_ansible_facts_path }}"
         state: directory
 
-    # JSON, not the INI the Linux roles write - ansible.windows.setup reads
-    # local facts only as .ps1 or .json, so an INI file would never be read.
     - name: "Main | Create the compliance facts file"
       ansible.windows.win_template:
         src: compliance_facts.json.j2
@@ -164,8 +158,7 @@
     msg: "{{ audit_results.split('\n') }}"
 
 - name: "Main | Warnings Section"
-  tags:
-    - always
+  tags: always
   block:
     - name: "Main | If Warnings Found Output Count And Control IDs Affected"
       when: warn_count != 0

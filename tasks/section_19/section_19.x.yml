@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_19.5.1.1
     - patch
     - toast
@@ -21,6 +22,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_19.6.6.1.1
     - patch
     - help
@@ -42,6 +44,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_19.7.5.1
     - patch
     - attachments
@@ -60,6 +63,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_19.7.5.2
     - patch
     - antivirus
@@ -80,6 +84,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_19.7.8.1
     - patch
     - cloudcontent
@@ -98,6 +103,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_19.7.8.2
     - patch
     - cloudcontent
@@ -117,6 +123,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_19.7.8.3
     - patch
     - cloudcontent
@@ -136,6 +143,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_19.7.8.4
     - patch
     - cloudcontent
@@ -157,6 +165,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_19.7.8.5
     - patch
     - cloudcontent
@@ -178,6 +187,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_19.7.26.1
     - patch
     - profiles
@@ -197,6 +207,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_19.7.44.1
     - patch
     - permissions
@@ -215,6 +226,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_19.7.46.2.1
     - patch
     - codec

@@ -1,6 +1,34 @@
 # ChangeLog
 
 ## CIS Benchmark_v4.0.0
+## October 2026 Updates
+
+  - fix: 2.3.5.2 VulnerableChannelAllowList removed, not written as 0
+  - fix: 18.4.4 sets EnableCertPaddingCheck under Wow6432Node
+  - fix: 2.3.6.x Domain member controls applied on domain controllers, as CIS scopes them
+  - fix: invented level1-domainmember tag removed from 2.3.6.x
+  - fix: 2.3.5.4 warning no longer names a non-existent GPO role
+  - fix: controls skipped by win_skip_for_test named in the warning summary
+  - fix: cloud auto-detection removed, 1.2.x order no longer depends on it (addresses https://github.com/ansible-lockdown/Windows-2022-CIS/issues/94) - Thank you @ericcames
+  - fix: 2.2.x user rights assigned by well-known SID, any display language
+  - fix: 17.x audit policy read by subcategory GUID from auditpol /backup, any display language
+  - fix: OS check by product type and build, any display language
+  - fix: 1.2.1 lowers the reset counter when the lockout duration is Never
+  - fix: 1.2.4 checks the reset counter against the live lockout duration
+  - fix: 2.2.31 skipped with a warning on hosts with IIS or ADFS
+  - fix: Hyper-V, IIS, ADFS and Exchange discovered in prelim
+  - fix: InstallationType read in check mode
+  - fix: community.general dependency removed
+  - docs: README - optional server roles, GPO role references removed
+  - style: spooler and 2.3.10.9 registers renamed to discovered_
+  - style: audit fetch loops placed before register
+  - style: automated and manual tags on every control
+  - style: unique names on 18.6.14.1, 2.2.33 and 2.2.38 sub-tasks
+  - style: single-item when and tags lists inlined
+  - style: comments removed from task files
+  - style: task vars placed straight after the module
+
+## CIS Benchmark_v4.0.0
 ## September 2026 Updates - host testing fixes
 
   - refactor: tasks re-filed into section_N/section_N.x.yml, matching Windows 2025

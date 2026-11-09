@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.4.1
     - patch
     - defender
@@ -25,6 +26,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.5.1
     - patch
     - maps
@@ -44,6 +46,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.43.5.2
     - patch
     - maps
@@ -63,6 +66,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.6.1.1
     - patch
     - defender
@@ -78,6 +82,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.6.1.2
     - patch
     - defender
@@ -106,6 +111,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.6.3.1
     - patch
     - defender
@@ -124,6 +130,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.7.1
     - patch
     - defender
@@ -142,6 +149,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.43.8.1
     - patch
     - defender
@@ -163,6 +171,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.10.1
     - patch
     - defender
@@ -183,6 +192,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.10.2
     - patch
     - defender
@@ -202,6 +212,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.10.3
     - patch
     - defender
@@ -221,6 +232,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.10.4
     - patch
     - defender
@@ -239,6 +251,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.10.5
     - patch
     - defender
@@ -257,6 +270,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.43.11.1.1.1
     - patch
     - defender
@@ -288,16 +302,17 @@
       when:
         - win22cis_brute_force_protection_aggressiveness != 1
         - win22cis_brute_force_protection_aggressiveness != 2
-      vars:
-        warn_control_id: '18.10.43.11.1.1.1'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.10.43.11.1.1.1'
 
 - name: "18.10.43.11.1.1.2 | PATCH | Ensure Configure Remote Encryption Protection Mode is set to Enabled: Audit or higher"
   when: win22cis_rule_18_10_43_11_1_1_2
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.11.1.1.2
     - patch
     - defender
@@ -330,16 +345,17 @@
       when:
         - win22cis_remote_encryption_protection_mode != 1
         - win22cis_remote_encryption_protection_mode != 2
-      vars:
-        warn_control_id: '18.10.43.11.1.1.2'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.10.43.11.1.1.2'
 
 - name: "18.10.43.11.1.2.1 | PATCH | Ensure Configure how aggressively Remote Encryption Protection blocks threats is set to Enabled: Medium or higher"
   when: win22cis_rule_18_10_43_11_1_2_1
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.43.11.1.2.1
     - patch
     - defender
@@ -373,16 +389,17 @@
       when:
         - win22cis_remote_encryption_protection_aggressiveness != 1
         - win22cis_remote_encryption_protection_aggressiveness != 2
-      vars:
-        warn_control_id: '18.10.43.11.1.2.1'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.10.43.11.1.2.1'
 
 - name: "18.10.43.12.1 | PATCH | Ensure Configure Watson events is set to Disabled"
   when: win22cis_rule_18_10_43_12_1
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.43.12.1
     - patch
     - defender
@@ -399,6 +416,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.13.1
     - patch
     - defender
@@ -420,6 +438,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.13.2
     - patch
     - defender
@@ -440,6 +459,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.13.3
     - patch
     - defender
@@ -460,6 +480,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.13.4
     - patch
     - defender
@@ -480,6 +501,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.13.5
     - patch
     - defender
@@ -499,6 +521,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.16
     - patch
     - defender
@@ -517,6 +540,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.43.17
     - patch
     - defender
