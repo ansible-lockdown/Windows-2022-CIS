@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.7.1
     - patch
     - logon
@@ -23,6 +24,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.7.2
     - patch
     - logon
@@ -41,6 +43,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.7.3
     - patch
     - logon
@@ -73,16 +76,17 @@
     - name: "2.3.7.3 | AUDIT | Ensure Interactive logon Machine inactivity limit is set to 900 or fewer seconds but not 0 | Warn Count"
       when: win22cis_inactivity_timeout_seconds > 900 or
           win22cis_inactivity_timeout_seconds == 0
-      vars:
-        warn_control_id: '2.3.7.3'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.7.3'
 
 - name: "2.3.7.4 | PATCH | Configure Interactive logon Message text for users attempting to log on"
   when: win22cis_rule_2_3_7_4
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.7.4
     - patch
     - logon
@@ -99,6 +103,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.7.5
     - patch
     - logon
@@ -116,6 +121,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level2-memberserver
+    - automated
     - rule_2.3.7.6
     - patch
     - logon
@@ -139,16 +145,17 @@
 
     - name: "2.3.7.6 | AUDIT | Ensure Interactive logon Number of previous logons to cache in case domain controller is not available is set to 4 or fewer logons MS only | Warn Count | Member Server"
       when: win22cis_cached_logons_count > 4
-      vars:
-        warn_control_id: '2.3.7.6'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.7.6'
 
 - name: "2.3.7.7 | PATCH | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days"
   when: win22cis_rule_2_3_7_7
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.7.7
     - patch
     - logon
@@ -176,10 +183,10 @@
     - name: "2.3.7.7 | AUDIT | Ensure Interactive logon Prompt user to change password before expiration is set to between 5 and 14 days | Warn Count"
       when: win22cis_password_expiry_warning_days < 5 or
           win22cis_password_expiry_warning_days > 14
-      vars:
-        warn_control_id: '2.3.7.7'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.7.7'
 
 - name: "2.3.7.8 | PATCH | Ensure Interactive logon Require Domain Controller Authentication to unlock workstation is set to Enabled MS only | Member Server"
   when:
@@ -187,6 +194,7 @@
     - prelim_win22cis_is_domain_member
   tags:
     - level1-memberserver
+    - automated
     - rule_2.3.7.8
     - patch
     - logon
@@ -208,6 +216,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.7.9
     - patch
     - logon
@@ -240,7 +249,7 @@
     - name: "2.3.7.9 | AUDIT | Ensure Interactive logon Smart card removal behavior is set to Lock Workstation or higher | Warn Count"
       when: win22cis_sc_remove_option == 0 or
           win22cis_sc_remove_option > 3
-      vars:
-        warn_control_id: '2.3.7.9'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.7.9'

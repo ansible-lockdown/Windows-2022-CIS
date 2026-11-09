@@ -23,10 +23,12 @@ run_heavy_tests: {{ audit_run_heavy_tests }}
 
 win22cis_account_lockout_counter_reset: {{ win22cis_account_lockout_counter_reset | to_json }}
 win22cis_account_lockout_duration: {{ win22cis_account_lockout_duration | to_json }}
+win22cis_adfs_installed: {{ win22cis_adfs_installed | default(false) | to_json }}
 win22cis_allow_admin_account_lockout: {{ win22cis_allow_admin_account_lockout | to_json }}
 win22cis_allow_telemetry: {{ win22cis_allow_telemetry | to_json }}
 win22cis_allow_windows_ink_workspace: {{ win22cis_allow_windows_ink_workspace | to_json }}
 win22cis_application_max_log_file_size: {{ win22cis_application_max_log_file_size | to_json }}
+win22cis_apply_generate_security_audits_on_iis_adfs: {{ win22cis_apply_generate_security_audits_on_iis_adfs | to_json }}
 win22cis_bad_login_lockout_count: {{ win22cis_bad_login_lockout_count | to_json }}
 win22cis_brute_force_protection_aggressiveness: {{ win22cis_brute_force_protection_aggressiveness | to_json }}
 win22cis_cached_logons_count: {{ win22cis_cached_logons_count | to_json }}
@@ -37,6 +39,7 @@ win22cis_domain_member_maximum_password_age: {{ win22cis_domain_member_maximum_p
 win22cis_enable_netbios_policy: {{ win22cis_enable_netbios_policy | to_json }}
 win22cis_force_kerberos_for_rpc: {{ win22cis_force_kerberos_for_rpc | to_json }}
 win22cis_idle_rdp_session_disconnect_time: {{ win22cis_idle_rdp_session_disconnect_time | to_json }}
+win22cis_iis_and_web_services_installed: {{ win22cis_iis_and_web_services_installed | default(false) | to_json }}
 win22cis_inactivity_timeout_seconds: {{ win22cis_inactivity_timeout_seconds | to_json }}
 win22cis_laps_backupdirectory_value: {{ win22cis_laps_backupdirectory_value | to_json }}
 win22cis_laps_passwordagedays_value: {{ win22cis_laps_passwordagedays_value | to_json }}
@@ -460,7 +463,6 @@ win22cis_rule_2_3_4_1: {{ win22cis_rule_2_3_4_1 | to_json }}
 win22cis_rule_2_3_5_1: {{ win22cis_rule_2_3_5_1 | to_json }}
 win22cis_rule_2_3_5_2: {{ win22cis_rule_2_3_5_2 | to_json }}
 win22cis_rule_2_3_5_3: {{ win22cis_rule_2_3_5_3 | to_json }}
-win22cis_rule_2_3_5_4: {{ win22cis_rule_2_3_5_4 | to_json }}
 win22cis_rule_2_3_5_5: {{ win22cis_rule_2_3_5_5 | to_json }}
 win22cis_rule_2_3_6_1: {{ win22cis_rule_2_3_6_1 | to_json }}
 win22cis_rule_2_3_6_2: {{ win22cis_rule_2_3_6_2 | to_json }}

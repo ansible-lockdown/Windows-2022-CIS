@@ -5,6 +5,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.8.1.1
     - patch
     - notifications

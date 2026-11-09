@@ -42,8 +42,7 @@ benchparse/
 *.retry
 
 # GitHub Action/Workflow files
-.github/
-.github/.ansible/.lock
+.github/.ansible/
 .ansible/
 .DS_Store
 

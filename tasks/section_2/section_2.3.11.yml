@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.1
     - patch
     - ntlm
@@ -20,6 +21,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.2
     - patch
     - localsystem
@@ -36,6 +38,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.3
     - patch
     - authentication
@@ -66,6 +69,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.4
     - patch
     - encryption
@@ -99,6 +103,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.5
     - patch
     - network
@@ -120,6 +125,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - manual
     - rule_2.3.11.6
     - patch
     - network
@@ -135,6 +141,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.7
     - patch
     - network
@@ -157,6 +164,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.8
     - patch
     - ldap
@@ -189,16 +197,17 @@
     - name: "2.3.11.8 | AUDIT | Ensure 'Network security: LDAP client encryption requirements' is set to 'Negotiate sealing' or higher | Warn Count"
       when: win22cis_ldap_client_confidentiality == 0 or
           win22cis_ldap_client_confidentiality > 2
-      vars:
-        warn_control_id: '2.3.11.8'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.11.8'
 
 - name: "2.3.11.9 | PATCH | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher"
   when: win22cis_rule_2_3_11_9
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.9
     - patch
     - ldap
@@ -231,16 +240,17 @@
     - name: "2.3.11.9 | AUDIT | Ensure Network security LDAP client signing requirements is set to Negotiate signing or higher | Warn Count"
       when: win22cis_ldap_client_integrity == 0 or
           win22cis_ldap_client_integrity > 2
-      vars:
-        warn_control_id: '2.3.11.9'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.11.9'
 
 - name: "2.3.11.10 | PATCH | Ensure Network security Minimum session security for NTLM SSP based including secure RPC clients is set to Require NTLMv2 session security Require 128-bit encryption"
   when: win22cis_rule_2_3_11_10
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.10
     - patch
     - ntlm
@@ -263,6 +273,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.11
     - patch
     - ntlm
@@ -285,6 +296,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.12
     - patch
     - ntlm
@@ -307,6 +319,7 @@
     - prelim_win22cis_is_domain_controller
   tags:
     - level1-domaincontroller
+    - automated
     - rule_2.3.11.13
     - patch
     - ntlm
@@ -328,6 +341,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_2.3.11.14
     - patch
     - ntlm
@@ -359,7 +373,7 @@
     - name: "2.3.11.14 | AUDIT | Ensure Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Audit all or higher | Warn Count"
       when: win22cis_restrict_sending_ntlm_traffic == 0 or
           win22cis_restrict_sending_ntlm_traffic > 2
-      vars:
-        warn_control_id: '2.3.11.14'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.11.14'

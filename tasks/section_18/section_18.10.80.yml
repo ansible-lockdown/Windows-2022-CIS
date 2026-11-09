@@ -5,6 +5,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.80.1
     - patch
     - wik
@@ -50,7 +51,7 @@
       when:
         - win22cis_allow_windows_ink_workspace != 0
         - win22cis_allow_windows_ink_workspace != 1
-      vars:
-        warn_control_id: '18.10.80.2'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.10.80.2'

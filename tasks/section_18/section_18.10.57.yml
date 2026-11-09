@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.57.2.2
     - patch
     - terminalservices
@@ -24,6 +25,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.57.3.2.1
     - patch
     - terminalservices
@@ -43,6 +45,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.57.3.3.1
     - patch
     - terminalservices
@@ -62,6 +65,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.57.3.3.2
     - patch
     - terminalservices
@@ -81,6 +85,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.57.3.3.3
     - patch
     - terminalservices
@@ -100,6 +105,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.57.3.3.4
     - patch
     - terminalservices
@@ -119,6 +125,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.57.3.3.5
     - patch
     - terminalservices
@@ -138,6 +145,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.57.3.3.6
     - patch
     - terminalservices
@@ -155,6 +163,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.57.3.3.7
     - patch
     - terminalservices
@@ -174,6 +183,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.57.3.9.1
     - patch
     - terminalservices
@@ -193,6 +203,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.57.3.9.2
     - patch
     - terminalservices
@@ -209,6 +220,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.57.3.9.3
     - patch
     - terminalservices
@@ -231,6 +243,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.57.3.9.4
     - patch
     - terminalservices
@@ -253,6 +266,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.57.3.9.5
     - patch
     - terminalservices
@@ -275,6 +289,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.57.3.10.1
     - patch
     - terminalservices
@@ -302,16 +317,17 @@
     - name: "18.10.57.3.10.1 | AUDIT | Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to 'Enabled: 15 minutes or less, but not Never (0) | Log a warning"
       when: win22cis_idle_rdp_session_disconnect_time == 0 or
           win22cis_idle_rdp_session_disconnect_time > 900000
-      vars:
-        warn_control_id: '18.10.57.3.10.1'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.10.57.3.10.1'
 
 - name: "18.10.57.3.10.2 | PATCH | Ensure Set time limit for disconnected sessions is set to Enabled 1 minute"
   when: win22cis_rule_18_10_57_3_10_2
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.57.3.10.2
     - patch
     - terminalservices
@@ -328,6 +344,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.57.3.11.1
     - patch
     - terminalservices
@@ -344,6 +361,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.57.3.11.2
     - patch
     - terminalservices
