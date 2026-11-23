@@ -5,6 +5,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.18.1
     - patch
     - appinstaller
@@ -24,6 +25,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.18.2
     - patch
     - appinstaller
@@ -43,6 +45,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.18.3
     - patch
     - appinstaller
@@ -62,6 +65,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.18.4
     - patch
     - appinstaller
@@ -84,6 +88,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.18.5
     - patch
     - appinstaller
@@ -103,6 +108,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.18.6
     - patch
     - appinstaller
@@ -124,6 +130,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.18.7
     - patch
     - appinstaller

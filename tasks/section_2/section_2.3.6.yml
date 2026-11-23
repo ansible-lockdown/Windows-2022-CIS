@@ -3,12 +3,11 @@
 - name: "2.3.6.1 | PATCH | Ensure Domain member Digitally encrypt or sign secure channel data always is set to Enabled"
   when:
     - win22cis_rule_2_3_6_1
-    - not prelim_win22cis_is_domain_controller
     - not prelim_win22cis_is_standalone
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - level1-domainmember
+    - automated
     - rule_2.3.6.1
     - patch
     - encryption
@@ -29,12 +28,11 @@
 - name: "2.3.6.2 | PATCH | Ensure Domain member Digitally encrypt secure channel data when possible is set to Enabled"
   when:
     - win22cis_rule_2_3_6_2
-    - not prelim_win22cis_is_domain_controller
     - not prelim_win22cis_is_standalone
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - level1-domainmember
+    - automated
     - rule_2.3.6.2
     - patch
     - encryption
@@ -53,13 +51,11 @@
     type: dword
 
 - name: "2.3.6.3 | PATCH | Ensure Domain member Digitally sign secure channel data when possible is set to Enabled"
-  when:
-    - win22cis_rule_2_3_6_3
-    - not prelim_win22cis_is_domain_controller
+  when: win22cis_rule_2_3_6_3
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - level1-domainmember
+    - automated
     - rule_2.3.6.3
     - patch
     - logon
@@ -78,13 +74,11 @@
     type: dword
 
 - name: "2.3.6.4 | PATCH | Ensure Domain member Disable machine account password changes is set to Disabled"
-  when:
-    - win22cis_rule_2_3_6_4
-    - not prelim_win22cis_is_domain_controller
+  when: win22cis_rule_2_3_6_4
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - level1-domainmember
+    - automated
     - rule_2.3.6.4
     - patch
     - logon
@@ -97,13 +91,11 @@
     type: dword
 
 - name: "2.3.6.5 | PATCH | Ensure Domain member Maximum machine account password age is set to 30 or fewer days but not 0"
-  when:
-    - win22cis_rule_2_3_6_5
-    - not prelim_win22cis_is_domain_controller
+  when: win22cis_rule_2_3_6_5
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - level1-domainmember
+    - automated
     - rule_2.3.6.5
     - patch
     - account
@@ -137,13 +129,11 @@
         warn_control_id: '2.3.6.5'
 
 - name: "2.3.6.6 | PATCH | Ensure Domain member Require strong Windows 2000 or later session key is set to Enabled"
-  when:
-    - win22cis_rule_2_3_6_6
-    - not prelim_win22cis_is_domain_controller
+  when: win22cis_rule_2_3_6_6
   tags:
     - level1-domaincontroller
     - level1-memberserver
-    - level1-domainmember
+    - automated
     - rule_2.3.6.6
     - patch
     - logon

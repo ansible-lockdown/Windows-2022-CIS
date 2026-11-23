@@ -5,6 +5,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.41.1
     - patch
     - msc

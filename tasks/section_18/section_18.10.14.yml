@@ -33,7 +33,7 @@
       when:
         - win22cis_require_pin_for_pairing != 1
         - win22cis_require_pin_for_pairing != 2
-      vars:
-        warn_control_id: '18.10.14.1'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.10.14.1'

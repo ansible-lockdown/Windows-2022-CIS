@@ -6,6 +6,7 @@
     - prelim_win22cis_is_domain_controller
   tags:
     - level1-domaincontroller
+    - automated
     - rule_5.1
     - patch
     - printer
@@ -20,7 +21,7 @@
       ansible.windows.win_service_info:
         name: Spooler
       check_mode: false
-      register: spooler_service_info
+      register: discovered_5_1_spooler_service_info
 
     - name: "5.1 | PATCH | Ensure Print Spooler (Spooler) is set to Disabled Domain Controller RegEdit"
       ansible.windows.win_regedit:
@@ -30,7 +31,7 @@
         type: dword
 
     - name: "5.1 | PATCH | Ensure Print Spooler (Spooler) is set to Disabled Domain Controller Service"
-      when: spooler_service_info.exists
+      when: discovered_5_1_spooler_service_info.exists
       ansible.windows.win_service:
         name: Spooler
         start_mode: disabled
@@ -42,6 +43,7 @@
     - not prelim_win22cis_is_domain_controller
   tags:
     - level2-memberserver
+    - automated
     - rule_5.2
     - patch
     - printer
@@ -56,7 +58,7 @@
       ansible.windows.win_service_info:
         name: Spooler
       check_mode: false
-      register: spooler_service_info
+      register: discovered_5_2_spooler_service_info
 
     - name: "5.2 | PATCH | Ensure Print Spooler (Spooler) is set to Disabled Member Server | RegEdit"
       ansible.windows.win_regedit:
@@ -66,7 +68,7 @@
         type: dword
 
     - name: "5.2 | PATCH | Ensure Print Spooler (Spooler) is set to Disabled Member Server | Service"
-      when: spooler_service_info.exists
+      when: discovered_5_2_spooler_service_info.exists
       ansible.windows.win_service:
         name: Spooler
         start_mode: disabled

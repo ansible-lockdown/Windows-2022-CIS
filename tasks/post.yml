@@ -6,8 +6,6 @@
 
 - name: "POST | Reboot System Options"
   tags: always
-  vars:
-    warn_control_id: Reboot_Required
   block:
     - name: "POST | Rebooting System................. skip_reboot Has Been Set To: False"
       when:
@@ -32,3 +30,5 @@
         - skip_reboot
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: Reboot_Required

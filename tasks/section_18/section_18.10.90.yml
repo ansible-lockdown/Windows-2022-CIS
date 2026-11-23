@@ -7,6 +7,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.10.90.1
     - patch
     - winrm
@@ -20,3 +21,24 @@
     name: AllowRemoteShellAccess
     data: 0
     type: dword
+
+- name: "18.10.90.1 | AUDIT | Ensure Allow Remote Shell Access is set to Disabled | Warn skipped by win_skip_for_test"
+  when:
+    - win22cis_rule_18_10_90_1
+    - win_skip_for_test | bool
+  tags:
+    - level2-domaincontroller
+    - level2-memberserver
+    - automated
+    - rule_18.10.90.1
+    - audit
+    - winrm
+    - NIST800-171_3.4.2
+    - NIST800-171_3.4.6
+    - NIST800-171_3.4.7
+    - NIST800-53R5_CM-6
+    - NIST800-53R5_CM-7
+  ansible.builtin.import_tasks:
+    file: warning_facts.yml
+  vars:
+    warn_control_id: '18.10.90.1 - win_skip_for_test'

@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.8.1
     - patch
     - autoplay
@@ -21,6 +22,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.8.2
     - patch
     - autorun
@@ -37,6 +39,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.8.3
     - patch
     - autoplay

@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.93.1.1
     - patch
     - winupdate
@@ -25,6 +26,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.93.2.1
     - patch
     - winupdate
@@ -45,6 +47,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.93.2.2
     - patch
     - winupdate
@@ -65,6 +68,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.93.4.1
     - patch
     - winupdate
@@ -127,16 +131,17 @@
 
     - name: "18.10.93.4.2 | AUDIT | Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days' | Log a warning"
       when: win22cis_defer_feature_updates_period_in_days < 180
-      vars:
-        warn_control_id: '18.10.93.4.2'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.10.93.4.2'
 
 - name: "18.10.93.4.3 | PATCH | Ensure Select when Quality Updates are received is set to Enabled 0 days"
   when: win22cis_rule_18_10_93_4_3
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.10.93.4.3
     - patch
     - winupdate

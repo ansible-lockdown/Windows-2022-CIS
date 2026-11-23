@@ -6,6 +6,7 @@
     - prelim_win22cis_is_domain_controller
   tags:
     - level1-domaincontroller
+    - automated
     - rule_2.3.5.1
     - patch
     - scheduledtasks
@@ -17,14 +18,13 @@
     data: 0
     type: dword
 
-# Per CIS Note: If this policy is set as prescribed, the registry key vulnerablechannelallowlist will not be present in the above registry location.
-
 - name: "2.3.5.2 | PATCH | Ensure Domain controller Allow vulnerable Netlogon secure channel connections is set to Not Configured DC only | Domain Controller"
   when:
     - win22cis_rule_2_3_5_2
     - prelim_win22cis_is_domain_controller
   tags:
     - level1-domaincontroller
+    - automated
     - rule_2.3.5.2
     - patch
     - logon
@@ -33,8 +33,7 @@
   ansible.windows.win_regedit:
     path: HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters
     name: VulnerableChannelAllowList
-    data: 0
-    type: dword
+    state: absent
 
 - name: "2.3.5.3 | PATCH | Ensure Domain controller LDAP server channel binding token requirements is set to Always DC only | Domain Controller"
   when:
@@ -42,6 +41,7 @@
     - prelim_win22cis_is_domain_controller
   tags:
     - level1-domaincontroller
+    - automated
     - rule_2.3.5.3
     - patch
     - ldap
@@ -65,6 +65,7 @@
     - prelim_win22cis_is_domain_controller
   tags:
     - level1-domaincontroller
+    - automated
     - rule_2.3.5.4
     - patch
     - ldap
@@ -84,13 +85,13 @@
           - "Domain Controllers Policy pins LDAPServerIntegrity to 1, and a domain controller"
           - "refreshes policy every 5 minutes, so a local registry write is reverted before it"
           - "takes effect. Set 'Domain controller: LDAP server signing requirements' to 'Require"
-          - "signing' in that policy, or apply it with the Private-Windows-2022-CIS-GPO role."
+          - "signing' in that policy."
 
     - name: "2.3.5.4 | AUDIT | Ensure Domain controller LDAP server signing requirements is set to Require signing DC only | Add Warn Count"
-      vars:
-        warn_control_id: '2.3.5.4'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '2.3.5.4'
 
 - name: "2.3.5.5 | PATCH | Ensure Domain controller Refuse machine account password changes is set to Disabled DC only | Domain Controller"
   when:
@@ -98,6 +99,7 @@
     - prelim_win22cis_is_domain_controller
   tags:
     - level1-domaincontroller
+    - automated
     - rule_2.3.5.5
     - patch
     - account

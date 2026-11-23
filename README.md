@@ -61,6 +61,12 @@
 
 On our [Discord Server](https://www.lockdownenterprise.com/discord) to ask questions, discuss features, or just chat with other Ansible-Lockdown users
 
+### Contributing
+
+Bug reports and feature requests are welcome from everyone, please raise an issue.
+
+Pull requests are accepted from approved contributors only. To be onboarded, join the [Discord Server](https://www.lockdownenterprise.com/discord) and request contributor access. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full process.
+
 ---
 
 ## Caution(s)
@@ -96,7 +102,6 @@ This is managed using tags:
 - level1-memberserver
 - level2-domaincontroller
 - level2-memberserver
-- level1-domainmember
 - ngws-domaincontroller
 - ngws-memberserver
 
@@ -138,14 +143,20 @@ The rest stay member server only:
 Section 1 account policy is applied on a standalone server only; on a domain member the
 Default Domain Policy owns it.
 
-## CIS GPO Compliance Method
+## Optional Server Roles
 
-GPO creation now lives in its own role, Windows-2022-CIS-GPO. This role applies the benchmark
-directly to a host and no longer creates Group Policy Objects.
+The role discovers Hyper-V, IIS, ADFS and Exchange in prelim, so the user rights that
+depend on them need no inventory setting.
+
+- **2.2.19 Create symbolic links** adds `NT VIRTUAL MACHINE\Virtual Machines` when Hyper-V is installed.
+- **2.2.31 Generate security audits** is skipped with a warning on a host with IIS or ADFS installed.
+  CIS notes 2 and 3 require an exception there so that IIS application pools and the ADFS service
+  accounts keep this right, and the audit reports 2.2.31 as skipped. Set
+  `win22cis_apply_generate_security_audits_on_iis_adfs: true` to apply the baseline on those hosts anyway.
+- **2.2.33 Impersonate a client after authentication** adds `IIS_IUSRS` when IIS is installed.
+- **2.2.38 Manage auditing and security log** adds `Exchange Servers` when Exchange is running.
 
 ## Group Policy Objects
-
-This role applies the benchmark directly to the host it runs against.
 
 This role applies the benchmark directly to the host it runs against. It does not
 create Group Policy Objects.
@@ -161,7 +172,7 @@ these settings is reverted shortly after this role makes it. The role would othe
 a change on every run while the host never actually reaches the required state.
 
 The settings below are defined by the default domain policies on a stock Active Directory
-domain. Apply them in Group Policy, or with the Windows-2022-CIS-GPO role, not here.
+domain. Apply them in Group Policy, not here.
 
 | Control | Setting | Where it is owned |
 |---------|---------|-------------------|

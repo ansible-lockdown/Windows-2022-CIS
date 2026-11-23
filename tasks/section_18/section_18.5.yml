@@ -5,6 +5,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.5.1
     - patch
     - mss
@@ -25,6 +26,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.5.2
     - patch
     - mss
@@ -42,6 +44,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.5.3
     - patch
     - mss
@@ -59,6 +62,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.5.4
     - patch
     - mss
@@ -90,6 +94,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.5.5
     - patch
     - mss
@@ -121,6 +126,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.5.6
     - patch
     - mss
@@ -138,6 +144,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.5.7
     - patch
     - mss
@@ -157,6 +164,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.5.8
     - patch
     - mss
@@ -172,6 +180,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.5.9
     - patch
     - mss
@@ -198,16 +207,17 @@
 
     - name: "18.5.9 | AUDIT | Ensure MSS ScreenSaverGracePeriod The time in seconds before the screen saver grace period expires is set to Enabled 5 or fewer seconds | Set warn control ID for non-compliance"
       when: win22cis_screen_saver_grace_period > 5
-      vars:
-        warn_control_id: '18.5.9'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.5.9'
 
 - name: "18.5.10 | PATCH | Ensure MSS: (TcpMaxDataRetransmissions IPv6) How many times unacknowledged data is retransmitted is set to Enabled: 3"
   when: win22cis_rule_18_5_10
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.5.10
     - patch
     - mss
@@ -236,6 +246,7 @@
   tags:
     - level2-domaincontroller
     - level2-memberserver
+    - automated
     - rule_18.5.11
     - patch
     - mss
@@ -264,6 +275,7 @@
   tags:
     - level1-domaincontroller
     - level1-memberserver
+    - automated
     - rule_18.5.12
     - patch
     - mss
@@ -286,7 +298,7 @@
 
     - name: "18.5.12 | AUDIT | Ensure MSS: (WarningLevel) Percentage threshold for the security event log at which the system will generate a warning is set to Enabled: 90 or less | Log a warning for non-compliance with control ID 18.5.12"
       when: win22cis_log_threshold_audit_event > 90
-      vars:
-        warn_control_id: '18.5.12'
       ansible.builtin.import_tasks:
         file: warning_facts.yml
+      vars:
+        warn_control_id: '18.5.12'
